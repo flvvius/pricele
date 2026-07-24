@@ -12,6 +12,7 @@ export interface ShareInput {
   flag: string;
   guesses: GuessRecord[];
   won: boolean;
+  streak?: number;
 }
 
 /**
@@ -20,6 +21,8 @@ export interface ShareInput {
  *   🟨⬛
  *   ⬛🟨
  *   🟩
+ *   🔥 5 day streak
+ *   pricele.vercel.app
  */
 export function buildShareText({
   puzzleNumber,
@@ -28,11 +31,15 @@ export function buildShareText({
   flag,
   guesses,
   won,
+  streak,
 }: ShareInput): string {
   const score = won ? `${guesses.length}/${MAX_GUESSES}` : `X/${MAX_GUESSES}`;
   const header = `Pricele #${puzzleNumber} - ${itemName} in ${countryName} ${flag} - ${score}`;
   const grid = guesses.map((g) => BAND_EMOJI[g.band]).join("\n");
-  return `${header}\n${grid}\nplay: https://pricele.vercel.app`;
+  const lines = [header, grid];
+  if (won && streak && streak > 1) lines.push(`🔥 ${streak} day streak`);
+  lines.push("pricele.vercel.app");
+  return lines.join("\n");
 }
 
 /** Copy text to the clipboard, with a legacy fallback. Returns success. */

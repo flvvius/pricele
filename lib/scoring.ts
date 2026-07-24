@@ -4,18 +4,21 @@
 export type Band = "green" | "yellow" | "black";
 export type Direction = "too_high" | "too_low" | "exact";
 
-export const WIN_THRESHOLD = Math.log(1.1); // ≈ 0.0953 → within 10%
-export const YELLOW_THRESHOLD = Math.log(1.3); // ≈ 0.2624 → within 30%
+export const WIN_THRESHOLD = Math.log(1.1); // within 10%
+export const YELLOW_THRESHOLD = Math.log(1.3); // within 30%
+export const MAX_LOG_DIFF = Math.log(5); // 5x off (or worse) counts as 0% close
 
 export interface GuessResult {
   band: Band;
   direction: Direction;
   win: boolean;
+  /** 0..1 warmth, for the proximity meter. 1 is exact, 0 is 5x off or worse. */
+  closeness: number;
 }
 
 /**
  * Evaluate a numeric guess against the actual price.
- * Both values must be positive (a price and a guessed price).
+ * Both values must be positive.
  */
 export function evaluate(guess: number, actual: number): GuessResult {
   if (!(guess > 0) || !(actual > 0)) {
@@ -34,7 +37,9 @@ export function evaluate(guess: number, actual: number): GuessResult {
   else if (absLogDiff <= YELLOW_THRESHOLD) band = "yellow";
   else band = "black";
 
-  return { band, direction, win: band === "green" };
+  const closeness = Math.max(0, 1 - absLogDiff / MAX_LOG_DIFF);
+
+  return { band, direction, win: band === "green", closeness };
 }
 
 export const BAND_EMOJI: Record<Band, string> = {

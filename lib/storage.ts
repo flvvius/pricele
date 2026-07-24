@@ -1,15 +1,17 @@
 // Player state lives in localStorage. Two separate keys:
 //   - today's game, keyed by UTC date, so it resets each day.
-//   - streak, which persists across days.
+//   - lifetime stats (streak, win rate, guess distribution), which persist.
 // All access is guarded for the server render, where window is undefined.
 
 import type { Band } from "./scoring";
 import { isoDateUTC } from "./puzzle";
+import { MAX_GUESSES } from "./share";
 
 export interface GuessRecord {
   value: number;
   band: Band;
   direction: "too_high" | "too_low" | "exact";
+  closeness: number;
 }
 
 export interface DayState {
@@ -19,13 +21,27 @@ export interface DayState {
   won: boolean;
 }
 
-export interface Streak {
-  count: number;
-  lastCompletedDate: string; // UTC ISO date
+export interface Stats {
+  played: number;
+  wins: number;
+  currentStreak: number;
+  maxStreak: number;
+  /** distribution[i] = games won using (i + 1) guesses. */
+  distribution: number[];
+  lastCompletedDate: string;
 }
 
 const dayKey = (date: string) => `pricele:day:${date}`;
-const STREAK_KEY = "pricele:streak";
+const STATS_KEY = "pricele:stats";
+
+export const EMPTY_STATS: Stats = {
+  played: 0,
+  wins: 0,
+  currentStreak: 0,
+  maxStreak: 0,
+  distribution: Array(MAX_GUESSES).fill(0),
+  lastCompletedDate: "",
+};
 
 function hasStorage(): boolean {
   return typeof window !== "undefined" && !!window.localStorage;
@@ -60,32 +76,53 @@ export function saveDayState(state: DayState): void {
   write(dayKey(state.date), state);
 }
 
-export function loadStreak(): Streak {
-  return read<Streak>(STREAK_KEY) ?? { count: 0, lastCompletedDate: "" };
+export function loadStats(): Stats {
+  const s = read<Stats>(STATS_KEY);
+  if (!s) return { ...EMPTY_STATS, distribution: [...EMPTY_STATS.distribution] };
+  // Be tolerant of older/partial shapes.
+  return {
+    ...EMPTY_STATS,
+    ...s,
+    distribution:
+      Array.isArray(s.distribution) && s.distribution.length === MAX_GUESSES
+        ? s.distribution
+        : [...EMPTY_STATS.distribution],
+  };
+}
+
+function isoYesterday(date: string): string {
+  return isoDateUTC(new Date(Date.parse(date + "T00:00:00Z") - 86400000));
 }
 
 /**
- * Record a completed game against the streak, idempotently for a given day.
- * - Same day already counted → unchanged.
- * - Completed the day immediately after lastCompletedDate → +1.
- * - Any gap (or first ever) → reset to 1.
- * A loss still "completes" the day for rollover, but only a win extends the streak.
+ * Fold a finished game into lifetime stats, idempotently for a given day.
+ * A loss still counts as played and breaks the streak; only a win extends it
+ * and lands in the guess distribution.
  */
-export function recordCompletion(date: string, won: boolean): Streak {
-  const streak = loadStreak();
-  if (streak.lastCompletedDate === date) return streak;
+export function recordCompletion(
+  date: string,
+  won: boolean,
+  numGuesses: number
+): Stats {
+  const stats = loadStats();
+  if (stats.lastCompletedDate === date) return stats;
 
-  let next: Streak;
-  if (!won) {
-    next = { count: 0, lastCompletedDate: date };
-  } else {
-    const prev = new Date(Date.parse(date + "T00:00:00Z") - 86400000);
-    const wasYesterday = isoDateUTC(prev) === streak.lastCompletedDate;
-    next = {
-      count: wasYesterday ? streak.count + 1 : 1,
-      lastCompletedDate: date,
-    };
+  const continues = stats.lastCompletedDate === isoYesterday(date);
+  const currentStreak = won ? (continues ? stats.currentStreak : 0) + 1 : 0;
+
+  const distribution = [...stats.distribution];
+  if (won && numGuesses >= 1 && numGuesses <= MAX_GUESSES) {
+    distribution[numGuesses - 1] += 1;
   }
-  write(STREAK_KEY, next);
+
+  const next: Stats = {
+    played: stats.played + 1,
+    wins: stats.wins + (won ? 1 : 0),
+    currentStreak,
+    maxStreak: Math.max(stats.maxStreak, currentStreak),
+    distribution,
+    lastCompletedDate: date,
+  };
+  write(STATS_KEY, next);
   return next;
 }

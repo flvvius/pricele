@@ -6,14 +6,7 @@ export const dynamic = "force-static";
 
 export default function Home() {
   return (
-    <main className="mx-auto flex min-h-dvh max-w-md flex-col gap-6 px-4 py-8">
-      <div className="text-center">
-        <h1 className="text-3xl font-black tracking-tight">Pricele</h1>
-        <p className="text-sm text-neutral-400">
-          Guess the price. New country daily.
-        </p>
-      </div>
-
+    <main className="mx-auto flex min-h-dvh max-w-md flex-col gap-6 px-4 py-6">
       <Game />
 
       <footer className="mt-auto pt-8 text-center text-xs text-neutral-600">

@@ -52,6 +52,20 @@ describe("evaluate: log-error symmetry", () => {
   });
 });
 
+describe("evaluate: closeness (warmth)", () => {
+  it("is 1 for an exact guess and decreases as the guess drifts", () => {
+    expect(evaluate(0.5, 0.5).closeness).toBeCloseTo(1);
+    const near = evaluate(0.55, 0.5).closeness;
+    const far = evaluate(1.0, 0.5).closeness;
+    expect(near).toBeGreaterThan(far);
+  });
+
+  it("floors at 0 for guesses 5x off or worse", () => {
+    expect(evaluate(2.5, 0.5).closeness).toBeCloseTo(0);
+    expect(evaluate(10, 0.5).closeness).toBe(0);
+  });
+});
+
 describe("evaluate: guard rails", () => {
   it("rejects non-positive input", () => {
     expect(() => evaluate(0, 1)).toThrow();

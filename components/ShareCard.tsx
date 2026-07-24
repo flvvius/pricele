@@ -8,6 +8,15 @@ export default function ShareCard(props: ShareInput) {
   const text = buildShareText(props);
 
   async function onShare() {
+    // Prefer the native share sheet on mobile; fall back to clipboard.
+    if (typeof navigator !== "undefined" && navigator.share) {
+      try {
+        await navigator.share({ text });
+        return;
+      } catch {
+        /* user dismissed or unsupported — fall through to copy */
+      }
+    }
     const ok = await copyToClipboard(text);
     setCopied(ok);
     if (ok) setTimeout(() => setCopied(false), 2000);
@@ -20,9 +29,9 @@ export default function ShareCard(props: ShareInput) {
       </pre>
       <button
         onClick={onShare}
-        className="rounded-lg bg-green-600 px-5 py-3 font-semibold text-white transition hover:bg-green-500"
+        className="rounded-lg bg-green-600 px-5 py-3 text-base font-semibold text-white shadow-lg shadow-green-900/30 transition hover:bg-green-500 active:scale-[0.99]"
       >
-        {copied ? "Copied!" : "Share result"}
+        {copied ? "Copied to clipboard!" : "Share result"}
       </button>
     </div>
   );
