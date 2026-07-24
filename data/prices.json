@@ -1,0 +1,122 @@
+[
+  {
+    "itemId": "coke-330ml",
+    "countryCode": "US",
+    "countryName": "United States",
+    "flag": "🇺🇸",
+    "priceUSD": 1.0,
+    "priceLocal": 1.0,
+    "localCurrency": "USD",
+    "avgHourlyWageUSD": 25.0,
+    "source": "Seed estimate",
+    "sourceDate": "2026-07-01"
+  },
+  {
+    "itemId": "coke-330ml",
+    "countryCode": "CH",
+    "countryName": "Switzerland",
+    "flag": "🇨🇭",
+    "priceUSD": 1.55,
+    "priceLocal": 1.35,
+    "localCurrency": "CHF",
+    "avgHourlyWageUSD": 34.0,
+    "source": "Seed estimate",
+    "sourceDate": "2026-07-01"
+  },
+  {
+    "itemId": "coke-330ml",
+    "countryCode": "NO",
+    "countryName": "Norway",
+    "flag": "🇳🇴",
+    "priceUSD": 2.2,
+    "priceLocal": 23.0,
+    "localCurrency": "NOK",
+    "avgHourlyWageUSD": 29.0,
+    "source": "Seed estimate",
+    "sourceDate": "2026-07-01"
+  },
+  {
+    "itemId": "coke-330ml",
+    "countryCode": "JP",
+    "countryName": "Japan",
+    "flag": "🇯🇵",
+    "priceUSD": 0.95,
+    "priceLocal": 140.0,
+    "localCurrency": "JPY",
+    "avgHourlyWageUSD": 15.0,
+    "source": "Seed estimate",
+    "sourceDate": "2026-07-01"
+  },
+  {
+    "itemId": "coke-330ml",
+    "countryCode": "BR",
+    "countryName": "Brazil",
+    "flag": "🇧🇷",
+    "priceUSD": 0.9,
+    "priceLocal": 4.8,
+    "localCurrency": "BRL",
+    "avgHourlyWageUSD": 4.5,
+    "source": "Seed estimate",
+    "sourceDate": "2026-07-01"
+  },
+  {
+    "itemId": "coke-330ml",
+    "countryCode": "MX",
+    "countryName": "Mexico",
+    "flag": "🇲🇽",
+    "priceUSD": 0.7,
+    "priceLocal": 13.0,
+    "localCurrency": "MXN",
+    "avgHourlyWageUSD": 4.0,
+    "source": "Seed estimate",
+    "sourceDate": "2026-07-01"
+  },
+  {
+    "itemId": "coke-330ml",
+    "countryCode": "LB",
+    "countryName": "Lebanon",
+    "flag": "🇱🇧",
+    "priceUSD": 0.5,
+    "priceLocal": 45000.0,
+    "localCurrency": "LBP",
+    "avgHourlyWageUSD": 3.2,
+    "source": "Seed estimate",
+    "sourceDate": "2026-07-01"
+  },
+  {
+    "itemId": "coke-330ml",
+    "countryCode": "VN",
+    "countryName": "Vietnam",
+    "flag": "🇻🇳",
+    "priceUSD": 0.45,
+    "priceLocal": 11000.0,
+    "localCurrency": "VND",
+    "avgHourlyWageUSD": 2.8,
+    "source": "Seed estimate",
+    "sourceDate": "2026-07-01"
+  },
+  {
+    "itemId": "coke-330ml",
+    "countryCode": "EG",
+    "countryName": "Egypt",
+    "flag": "🇪🇬",
+    "priceUSD": 0.4,
+    "priceLocal": 19.0,
+    "localCurrency": "EGP",
+    "avgHourlyWageUSD": 1.8,
+    "source": "Seed estimate",
+    "sourceDate": "2026-07-01"
+  },
+  {
+    "itemId": "coke-330ml",
+    "countryCode": "IN",
+    "countryName": "India",
+    "flag": "🇮🇳",
+    "priceUSD": 0.35,
+    "priceLocal": 30.0,
+    "localCurrency": "INR",
+    "avgHourlyWageUSD": 2.5,
+    "source": "Seed estimate",
+    "sourceDate": "2026-07-01"
+  }
+]
