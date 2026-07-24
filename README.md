@@ -33,6 +33,28 @@ NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION=...            # optional
 NEXT_PUBLIC_BING_SITE_VERIFICATION=...              # optional
 ```
 
+## Ads
+
+Monetization is Google AdSense. The loader script and the
+`google-adsense-account` verification meta ship on every page, and `/ads.txt`
+is generated from the publisher id (`app/ads.txt/route.ts`) — all driven by
+`lib/ads.ts`. The publisher id defaults to the site's account and is
+overridable per-deploy.
+
+Ad **units** are opt-in and never appear during play — the one labeled unit
+sits on the post-game Reveal screen, with space reserved so a slow ad never
+shifts the layout (`components/AdSlot.tsx`). A unit renders only once its slot
+id is set, so there are never empty placeholder boxes:
+
+```bash
+NEXT_PUBLIC_ADSENSE_CLIENT=ca-pub-XXXXXXXXXXXXXXXX   # optional; overrides the default
+NEXT_PUBLIC_ADSENSE_SLOT_REVEAL=1234567890           # unit id for the Reveal screen
+```
+
+Create the display ad unit in the AdSense dashboard to get its slot id. Setting
+`NEXT_PUBLIC_ADSENSE_CLIENT` to a blank/malformed value turns everything off and
+the build is byte-for-byte ad-free.
+
 ## Develop
 
 ```bash

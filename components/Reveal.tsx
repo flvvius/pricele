@@ -11,6 +11,8 @@ import {
 import ShareCard from "./ShareCard";
 import Countdown from "./Countdown";
 import EngagementPrompts from "./EngagementPrompts";
+import AdSlot from "./AdSlot";
+import { AD_SLOTS } from "@/lib/ads";
 
 interface Props {
   puzzleNumber: number;
@@ -87,6 +89,9 @@ export default function Reveal({
       />
 
       {!isArchive && <EngagementPrompts />}
+
+      {/* Post-game only: shown after the puzzle is finished, never during play. */}
+      <AdSlot slot={AD_SLOTS.reveal} />
 
       {!isArchive && (
         <div className="flex items-center justify-between rounded-lg border border-neutral-800 bg-neutral-900 px-4 py-3 text-sm">

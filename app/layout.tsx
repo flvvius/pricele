@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import JsonLd from "@/components/JsonLd";
+import { ADSENSE_CLIENT, ADSENSE_LOADER_SRC, adsEnabled } from "@/lib/ads";
 import {
   SITE_URL,
   SITE_NAME,
@@ -96,13 +97,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Google AdSense loader — present on every page for account
-            verification and Auto ads. */}
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5192535313530723"
-          crossOrigin="anonymous"
-        />
+        {/* Google AdSense: verification meta + loader, on every page. Both are
+            gated on a well-formed publisher id (enabled by default). */}
+        {adsEnabled() && (
+          <>
+            <meta name="google-adsense-account" content={ADSENSE_CLIENT} />
+            <script async src={ADSENSE_LOADER_SRC} crossOrigin="anonymous" />
+          </>
+        )}
         <JsonLd data={[websiteJsonLd(), gameJsonLd()]} />
       </head>
       <body className="min-h-dvh antialiased">{children}</body>
