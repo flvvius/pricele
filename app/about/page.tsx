@@ -25,17 +25,17 @@ export default function AboutPage() {
       <section className="flex flex-col gap-3 text-sm leading-relaxed text-neutral-400">
         <h2 className="text-lg font-bold text-neutral-100">What it is</h2>
         <p>
-          {SITE_NAME} is a quick, free browser game you can play once a day. Each
-          day you are shown one country and one everyday item — currently a{" "}
-          {ITEM_NAME} — and your job is to guess what it costs in US dollars. You
-          get five tries, with hotter/colder hints after each guess, and you win
-          by landing within 10% of the real price. A brand-new country goes live
-          every day at your local midnight.
+          {SITE_NAME} is a quick, free browser game you play once a day. Each day
+          you get one country and one everyday item (right now it&apos;s a{" "}
+          {ITEM_NAME}), and you try to guess what it costs in US dollars. You get
+          five tries, with higher-or-lower hints after each guess, and you win if
+          you land within 10% of the real price. The country changes every day at
+          midnight your time.
         </p>
         <p>
-          If you enjoy Wordle, Globle, or other daily puzzles, {SITE_NAME}{" "}
-          scratches the same itch: one short round a day, a streak to protect,
-          and a result you can share with friends.
+          If you like Wordle or Globle, this is the same kind of thing: a short
+          daily puzzle and a streak you&apos;ll want to keep going. When
+          you&apos;re done, you can share your result with friends.
         </p>
       </section>
 
@@ -44,20 +44,20 @@ export default function AboutPage() {
           Where the prices come from
         </h2>
         <p>
-          Prices are approximate, everyday retail figures compiled from publicly
-          available cost-of-living data and converted to US dollars. They are
-          meant to be reasonable ballpark values for a fun daily game — not
-          exact, current, or location-specific quotes. Real prices vary by city,
-          shop, brand, and season, so please treat the numbers as estimates for
-          entertainment, not as shopping or financial advice.
+          The prices are everyday retail figures put together from publicly
+          available cost-of-living data and converted to US dollars. They&apos;re
+          meant to be sensible ballpark numbers for a fun game, not exact or
+          up-to-the-minute quotes. Real prices change a lot depending on the city,
+          the shop, the brand, and the time of year, so treat the numbers here as
+          estimates for fun rather than shopping or financial advice.
         </p>
       </section>
 
       <section className="flex flex-col gap-3 text-sm leading-relaxed text-neutral-400">
         <h2 className="text-lg font-bold text-neutral-100">Who makes it</h2>
         <p>
-          {SITE_NAME} is an independent side project. Questions, corrections, or
-          feedback are always welcome — email{" "}
+          {SITE_NAME} is an independent side project. If you have a question,
+          spot a mistake, or just want to say hi, email{" "}
           <a
             href={`mailto:${SITE_EMAIL}`}
             className="text-neutral-200 underline hover:text-neutral-100"

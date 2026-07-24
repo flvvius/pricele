@@ -20,7 +20,7 @@ export const SITE_TAGLINE = "Guess the price. New country daily.";
 /** Public contact address, surfaced on the Contact page and in policies. */
 export const SITE_EMAIL = "flaviuscojocaru19@gmail.com";
 export const SITE_DESCRIPTION =
-  "Pricele is a free daily game: guess the price of an everyday item around the world in 5 tries. A new country every day. How well do you know global prices and the cost of living?";
+  "Pricele is a free daily game where you guess the price of an everyday item somewhere in the world in 5 tries. New country every day. See how well you actually know what things cost.";
 
 /** Absolute URL for a site-relative path. */
 export function absoluteUrl(path = "/"): string {

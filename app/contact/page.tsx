@@ -16,15 +16,15 @@ export default function ContactPage() {
       <header className="flex flex-col gap-2">
         <h1 className="text-2xl font-bold text-neutral-100">Contact</h1>
         <p className="text-sm text-neutral-400">
-          Questions, feedback, corrections, or a price that looks off? Get in
-          touch.
+          Got a question, some feedback, or spotted a price that looks wrong?
+          Drop us a line.
         </p>
       </header>
 
       <section className="flex flex-col gap-3 text-sm leading-relaxed text-neutral-400">
         <p>
-          The best way to reach {SITE_NAME} is by email. We read every message
-          and try to reply within a few days.
+          The easiest way to reach {SITE_NAME} is by email. We read everything
+          that comes in and usually reply within a few days.
         </p>
         <p>
           <a
@@ -35,9 +35,8 @@ export default function ContactPage() {
           </a>
         </p>
         <p>
-          You can use this address for general questions, feedback about the
-          game, reporting an inaccurate price, or advertising and partnership
-          enquiries.
+          Feel free to use it for anything: questions about the game, a price
+          that seems off, or advertising and partnership enquiries.
         </p>
       </section>
 

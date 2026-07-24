@@ -20,18 +20,18 @@ export default function Home() {
           A new price puzzle every day
         </h2>
         <p className="text-sm text-neutral-400">
-          Pricele is a free daily guessing game about the cost of living around
-          the world. Each day you are shown one country and one everyday item —
-          this month a {ITEM_NAME} — and your job is to guess what it costs in US
-          dollars. You have five tries, with hotter/colder hints after each
-          guess, and you win by landing within 10% of the real price. A brand-new
-          country goes live every day at your local midnight, so a fresh puzzle is
-          always waiting at the start of your day.
+          Pricele is a free daily game about what things cost around the world.
+          Every day you get one country and one everyday item (a {ITEM_NAME} this
+          month), and you try to guess the price in US dollars. You get five
+          guesses, with higher-or-lower hints along the way, and you win if you
+          land within 10% of the real price. The country changes every day at
+          midnight your time, so there&apos;s always a fresh one waiting when you
+          wake up.
         </p>
         <p className="text-sm text-neutral-400">
-          If you like Wordle, Globle, or other daily games, Pricele scratches the
-          same itch: one quick puzzle a day, a streak to protect, and a result
-          you can share. Come back tomorrow for a new country.
+          If you play Wordle or Globle, it&apos;s the same kind of thing: a quick
+          puzzle you do once a day, plus a streak you&apos;ll want to keep going.
+          Check back tomorrow for a new country.
         </p>
       </section>
 

@@ -16,26 +16,26 @@ export const HOME_FAQ: FaqItem[] = [
   {
     question: "How do you play Pricele?",
     answer:
-      "Each day you are shown one country and one item. Enter your best guess of the price in US dollars. After every guess Pricele tells you whether the real price is higher or lower and how close you are. Land within 10% of the real price to win. You have five guesses.",
+      "Each day you get one country and one item. Type in your best guess of the price in US dollars. After every guess, Pricele tells you whether the real price is higher or lower and how close you got. Land within 10% of the real price to win. You have five guesses.",
   },
   {
     question: "Is Pricele free to play?",
     answer:
-      "Yes. Pricele is completely free, needs no account or download, and runs in any web browser on phone or desktop.",
+      "Yes, it's completely free. You don't need an account or a download, and it works in any browser on your phone or computer.",
   },
   {
     question: "How often does Pricele update?",
     answer:
-      "A new country goes live every day at your local midnight, so a fresh puzzle is always waiting at the start of your day. The featured item changes once a month.",
+      "The country changes every day at midnight your time, so there's a new puzzle each morning. The item itself changes about once a month.",
   },
   {
     question: "How are the prices decided?",
     answer:
-      "Each country has one representative price in US dollars and its local currency, plus the average local wage that powers the reveal stat. Prices are rough estimates for a daily game, not shopping advice.",
+      "Each country has one representative price, shown in US dollars and the local currency, along with the average local wage used for the reveal stat. The prices are rough estimates for a daily game, not shopping advice.",
   },
   {
     question: "Does Pricele save my streak?",
     answer:
-      "Yes. Your daily results and streak are stored privately in your browser, so come back each day to keep your streak alive. Nothing is uploaded and no sign-in is required.",
+      "Yes. Your results and streak are saved right in your browser, so just play each day to keep the streak going. Nothing gets uploaded and there's no sign-in.",
   },
 ];
