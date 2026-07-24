@@ -96,6 +96,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* Google AdSense loader — present on every page for account
+            verification and Auto ads. */}
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5192535313530723"
+          crossOrigin="anonymous"
+        />
         <JsonLd data={[websiteJsonLd(), gameJsonLd()]} />
       </head>
       <body className="min-h-dvh antialiased">{children}</body>
