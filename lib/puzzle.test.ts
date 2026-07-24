@@ -16,23 +16,25 @@ describe("date logic (local time)", () => {
 });
 
 describe("daily puzzle rotation", () => {
-  it("is deterministic and cycles through the rotation", () => {
-    const day0 = getDailyPuzzle(new Date(2026, 6, 1));
-    const day10 = getDailyPuzzle(new Date(2026, 6, 11));
-    expect(day0?.price.countryCode).toBe("US");
-    expect(day0?.puzzleNumber).toBe(1);
-    expect(day10?.price.countryCode).toBe("GB");
-    expect(day10?.puzzleNumber).toBe(11);
+  it("starts on India on the rotation start date (2026-07-24)", () => {
+    const day0 = getDailyPuzzle(new Date(2026, 6, 24));
+    expect(day0?.price.countryCode).toBe("IN");
+    expect(day0?.puzzleNumber).toBe(24); // epoch is 2026-07-01
   });
 
-  it("wraps around after the last country", () => {
-    const first = getDailyPuzzle(new Date(2026, 6, 1))?.price.countryCode;
-    const wrapped = getDailyPuzzle(new Date(2026, 7, 3))?.price.countryCode; // 33 days later
-    expect(wrapped).toBe(first);
+  it("advances one country per day", () => {
+    expect(getDailyPuzzle(new Date(2026, 6, 25))?.price.countryCode).toBe("US");
+    expect(getDailyPuzzle(new Date(2026, 6, 26))?.price.countryCode).toBe("TH");
+  });
+
+  it("wraps back to India after a full cycle", () => {
+    // 33 days after the start date.
+    const wrapped = getDailyPuzzle(new Date(2026, 6, 24 + 33));
+    expect(wrapped?.price.countryCode).toBe("IN");
   });
 
   it("puzzleNumber increments by one each day", () => {
-    expect(puzzleNumber(new Date(2026, 6, 1))).toBe(1);
-    expect(puzzleNumber(new Date(2026, 6, 2))).toBe(2);
+    expect(puzzleNumber(new Date(2026, 6, 24))).toBe(24);
+    expect(puzzleNumber(new Date(2026, 6, 25))).toBe(25);
   });
 });
