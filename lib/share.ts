@@ -6,7 +6,6 @@ import type { GuessRecord } from "./storage";
 export const MAX_GUESSES = 5;
 
 export const SHARE_URL = "https://pricele.online";
-const SHARE_DOMAIN = "pricele.online";
 
 export interface ShareInput {
   puzzleNumber: number;
@@ -24,7 +23,7 @@ export interface ShareInput {
  * Build the shareable text. Kept plain and factual, in the Wordle mold:
  *   Pricele #47 · Lebanon 🇱🇧 · 3/5 (within 4%)
  *   🟨🟨🟩
- *   pricele.online
+ *   https://pricele.online
  */
 export function buildShareText({
   puzzleNumber,
@@ -39,7 +38,7 @@ export function buildShareText({
     won && bestPctOff !== undefined ? ` (within ${Math.max(bestPctOff, 1)}%)` : "";
   const header = `Pricele #${puzzleNumber} · ${countryName} ${flag} · ${score}${acc}`;
   const grid = guesses.map((g) => BAND_EMOJI[g.band]).join("");
-  return [header, grid, SHARE_DOMAIN].join("\n");
+  return [header, grid, SHARE_URL].join("\n");
 }
 
 /** Copy text to the clipboard, with a legacy fallback. Returns success. */
