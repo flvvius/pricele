@@ -1,33 +1,15 @@
 import type { MetadataRoute } from "next";
-import { SITE_URL, absoluteUrl } from "@/lib/seo";
-import { allCountrySlugs } from "@/lib/catalog";
+import { SITE_URL } from "@/lib/seo";
 
-// Lists every indexable route: the daily game, the prices index, and one entry
-// per country page. Adding a country to prices.json extends the sitemap here.
+// Only the game itself is indexable. Per-country price pages were removed on
+// purpose so the day's answer can't be looked up.
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
-
-  const staticRoutes: MetadataRoute.Sitemap = [
+  return [
     {
       url: SITE_URL,
-      lastModified: now,
+      lastModified: new Date(),
       changeFrequency: "daily",
       priority: 1,
     },
-    {
-      url: absoluteUrl("/prices"),
-      lastModified: now,
-      changeFrequency: "weekly",
-      priority: 0.8,
-    },
   ];
-
-  const countryRoutes: MetadataRoute.Sitemap = allCountrySlugs().map((slug) => ({
-    url: absoluteUrl(`/prices/${slug}`),
-    lastModified: now,
-    changeFrequency: "monthly",
-    priority: 0.6,
-  }));
-
-  return [...staticRoutes, ...countryRoutes];
 }

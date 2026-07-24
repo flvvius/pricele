@@ -101,24 +101,5 @@ export function faqJsonLd(items: FaqItem[]) {
   };
 }
 
-export interface Crumb {
-  name: string;
-  path: string;
-}
-
-/** BreadcrumbList schema for the reference pages. */
-export function breadcrumbJsonLd(crumbs: Crumb[]) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: crumbs.map((crumb, i) => ({
-      "@type": "ListItem",
-      position: i + 1,
-      name: crumb.name,
-      item: absoluteUrl(crumb.path),
-    })),
-  };
-}
-
 /** The canonical item name, for reuse in copy and titles. */
 export const ITEM_NAME = ACTIVE_ITEM.name;

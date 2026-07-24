@@ -15,16 +15,15 @@ built with Next.js and statically generated, so it deploys to Vercel with no con
 Everything is statically rendered for search engines and AI answer engines:
 
 - **Structured data** (`lib/seo.ts`, `components/JsonLd.tsx`): site-wide
-  `VideoGame`, `WebSite`, and `Organization` schema, `FAQPage` on the home and
-  country pages, `ItemList` on `/prices`, and `BreadcrumbList` on reference pages.
+  `VideoGame` and `WebSite` schema, plus `FAQPage` on the home page.
 - **Crawlable content**: the home page ships server-rendered copy and an FAQ
   below the (client-side) game, so crawlers get real text, not an empty shell.
-- **Compounding reference pages** (`/prices`, `/prices/[country]`): one static,
-  indexable page per country targeting "how much does a … cost in <country>",
-  generated straight from `data/prices.json`. Add a country and it appears in the
-  nav, the sitemap, and its own page automatically.
 - **Technical SEO**: dynamic `sitemap.xml`, `robots.txt`, PWA `manifest`,
   canonical URLs, rich Open Graph / Twitter cards, and a theme color.
+
+> Note: there are intentionally **no** per-country price pages. Listing every
+> country's price would let players look up the day's answer, so those reference
+> pages were removed.
 
 Set the canonical origin and (optional) search-console verification via env vars:
 

@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Game from "@/components/Game";
 import FaqSection from "@/components/FaqSection";
 import SiteFooter from "@/components/SiteFooter";
@@ -32,11 +31,7 @@ export default function Home() {
         <p className="text-sm text-neutral-400">
           If you like Wordle, Globle, or other daily games, Pricele scratches the
           same itch: one quick puzzle a day, a streak to protect, and a result
-          you can share. Curious how much things cost elsewhere? Browse the{" "}
-          <Link href="/prices" className="text-neutral-200 underline underline-offset-2">
-            price of a {ITEM_NAME} in every country
-          </Link>
-          .
+          you can share. Come back tomorrow for a new country.
         </p>
       </section>
 
