@@ -5,6 +5,8 @@ import type { GuessRecord } from "./storage";
 
 export const MAX_GUESSES = 5;
 
+export const SHARE_URL = "https://pricele.online";
+
 export interface ShareInput {
   puzzleNumber: number;
   itemName: string;
@@ -13,16 +15,18 @@ export interface ShareInput {
   guesses: GuessRecord[];
   won: boolean;
   streak?: number;
+  /** How far the player's closest guess landed, in % of the real price. */
+  bestPctOff?: number;
 }
 
 /**
- * Build the shareable text, e.g.:
- *   Pricele #47 - Coca-Cola in Lebanon 🇱🇧 - 3/5
- *   🟨⬛
- *   ⬛🟨
- *   🟩
- *   🔥 5 day streak
- *   pricele.vercel.app
+ * Build the shareable text — designed to bait a reply, not just report a score.
+ * Leads with the country + a proximity brag/tease and ends on a dare:
+ *   Pricele #47 🥤 Coca-Cola in Lebanon 🇱🇧
+ *   🎯 Cracked it in 3/5 — within 4% of the real price
+ *   🟨🟨🟩
+ *   🔥 5-day streak
+ *   Bet you can't beat me 👉 https://pricele.online
  */
 export function buildShareText({
   puzzleNumber,
@@ -32,13 +36,23 @@ export function buildShareText({
   guesses,
   won,
   streak,
+  bestPctOff,
 }: ShareInput): string {
+  const header = `Pricele #${puzzleNumber} 🥤 ${itemName} in ${countryName} ${flag}`;
+
   const score = won ? `${guesses.length}/${MAX_GUESSES}` : `X/${MAX_GUESSES}`;
-  const header = `Pricele #${puzzleNumber} - ${itemName} in ${countryName} ${flag} - ${score}`;
-  const grid = guesses.map((g) => BAND_EMOJI[g.band]).join("\n");
-  const lines = [header, grid];
-  if (won && streak && streak > 1) lines.push(`🔥 ${streak} day streak`);
-  lines.push("pricele.vercel.app");
+  const off = bestPctOff ?? 0;
+  const result = won
+    ? off <= 3
+      ? `🎯 Cracked it in ${score} — within ${off}% of the real price`
+      : `✅ Guessed it in ${score} — within ${off}% of the real price`
+    : `💀 Missed in ${score} — closest was ${off}% off. Can you do better?`;
+
+  const grid = guesses.map((g) => BAND_EMOJI[g.band]).join("");
+
+  const lines = [header, result, grid];
+  if (won && streak && streak > 1) lines.push(`🔥 ${streak}-day streak`);
+  lines.push(`Bet you can't beat me 👉 ${SHARE_URL}`);
   return lines.join("\n");
 }
 

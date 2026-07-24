@@ -17,6 +17,16 @@ const FILL: Record<GuessRecord["band"], string> = {
   black: "#6b7280",
 };
 
+// A little temperature read for the warmth number, so each guess lands as its
+// own mini-reward: the closer you are, the hotter the emoji.
+function warmthEmoji(pct: number): string {
+  if (pct >= 90) return "🔥";
+  if (pct >= 70) return "♨️";
+  if (pct >= 45) return "🌡️";
+  if (pct >= 20) return "❄️";
+  return "🧊";
+}
+
 function Row({ guess }: { guess: GuessRecord }) {
   const pct = Math.round(guess.closeness * 100);
   return (
@@ -42,15 +52,20 @@ function Row({ guess }: { guess: GuessRecord }) {
           </span>
         </span>
       </div>
-      <div
-        className="mt-2 h-1.5 overflow-hidden rounded-full bg-neutral-700"
-        role="img"
-        aria-label={`${pct}% warm`}
-      >
+      <div className="mt-2 flex items-center gap-2">
         <div
-          className="h-full rounded-full transition-all duration-500"
-          style={{ width: `${Math.max(pct, 4)}%`, backgroundColor: FILL[guess.band] }}
-        />
+          className="h-1.5 flex-1 overflow-hidden rounded-full bg-neutral-700"
+          role="img"
+          aria-label={`${pct}% warm`}
+        >
+          <div
+            className="h-full rounded-full transition-all duration-500"
+            style={{ width: `${Math.max(pct, 4)}%`, backgroundColor: FILL[guess.band] }}
+          />
+        </div>
+        <span className="w-16 shrink-0 text-right text-xs font-semibold tabular-nums text-neutral-300">
+          <span aria-hidden>{warmthEmoji(pct)}</span> {pct}%
+        </span>
       </div>
     </li>
   );

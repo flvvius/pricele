@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getDailyPuzzle, isoDate } from "@/lib/puzzle";
+import { getDailyPuzzle, isoDate, dateFromISO } from "@/lib/puzzle";
 import { ACTIVE_ITEM } from "@/data/item";
 import { evaluate } from "@/lib/scoring";
 import {
@@ -9,16 +9,19 @@ import {
   saveDayState,
   loadStats,
   recordCompletion,
+  streakAtRisk,
   EMPTY_STATS,
   type DayState,
   type Stats,
 } from "@/lib/storage";
 import { MAX_GUESSES } from "@/lib/share";
+import { initPwa } from "@/lib/pwa";
 import GuessInput from "./GuessInput";
 import GuessHistory from "./GuessHistory";
 import Reveal from "./Reveal";
 import HowToPlay from "./HowToPlay";
 import StatsPanel from "./StatsPanel";
+import ArchiveModal from "./ArchiveModal";
 
 const INTRO_KEY = "pricele:seen-intro";
 
@@ -55,6 +58,7 @@ function IconButton({
 export default function Game() {
   const [mounted, setMounted] = useState(false);
   const [today, setToday] = useState("");
+  const [activeDate, setActiveDate] = useState("");
   const [state, setState] = useState<DayState>({
     date: "",
     guesses: [],
@@ -64,23 +68,31 @@ export default function Game() {
   const [stats, setStats] = useState<Stats>(EMPTY_STATS);
   const [showHowTo, setShowHowTo] = useState(false);
   const [showStats, setShowStats] = useState(false);
+  const [showArchive, setShowArchive] = useState(false);
 
   useEffect(() => {
     const day = isoDate(new Date());
-    const dayState = loadDayState(day);
     setToday(day);
-    setState(dayState);
+    setActiveDate(day);
+    setState(loadDayState(day));
     setStats(loadStats());
     setMounted(true);
+    initPwa();
 
-    // First-time players get the rules once.
+    const dayState = loadDayState(day);
     if (!window.localStorage.getItem(INTRO_KEY) && dayState.guesses.length === 0) {
       setShowHowTo(true);
       window.localStorage.setItem(INTRO_KEY, "1");
     }
   }, []);
 
-  const puzzle = mounted ? getDailyPuzzle(new Date()) : null;
+  const isArchive = mounted && activeDate !== today;
+  const puzzle = mounted ? getDailyPuzzle(dateFromISO(activeDate)) : null;
+
+  function selectDate(date: string) {
+    setActiveDate(date);
+    setState(loadDayState(date));
+  }
 
   function handleGuess(value: number) {
     if (!puzzle || state.done) return;
@@ -97,17 +109,20 @@ export default function Game() {
     const won = result.win;
     const done = won || guesses.length >= MAX_GUESSES;
 
-    const next: DayState = { date: today, guesses, done, won };
+    const next: DayState = { date: activeDate, guesses, done, won };
     setState(next);
     saveDayState(next);
     vibrate(won ? [30, 40, 90] : 20);
 
-    if (done) {
+    // Archive replays are practice: they save your result but never touch the streak.
+    if (done && !isArchive) {
       setStats(recordCompletion(today, won, guesses.length));
     }
   }
 
-  const highlightGuess = state.won ? state.guesses.length : undefined;
+  const highlightGuess =
+    state.won && !isArchive ? state.guesses.length : undefined;
+  const atRisk = mounted && !isArchive && !state.done && streakAtRisk(stats, today);
 
   return (
     <div className="flex flex-col gap-6">
@@ -123,14 +138,37 @@ export default function Game() {
           <h1 className="text-2xl font-black tracking-tight">Pricele</h1>
           <p className="text-xs text-neutral-500">Guess the price. New country daily.</p>
         </div>
-        <IconButton label="Statistics" onClick={() => setShowStats(true)}>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-            <line x1="6" y1="20" x2="6" y2="12" />
-            <line x1="12" y1="20" x2="12" y2="4" />
-            <line x1="18" y1="20" x2="18" y2="14" />
-          </svg>
-        </IconButton>
+        <div className="flex items-center">
+          <IconButton label="Archive" onClick={() => setShowArchive(true)}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <path d="M3 3v5h5" />
+              <path d="M3.05 13A9 9 0 1 0 6 5.3L3 8" />
+              <path d="M12 7v5l3 2" />
+            </svg>
+          </IconButton>
+          <IconButton label="Statistics" onClick={() => setShowStats(true)}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <line x1="6" y1="20" x2="6" y2="12" />
+              <line x1="12" y1="20" x2="12" y2="4" />
+              <line x1="18" y1="20" x2="18" y2="14" />
+            </svg>
+          </IconButton>
+        </div>
       </header>
+
+      {isArchive && puzzle && (
+        <div className="flex items-center justify-between rounded-lg border border-amber-800/60 bg-amber-950/30 px-3 py-2 text-sm">
+          <span className="text-amber-300">
+            Archive · Pricele #{puzzle.puzzleNumber}
+          </span>
+          <button
+            onClick={() => selectDate(today)}
+            className="font-medium text-amber-200 underline underline-offset-2"
+          >
+            Back to today
+          </button>
+        </div>
+      )}
 
       <div className="flex items-center gap-4 rounded-xl border border-neutral-800 bg-neutral-900/60 p-4">
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -159,6 +197,12 @@ export default function Game() {
 
       {mounted && puzzle ? (
         <>
+          {atRisk && (
+            <p className="animate-pop rounded-lg border border-orange-800/60 bg-orange-950/30 px-3 py-2 text-center text-sm font-medium text-orange-300">
+              🔥 {stats.currentStreak}-day streak on the line — solve today&apos;s
+              to keep it.
+            </p>
+          )}
           {!state.done && (
             <p className="text-center text-xs text-neutral-500">
               Guess in USD. Win by landing within 10% of the real price.
@@ -174,6 +218,7 @@ export default function Game() {
               won={state.won}
               stats={stats}
               onShowStats={() => setShowStats(true)}
+              isArchive={isArchive}
             />
           ) : (
             <GuessInput
@@ -193,6 +238,12 @@ export default function Game() {
         onClose={() => setShowStats(false)}
         stats={stats}
         highlightGuess={highlightGuess}
+      />
+      <ArchiveModal
+        open={showArchive}
+        onClose={() => setShowArchive(false)}
+        today={today}
+        onPlay={selectDate}
       />
     </div>
   );

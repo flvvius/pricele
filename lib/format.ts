@@ -3,6 +3,8 @@
 // copy stay identical everywhere.
 
 import type { PriceEntry } from "@/lib/puzzle";
+import { ACTIVE_ITEM } from "@/data/item";
+import pricesData from "@/data/prices.json";
 
 /** "140 JPY", "45,000 LBP" — the price in its local currency. */
 export function formatLocal(price: PriceEntry): string {
@@ -46,6 +48,73 @@ export function affordanceLine(price: PriceEntry): string {
   }
   const hours = minutes / 60;
   return `About ${hours.toFixed(1)} hours of the average local wage buys one.`;
+}
+
+/**
+ * How far a guess is from the real price, as a rounded percentage of the real
+ * price. Symmetric enough for a headline number: $0.90 vs $1.00 -> 10.
+ * Always >= 0. Used for "within X%" / "X% off" copy and the share hook.
+ */
+export function pctOff(guess: number, actual: number): number {
+  if (!(actual > 0)) return 0;
+  return Math.round(Math.abs(guess / actual - 1) * 100);
+}
+
+/** The smallest pctOff across a set of guesses (the player's best shot). */
+export function bestPctOff(
+  guesses: { value: number }[],
+  actual: number
+): number {
+  if (guesses.length === 0) return 0;
+  return Math.min(...guesses.map((g) => pctOff(g.value, actual)));
+}
+
+/**
+ * A short, punchy line about how close the player landed — the "mini WordleBot"
+ * accuracy read. Different framing for a win (celebrate) vs. a loss (near-miss
+ * sting that pulls them back tomorrow).
+ */
+export function accuracyLine(bestOff: number, won: boolean): string {
+  if (won) {
+    if (bestOff === 0) return "Spot on — you nailed the exact price. 🎯";
+    if (bestOff <= 3) return `Razor sharp — within ${bestOff}% of the real price. 🎯`;
+    return `Nice — within ${bestOff}% of the real price.`;
+  }
+  if (bestOff <= 15) return `Agonizing — your closest was just ${bestOff}% off. So close.`;
+  if (bestOff <= 40) return `Your closest guess was ${bestOff}% off. Tomorrow's yours.`;
+  return `Your closest guess was ${bestOff}% off. Ouch — try again tomorrow.`;
+}
+
+/**
+ * Where today's price sits among all countries for the active item, as a
+ * "did you know" reveal stat. Ranks by USD price; 1 = most expensive.
+ */
+export function priceRankLine(price: PriceEntry): string {
+  const all = (pricesData as PriceEntry[]).filter(
+    (p) => p.itemId === ACTIVE_ITEM.id
+  );
+  const total = all.length;
+  if (total < 2) return "";
+  const sorted = [...all].sort((a, b) => b.priceUSD - a.priceUSD);
+  const rank = sorted.findIndex((p) => p.countryCode === price.countryCode) + 1;
+  if (rank <= 0) return "";
+
+  const item = ACTIVE_ITEM.name;
+  if (rank === 1) {
+    return `That makes it the most expensive ${item} of all ${total} countries in the game.`;
+  }
+  if (rank === total) {
+    return `That makes it the cheapest ${item} of all ${total} countries in the game.`;
+  }
+  const cheaperThan = total - rank;
+  const pct = Math.round((cheaperThan / (total - 1)) * 100);
+  if (rank <= 3) {
+    return `That's the #${rank} priciest of ${total} countries — dearer than ${pct}% of the world here.`;
+  }
+  if (pct <= 25) {
+    return `Among the cheapest here — only ${pct}% of the ${total} countries are cheaper.`;
+  }
+  return `Cheaper than ${pct}% of the ${total} countries in the game.`;
 }
 
 /** URL-safe slug for a country, e.g. "United States" -> "united-states". */

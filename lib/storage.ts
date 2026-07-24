@@ -96,6 +96,21 @@ function isoYesterday(date: string): string {
 }
 
 /**
+ * True when the player has a live streak they could lose today: they've won
+ * before, their last completed day was *yesterday* (streak still valid), and
+ * they haven't finished today's puzzle yet. Drives the "protect your streak"
+ * nudge. If they last played earlier than yesterday the streak is already dead,
+ * so there's nothing to protect and we stay quiet.
+ */
+export function streakAtRisk(stats: Stats, today: string): boolean {
+  return (
+    stats.currentStreak > 0 &&
+    stats.lastCompletedDate !== today &&
+    stats.lastCompletedDate === isoYesterday(today)
+  );
+}
+
+/**
  * Fold a finished game into lifetime stats, idempotently for a given day.
  * A loss still counts as played and breaks the streak; only a win extends it
  * and lands in the guess distribution.

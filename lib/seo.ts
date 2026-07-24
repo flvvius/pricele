@@ -12,7 +12,7 @@ export const SITE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL ||
   (process.env.NEXT_PUBLIC_VERCEL_URL
     ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
-    : "https://pricele.vercel.app")
+    : "https://pricele.online")
 ).replace(/\/$/, "");
 
 export const SITE_NAME = "Pricele";

@@ -48,6 +48,33 @@ export function puzzleNumber(today: Date = new Date()): number {
   return daysSince(ROTATION.epoch, today) + 1;
 }
 
+/** A local Date at midnight for an ISO "YYYY-MM-DD" string. */
+export function dateFromISO(iso: string): Date {
+  const [y, m, d] = iso.split("-").map(Number);
+  return new Date(y, m - 1, d);
+}
+
+/**
+ * Past puzzle dates (ISO), newest first, from the rotation start up to yesterday.
+ * Capped to the most recent `limit`. Never includes today or the future, so the
+ * archive can't be used to look up the current answer.
+ */
+export function pastPuzzleDates(today: Date = new Date(), limit = 60): string[] {
+  const todayIdx = daysSince(ROTATION.startDate, today);
+  const dates: string[] = [];
+  const start = Math.max(0, todayIdx - limit);
+  for (let i = todayIdx - 1; i >= start; i--) {
+    dates.push(addDaysISO(ROTATION.startDate, i));
+  }
+  return dates;
+}
+
+/** ISO date `days` after an ISO date, in local calendar terms. */
+export function addDaysISO(iso: string, days: number): string {
+  const base = dateFromISO(iso);
+  return isoDate(new Date(base.getFullYear(), base.getMonth(), base.getDate() + days));
+}
+
 export interface DailyPuzzle {
   puzzleNumber: number;
   item: typeof ACTIVE_ITEM;
