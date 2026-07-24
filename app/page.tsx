@@ -26,8 +26,8 @@ export default function Home() {
           this month a {ITEM_NAME} — and your job is to guess what it costs in US
           dollars. You have five tries, with hotter/colder hints after each
           guess, and you win by landing within 10% of the real price. A brand-new
-          country goes live at midnight UTC, so players everywhere solve the same
-          puzzle each day.
+          country goes live every day at your local midnight, so a fresh puzzle is
+          always waiting at the start of your day.
         </p>
         <p className="text-sm text-neutral-400">
           If you like Wordle, Globle, or other daily games, Pricele scratches the

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getDailyPuzzle, isoDateUTC } from "@/lib/puzzle";
+import { getDailyPuzzle, isoDate } from "@/lib/puzzle";
 import { ACTIVE_ITEM } from "@/data/item";
 import { evaluate } from "@/lib/scoring";
 import {
@@ -66,7 +66,7 @@ export default function Game() {
   const [showStats, setShowStats] = useState(false);
 
   useEffect(() => {
-    const day = isoDateUTC(new Date());
+    const day = isoDate(new Date());
     const dayState = loadDayState(day);
     setToday(day);
     setState(dayState);

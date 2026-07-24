@@ -1,7 +1,7 @@
 import type { PriceEntry } from "@/lib/puzzle";
 import type { GuessRecord, Stats } from "@/lib/storage";
 import { MAX_GUESSES } from "@/lib/share";
-import { affordanceLine, formatLocal } from "@/lib/format";
+import { affordanceLine, formatMoney } from "@/lib/format";
 import ShareCard from "./ShareCard";
 import Countdown from "./Countdown";
 
@@ -45,9 +45,11 @@ export default function Reveal({
           Actual price
         </p>
         <p className="mt-1 text-4xl font-black tabular-nums">
-          ${price.priceUSD.toFixed(2)}
+          {formatMoney(price.priceUSD, "USD")}
         </p>
-        <p className="text-neutral-400">{formatLocal(price)}</p>
+        <p className="text-neutral-400">
+          {formatMoney(price.priceLocal, price.localCurrency)}
+        </p>
         <p className="mt-3 border-t border-neutral-700 pt-3 text-sm text-neutral-300">
           {affordanceLine(price)}
         </p>
@@ -57,7 +59,7 @@ export default function Reveal({
         <p className="text-center text-sm text-neutral-400">
           Your closest was{" "}
           <span className="font-semibold text-neutral-200">
-            ${closest(guesses)?.value.toFixed(2)}
+            {formatMoney(closest(guesses)?.value ?? 0, "USD")}
           </span>
           .
         </p>

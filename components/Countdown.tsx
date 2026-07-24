@@ -1,14 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { msUntilNextUTCDay, formatCountdown } from "@/lib/time";
+import { msUntilNextDay, formatCountdown } from "@/lib/time";
 
-/** Live ticking countdown to the next daily puzzle. */
+/** Live ticking countdown to the next daily puzzle (local midnight). */
 export default function Countdown() {
-  const [ms, setMs] = useState(() => msUntilNextUTCDay());
+  const [ms, setMs] = useState(() => msUntilNextDay());
 
   useEffect(() => {
-    const id = setInterval(() => setMs(msUntilNextUTCDay()), 1000);
+    const id = setInterval(() => setMs(msUntilNextDay()), 1000);
     return () => clearInterval(id);
   }, []);
 

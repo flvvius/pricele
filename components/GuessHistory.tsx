@@ -1,11 +1,14 @@
 import { BAND_EMOJI } from "@/lib/scoring";
 import type { GuessRecord } from "@/lib/storage";
 import { MAX_GUESSES } from "@/lib/share";
+import { formatMoney } from "@/lib/format";
 
+// Phrased around the real price, not the guess, so it's unambiguous: "the real
+// price is higher than what you typed" rather than the confusing bare "Higher".
 const HINT: Record<GuessRecord["direction"], { label: string }> = {
-  too_high: { label: "▼ Lower" },
-  too_low: { label: "▲ Higher" },
-  exact: { label: "Exact" },
+  too_high: { label: "↓ Real price is lower" },
+  too_low: { label: "↑ Real price is higher" },
+  exact: { label: "✓ Exact" },
 };
 
 const FILL: Record<GuessRecord["band"], string> = {
@@ -20,7 +23,7 @@ function Row({ guess }: { guess: GuessRecord }) {
     <li className="animate-pop rounded-lg border border-neutral-700 bg-neutral-800 px-3 py-2.5">
       <div className="flex items-center justify-between">
         <span className="tabular-nums font-semibold">
-          ${guess.value.toLocaleString(undefined, { maximumFractionDigits: 2 })}
+          {formatMoney(guess.value, "USD")}
         </span>
         <span className="flex items-center gap-2 text-sm">
           <span

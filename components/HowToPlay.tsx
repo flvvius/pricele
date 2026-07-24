@@ -18,8 +18,11 @@ export default function HowToPlay({
         <p>After each guess you get two clues:</p>
         <ul className="flex flex-col gap-2">
           <li className="flex items-center gap-3">
-            <span className="text-lg">⬆️⬇️</span>
-            <span>Whether the real price is higher or lower.</span>
+            <span className="text-lg">↕️</span>
+            <span>
+              Whether the <strong className="text-white">real price</strong> is
+              higher or lower than the amount you guessed.
+            </span>
           </li>
           <li className="flex items-center gap-3">
             <span className="text-lg">🟩</span>

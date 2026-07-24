@@ -26,7 +26,7 @@ export const HOME_FAQ: FaqItem[] = [
   {
     question: "How often does Pricele update?",
     answer:
-      "A new country goes live every day at midnight UTC, so everyone in the world plays the same puzzle. The featured item changes once a month.",
+      "A new country goes live every day at your local midnight, so a fresh puzzle is always waiting at the start of your day. The featured item changes once a month.",
   },
   {
     question: "How are the prices decided?",

@@ -6,9 +6,9 @@ hotter/colder feedback on a log scale. The country changes daily; the item
 changes monthly.
 
 There's no backend. Game data is static JSON bundled at build time, and player
-state (today's guesses and your streak) lives in `localStorage`, keyed by UTC
-date. The site is built with Next.js and statically generated, so it deploys to
-Vercel with no config.
+state (today's guesses and your streak) lives in `localStorage`, keyed by the
+player's local date, so the puzzle resets at their own midnight. The site is
+built with Next.js and statically generated, so it deploys to Vercel with no config.
 
 ## SEO
 
@@ -60,11 +60,12 @@ pnpm build      # production build
 row per country: the price in USD and local currency, plus the average local
 hourly wage that drives the reveal stat. `data/rotation.ts` is an ordered list
 of country codes and a start date; the day's country is
-`countryOrder[daysSinceUTC(startDate, today) % length]`, so reordering the list
-changes the difficulty curve without touching any dates.
+`countryOrder[daysSince(startDate, today) % length]` in the player's local time,
+so reordering the list changes the difficulty curve without touching any dates.
 
-The seed `prices.json` ships with about ten hand-entered countries marked
-`"source": "Seed estimate"`. Replace them with verified numbers and add more
-before launch. See `scripts/collect-prices.ts` for a starting point.
+`prices.json` ships with 33 countries. Most prices come from a per-country
+Coca-Cola 330ml comparison (marked `"source": "Burger Parity, 2026"`); a few
+low-price countries are marked `"source": "Seed estimate"`. The average wage
+figures are estimates. Verify before launch; see `scripts/collect-prices.ts`.
 
 Prices are rough estimates for a daily game, not shopping advice.

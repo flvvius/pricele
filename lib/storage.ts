@@ -1,10 +1,10 @@
 // Player state lives in localStorage. Two separate keys:
-//   - today's game, keyed by UTC date, so it resets each day.
+//   - today's game, keyed by the player's local date, so it resets each day.
 //   - lifetime stats (streak, win rate, guess distribution), which persist.
 // All access is guarded for the server render, where window is undefined.
 
 import type { Band } from "./scoring";
-import { isoDateUTC } from "./puzzle";
+import { isoDate } from "./puzzle";
 import { MAX_GUESSES } from "./share";
 
 export interface GuessRecord {
@@ -15,7 +15,7 @@ export interface GuessRecord {
 }
 
 export interface DayState {
-  date: string; // UTC ISO date this state belongs to
+  date: string; // local ISO date this state belongs to
   guesses: GuessRecord[];
   done: boolean;
   won: boolean;
@@ -91,7 +91,8 @@ export function loadStats(): Stats {
 }
 
 function isoYesterday(date: string): string {
-  return isoDateUTC(new Date(Date.parse(date + "T00:00:00Z") - 86400000));
+  const [y, m, d] = date.split("-").map(Number);
+  return isoDate(new Date(y, m - 1, d - 1));
 }
 
 /**

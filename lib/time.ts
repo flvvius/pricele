@@ -1,11 +1,15 @@
-// Countdown to the next daily puzzle, which flips at UTC midnight.
+// Countdown to the next daily puzzle, which flips at the player's local midnight.
 
-export function msUntilNextUTCDay(now: Date = new Date()): number {
-  const next = Date.UTC(
-    now.getUTCFullYear(),
-    now.getUTCMonth(),
-    now.getUTCDate() + 1
-  );
+export function msUntilNextDay(now: Date = new Date()): number {
+  const next = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate() + 1,
+    0,
+    0,
+    0,
+    0
+  ).getTime();
   return Math.max(0, next - now.getTime());
 }
 
