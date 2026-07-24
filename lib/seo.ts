@@ -5,14 +5,13 @@
 import { ACTIVE_ITEM } from "@/data/item";
 
 /**
- * Canonical origin, no trailing slash. Override per-deploy with
- * NEXT_PUBLIC_SITE_URL (e.g. a custom domain) and fall back to the Vercel URL.
+ * Canonical origin, no trailing slash. Defaults to the production custom domain
+ * so canonical tags, Open Graph URLs, the sitemap, and JSON-LD always point at
+ * pricele.online — never at a Vercel per-deployment URL, which must never be
+ * treated as canonical. Override per-deploy with NEXT_PUBLIC_SITE_URL if needed.
  */
 export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL ||
-  (process.env.NEXT_PUBLIC_VERCEL_URL
-    ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
-    : "https://pricele.online")
+  process.env.NEXT_PUBLIC_SITE_URL || "https://pricele.online"
 ).replace(/\/$/, "");
 
 export const SITE_NAME = "Pricele";
