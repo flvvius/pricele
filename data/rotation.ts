@@ -1,9 +1,8 @@
-// Deterministic date → country mapping, computed from an ordered list + a start date
-// (§4, simplified). Order the array by hand to control the difficulty curve across the
-// month; no per-date rows to maintain. Only include codes that have a row in prices.json.
+// Maps each day to a country from an ordered list plus a start date. Order the list
+// by hand to shape the difficulty curve. Only include codes that have a row in prices.json.
 
 export interface Rotation {
-  /** Global launch date — puzzle #1. Used for the puzzle number. UTC. */
+  /** Launch date, i.e. puzzle #1. UTC. */
   epoch: string;
   /** First day of the current item's rotation. UTC. */
   startDate: string;

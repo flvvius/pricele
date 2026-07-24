@@ -12,7 +12,7 @@ interface Props {
   nextCountryName: string;
 }
 
-/** "You'd need to work N minutes to afford this" — the TIL hook (§5). */
+/** How much local working time the item costs, shown on the reveal. */
 function affordanceLine(price: PriceEntry): string {
   const minutes = (price.priceUSD / price.avgHourlyWageUSD) * 60;
   if (minutes < 1) {
@@ -56,11 +56,11 @@ export default function Reveal({
 
       {won ? (
         <p className="text-center text-lg font-semibold text-green-400">
-          Nice — got it in {guesses.length}/{5}. Streak: {streak} 🔥
+          Solved in {guesses.length}/{5}. Streak: {streak} 🔥
         </p>
       ) : (
         <p className="text-center text-lg text-neutral-300">
-          Out of guesses — the reveal&apos;s above. Closest you got was{" "}
+          Out of guesses. Your closest was{" "}
           <span className="font-semibold">
             $
             {[...guesses]

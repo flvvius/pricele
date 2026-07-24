@@ -5,7 +5,7 @@ const SITE_URL = "https://pricele.vercel.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "Pricele — the daily price guessing game",
+  title: "Pricele: guess the price",
   description:
     "Guess the price of an everyday item around the world in 5 tries. A new country every day. How well do you know global prices?",
   keywords: [
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     "guess the price",
   ],
   openGraph: {
-    title: "Pricele — the daily price guessing game",
+    title: "Pricele: guess the price",
     description:
       "Guess the price of an everyday item around the world in 5 tries. A new country every day.",
     url: SITE_URL,
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Pricele — the daily price guessing game",
+    title: "Pricele: guess the price",
     description:
       "Guess the price of an everyday item around the world in 5 tries.",
     images: ["/og.svg"],

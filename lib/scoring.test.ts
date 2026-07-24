@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { evaluate } from "./scoring";
 
-describe("evaluate — spec §3 worked examples (actual = $0.50)", () => {
+describe("evaluate: worked examples (actual = $0.50)", () => {
   const actual = 0.5;
 
   it("$0.55 → green (win)", () => {
@@ -31,7 +31,7 @@ describe("evaluate — spec §3 worked examples (actual = $0.50)", () => {
   });
 });
 
-describe("evaluate — log-error symmetry", () => {
+describe("evaluate: log-error symmetry", () => {
   it("guessing 2x and guessing half give the same band", () => {
     const actual = 3.0;
     expect(evaluate(6.0, actual).band).toBe(evaluate(1.5, actual).band);
@@ -52,7 +52,7 @@ describe("evaluate — log-error symmetry", () => {
   });
 });
 
-describe("evaluate — guard rails", () => {
+describe("evaluate: guard rails", () => {
   it("rejects non-positive input", () => {
     expect(() => evaluate(0, 1)).toThrow();
     expect(() => evaluate(1, 0)).toThrow();

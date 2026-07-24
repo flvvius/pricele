@@ -1,5 +1,5 @@
-// All "today" logic is UTC (§7, §10) — matches how Wordle-likes handle daily rollover
-// and avoids per-timezone bugs. Everything here is pure and deterministic from a Date.
+// All "today" logic runs in UTC so the daily rollover is the same for every player.
+// Everything here is pure and deterministic from a Date.
 
 import pricesData from "@/data/prices.json";
 import { ROTATION } from "@/data/rotation";

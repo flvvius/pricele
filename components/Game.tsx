@@ -16,10 +16,9 @@ import GuessInput from "./GuessInput";
 import GuessHistory from "./GuessHistory";
 import Reveal from "./Reveal";
 
-// The item is fixed for the month, so its header renders in the static HTML (good for SEO).
-// Everything that depends on "today" (which country, saved state, streak) is time-dependent
-// and would differ between the build-time HTML and the client on a later day, so it's
-// computed only after mount — no hydration mismatch, and the client always shows the real day.
+// The item is fixed for the month, so its header can render in the static HTML.
+// Anything that depends on the current day is computed after mount so the build-time
+// HTML and the client agree.
 function ItemHeader({ countryLine }: { countryLine: React.ReactNode }) {
   return (
     <header className="flex items-center gap-4">
@@ -62,7 +61,7 @@ export default function Game() {
   if (!mounted) {
     return (
       <div className="flex flex-col gap-6">
-        <ItemHeader countryLine={<span className="text-neutral-500">Loading today&apos;s country…</span>} />
+        <ItemHeader countryLine={<span className="text-neutral-500">Loading today&apos;s country</span>} />
       </div>
     );
   }
@@ -71,7 +70,7 @@ export default function Game() {
   if (!puzzle) {
     return (
       <p className="text-center text-neutral-400">
-        No puzzle configured for today — check back soon.
+        No puzzle set for today. Check back soon.
       </p>
     );
   }

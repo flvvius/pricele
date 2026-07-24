@@ -8,13 +8,22 @@ interface Props {
   onGuess: (value: number) => void;
 }
 
+// Keep only digits and a single decimal separator. Allowing both "." and ","
+// means the guess still parses on keyboards that only offer a comma.
+function sanitize(raw: string): string {
+  const cleaned = raw.replace(/[^0-9.,]/g, "");
+  const sep = cleaned.search(/[.,]/);
+  if (sep === -1) return cleaned;
+  return cleaned.slice(0, sep + 1) + cleaned.slice(sep + 1).replace(/[.,]/g, "");
+}
+
 export default function GuessInput({ disabled, remaining, onGuess }: Props) {
   const [value, setValue] = useState("");
   const [error, setError] = useState<string | null>(null);
 
   function submit(e: FormEvent) {
     e.preventDefault();
-    const n = Number(value);
+    const n = Number(value.replace(",", "."));
     if (!value.trim() || Number.isNaN(n) || n <= 0) {
       setError("Enter a price greater than 0.");
       return;
@@ -32,14 +41,14 @@ export default function GuessInput({ disabled, remaining, onGuess }: Props) {
             $
           </span>
           <input
-            type="number"
+            type="text"
             inputMode="decimal"
-            step="0.01"
-            min="0"
+            enterKeyHint="done"
+            autoComplete="off"
             autoFocus
             disabled={disabled}
             value={value}
-            onChange={(e) => setValue(e.target.value)}
+            onChange={(e) => setValue(sanitize(e.target.value))}
             placeholder="Your guess in USD"
             aria-label="Your guess in USD"
             className="w-full rounded-lg border border-neutral-700 bg-neutral-800 py-3 pl-7 pr-3 text-lg tabular-nums outline-none focus:border-neutral-400 disabled:opacity-50"

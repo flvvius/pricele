@@ -17,7 +17,7 @@ export default function Home() {
       <Game />
 
       <footer className="mt-auto pt-8 text-center text-xs text-neutral-600">
-        Prices are estimates for a fun daily puzzle — not shopping advice.
+        Prices are rough estimates for a daily game, not shopping advice.
       </footer>
     </main>
   );

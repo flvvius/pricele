@@ -1,4 +1,4 @@
-// Wordle-style plain-text share card (§6) — the acquisition engine. No image generation.
+// Plain-text share card, one emoji row per guess.
 
 import { BAND_EMOJI } from "./scoring";
 import type { GuessRecord } from "./storage";
@@ -16,7 +16,7 @@ export interface ShareInput {
 
 /**
  * Build the shareable text, e.g.:
- *   Pricele #47 — Coca-Cola in Lebanon 🇱🇧 — 3/5
+ *   Pricele #47 - Coca-Cola in Lebanon 🇱🇧 - 3/5
  *   🟨⬛
  *   ⬛🟨
  *   🟩
@@ -30,7 +30,7 @@ export function buildShareText({
   won,
 }: ShareInput): string {
   const score = won ? `${guesses.length}/${MAX_GUESSES}` : `X/${MAX_GUESSES}`;
-  const header = `Pricele #${puzzleNumber} — ${itemName} in ${countryName} ${flag} — ${score}`;
+  const header = `Pricele #${puzzleNumber} - ${itemName} in ${countryName} ${flag} - ${score}`;
   const grid = guesses.map((g) => BAND_EMOJI[g.band]).join("\n");
   return `${header}\n${grid}\nplay: https://pricele.vercel.app`;
 }

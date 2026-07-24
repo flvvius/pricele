@@ -1,47 +1,46 @@
 # Pricele
 
-A daily "guess the price" game. Each day you guess the price of a fixed item
-(this month: a 330ml Coca-Cola can) in a different country, in up to 5 tries,
-with log-scale hotter/colder feedback. New country every day; item changes
-monthly.
+A daily price-guessing game. Each day you guess the price of a fixed item (this
+month, a 330ml Coca-Cola can) in a different country, in up to 5 tries, with
+hotter/colder feedback on a log scale. The country changes daily; the item
+changes monthly.
 
-- **No backend.** Game data is static JSON bundled at build time; player state
-  (today's guesses + streak) lives in `localStorage`, keyed by UTC date.
-- **Static / SSG.** Built with Next.js App Router, statically generated for SEO,
-  deploys to Vercel.
+There's no backend. Game data is static JSON bundled at build time, and player
+state (today's guesses and your streak) lives in `localStorage`, keyed by UTC
+date. The site is built with Next.js and statically generated, so it deploys to
+Vercel with no config.
 
 ## Develop
 
 ```bash
 pnpm install
 pnpm dev        # http://localhost:3000
-pnpm test       # scoring unit tests (vitest)
-pnpm build      # static production build
+pnpm test       # scoring unit tests
+pnpm build      # production build
 ```
 
-## How it works
+## Layout
 
-| Concern            | Where                                         |
-| ------------------ | --------------------------------------------- |
-| Scoring (log-band) | `lib/scoring.ts` (+ `lib/scoring.test.ts`)    |
-| "Today" logic (UTC)| `lib/puzzle.ts`                               |
-| Player state       | `lib/storage.ts`                              |
-| Share card text    | `lib/share.ts`                                |
-| Game UI            | `components/*`                                 |
-| Content            | `data/prices.json`, `data/rotation.ts`, `data/item.ts` |
+| Concern           | Where                                                  |
+| ----------------- | ------------------------------------------------------ |
+| Scoring           | `lib/scoring.ts` (+ `lib/scoring.test.ts`)             |
+| "Today" logic     | `lib/puzzle.ts`                                        |
+| Player state      | `lib/storage.ts`                                       |
+| Share card        | `lib/share.ts`                                         |
+| UI                | `components/`                                          |
+| Content           | `data/prices.json`, `data/rotation.ts`, `data/item.ts` |
 
-### Content model
+### Content
 
-- `data/item.ts` — the active item for the month.
-- `data/prices.json` — one row per country: price in USD + local currency, and
-  the average local hourly wage (drives the reveal stat).
-- `data/rotation.ts` — an ordered list of country codes + a start date. Today's
-  country is `countryOrder[daysSinceUTC(startDate, today) % length]`. Reorder the
-  array to shape the difficulty curve; no per-date rows to maintain.
+`data/item.ts` holds the active item for the month. `data/prices.json` has one
+row per country: the price in USD and local currency, plus the average local
+hourly wage that drives the reveal stat. `data/rotation.ts` is an ordered list
+of country codes and a start date; the day's country is
+`countryOrder[daysSinceUTC(startDate, today) % length]`, so reordering the list
+changes the difficulty curve without touching any dates.
 
-The seed `prices.json` ships with ~10 hand-entered countries marked
-`"source": "Seed estimate"`. Replace these with verified numbers and expand the
-set before a real launch — see `scripts/collect-prices.ts` for the collection
-scaffold and the accuracy caveats.
+The seed `prices.json` ships with about ten hand-entered countries marked
+`"source": "Seed estimate"`. Replace them with verified numbers and add more
+before launch. See `scripts/collect-prices.ts` for a starting point.
 
-> Prices are estimates for a daily puzzle, not shopping advice.
+Prices are rough estimates for a daily game, not shopping advice.

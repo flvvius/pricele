@@ -6,7 +6,7 @@ export interface Item {
   imageUrl: string;
 }
 
-// The active item for the MVP. One item per month (§1).
+// The active item for the current month.
 export const ACTIVE_ITEM: Item = {
   id: "coke-330ml",
   name: "Coca-Cola (330ml can)",

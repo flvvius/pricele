@@ -1,7 +1,7 @@
-// Player state in localStorage — no backend (§7). Two separate concerns:
-//   - today's game state, keyed by UTC date, so it resets naturally each day.
-//   - streak, persisted across days.
-// All access is SSR-guarded because the page is statically generated.
+// Player state lives in localStorage. Two separate keys:
+//   - today's game, keyed by UTC date, so it resets each day.
+//   - streak, which persists across days.
+// All access is guarded for the server render, where window is undefined.
 
 import type { Band } from "./scoring";
 import { isoDateUTC } from "./puzzle";
@@ -46,7 +46,7 @@ function write(key: string, value: unknown): void {
   try {
     window.localStorage.setItem(key, JSON.stringify(value));
   } catch {
-    /* quota or privacy mode — game still playable in-memory this session */
+    /* quota or privacy mode: game still works in memory for this session */
   }
 }
 
