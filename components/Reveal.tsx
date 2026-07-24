@@ -1,6 +1,7 @@
 import type { PriceEntry } from "@/lib/puzzle";
 import type { GuessRecord, Stats } from "@/lib/storage";
 import { MAX_GUESSES } from "@/lib/share";
+import { affordanceLine, formatLocal } from "@/lib/format";
 import ShareCard from "./ShareCard";
 import Countdown from "./Countdown";
 
@@ -12,26 +13,6 @@ interface Props {
   won: boolean;
   stats: Stats;
   onShowStats: () => void;
-}
-
-/** How much local working time the item costs, shown on the reveal. */
-function affordanceLine(price: PriceEntry): string {
-  const minutes = (price.priceUSD / price.avgHourlyWageUSD) * 60;
-  if (minutes < 1) {
-    return "Under a minute of the average local wage buys one.";
-  }
-  if (minutes < 90) {
-    return `About ${Math.round(minutes)} minutes of the average local wage buys one.`;
-  }
-  const hours = minutes / 60;
-  return `About ${hours.toFixed(1)} hours of the average local wage buys one.`;
-}
-
-function formatLocal(price: PriceEntry): string {
-  const n = price.priceLocal.toLocaleString(undefined, {
-    maximumFractionDigits: 2,
-  });
-  return `${n} ${price.localCurrency}`;
 }
 
 function closest(guesses: GuessRecord[]): GuessRecord | undefined {

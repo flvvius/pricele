@@ -10,6 +10,30 @@ state (today's guesses and your streak) lives in `localStorage`, keyed by UTC
 date. The site is built with Next.js and statically generated, so it deploys to
 Vercel with no config.
 
+## SEO
+
+Everything is statically rendered for search engines and AI answer engines:
+
+- **Structured data** (`lib/seo.ts`, `components/JsonLd.tsx`): site-wide
+  `VideoGame`, `WebSite`, and `Organization` schema, `FAQPage` on the home and
+  country pages, `ItemList` on `/prices`, and `BreadcrumbList` on reference pages.
+- **Crawlable content**: the home page ships server-rendered copy and an FAQ
+  below the (client-side) game, so crawlers get real text, not an empty shell.
+- **Compounding reference pages** (`/prices`, `/prices/[country]`): one static,
+  indexable page per country targeting "how much does a … cost in <country>",
+  generated straight from `data/prices.json`. Add a country and it appears in the
+  nav, the sitemap, and its own page automatically.
+- **Technical SEO**: dynamic `sitemap.xml`, `robots.txt`, PWA `manifest`,
+  canonical URLs, rich Open Graph / Twitter cards, and a theme color.
+
+Set the canonical origin and (optional) search-console verification via env vars:
+
+```bash
+NEXT_PUBLIC_SITE_URL=https://your-domain.com        # falls back to the Vercel URL
+NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION=...            # optional
+NEXT_PUBLIC_BING_SITE_VERIFICATION=...              # optional
+```
+
 ## Develop
 
 ```bash
