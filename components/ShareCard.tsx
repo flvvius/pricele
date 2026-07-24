@@ -1,17 +1,24 @@
 "use client";
 
 import { useState } from "react";
-import { buildShareText, copyToClipboard, type ShareInput } from "@/lib/share";
+import {
+  buildShareText,
+  buildShareTextWithUrl,
+  copyToClipboard,
+  SHARE_URL,
+  type ShareInput,
+} from "@/lib/share";
 
 export default function ShareCard(props: ShareInput) {
   const [copied, setCopied] = useState(false);
-  const text = buildShareText(props);
+  const text = buildShareTextWithUrl(props);
 
   async function onShare() {
-    // Prefer the native share sheet on mobile; fall back to clipboard.
+    // Prefer the native share sheet on mobile; pass the link as a dedicated URL
+    // so it shares as a real link. Fall back to copying the full text.
     if (typeof navigator !== "undefined" && navigator.share) {
       try {
-        await navigator.share({ text });
+        await navigator.share({ text: buildShareText(props), url: SHARE_URL });
         return;
       } catch {
         /* user dismissed or unsupported — fall through to copy */

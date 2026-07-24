@@ -20,10 +20,11 @@ export interface ShareInput {
 }
 
 /**
- * Build the shareable text. Kept plain and factual, in the Wordle mold:
+ * Build the shareable text (without the URL — callers append SHARE_URL, or pass
+ * it as the dedicated `url` field of the native share sheet). Plain and factual,
+ * in the Wordle mold:
  *   Pricele #47 · Lebanon 🇱🇧 · 3/5 (within 4%)
  *   🟨🟨🟩
- *   https://pricele.online
  */
 export function buildShareText({
   puzzleNumber,
@@ -38,7 +39,12 @@ export function buildShareText({
     won && bestPctOff !== undefined ? ` (within ${Math.max(bestPctOff, 1)}%)` : "";
   const header = `Pricele #${puzzleNumber} · ${countryName} ${flag} · ${score}${acc}`;
   const grid = guesses.map((g) => BAND_EMOJI[g.band]).join("");
-  return [header, grid, SHARE_URL].join("\n");
+  return [header, grid].join("\n");
+}
+
+/** The full share text including the https:// link (for clipboard/display). */
+export function buildShareTextWithUrl(input: ShareInput): string {
+  return `${buildShareText(input)}\n${SHARE_URL}`;
 }
 
 /** Copy text to the clipboard, with a legacy fallback. Returns success. */
