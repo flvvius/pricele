@@ -6,6 +6,7 @@ import type { GuessRecord } from "./storage";
 export const MAX_GUESSES = 5;
 
 export const SHARE_URL = "https://pricele.online";
+const SHARE_DOMAIN = "pricele.online";
 
 export interface ShareInput {
   puzzleNumber: number;
@@ -20,40 +21,25 @@ export interface ShareInput {
 }
 
 /**
- * Build the shareable text — designed to bait a reply, not just report a score.
- * Leads with the country + a proximity brag/tease and ends on a dare:
- *   Pricele #47 🥤 Coca-Cola in Lebanon 🇱🇧
- *   🎯 Cracked it in 3/5 — within 4% of the real price
+ * Build the shareable text. Kept plain and factual, in the Wordle mold:
+ *   Pricele #47 · Lebanon 🇱🇧 · 3/5 (within 4%)
  *   🟨🟨🟩
- *   🔥 5-day streak
- *   Bet you can't beat me 👉 https://pricele.online
+ *   pricele.online
  */
 export function buildShareText({
   puzzleNumber,
-  itemName,
   countryName,
   flag,
   guesses,
   won,
-  streak,
   bestPctOff,
 }: ShareInput): string {
-  const header = `Pricele #${puzzleNumber} 🥤 ${itemName} in ${countryName} ${flag}`;
-
   const score = won ? `${guesses.length}/${MAX_GUESSES}` : `X/${MAX_GUESSES}`;
-  const off = bestPctOff ?? 0;
-  const result = won
-    ? off <= 3
-      ? `🎯 Cracked it in ${score} — within ${off}% of the real price`
-      : `✅ Guessed it in ${score} — within ${off}% of the real price`
-    : `💀 Missed in ${score} — closest was ${off}% off. Can you do better?`;
-
+  const acc =
+    won && bestPctOff !== undefined ? ` (within ${Math.max(bestPctOff, 1)}%)` : "";
+  const header = `Pricele #${puzzleNumber} · ${countryName} ${flag} · ${score}${acc}`;
   const grid = guesses.map((g) => BAND_EMOJI[g.band]).join("");
-
-  const lines = [header, result, grid];
-  if (won && streak && streak > 1) lines.push(`🔥 ${streak}-day streak`);
-  lines.push(`Bet you can't beat me 👉 ${SHARE_URL}`);
-  return lines.join("\n");
+  return [header, grid, SHARE_DOMAIN].join("\n");
 }
 
 /** Copy text to the clipboard, with a legacy fallback. Returns success. */
