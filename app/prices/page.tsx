@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import JsonLd from "@/components/JsonLd";
 import SiteFooter from "@/components/SiteFooter";
+import AdSlot from "@/components/AdSlot";
+import { AD_SLOTS } from "@/lib/ads";
 import { activePriceEntries } from "@/lib/catalog";
 import { countrySlug, formatLocal, formatUSD } from "@/lib/format";
 import {
@@ -99,6 +101,8 @@ export default function PricesIndex() {
           </tbody>
         </table>
       </section>
+
+      <AdSlot slot={AD_SLOTS.content} />
 
       <p className="text-xs text-neutral-500">
         Prices are rough estimates for a daily game, not shopping advice.

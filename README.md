@@ -34,6 +34,28 @@ NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION=...            # optional
 NEXT_PUBLIC_BING_SITE_VERIFICATION=...              # optional
 ```
 
+## Ads
+
+Monetization is Google AdSense, placed manually for the best revenue-to-UX
+ratio rather than intrusive Auto Ads. There is exactly one labeled unit per
+view, and **never during active play** — ads only appear on the post-game
+Reveal screen and on the `/prices` reference pages (long-dwell, high commercial
+intent). Space is reserved so a slow ad never shifts the layout.
+
+Everything is env-gated: with no publisher ID the site renders **completely
+ad-free** — no loader script, no placeholders, no `ads.txt`. To go live, set:
+
+```bash
+NEXT_PUBLIC_ADSENSE_CLIENT=ca-pub-XXXXXXXXXXXXXXXX   # your AdSense publisher ID
+NEXT_PUBLIC_ADSENSE_SLOT_REVEAL=1234567890           # unit id for the Reveal screen
+NEXT_PUBLIC_ADSENSE_SLOT_CONTENT=0987654321          # unit id for the /prices pages
+```
+
+Create the two display ad units in the AdSense dashboard to get their slot ids.
+The loader script (`app/layout.tsx`), the `google-adsense-account` meta tag, and
+`/ads.txt` (`app/ads.txt/route.ts`) are all wired from `NEXT_PUBLIC_ADSENSE_CLIENT`.
+Config and the `<AdSlot>` component live in `lib/ads.ts` and `components/AdSlot.tsx`.
+
 ## Develop
 
 ```bash

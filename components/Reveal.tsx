@@ -4,6 +4,8 @@ import { MAX_GUESSES } from "@/lib/share";
 import { affordanceLine, formatLocal } from "@/lib/format";
 import ShareCard from "./ShareCard";
 import Countdown from "./Countdown";
+import AdSlot from "./AdSlot";
+import { AD_SLOTS } from "@/lib/ads";
 
 interface Props {
   puzzleNumber: number;
@@ -78,6 +80,10 @@ export default function Reveal({
         won={won}
         streak={stats.currentStreak}
       />
+
+      {/* Post-game only: shown after the puzzle is finished and shared, never
+          during play. Highest-attention, lowest-interruption slot. */}
+      <AdSlot slot={AD_SLOTS.reveal} />
 
       <div className="flex items-center justify-between rounded-lg border border-neutral-800 bg-neutral-900 px-4 py-3 text-sm">
         <div>

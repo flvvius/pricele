@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 import JsonLd from "@/components/JsonLd";
 import FaqSection from "@/components/FaqSection";
 import SiteFooter from "@/components/SiteFooter";
+import AdSlot from "@/components/AdSlot";
+import { AD_SLOTS } from "@/lib/ads";
 import {
   activePriceEntries,
   allCountrySlugs,
@@ -142,6 +144,8 @@ export default function CountryPrice({
           </p>
         </div>
       </section>
+
+      <AdSlot slot={AD_SLOTS.content} />
 
       <section aria-labelledby="play-cta" className="rounded-xl border border-neutral-800 bg-neutral-900/60 p-5">
         <h2 id="play-cta" className="text-lg font-bold text-neutral-100">

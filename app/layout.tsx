@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import "./globals.css";
 import JsonLd from "@/components/JsonLd";
+import { ADSENSE_CLIENT, adsEnabled } from "@/lib/ads";
 import {
   SITE_URL,
   SITE_NAME,
@@ -97,8 +99,22 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <JsonLd data={[websiteJsonLd(), gameJsonLd()]} />
+        {adsEnabled() && (
+          <meta name="google-adsense-account" content={ADSENSE_CLIENT} />
+        )}
       </head>
-      <body className="min-h-dvh antialiased">{children}</body>
+      <body className="min-h-dvh antialiased">
+        {children}
+        {adsEnabled() && (
+          <Script
+            id="adsbygoogle-init"
+            async
+            strategy="afterInteractive"
+            crossOrigin="anonymous"
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`}
+          />
+        )}
+      </body>
     </html>
   );
 }
