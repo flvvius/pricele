@@ -76,13 +76,13 @@ export function bestPctOff(
  */
 export function accuracyLine(bestOff: number, won: boolean): string {
   if (won) {
-    if (bestOff === 0) return "Spot on — you nailed the exact price. 🎯";
-    if (bestOff <= 3) return `Razor sharp — within ${bestOff}% of the real price. 🎯`;
-    return `Nice — within ${bestOff}% of the real price.`;
+    if (bestOff === 0) return "Spot on. You nailed the exact price.";
+    if (bestOff <= 3) return `Within ${bestOff}% of the real price.`;
+    return `Within ${bestOff}% of the real price.`;
   }
-  if (bestOff <= 15) return `Agonizing — your closest was just ${bestOff}% off. So close.`;
+  if (bestOff <= 15) return `So close. Your closest was just ${bestOff}% off.`;
   if (bestOff <= 40) return `Your closest guess was ${bestOff}% off. Tomorrow's yours.`;
-  return `Your closest guess was ${bestOff}% off. Ouch — try again tomorrow.`;
+  return `Your closest guess was ${bestOff}% off. Try again tomorrow.`;
 }
 
 /**
@@ -109,10 +109,10 @@ export function priceRankLine(price: PriceEntry): string {
   const cheaperThan = total - rank;
   const pct = Math.round((cheaperThan / (total - 1)) * 100);
   if (rank <= 3) {
-    return `That's the #${rank} priciest of ${total} countries — dearer than ${pct}% of the world here.`;
+    return `That's the #${rank} priciest of the ${total} countries in the game.`;
   }
   if (pct <= 25) {
-    return `Among the cheapest here — only ${pct}% of the ${total} countries are cheaper.`;
+    return `Among the cheapest here: only ${pct}% of the ${total} countries are cheaper.`;
   }
   return `Cheaper than ${pct}% of the ${total} countries in the game.`;
 }

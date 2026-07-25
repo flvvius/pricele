@@ -125,8 +125,12 @@ export default function Game() {
   const atRisk = mounted && !isArchive && !state.done && streakAtRisk(stats, today);
 
   return (
-    <div className="flex flex-col gap-6">
-      <header className="flex items-center justify-between">
+    // One self-contained screen: the header and item bar are fixed height, the
+    // board flexes to fill whatever is left, and the input sits at the bottom.
+    // With interactive-widget=resizes-content, the keyboard shrinks the viewport
+    // and this whole column reflows, so typing and results stay on one screen.
+    <div className="flex h-[100dvh] flex-col gap-3 pt-3 pb-[max(0.5rem,env(safe-area-inset-bottom))]">
+      <header className="flex shrink-0 items-center justify-between">
         <IconButton label="How to play" onClick={() => setShowHowTo(true)}>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
             <circle cx="12" cy="12" r="10" />
@@ -135,8 +139,8 @@ export default function Game() {
           </svg>
         </IconButton>
         <div className="text-center">
-          <h1 className="text-2xl font-black tracking-tight">Pricele</h1>
-          <p className="text-xs text-neutral-500">Guess the price. New country daily.</p>
+          <h1 className="text-xl font-black leading-tight tracking-tight">Pricele</h1>
+          <p className="text-[10px] text-neutral-500">New country daily</p>
         </div>
         <div className="flex items-center">
           <IconButton label="Archive" onClick={() => setShowArchive(true)}>
@@ -157,7 +161,7 @@ export default function Game() {
       </header>
 
       {isArchive && puzzle && (
-        <div className="flex items-center justify-between rounded-lg border border-amber-800/60 bg-amber-950/30 px-3 py-2 text-sm">
+        <div className="flex shrink-0 items-center justify-between rounded-lg border border-amber-800/60 bg-amber-950/30 px-3 py-1.5 text-xs">
           <span className="text-amber-300">
             Archive · Pricele #{puzzle.puzzleNumber}
           </span>
@@ -170,19 +174,20 @@ export default function Game() {
         </div>
       )}
 
-      <div className="flex items-center gap-4 rounded-xl border border-neutral-800 bg-neutral-900/60 p-4">
+      <div className="flex shrink-0 items-center gap-3 rounded-xl border border-neutral-800 bg-neutral-900/60 p-2.5">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={ACTIVE_ITEM.imageUrl}
           alt={ACTIVE_ITEM.name}
-          width={56}
-          height={56}
-          className="h-14 w-14 rounded-lg bg-white object-contain p-1"
+          width={40}
+          height={40}
+          className="h-10 w-10 shrink-0 rounded-lg bg-white object-contain p-1"
         />
-        <div>
-          <p className="text-xs text-neutral-400">Guess the price of</p>
-          <h2 className="text-lg font-bold leading-tight">{ACTIVE_ITEM.name}</h2>
-          <p className="text-base">
+        <div className="min-w-0">
+          <h2 className="truncate text-sm font-bold leading-tight">
+            {ACTIVE_ITEM.name}
+          </h2>
+          <p className="truncate text-sm text-neutral-300">
             {puzzle ? (
               <>
                 in {puzzle.price.countryName}{" "}
@@ -196,20 +201,10 @@ export default function Game() {
       </div>
 
       {mounted && puzzle ? (
-        <>
-          {atRisk && (
-            <p className="animate-pop rounded-lg border border-orange-800/60 bg-orange-950/30 px-3 py-2 text-center text-sm font-medium text-orange-300">
-              🔥 {stats.currentStreak}-day streak on the line — solve today&apos;s
-              to keep it.
-            </p>
-          )}
-          {!state.done && (
-            <p className="text-center text-xs text-neutral-500">
-              Guess in USD. Win by landing within 5% of the real price.
-            </p>
-          )}
-          <GuessHistory guesses={state.guesses} />
-          {state.done ? (
+        state.done ? (
+          // Finished: the reveal is longer than a screen, so it scrolls inside
+          // the game area instead of pushing the page.
+          <div className="min-h-0 flex-1 overflow-y-auto">
             <Reveal
               puzzleNumber={puzzle.puzzleNumber}
               itemName={ACTIVE_ITEM.name}
@@ -220,16 +215,28 @@ export default function Game() {
               onShowStats={() => setShowStats(true)}
               isArchive={isArchive}
             />
-          ) : (
-            <GuessInput
-              disabled={state.done}
-              remaining={MAX_GUESSES - state.guesses.length}
-              onGuess={handleGuess}
-            />
-          )}
-        </>
+          </div>
+        ) : (
+          <>
+            {atRisk && (
+              <p className="animate-pop shrink-0 rounded-lg border border-orange-800/60 bg-orange-950/30 px-3 py-1.5 text-center text-xs font-medium text-orange-300">
+                🔥 {stats.currentStreak}-day streak on the line
+              </p>
+            )}
+            <GuessHistory guesses={state.guesses} />
+            <div className="shrink-0">
+              <GuessInput
+                disabled={state.done}
+                remaining={MAX_GUESSES - state.guesses.length}
+                onGuess={handleGuess}
+              />
+            </div>
+          </>
+        )
       ) : (
-        <p className="py-8 text-center text-sm text-neutral-500">Loading…</p>
+        <div className="flex min-h-0 flex-1 items-center justify-center">
+          <p className="text-sm text-neutral-500">Loading…</p>
+        </div>
       )}
 
       <HowToPlay open={showHowTo} onClose={() => setShowHowTo(false)} />

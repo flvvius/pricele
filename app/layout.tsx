@@ -87,6 +87,9 @@ export const viewport: Viewport = {
   colorScheme: "dark",
   width: "device-width",
   initialScale: 1,
+  // Make the on-screen keyboard shrink the viewport instead of covering the
+  // page, so the guess input stays visible while typing on mobile.
+  interactiveWidget: "resizes-content",
 };
 
 export default function RootLayout({

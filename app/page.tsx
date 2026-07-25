@@ -12,7 +12,9 @@ export const dynamic = "force-static";
 
 export default function Home() {
   return (
-    <main className="mx-auto flex min-h-dvh max-w-md flex-col gap-10 px-4 py-6">
+    <main className="mx-auto flex max-w-md flex-col gap-10 px-4 pb-6">
+      {/* The game occupies exactly the first screen; the prose below is for
+          readers and crawlers and sits deliberately below the fold. */}
       <Game />
 
       <section aria-labelledby="about-heading" className="flex flex-col gap-3">

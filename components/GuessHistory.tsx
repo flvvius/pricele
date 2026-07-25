@@ -27,44 +27,44 @@ function warmthEmoji(pct: number): string {
   return "🧊";
 }
 
+// One compact row per guess. Warmth is the row's background fill rather than a
+// separate bar underneath, so the whole five-row board fits above the keyboard
+// without scrolling. Rows flex to share whatever height is available.
 function Row({ guess }: { guess: GuessRecord }) {
   const pct = Math.round(guess.closeness * 100);
   return (
-    <li className="animate-pop rounded-lg border border-neutral-700 bg-neutral-800 px-3 py-2.5">
-      <div className="flex items-center justify-between">
-        <span className="tabular-nums font-semibold">
+    <li className="animate-pop relative min-h-[42px] max-h-[72px] flex-1 overflow-hidden rounded-lg border border-neutral-700 bg-neutral-800">
+      <div
+        className="absolute inset-y-0 left-0 opacity-25 transition-all duration-500"
+        style={{ width: `${Math.max(pct, 3)}%`, backgroundColor: FILL[guess.band] }}
+        role="img"
+        aria-label={`${pct}% warm`}
+      />
+      <div className="relative flex h-full items-center justify-between gap-2 px-3">
+        <span className="shrink-0 text-sm font-semibold tabular-nums">
           {formatMoney(guess.value, "USD")}
         </span>
-        <span className="flex items-center gap-2 text-sm">
+        <span className="flex min-w-0 items-center gap-2">
           <span
-            className={
+            className={`truncate text-xs ${
               guess.direction === "too_high"
-                ? "text-sky-400"
+                ? "text-sky-300"
                 : guess.direction === "too_low"
-                  ? "text-orange-400"
-                  : "text-green-400"
-            }
+                  ? "text-orange-300"
+                  : "text-green-300"
+            }`}
           >
             {HINT[guess.direction].label}
           </span>
-          <span className="text-lg" aria-hidden>
+          <span className="shrink-0 text-xs font-semibold tabular-nums text-neutral-300">
+            {pct}%
+          </span>
+          <span className="shrink-0 text-sm" aria-hidden>
+            {warmthEmoji(pct)}
+          </span>
+          <span className="shrink-0 text-sm" aria-hidden>
             {BAND_EMOJI[guess.band]}
           </span>
-        </span>
-      </div>
-      <div className="mt-2 flex items-center gap-2">
-        <div
-          className="h-1.5 flex-1 overflow-hidden rounded-full bg-neutral-700"
-          role="img"
-          aria-label={`${pct}% warm`}
-        >
-          <div
-            className="h-full rounded-full transition-all duration-500"
-            style={{ width: `${Math.max(pct, 4)}%`, backgroundColor: FILL[guess.band] }}
-          />
-        </div>
-        <span className="w-16 shrink-0 text-right text-xs font-semibold tabular-nums text-neutral-300">
-          <span aria-hidden>{warmthEmoji(pct)}</span> {pct}%
         </span>
       </div>
     </li>
@@ -75,14 +75,17 @@ export default function GuessHistory({ guesses }: { guesses: GuessRecord[] }) {
   const empties = Math.max(0, MAX_GUESSES - guesses.length);
 
   return (
-    <ul className="flex flex-col gap-2" aria-label="Your guesses">
+    <ul
+      className="flex min-h-0 flex-1 flex-col justify-center gap-1.5"
+      aria-label="Your guesses"
+    >
       {guesses.map((g, i) => (
         <Row key={i} guess={g} />
       ))}
       {Array.from({ length: empties }, (_, i) => (
         <li
           key={`empty-${i}`}
-          className="flex h-[52px] items-center justify-center rounded-lg border border-dashed border-neutral-800 text-neutral-700"
+          className="flex min-h-[42px] max-h-[72px] flex-1 items-center justify-center rounded-lg border border-dashed border-neutral-800 text-neutral-700"
         >
           <span aria-hidden>·</span>
         </li>
