@@ -4,10 +4,17 @@ import { evaluate } from "./scoring";
 describe("evaluate: worked examples (actual = $0.50)", () => {
   const actual = 0.5;
 
-  it("$0.55 → green (win)", () => {
-    const r = evaluate(0.55, actual);
+  it("$0.52 → green (win, within 5%)", () => {
+    const r = evaluate(0.52, actual);
     expect(r.band).toBe("green");
     expect(r.win).toBe(true);
+    expect(r.direction).toBe("too_high");
+  });
+
+  it("$0.55 (10% over) → yellow, just outside the 5% win", () => {
+    const r = evaluate(0.55, actual);
+    expect(r.band).toBe("yellow");
+    expect(r.win).toBe(false);
     expect(r.direction).toBe("too_high");
   });
 
@@ -38,10 +45,10 @@ describe("evaluate: log-error symmetry", () => {
   });
 
   it("thresholds are consistent across price magnitudes", () => {
-    // +10% is always green regardless of the underlying price
-    expect(evaluate(0.33, 0.3).band).toBe("green");
-    expect(evaluate(3.3, 3.0).band).toBe("green");
-    expect(evaluate(3300, 3000).band).toBe("green");
+    // +4% is always green regardless of the underlying price (within 5%)
+    expect(evaluate(0.312, 0.3).band).toBe("green");
+    expect(evaluate(3.12, 3.0).band).toBe("green");
+    expect(evaluate(3120, 3000).band).toBe("green");
   });
 
   it("an exact guess is green with direction 'exact'", () => {

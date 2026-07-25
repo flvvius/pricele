@@ -205,7 +205,7 @@ export default function Game() {
           )}
           {!state.done && (
             <p className="text-center text-xs text-neutral-500">
-              Guess in USD. Win by landing within 10% of the real price.
+              Guess in USD. Win by landing within 5% of the real price.
             </p>
           )}
           <GuessHistory guesses={state.guesses} />

@@ -29,7 +29,7 @@ export default function AboutPage() {
           you get one country and one everyday item (right now it&apos;s a{" "}
           {ITEM_NAME}), and you try to guess what it costs in US dollars. You get
           five tries, with higher-or-lower hints after each guess, and you win if
-          you land within 10% of the real price. The country changes every day at
+          you land within 5% of the real price. The country changes every day at
           midnight your time.
         </p>
         <p>

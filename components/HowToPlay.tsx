@@ -27,7 +27,7 @@ export default function HowToPlay({
           <li className="flex items-center gap-3">
             <span className="text-lg">🟩</span>
             <span>
-              Within 10% of the real price. This wins the game.
+              Within 5% of the real price. This wins the game.
             </span>
           </li>
           <li className="flex items-center gap-3">

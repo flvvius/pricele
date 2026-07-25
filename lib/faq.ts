@@ -16,7 +16,7 @@ export const HOME_FAQ: FaqItem[] = [
   {
     question: "How do you play Pricele?",
     answer:
-      "Each day you get one country and one item. Type in your best guess of the price in US dollars. After every guess, Pricele tells you whether the real price is higher or lower and how close you got. Land within 10% of the real price to win. You have five guesses.",
+      "Each day you get one country and one item. Type in your best guess of the price in US dollars. After every guess, Pricele tells you whether the real price is higher or lower and how close you got. Land within 5% of the real price to win. You have five guesses.",
   },
   {
     question: "Is Pricele free to play?",

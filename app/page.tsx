@@ -24,7 +24,7 @@ export default function Home() {
           Every day you get one country and one everyday item (a {ITEM_NAME} this
           month), and you try to guess the price in US dollars. You get five
           guesses, with higher-or-lower hints along the way, and you win if you
-          land within 10% of the real price. The country changes every day at
+          land within 5% of the real price. The country changes every day at
           midnight your time, so there&apos;s always a fresh one waiting when you
           wake up.
         </p>

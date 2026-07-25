@@ -4,7 +4,7 @@
 export type Band = "green" | "yellow" | "black";
 export type Direction = "too_high" | "too_low" | "exact";
 
-export const WIN_THRESHOLD = Math.log(1.1); // within 10%
+export const WIN_THRESHOLD = Math.log(1.05); // within 5%
 export const YELLOW_THRESHOLD = Math.log(1.3); // within 30%
 export const MAX_LOG_DIFF = Math.log(5); // 5x off (or worse) counts as 0% close
 
