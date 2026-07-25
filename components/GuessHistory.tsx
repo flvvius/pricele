@@ -33,7 +33,7 @@ function warmthEmoji(pct: number): string {
 function Row({ guess }: { guess: GuessRecord }) {
   const pct = Math.round(guess.closeness * 100);
   return (
-    <li className="animate-pop relative min-h-[42px] max-h-[72px] flex-1 overflow-hidden rounded-lg border border-neutral-700 bg-neutral-800">
+    <li className="animate-pop relative min-h-[42px] max-h-[80px] flex-1 overflow-hidden rounded-lg border border-neutral-700 bg-neutral-800">
       <div
         className="absolute inset-y-0 left-0 opacity-25 transition-all duration-500"
         style={{ width: `${Math.max(pct, 3)}%`, backgroundColor: FILL[guess.band] }}
@@ -76,7 +76,7 @@ export default function GuessHistory({ guesses }: { guesses: GuessRecord[] }) {
 
   return (
     <ul
-      className="flex min-h-0 flex-1 flex-col justify-center gap-1.5"
+      className="flex min-h-0 flex-1 flex-col justify-start gap-1.5"
       aria-label="Your guesses"
     >
       {guesses.map((g, i) => (
@@ -85,7 +85,7 @@ export default function GuessHistory({ guesses }: { guesses: GuessRecord[] }) {
       {Array.from({ length: empties }, (_, i) => (
         <li
           key={`empty-${i}`}
-          className="flex min-h-[42px] max-h-[72px] flex-1 items-center justify-center rounded-lg border border-dashed border-neutral-800 text-neutral-700"
+          className="flex min-h-[42px] max-h-[80px] flex-1 items-center justify-center rounded-lg border border-dashed border-neutral-800 text-neutral-700"
         >
           <span aria-hidden>·</span>
         </li>
