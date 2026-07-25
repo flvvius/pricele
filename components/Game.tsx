@@ -15,6 +15,7 @@ import {
   type Stats,
 } from "@/lib/storage";
 import { MAX_GUESSES } from "@/lib/share";
+import { anchorPriceUSD, formatMoney } from "@/lib/format";
 import { initPwa } from "@/lib/pwa";
 import GuessInput from "./GuessInput";
 import GuessHistory from "./GuessHistory";
@@ -225,6 +226,15 @@ export default function Game() {
             )}
             <GuessHistory guesses={state.guesses} />
             <div className="shrink-0">
+              {state.guesses.length === 0 && (
+                <p className="mb-2 text-center text-xs text-neutral-500">
+                  For scale, the median across all countries is{" "}
+                  <span className="font-semibold text-neutral-300">
+                    {formatMoney(anchorPriceUSD(), "USD")}
+                  </span>
+                  .
+                </p>
+              )}
               <GuessInput
                 disabled={state.done}
                 remaining={MAX_GUESSES - state.guesses.length}

@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { evaluate } from "./scoring";
+import { evaluate, warmthTier, tierFromCloseness } from "./scoring";
 
 describe("evaluate: worked examples (actual = $0.50)", () => {
   const actual = 0.5;
@@ -70,6 +70,43 @@ describe("evaluate: closeness (warmth)", () => {
   it("floors at 0 for guesses 5x off or worse", () => {
     expect(evaluate(2.5, 0.5).closeness).toBeCloseTo(0);
     expect(evaluate(10, 0.5).closeness).toBe(0);
+  });
+});
+
+describe("warmth tiers", () => {
+  const actual = 1.0;
+
+  it("buckets by how many times off the guess is", () => {
+    expect(warmthTier(1.1, actual).label).toBe("Scorching");
+    expect(warmthTier(1.3, actual).label).toBe("Hot");
+    expect(warmthTier(1.8, actual).label).toBe("Warm");
+    expect(warmthTier(3.0, actual).label).toBe("Cold");
+    expect(warmthTier(10, actual).label).toBe("Freezing");
+  });
+
+  it("is symmetric for over- and under-guesses", () => {
+    expect(warmthTier(2, actual).label).toBe(warmthTier(0.5, actual).label);
+    expect(warmthTier(3, actual).label).toBe(warmthTier(1 / 3, actual).label);
+  });
+
+  it("levels increase with warmth", () => {
+    expect(warmthTier(1.1, actual).level).toBeGreaterThan(
+      warmthTier(1.8, actual).level
+    );
+    expect(warmthTier(10, actual).level).toBe(0);
+  });
+
+  it("tierFromCloseness matches warmthTier for the same pair", () => {
+    for (const guess of [1.02, 1.2, 1.5, 2.5, 4, 12]) {
+      const c = evaluate(guess, actual).closeness;
+      expect(tierFromCloseness(c).label).toBe(warmthTier(guess, actual).label);
+    }
+  });
+
+  it("hides the exact distance: a whole range of guesses shares one tier", () => {
+    // If the tier leaked the price, these would differ.
+    const labels = [1.45, 1.6, 1.75, 1.95].map((g) => warmthTier(g, actual).label);
+    expect(new Set(labels).size).toBe(1);
   });
 });
 

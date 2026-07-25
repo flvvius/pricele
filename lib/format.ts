@@ -86,6 +86,22 @@ export function accuracyLine(bestOff: number, won: boolean): string {
 }
 
 /**
+ * A scale anchor for the very first guess: the median price of the active item
+ * across every country in the game. Without it a new player has no idea whether
+ * the answer lives near $0.20 or $20, which makes the opening guess a pure stab.
+ * The median deliberately says nothing about today's country specifically.
+ */
+export function anchorPriceUSD(): number {
+  const all = (pricesData as PriceEntry[])
+    .filter((p) => p.itemId === ACTIVE_ITEM.id)
+    .map((p) => p.priceUSD)
+    .sort((a, b) => a - b);
+  if (all.length === 0) return 0;
+  const mid = Math.floor(all.length / 2);
+  return all.length % 2 === 0 ? (all[mid - 1] + all[mid]) / 2 : all[mid];
+}
+
+/**
  * Where today's price sits among all countries for the active item, as a
  * "did you know" reveal stat. Ranks by USD price; 1 = most expensive.
  */

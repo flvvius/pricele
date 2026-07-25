@@ -110,6 +110,25 @@ export function streakAtRisk(stats: Stats, today: string): boolean {
   );
 }
 
+// Streak milestones. Most players who quit do so in the first week, so the
+// early markers matter more than the far ones.
+export const STREAK_MILESTONES = [3, 7, 14, 30, 60, 100] as const;
+
+/** The milestone this streak just hit, or null if it isn't on one. */
+export function milestoneFor(streak: number): number | null {
+  return STREAK_MILESTONES.find((m) => m === streak) ?? null;
+}
+
+/** The next milestone to aim for, or null once they're all passed. */
+export function nextMilestone(streak: number): number | null {
+  return STREAK_MILESTONES.find((m) => m > streak) ?? null;
+}
+
+/** True when the player has never lost a game (and has played at least a few). */
+export function isPerfect(stats: Stats): boolean {
+  return stats.played >= 3 && stats.wins === stats.played;
+}
+
 /**
  * Fold a finished game into lifetime stats, idempotently for a given day.
  * A loss still counts as played and breaks the streak; only a win extends it

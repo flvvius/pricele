@@ -1,5 +1,11 @@
 import type { PriceEntry } from "@/lib/puzzle";
-import type { GuessRecord, Stats } from "@/lib/storage";
+import {
+  isPerfect,
+  milestoneFor,
+  nextMilestone,
+  type GuessRecord,
+  type Stats,
+} from "@/lib/storage";
 import { MAX_GUESSES } from "@/lib/share";
 import {
   affordanceLine,
@@ -37,6 +43,9 @@ export default function Reveal({
   isArchive = false,
 }: Props) {
   const bestOff = bestPctOff(guesses, price.priceUSD);
+  const milestone = milestoneFor(stats.currentStreak);
+  const upcoming = nextMilestone(stats.currentStreak);
+  const perfect = isPerfect(stats);
 
   return (
     <div className="flex flex-col gap-5">
@@ -71,9 +80,29 @@ export default function Reveal({
         )}
       </div>
 
-      {!isArchive && won && stats.currentStreak > 1 && (
+      {!isArchive && won && milestone && (
+        <div className="animate-pop rounded-xl border border-orange-700/70 bg-orange-950/40 p-3 text-center">
+          <p className="text-base font-bold text-orange-200">
+            🔥 {milestone}-day streak
+          </p>
+          <p className="mt-0.5 text-xs text-orange-300/80">
+            {milestone >= 30
+              ? "That's a serious habit."
+              : "Nice run. Keep it going."}
+          </p>
+        </div>
+      )}
+
+      {!isArchive && won && !milestone && stats.currentStreak > 1 && (
         <p className="text-center text-sm text-orange-300">
-          🔥 {stats.currentStreak}-day streak. Play tomorrow to keep it alive.
+          🔥 {stats.currentStreak}-day streak
+          {upcoming ? ` · ${upcoming - stats.currentStreak} to go until ${upcoming}` : ""}
+        </p>
+      )}
+
+      {!isArchive && perfect && (
+        <p className="text-center text-xs text-neutral-400">
+          ⭐ Perfect record: {stats.wins}/{stats.played}
         </p>
       )}
 
