@@ -5,20 +5,21 @@
 import { ACTIVE_ITEM } from "@/data/item";
 
 /**
- * Canonical origin, no trailing slash. Override per-deploy with
- * NEXT_PUBLIC_SITE_URL (e.g. a custom domain) and fall back to the Vercel URL.
+ * Canonical origin, no trailing slash. Defaults to the production custom domain
+ * so canonical tags, Open Graph URLs, the sitemap, and JSON-LD always point at
+ * pricele.online — never at a Vercel per-deployment URL, which must never be
+ * treated as canonical. Override per-deploy with NEXT_PUBLIC_SITE_URL if needed.
  */
 export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL ||
-  (process.env.NEXT_PUBLIC_VERCEL_URL
-    ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
-    : "https://pricele.vercel.app")
+  process.env.NEXT_PUBLIC_SITE_URL || "https://pricele.online"
 ).replace(/\/$/, "");
 
 export const SITE_NAME = "Pricele";
 export const SITE_TAGLINE = "Guess the price. New country daily.";
+/** Public contact address, surfaced on the Contact page and in policies. */
+export const SITE_EMAIL = "flaviuscojocaru19@gmail.com";
 export const SITE_DESCRIPTION =
-  "Pricele is a free daily game: guess the price of an everyday item around the world in 5 tries. A new country every day. How well do you know global prices and the cost of living?";
+  "Pricele is a free daily game where you guess the price of an everyday item somewhere in the world in 5 tries. New country every day. See how well you actually know what things cost.";
 
 /** Absolute URL for a site-relative path. */
 export function absoluteUrl(path = "/"): string {
@@ -97,25 +98,6 @@ export function faqJsonLd(items: FaqItem[]) {
         "@type": "Answer",
         text: item.answer,
       },
-    })),
-  };
-}
-
-export interface Crumb {
-  name: string;
-  path: string;
-}
-
-/** BreadcrumbList schema for the reference pages. */
-export function breadcrumbJsonLd(crumbs: Crumb[]) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: crumbs.map((crumb, i) => ({
-      "@type": "ListItem",
-      position: i + 1,
-      name: crumb.name,
-      item: absoluteUrl(crumb.path),
     })),
   };
 }

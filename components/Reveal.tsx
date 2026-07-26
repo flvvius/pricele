@@ -1,9 +1,22 @@
 import type { PriceEntry } from "@/lib/puzzle";
-import type { GuessRecord, Stats } from "@/lib/storage";
+import {
+  isPerfect,
+  milestoneFor,
+  nextMilestone,
+  type GuessRecord,
+  type Stats,
+} from "@/lib/storage";
 import { MAX_GUESSES } from "@/lib/share";
-import { affordanceLine, formatLocal } from "@/lib/format";
+import {
+  affordanceLine,
+  formatMoney,
+  bestPctOff,
+  accuracyLine,
+  priceRankLine,
+} from "@/lib/format";
 import ShareCard from "./ShareCard";
 import Countdown from "./Countdown";
+import EngagementPrompts from "./EngagementPrompts";
 import AdSlot from "./AdSlot";
 import { AD_SLOTS } from "@/lib/ads";
 
@@ -15,10 +28,8 @@ interface Props {
   won: boolean;
   stats: Stats;
   onShowStats: () => void;
-}
-
-function closest(guesses: GuessRecord[]): GuessRecord | undefined {
-  return [...guesses].sort((a, b) => b.closeness - a.closeness)[0];
+  /** True when replaying a past puzzle: hide today-only chrome (streak, reminders). */
+  isArchive?: boolean;
 }
 
 export default function Reveal({
@@ -29,7 +40,13 @@ export default function Reveal({
   won,
   stats,
   onShowStats,
+  isArchive = false,
 }: Props) {
+  const bestOff = bestPctOff(guesses, price.priceUSD);
+  const milestone = milestoneFor(stats.currentStreak);
+  const upcoming = nextMilestone(stats.currentStreak);
+  const perfect = isPerfect(stats);
+
   return (
     <div className="flex flex-col gap-5">
       <div className="text-center">
@@ -40,6 +57,9 @@ export default function Reveal({
         ) : (
           <p className="text-xl font-bold text-neutral-200">Out of guesses</p>
         )}
+        <p className="mt-1 text-sm text-neutral-300">
+          {accuracyLine(bestOff, won)}
+        </p>
       </div>
 
       <div className="animate-pop rounded-xl border border-neutral-700 bg-neutral-800 p-5 text-center">
@@ -47,27 +67,42 @@ export default function Reveal({
           Actual price
         </p>
         <p className="mt-1 text-4xl font-black tabular-nums">
-          ${price.priceUSD.toFixed(2)}
+          {formatMoney(price.priceUSD, "USD")}
         </p>
-        <p className="text-neutral-400">{formatLocal(price)}</p>
+        <p className="text-neutral-400">
+          {formatMoney(price.priceLocal, price.localCurrency)}
+        </p>
         <p className="mt-3 border-t border-neutral-700 pt-3 text-sm text-neutral-300">
           {affordanceLine(price)}
         </p>
+        {priceRankLine(price) && (
+          <p className="mt-2 text-sm text-neutral-400">{priceRankLine(price)}</p>
+        )}
       </div>
 
-      {!won && (
-        <p className="text-center text-sm text-neutral-400">
-          Your closest was{" "}
-          <span className="font-semibold text-neutral-200">
-            ${closest(guesses)?.value.toFixed(2)}
-          </span>
-          .
+      {!isArchive && won && milestone && (
+        <div className="animate-pop rounded-xl border border-orange-700/70 bg-orange-950/40 p-3 text-center">
+          <p className="text-base font-bold text-orange-200">
+            🔥 {milestone}-day streak
+          </p>
+          <p className="mt-0.5 text-xs text-orange-300/80">
+            {milestone >= 30
+              ? "That's a serious habit."
+              : "Nice run. Keep it going."}
+          </p>
+        </div>
+      )}
+
+      {!isArchive && won && !milestone && stats.currentStreak > 1 && (
+        <p className="text-center text-sm text-orange-300">
+          🔥 {stats.currentStreak}-day streak
+          {upcoming ? ` · ${upcoming - stats.currentStreak} to go until ${upcoming}` : ""}
         </p>
       )}
 
-      {won && stats.currentStreak > 1 && (
-        <p className="text-center text-sm text-orange-300">
-          🔥 {stats.currentStreak}-day streak. Play tomorrow to keep it alive.
+      {!isArchive && perfect && (
+        <p className="text-center text-xs text-neutral-400">
+          ⭐ Perfect record: {stats.wins}/{stats.played}
         </p>
       )}
 
@@ -78,25 +113,29 @@ export default function Reveal({
         flag={price.flag}
         guesses={guesses}
         won={won}
-        streak={stats.currentStreak}
+        streak={isArchive ? undefined : stats.currentStreak}
+        bestPctOff={bestOff}
       />
 
-      {/* Post-game only: shown after the puzzle is finished and shared, never
-          during play. Highest-attention, lowest-interruption slot. */}
+      {!isArchive && <EngagementPrompts />}
+
+      {/* Post-game only: shown after the puzzle is finished, never during play. */}
       <AdSlot slot={AD_SLOTS.reveal} />
 
-      <div className="flex items-center justify-between rounded-lg border border-neutral-800 bg-neutral-900 px-4 py-3 text-sm">
-        <div>
-          <p className="text-neutral-400">Next country in</p>
-          <Countdown />
+      {!isArchive && (
+        <div className="flex items-center justify-between rounded-lg border border-neutral-800 bg-neutral-900 px-4 py-3 text-sm">
+          <div>
+            <p className="text-neutral-400">Next country in</p>
+            <Countdown />
+          </div>
+          <button
+            onClick={onShowStats}
+            className="rounded-lg border border-neutral-700 px-3 py-2 font-medium text-neutral-200 transition hover:bg-neutral-800"
+          >
+            View stats
+          </button>
         </div>
-        <button
-          onClick={onShowStats}
-          className="rounded-lg border border-neutral-700 px-3 py-2 font-medium text-neutral-200 transition hover:bg-neutral-800"
-        >
-          View stats
-        </button>
-      </div>
+      )}
     </div>
   );
 }

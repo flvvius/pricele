@@ -62,11 +62,14 @@ export default function GuessInput({ disabled, remaining, onGuess }: Props) {
           Guess
         </button>
       </div>
-      <p className="min-h-5 text-sm text-red-400" role="alert">
-        {error ?? ""}
-      </p>
-      <p className="text-center text-sm text-neutral-500">
-        {remaining} {remaining === 1 ? "guess" : "guesses"} left
+      {/* One compact status line: the error replaces the hint when present, so
+          the input block never changes height and the board doesn't jump. */}
+      <p
+        className={`text-center text-xs ${error ? "text-red-400" : "text-neutral-500"}`}
+        role={error ? "alert" : undefined}
+      >
+        {error ??
+          `${remaining} ${remaining === 1 ? "guess" : "guesses"} left · win within 5%`}
       </p>
     </form>
   );

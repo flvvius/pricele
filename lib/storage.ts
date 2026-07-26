@@ -1,10 +1,10 @@
 // Player state lives in localStorage. Two separate keys:
-//   - today's game, keyed by UTC date, so it resets each day.
+//   - today's game, keyed by the player's local date, so it resets each day.
 //   - lifetime stats (streak, win rate, guess distribution), which persist.
 // All access is guarded for the server render, where window is undefined.
 
 import type { Band } from "./scoring";
-import { isoDateUTC } from "./puzzle";
+import { isoDate } from "./puzzle";
 import { MAX_GUESSES } from "./share";
 
 export interface GuessRecord {
@@ -15,7 +15,7 @@ export interface GuessRecord {
 }
 
 export interface DayState {
-  date: string; // UTC ISO date this state belongs to
+  date: string; // local ISO date this state belongs to
   guesses: GuessRecord[];
   done: boolean;
   won: boolean;
@@ -91,7 +91,42 @@ export function loadStats(): Stats {
 }
 
 function isoYesterday(date: string): string {
-  return isoDateUTC(new Date(Date.parse(date + "T00:00:00Z") - 86400000));
+  const [y, m, d] = date.split("-").map(Number);
+  return isoDate(new Date(y, m - 1, d - 1));
+}
+
+/**
+ * True when the player has a live streak they could lose today: they've won
+ * before, their last completed day was *yesterday* (streak still valid), and
+ * they haven't finished today's puzzle yet. Drives the "protect your streak"
+ * nudge. If they last played earlier than yesterday the streak is already dead,
+ * so there's nothing to protect and we stay quiet.
+ */
+export function streakAtRisk(stats: Stats, today: string): boolean {
+  return (
+    stats.currentStreak > 0 &&
+    stats.lastCompletedDate !== today &&
+    stats.lastCompletedDate === isoYesterday(today)
+  );
+}
+
+// Streak milestones. Most players who quit do so in the first week, so the
+// early markers matter more than the far ones.
+export const STREAK_MILESTONES = [3, 7, 14, 30, 60, 100] as const;
+
+/** The milestone this streak just hit, or null if it isn't on one. */
+export function milestoneFor(streak: number): number | null {
+  return STREAK_MILESTONES.find((m) => m === streak) ?? null;
+}
+
+/** The next milestone to aim for, or null once they're all passed. */
+export function nextMilestone(streak: number): number | null {
+  return STREAK_MILESTONES.find((m) => m > streak) ?? null;
+}
+
+/** True when the player has never lost a game (and has played at least a few). */
+export function isPerfect(stats: Stats): boolean {
+  return stats.played >= 3 && stats.wins === stats.played;
 }
 
 /**

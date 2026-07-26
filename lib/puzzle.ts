@@ -1,5 +1,6 @@
-// All "today" logic runs in UTC so the daily rollover is the same for every player.
-// Everything here is pure and deterministic from a Date.
+// All "today" logic runs in the player's LOCAL time, so the puzzle rolls over at
+// their own midnight (00:00) wherever they are. This is computed on the client after
+// mount, so it always reflects the visitor's timezone.
 
 import pricesData from "@/data/prices.json";
 import { ROTATION } from "@/data/rotation";
@@ -22,25 +23,56 @@ const PRICES = pricesData as PriceEntry[];
 
 const MS_PER_DAY = 24 * 60 * 60 * 1000;
 
-/** UTC midnight timestamp for a given date. */
-function utcMidnight(d: Date): number {
-  return Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate());
+/** ISO "YYYY-MM-DD" for a date, in local time. Used as the localStorage day key. */
+export function isoDate(d: Date = new Date()): string {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
 }
 
-/** ISO "YYYY-MM-DD" for a date, in UTC. Used as the localStorage day key. */
-export function isoDateUTC(d: Date): string {
-  return new Date(utcMidnight(d)).toISOString().slice(0, 10);
-}
-
-/** Whole UTC days from `from` (an ISO date string) to `to` (a Date). */
-export function daysSinceUTC(from: string, to: Date): number {
-  const fromMs = Date.parse(from + "T00:00:00Z");
-  return Math.floor((utcMidnight(to) - fromMs) / MS_PER_DAY);
+/**
+ * Whole calendar days from `from` (an ISO "YYYY-MM-DD" string) to `to` (a Date),
+ * both read as local calendar dates. Comparing UTC-anchored midnights of the local
+ * Y/M/D keeps the difference an exact multiple of a day even across DST changes.
+ */
+export function daysSince(from: string, to: Date): number {
+  const [fy, fm, fd] = from.split("-").map(Number);
+  const fromMs = Date.UTC(fy, fm - 1, fd);
+  const toMs = Date.UTC(to.getFullYear(), to.getMonth(), to.getDate());
+  return Math.floor((toMs - fromMs) / MS_PER_DAY);
 }
 
 /** 1-based puzzle number for the given day. */
 export function puzzleNumber(today: Date = new Date()): number {
-  return daysSinceUTC(ROTATION.epoch, today) + 1;
+  return daysSince(ROTATION.epoch, today) + 1;
+}
+
+/** A local Date at midnight for an ISO "YYYY-MM-DD" string. */
+export function dateFromISO(iso: string): Date {
+  const [y, m, d] = iso.split("-").map(Number);
+  return new Date(y, m - 1, d);
+}
+
+/**
+ * Past puzzle dates (ISO), newest first, from the rotation start up to yesterday.
+ * Capped to the most recent `limit`. Never includes today or the future, so the
+ * archive can't be used to look up the current answer.
+ */
+export function pastPuzzleDates(today: Date = new Date(), limit = 60): string[] {
+  const todayIdx = daysSince(ROTATION.startDate, today);
+  const dates: string[] = [];
+  const start = Math.max(0, todayIdx - limit);
+  for (let i = todayIdx - 1; i >= start; i--) {
+    dates.push(addDaysISO(ROTATION.startDate, i));
+  }
+  return dates;
+}
+
+/** ISO date `days` after an ISO date, in local calendar terms. */
+export function addDaysISO(iso: string, days: number): string {
+  const base = dateFromISO(iso);
+  return isoDate(new Date(base.getFullYear(), base.getMonth(), base.getDate() + days));
 }
 
 export interface DailyPuzzle {
@@ -59,7 +91,7 @@ export function getDailyPuzzle(today: Date = new Date()): DailyPuzzle | null {
   if (countryOrder.length === 0) return null;
 
   const idx =
-    ((daysSinceUTC(startDate, today) % countryOrder.length) +
+    ((daysSince(startDate, today) % countryOrder.length) +
       countryOrder.length) %
     countryOrder.length;
   const countryCode = countryOrder[idx];

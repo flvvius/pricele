@@ -6,25 +6,24 @@ hotter/colder feedback on a log scale. The country changes daily; the item
 changes monthly.
 
 There's no backend. Game data is static JSON bundled at build time, and player
-state (today's guesses and your streak) lives in `localStorage`, keyed by UTC
-date. The site is built with Next.js and statically generated, so it deploys to
-Vercel with no config.
+state (today's guesses and your streak) lives in `localStorage`, keyed by the
+player's local date, so the puzzle resets at their own midnight. The site is
+built with Next.js and statically generated, so it deploys to Vercel with no config.
 
 ## SEO
 
 Everything is statically rendered for search engines and AI answer engines:
 
 - **Structured data** (`lib/seo.ts`, `components/JsonLd.tsx`): site-wide
-  `VideoGame`, `WebSite`, and `Organization` schema, `FAQPage` on the home and
-  country pages, `ItemList` on `/prices`, and `BreadcrumbList` on reference pages.
+  `VideoGame` and `WebSite` schema, plus `FAQPage` on the home page.
 - **Crawlable content**: the home page ships server-rendered copy and an FAQ
   below the (client-side) game, so crawlers get real text, not an empty shell.
-- **Compounding reference pages** (`/prices`, `/prices/[country]`): one static,
-  indexable page per country targeting "how much does a … cost in <country>",
-  generated straight from `data/prices.json`. Add a country and it appears in the
-  nav, the sitemap, and its own page automatically.
 - **Technical SEO**: dynamic `sitemap.xml`, `robots.txt`, PWA `manifest`,
   canonical URLs, rich Open Graph / Twitter cards, and a theme color.
+
+> Note: there are intentionally **no** per-country price pages. Listing every
+> country's price would let players look up the day's answer, so those reference
+> pages were removed.
 
 Set the canonical origin and (optional) search-console verification via env vars:
 
@@ -37,24 +36,25 @@ NEXT_PUBLIC_BING_SITE_VERIFICATION=...              # optional
 ## Ads
 
 Monetization is Google AdSense, placed manually for the best revenue-to-UX
-ratio rather than intrusive Auto Ads. There is exactly one labeled unit per
-view, and **never during active play** — ads only appear on the post-game
-Reveal screen and on the `/prices` reference pages (long-dwell, high commercial
-intent). Space is reserved so a slow ad never shifts the layout.
+ratio rather than intrusive Auto Ads. The loader script and the
+`google-adsense-account` verification meta ship on every page, and `/ads.txt`
+is generated from the publisher id (`app/ads.txt/route.ts`) — all driven by
+`lib/ads.ts`. The publisher id defaults to the site's account and is
+overridable per-deploy.
 
-Everything is env-gated: with no publisher ID the site renders **completely
-ad-free** — no loader script, no placeholders, no `ads.txt`. To go live, set:
+Ad **units** are opt-in and never appear during play — the one labeled unit
+sits on the post-game Reveal screen, with space reserved so a slow ad never
+shifts the layout (`components/AdSlot.tsx`). A unit renders only once its slot
+id is set, so there are never empty placeholder boxes:
 
 ```bash
-NEXT_PUBLIC_ADSENSE_CLIENT=ca-pub-XXXXXXXXXXXXXXXX   # your AdSense publisher ID
+NEXT_PUBLIC_ADSENSE_CLIENT=ca-pub-XXXXXXXXXXXXXXXX   # optional; overrides the default
 NEXT_PUBLIC_ADSENSE_SLOT_REVEAL=1234567890           # unit id for the Reveal screen
-NEXT_PUBLIC_ADSENSE_SLOT_CONTENT=0987654321          # unit id for the /prices pages
 ```
 
-Create the two display ad units in the AdSense dashboard to get their slot ids.
-The loader script (`app/layout.tsx`), the `google-adsense-account` meta tag, and
-`/ads.txt` (`app/ads.txt/route.ts`) are all wired from `NEXT_PUBLIC_ADSENSE_CLIENT`.
-Config and the `<AdSlot>` component live in `lib/ads.ts` and `components/AdSlot.tsx`.
+Create the display ad unit in the AdSense dashboard to get its slot id. Setting
+`NEXT_PUBLIC_ADSENSE_CLIENT` to a blank/malformed value turns everything off and
+the build is byte-for-byte ad-free.
 
 ## Develop
 
@@ -82,11 +82,12 @@ pnpm build      # production build
 row per country: the price in USD and local currency, plus the average local
 hourly wage that drives the reveal stat. `data/rotation.ts` is an ordered list
 of country codes and a start date; the day's country is
-`countryOrder[daysSinceUTC(startDate, today) % length]`, so reordering the list
-changes the difficulty curve without touching any dates.
+`countryOrder[daysSince(startDate, today) % length]` in the player's local time,
+so reordering the list changes the difficulty curve without touching any dates.
 
-The seed `prices.json` ships with about ten hand-entered countries marked
-`"source": "Seed estimate"`. Replace them with verified numbers and add more
-before launch. See `scripts/collect-prices.ts` for a starting point.
+`prices.json` ships with 33 countries. Most prices come from a per-country
+Coca-Cola 330ml comparison (marked `"source": "Burger Parity, 2026"`); a few
+low-price countries are marked `"source": "Seed estimate"`. The average wage
+figures are estimates. Verify before launch; see `scripts/collect-prices.ts`.
 
 Prices are rough estimates for a daily game, not shopping advice.

@@ -1,8 +1,7 @@
 import type { Metadata, Viewport } from "next";
-import Script from "next/script";
 import "./globals.css";
 import JsonLd from "@/components/JsonLd";
-import { ADSENSE_CLIENT, adsEnabled } from "@/lib/ads";
+import { ADSENSE_CLIENT, ADSENSE_LOADER_SRC, adsEnabled } from "@/lib/ads";
 import {
   SITE_URL,
   SITE_NAME,
@@ -88,6 +87,9 @@ export const viewport: Viewport = {
   colorScheme: "dark",
   width: "device-width",
   initialScale: 1,
+  // Make the on-screen keyboard shrink the viewport instead of covering the
+  // page, so the guess input stays visible while typing on mobile.
+  interactiveWidget: "resizes-content",
 };
 
 export default function RootLayout({
@@ -98,23 +100,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* Google AdSense: verification meta + loader, on every page. Both are
+            gated on a well-formed publisher id (enabled by default). */}
+        {adsEnabled() && (
+          <>
+            <meta name="google-adsense-account" content={ADSENSE_CLIENT} />
+            <script async src={ADSENSE_LOADER_SRC} crossOrigin="anonymous" />
+          </>
+        )}
         <JsonLd data={[websiteJsonLd(), gameJsonLd()]} />
-        {adsEnabled() && (
-          <meta name="google-adsense-account" content={ADSENSE_CLIENT} />
-        )}
       </head>
-      <body className="min-h-dvh antialiased">
-        {children}
-        {adsEnabled() && (
-          <Script
-            id="adsbygoogle-init"
-            async
-            strategy="afterInteractive"
-            crossOrigin="anonymous"
-            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`}
-          />
-        )}
-      </body>
+      <body className="min-h-dvh antialiased">{children}</body>
     </html>
   );
 }

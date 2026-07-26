@@ -4,7 +4,7 @@
 export type Band = "green" | "yellow" | "black";
 export type Direction = "too_high" | "too_low" | "exact";
 
-export const WIN_THRESHOLD = Math.log(1.1); // within 10%
+export const WIN_THRESHOLD = Math.log(1.05); // within 5%
 export const YELLOW_THRESHOLD = Math.log(1.3); // within 30%
 export const MAX_LOG_DIFF = Math.log(5); // 5x off (or worse) counts as 0% close
 
@@ -47,3 +47,40 @@ export const BAND_EMOJI: Record<Band, string> = {
   yellow: "🟨",
   black: "⬛",
 };
+
+// Warmth is shown as one of a few coarse tiers, never as an exact percentage.
+// An exact closeness figure plus the higher/lower hint is enough to invert the
+// log formula and recover the price from a single guess, which made the game
+// solvable in two. Wide tiers keep the hotter/colder feel without leaking the
+// answer, so players still have to narrow it down.
+export interface WarmthTier {
+  /** 0 (coldest) to 4 (hottest). */
+  level: number;
+  label: string;
+  emoji: string;
+}
+
+const TIERS: { maxRatio: number; tier: WarmthTier }[] = [
+  { maxRatio: 1.15, tier: { level: 4, label: "Scorching", emoji: "🔥" } },
+  { maxRatio: 1.4, tier: { level: 3, label: "Hot", emoji: "♨️" } },
+  { maxRatio: 2, tier: { level: 2, label: "Warm", emoji: "🌡️" } },
+  { maxRatio: 3.5, tier: { level: 1, label: "Cold", emoji: "❄️" } },
+];
+const COLDEST: WarmthTier = { level: 0, label: "Freezing", emoji: "🧊" };
+
+/** Warmth tier for a guess/actual pair, bucketed by how many times off it is. */
+export function warmthTier(guess: number, actual: number): WarmthTier {
+  const ratio = Math.exp(Math.abs(Math.log(guess / actual)));
+  return TIERS.find((t) => ratio <= t.maxRatio)?.tier ?? COLDEST;
+}
+
+/**
+ * Same tiers, derived from a stored closeness value, so games saved before
+ * tiers existed still render. closeness = 1 - absLogDiff / MAX_LOG_DIFF.
+ */
+export function tierFromCloseness(closeness: number): WarmthTier {
+  const ratio = Math.exp((1 - closeness) * MAX_LOG_DIFF);
+  return TIERS.find((t) => ratio <= t.maxRatio)?.tier ?? COLDEST;
+}
+
+export const WARMTH_LEVELS = 5;

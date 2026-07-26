@@ -1,9 +1,11 @@
-// Plain-text share card, one emoji row per guess.
+// Plain-text share card, one emoji per guess.
 
-import { BAND_EMOJI } from "./scoring";
+import { tierFromCloseness } from "./scoring";
 import type { GuessRecord } from "./storage";
 
 export const MAX_GUESSES = 5;
+
+export const SHARE_URL = "https://pricele.online";
 
 export interface ShareInput {
   puzzleNumber: number;
@@ -13,33 +15,43 @@ export interface ShareInput {
   guesses: GuessRecord[];
   won: boolean;
   streak?: number;
+  /** How far the player's closest guess landed, in % of the real price. */
+  bestPctOff?: number;
 }
 
 /**
- * Build the shareable text, e.g.:
- *   Pricele #47 - Coca-Cola in Lebanon 🇱🇧 - 3/5
- *   🟨⬛
- *   ⬛🟨
- *   🟩
- *   🔥 5 day streak
- *   pricele.vercel.app
+ * Build the shareable text (without the URL — callers append SHARE_URL, or pass
+ * it as the dedicated `url` field of the native share sheet).
+ *
+ * The grid is a warmth ladder rather than flat band squares, so it reads as the
+ * story of the round (freezing, then closing in) instead of a bare score. A
+ * winning final guess is marked with a bullseye:
+ *   Pricele #47 · Lebanon 🇱🇧 · 3/5 (within 4%)
+ *   🧊♨️🎯
  */
 export function buildShareText({
   puzzleNumber,
-  itemName,
   countryName,
   flag,
   guesses,
   won,
-  streak,
+  bestPctOff,
 }: ShareInput): string {
   const score = won ? `${guesses.length}/${MAX_GUESSES}` : `X/${MAX_GUESSES}`;
-  const header = `Pricele #${puzzleNumber} - ${itemName} in ${countryName} ${flag} - ${score}`;
-  const grid = guesses.map((g) => BAND_EMOJI[g.band]).join("\n");
-  const lines = [header, grid];
-  if (won && streak && streak > 1) lines.push(`🔥 ${streak} day streak`);
-  lines.push("pricele.vercel.app");
-  return lines.join("\n");
+  const acc =
+    won && bestPctOff !== undefined ? ` (within ${Math.max(bestPctOff, 1)}%)` : "";
+  const header = `Pricele #${puzzleNumber} · ${countryName} ${flag} · ${score}${acc}`;
+  const grid = guesses
+    .map((g, i) =>
+      won && i === guesses.length - 1 ? "🎯" : tierFromCloseness(g.closeness).emoji
+    )
+    .join("");
+  return [header, grid].join("\n");
+}
+
+/** The full share text including the https:// link (for clipboard/display). */
+export function buildShareTextWithUrl(input: ShareInput): string {
+  return `${buildShareText(input)}\n${SHARE_URL}`;
 }
 
 /** Copy text to the clipboard, with a legacy fallback. Returns success. */
