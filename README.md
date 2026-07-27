@@ -35,7 +35,8 @@ NEXT_PUBLIC_BING_SITE_VERIFICATION=...              # optional
 
 ## Ads
 
-Monetization is Google AdSense. The loader script and the
+Monetization is Google AdSense, placed manually for the best revenue-to-UX
+ratio rather than intrusive Auto Ads. The loader script and the
 `google-adsense-account` verification meta ship on every page, and `/ads.txt`
 is generated from the publisher id (`app/ads.txt/route.ts`) — all driven by
 `lib/ads.ts`. The publisher id defaults to the site's account and is
