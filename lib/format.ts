@@ -122,15 +122,17 @@ export function priceRankLine(price: PriceEntry): string {
   if (rank === total) {
     return `That makes it the cheapest ${item} of all ${total} countries in the game.`;
   }
-  const cheaperThan = total - rank;
-  const pct = Math.round((cheaperThan / (total - 1)) * 100);
+  // Share of other countries that cost LESS than this one. A high number means
+  // today's price is expensive, not cheap.
+  const cheaperCount = total - rank;
+  const pctCheaper = Math.round((cheaperCount / (total - 1)) * 100);
   if (rank <= 3) {
     return `That's the #${rank} priciest of the ${total} countries in the game.`;
   }
-  if (pct <= 25) {
-    return `Among the cheapest here: only ${pct}% of the ${total} countries are cheaper.`;
+  if (pctCheaper >= 50) {
+    return `More expensive than ${pctCheaper}% of the ${total} countries in the game.`;
   }
-  return `Cheaper than ${pct}% of the ${total} countries in the game.`;
+  return `Cheaper than ${100 - pctCheaper}% of the ${total} countries in the game.`;
 }
 
 /** URL-safe slug for a country, e.g. "United States" -> "united-states". */
