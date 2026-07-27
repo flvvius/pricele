@@ -17,6 +17,7 @@ import {
 import { MAX_GUESSES } from "@/lib/share";
 import { anchorPriceUSD, formatMoney } from "@/lib/format";
 import { initPwa } from "@/lib/pwa";
+import { useKeyboardViewport } from "./useKeyboardViewport";
 import GuessInput from "./GuessInput";
 import GuessHistory from "./GuessHistory";
 import Reveal from "./Reveal";
@@ -70,6 +71,8 @@ export default function Game() {
   const [showHowTo, setShowHowTo] = useState(false);
   const [showStats, setShowStats] = useState(false);
   const [showArchive, setShowArchive] = useState(false);
+
+  useKeyboardViewport();
 
   useEffect(() => {
     const day = isoDate(new Date());
@@ -130,7 +133,10 @@ export default function Game() {
     // board flexes to fill whatever is left, and the input sits at the bottom.
     // With interactive-widget=resizes-content, the keyboard shrinks the viewport
     // and this whole column reflows, so typing and results stay on one screen.
-    <div className="flex h-[100dvh] flex-col gap-3 pt-3 pb-[max(0.5rem,env(safe-area-inset-bottom))]">
+    <div
+      className="flex flex-col gap-3 pt-3 pb-[max(0.5rem,env(safe-area-inset-bottom))]"
+      style={{ height: "var(--vvh, 100dvh)" }}
+    >
       <header className="flex shrink-0 items-center justify-between">
         <IconButton label="How to play" onClick={() => setShowHowTo(true)}>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
