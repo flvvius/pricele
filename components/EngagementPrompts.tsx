@@ -69,7 +69,7 @@ export default function EngagementPrompts() {
             disabled={busy}
             className="rounded-lg border border-neutral-700 px-3 py-2 text-sm font-medium text-neutral-200 transition hover:bg-neutral-800 disabled:opacity-50"
           >
-            📲 Add to home screen
+            Add to home screen
           </button>
         )}
         {showReminder &&
@@ -78,7 +78,7 @@ export default function EngagementPrompts() {
               onClick={onDisableReminder}
               className="rounded-lg border border-green-700 bg-green-950/40 px-3 py-2 text-sm font-medium text-green-300 transition hover:bg-green-950/70"
             >
-              🔔 Daily reminder on · turn off
+              Daily reminder on · turn off
             </button>
           ) : (
             <button
@@ -86,7 +86,7 @@ export default function EngagementPrompts() {
               disabled={busy}
               className="rounded-lg border border-neutral-700 px-3 py-2 text-sm font-medium text-neutral-200 transition hover:bg-neutral-800 disabled:opacity-50"
             >
-              🔔 Remind me daily
+              Remind me daily
             </button>
           ))}
       </div>

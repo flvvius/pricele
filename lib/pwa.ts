@@ -166,7 +166,7 @@ async function armReminder(): Promise<void> {
       window as unknown as { TimestampTrigger: new (t: number) => unknown }
     ).TimestampTrigger;
 
-    await reg.showNotification("Pricele is waiting 🥤", {
+    await reg.showNotification("Pricele is waiting", {
       tag: "pricele-daily",
       body: "A new country is live. Keep your streak alive!",
       icon: "/icon.svg",

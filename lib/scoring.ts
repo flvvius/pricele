@@ -57,16 +57,15 @@ export interface WarmthTier {
   /** 0 (coldest) to 4 (hottest). */
   level: number;
   label: string;
-  emoji: string;
 }
 
 const TIERS: { maxRatio: number; tier: WarmthTier }[] = [
-  { maxRatio: 1.15, tier: { level: 4, label: "Scorching", emoji: "🔥" } },
-  { maxRatio: 1.4, tier: { level: 3, label: "Hot", emoji: "♨️" } },
-  { maxRatio: 2, tier: { level: 2, label: "Warm", emoji: "🌡️" } },
-  { maxRatio: 3.5, tier: { level: 1, label: "Cold", emoji: "❄️" } },
+  { maxRatio: 1.15, tier: { level: 4, label: "Scorching" } },
+  { maxRatio: 1.4, tier: { level: 3, label: "Hot" } },
+  { maxRatio: 2, tier: { level: 2, label: "Warm" } },
+  { maxRatio: 3.5, tier: { level: 1, label: "Cold" } },
 ];
-const COLDEST: WarmthTier = { level: 0, label: "Freezing", emoji: "🧊" };
+const COLDEST: WarmthTier = { level: 0, label: "Freezing" };
 
 /** Warmth tier for a guess/actual pair, bucketed by how many times off it is. */
 export function warmthTier(guess: number, actual: number): WarmthTier {

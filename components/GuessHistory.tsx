@@ -54,9 +54,6 @@ function Row({ guess }: { guess: GuessRecord }) {
             {tier.label}
           </span>
           <span className="shrink-0 text-sm" aria-hidden>
-            {tier.emoji}
-          </span>
-          <span className="shrink-0 text-sm" aria-hidden>
             {BAND_EMOJI[guess.band]}
           </span>
         </span>

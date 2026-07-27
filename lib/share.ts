@@ -1,6 +1,6 @@
-// Plain-text share card, one emoji per guess.
+// Plain-text share card, one square per guess.
 
-import { tierFromCloseness } from "./scoring";
+import { BAND_EMOJI } from "./scoring";
 import type { GuessRecord } from "./storage";
 
 export const MAX_GUESSES = 5;
@@ -23,11 +23,10 @@ export interface ShareInput {
  * Build the shareable text (without the URL — callers append SHARE_URL, or pass
  * it as the dedicated `url` field of the native share sheet).
  *
- * The grid is a warmth ladder rather than flat band squares, so it reads as the
- * story of the round (freezing, then closing in) instead of a bare score. A
- * winning final guess is marked with a bullseye:
+ * One square per guess, from the band already stored on each guess, so the row
+ * reads as the shape of the round at a glance:
  *   Pricele #47 · Lebanon 🇱🇧 · 3/5 (within 4%)
- *   🧊♨️🎯
+ *   ⬛🟨🟩
  */
 export function buildShareText({
   puzzleNumber,
@@ -41,11 +40,7 @@ export function buildShareText({
   const acc =
     won && bestPctOff !== undefined ? ` (within ${Math.max(bestPctOff, 1)}%)` : "";
   const header = `Pricele #${puzzleNumber} · ${countryName} ${flag} · ${score}${acc}`;
-  const grid = guesses
-    .map((g, i) =>
-      won && i === guesses.length - 1 ? "🎯" : tierFromCloseness(g.closeness).emoji
-    )
-    .join("");
+  const grid = guesses.map((g) => BAND_EMOJI[g.band]).join("");
   return [header, grid].join("\n");
 }
 

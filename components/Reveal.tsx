@@ -52,7 +52,7 @@ export default function Reveal({
       <div className="text-center">
         {won ? (
           <p className="animate-pop text-xl font-bold text-green-400">
-            Solved in {guesses.length}/{MAX_GUESSES} 🎉
+            Solved in {guesses.length}/{MAX_GUESSES}
           </p>
         ) : (
           <p className="text-xl font-bold text-neutral-200">Out of guesses</p>
@@ -83,7 +83,7 @@ export default function Reveal({
       {!isArchive && won && milestone && (
         <div className="animate-pop rounded-xl border border-orange-700/70 bg-orange-950/40 p-3 text-center">
           <p className="text-base font-bold text-orange-200">
-            🔥 {milestone}-day streak
+            {milestone}-day streak
           </p>
           <p className="mt-0.5 text-xs text-orange-300/80">
             {milestone >= 30
@@ -95,14 +95,14 @@ export default function Reveal({
 
       {!isArchive && won && !milestone && stats.currentStreak > 1 && (
         <p className="text-center text-sm text-orange-300">
-          🔥 {stats.currentStreak}-day streak
+          {stats.currentStreak}-day streak
           {upcoming ? ` · ${upcoming - stats.currentStreak} to go until ${upcoming}` : ""}
         </p>
       )}
 
       {!isArchive && perfect && (
         <p className="text-center text-xs text-neutral-400">
-          ⭐ Perfect record: {stats.wins}/{stats.played}
+          Perfect record: {stats.wins}/{stats.played}
         </p>
       )}
 

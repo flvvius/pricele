@@ -227,7 +227,7 @@ export default function Game() {
           <>
             {atRisk && (
               <p className="animate-pop shrink-0 rounded-lg border border-orange-800/60 bg-orange-950/30 px-3 py-1.5 text-center text-xs font-medium text-orange-300">
-                🔥 {stats.currentStreak}-day streak on the line
+                {stats.currentStreak}-day streak on the line
               </p>
             )}
             <GuessHistory guesses={state.guesses} />
