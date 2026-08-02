@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { SITE_NAME, SITE_URL, SITE_EMAIL } from "@/lib/seo";
 
@@ -17,7 +18,8 @@ export const metadata: Metadata = {
 export default function PrivacyPage() {
   const host = SITE_URL.replace(/^https?:\/\//, "");
   return (
-    <main className="mx-auto flex min-h-dvh max-w-md flex-col gap-6 px-4 py-8">
+    <main className="mx-auto flex min-h-dvh max-w-2xl flex-col gap-6 px-4 py-6">
+      <SiteHeader />
       <header className="flex flex-col gap-2">
         <h1 className="text-2xl font-bold text-neutral-100">Privacy Policy</h1>
         <p className="text-xs text-neutral-500">Last updated: {LAST_UPDATED}</p>

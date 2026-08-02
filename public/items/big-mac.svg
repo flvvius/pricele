@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Hamburger">
+  <path d="M8 22c0-9 11-14 24-14s24 5 24 14z" fill="#e5a45a"/>
+  <circle cx="22" cy="14" r="1.4" fill="#fff5e0"/>
+  <circle cx="32" cy="11" r="1.4" fill="#fff5e0"/>
+  <circle cx="42" cy="14" r="1.4" fill="#fff5e0"/>
+  <rect x="7" y="22" width="50" height="5" rx="2.5" fill="#8fbf50"/>
+  <rect x="6" y="26" width="52" height="7" rx="3" fill="#7a3f1d"/>
+  <rect x="8" y="32" width="48" height="5" rx="2.5" fill="#f5c542"/>
+  <rect x="7" y="36" width="50" height="5" rx="2.5" fill="#8fbf50"/>
+  <rect x="6" y="40" width="52" height="7" rx="3" fill="#7a3f1d"/>
+  <path d="M8 47h48c0 6-10 9-24 9S8 53 8 47z" fill="#d99441"/>
+</svg>

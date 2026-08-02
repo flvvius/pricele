@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "test": "vitest run",
-    "collect-prices": "tsx scripts/collect-prices.ts"
+    "refresh-big-mac": "tsx scripts/refresh-big-mac.ts"
   },
   "dependencies": {
     "next": "14.2.15",

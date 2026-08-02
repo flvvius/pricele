@@ -1,10 +1,15 @@
 // Shared, framework-free formatting helpers used by both the interactive game
 // (Reveal) and the statically rendered SEO reference pages, so the numbers and
 // copy stay identical everywhere.
+//
+// Everything that compares prices is scoped to a single item id. There is no
+// longer one "active item" — each day has its own — so a helper that ranked or
+// averaged across the whole table would silently mix Big Macs in with litres of
+// milk.
 
 import type { PriceEntry } from "@/lib/puzzle";
-import { ACTIVE_ITEM } from "@/data/item";
-import pricesData from "@/data/prices.json";
+import { PRICES } from "@/lib/puzzle";
+import { getItem } from "@/data/items";
 
 /** "140 JPY", "45,000 LBP" — the price in its local currency. */
 export function formatLocal(price: PriceEntry): string {
@@ -77,7 +82,6 @@ export function bestPctOff(
 export function accuracyLine(bestOff: number, won: boolean): string {
   if (won) {
     if (bestOff === 0) return "Spot on. You nailed the exact price.";
-    if (bestOff <= 3) return `Within ${bestOff}% of the real price.`;
     return `Within ${bestOff}% of the real price.`;
   }
   if (bestOff <= 15) return `So close. Your closest was just ${bestOff}% off.`;
@@ -85,15 +89,34 @@ export function accuracyLine(bestOff: number, won: boolean): string {
   return `Your closest guess was ${bestOff}% off. Try again tomorrow.`;
 }
 
+const MONTHS = [
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December",
+];
+
 /**
- * A scale anchor for the very first guess: the median price of the active item
+ * "24 July 2026" from an ISO date. Built by hand rather than with toLocaleString
+ * so the statically rendered archive pages produce identical HTML on every
+ * machine, regardless of the build server's locale.
+ */
+export function formatArchiveDate(iso: string): string {
+  const [y, m, d] = iso.split("-").map(Number);
+  return `${d} ${MONTHS[m - 1]} ${y}`;
+}
+
+/** Every price row for one item. */
+function rowsFor(itemId: string): PriceEntry[] {
+  return PRICES.filter((p) => p.itemId === itemId);
+}
+
+/**
+ * A scale anchor for the very first guess: the median price of the day's item
  * across every country in the game. Without it a new player has no idea whether
  * the answer lives near $0.20 or $20, which makes the opening guess a pure stab.
  * The median deliberately says nothing about today's country specifically.
  */
-export function anchorPriceUSD(): number {
-  const all = (pricesData as PriceEntry[])
-    .filter((p) => p.itemId === ACTIVE_ITEM.id)
+export function anchorPriceUSD(itemId: string): number {
+  const all = rowsFor(itemId)
     .map((p) => p.priceUSD)
     .sort((a, b) => a - b);
   if (all.length === 0) return 0;
@@ -102,28 +125,26 @@ export function anchorPriceUSD(): number {
 }
 
 /**
- * Where today's price sits among all countries for the active item, as a
+ * Where the day's price sits among all countries for the same item, as a
  * "did you know" reveal stat. Ranks by USD price; 1 = most expensive.
  */
 export function priceRankLine(price: PriceEntry): string {
-  const all = (pricesData as PriceEntry[]).filter(
-    (p) => p.itemId === ACTIVE_ITEM.id
-  );
+  const all = rowsFor(price.itemId);
   const total = all.length;
   if (total < 2) return "";
   const sorted = [...all].sort((a, b) => b.priceUSD - a.priceUSD);
   const rank = sorted.findIndex((p) => p.countryCode === price.countryCode) + 1;
   if (rank <= 0) return "";
 
-  const item = ACTIVE_ITEM.name;
+  const noun = (getItem(price.itemId)?.shortName ?? "item").toLowerCase();
   if (rank === 1) {
-    return `That makes it the most expensive ${item} of all ${total} countries in the game.`;
+    return `That makes it the most expensive ${noun} of all ${total} countries in the game.`;
   }
   if (rank === total) {
-    return `That makes it the cheapest ${item} of all ${total} countries in the game.`;
+    return `That makes it the cheapest ${noun} of all ${total} countries in the game.`;
   }
   // Share of other countries that cost LESS than this one. A high number means
-  // today's price is expensive, not cheap.
+  // this price is expensive, not cheap.
   const cheaperCount = total - rank;
   const pctCheaper = Math.round((cheaperCount / (total - 1)) * 100);
   if (rank <= 3) {
@@ -133,12 +154,4 @@ export function priceRankLine(price: PriceEntry): string {
     return `More expensive than ${pctCheaper}% of the ${total} countries in the game.`;
   }
   return `Cheaper than ${100 - pctCheaper}% of the ${total} countries in the game.`;
-}
-
-/** URL-safe slug for a country, e.g. "United States" -> "united-states". */
-export function countrySlug(countryName: string): string {
-  return countryName
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
 }

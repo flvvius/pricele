@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { getDailyPuzzle, isoDate, dateFromISO } from "@/lib/puzzle";
-import { ACTIVE_ITEM } from "@/data/item";
 import { evaluate } from "@/lib/scoring";
 import {
   loadDayState,
@@ -147,7 +146,7 @@ export default function Game() {
         </IconButton>
         <div className="text-center">
           <h1 className="text-xl font-black leading-tight tracking-tight">Pricele</h1>
-          <p className="text-[10px] text-neutral-500">New country daily</p>
+          <p className="text-[10px] text-neutral-500">New item &amp; country daily</p>
         </div>
         <div className="flex items-center">
           <IconButton label="Archive" onClick={() => setShowArchive(true)}>
@@ -181,18 +180,20 @@ export default function Game() {
         </div>
       )}
 
+      {/* Both the item and the country change daily, so this bar is the only
+          place that tells the player what they are actually pricing today. */}
       <div className="flex shrink-0 items-center gap-3 rounded-xl border border-neutral-800 bg-neutral-900/60 p-2.5">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={ACTIVE_ITEM.imageUrl}
-          alt={ACTIVE_ITEM.name}
+          src={puzzle?.item.imageUrl ?? "/items/placeholder.svg"}
+          alt={puzzle?.item.name ?? ""}
           width={40}
           height={40}
           className="h-10 w-10 shrink-0 rounded-lg bg-white object-contain p-1"
         />
         <div className="min-w-0">
           <h2 className="truncate text-sm font-bold leading-tight">
-            {ACTIVE_ITEM.name}
+            {puzzle ? puzzle.item.name : "Today's item"}
           </h2>
           <p className="truncate text-sm text-neutral-300">
             {puzzle ? (
@@ -201,7 +202,7 @@ export default function Game() {
                 <span aria-hidden>{puzzle.price.flag}</span>
               </>
             ) : (
-              <span className="text-neutral-500">Loading today&apos;s country</span>
+              <span className="text-neutral-500">Loading today&apos;s puzzle</span>
             )}
           </p>
         </div>
@@ -214,7 +215,7 @@ export default function Game() {
           <div className="min-h-0 flex-1 overflow-y-auto">
             <Reveal
               puzzleNumber={puzzle.puzzleNumber}
-              itemName={ACTIVE_ITEM.name}
+              item={puzzle.item}
               price={puzzle.price}
               guesses={state.guesses}
               won={state.won}
@@ -234,9 +235,10 @@ export default function Game() {
             <div className="shrink-0">
               {state.guesses.length === 0 && (
                 <p className="mb-2 text-center text-xs text-neutral-500">
-                  For scale, the median across all countries is{" "}
+                  For scale, the median {puzzle.item.shortName.toLowerCase()}{" "}
+                  across all countries is{" "}
                   <span className="font-semibold text-neutral-300">
-                    {formatMoney(anchorPriceUSD(), "USD")}
+                    {formatMoney(anchorPriceUSD(puzzle.item.id), "USD")}
                   </span>
                   .
                 </p>

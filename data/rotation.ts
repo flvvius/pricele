@@ -1,21 +1,34 @@
-// Maps each day to a country: index = daysSince(startDate) % countryOrder.length.
+// Maps each day to one (item, country) pair:
+//   country = countryOrder[dayIndex % countryOrder.length]
+//   item    = itemOrder[dayIndex % itemOrder.length]
+// where dayIndex = daysSince(startDate).
+//
+// The two lists advance independently. Their lengths (33 and 7) are coprime, so
+// a given pair only recurs after 33 x 7 = 231 days: a different country every
+// day, a different item every day, and the same combination about twice a year.
 //
 // STABILITY RULE — read before editing:
-//   To keep a given day's country from ever changing, only ever *append* new
-//   countries to the end of countryOrder, and never move startDate or reorder
-//   the existing entries. Because the day index is the raw day count until it
-//   exceeds the list length, appending only affects days far in the future and
-//   leaves today and the near-term schedule fixed. (Reordering the list or
-//   changing its length under a fixed startDate is exactly what shifted the
-//   puzzle from India to Lebanon before, so don't do that.)
+//   To keep a given day's puzzle from ever changing, only ever *append* to
+//   countryOrder or itemOrder, and never move startDate or reorder the existing
+//   entries. Appending changes a list's length, and therefore the modulo for
+//   every day past the current cycle — so append at the END only, never insert
+//   in the middle. (Reordering countryOrder under a fixed startDate is exactly
+//   what shifted the puzzle from India to Lebanon once before.)
+//
+//   One extra constraint on itemOrder: keep its length coprime with
+//   countryOrder's, or the pairing collapses onto a short cycle and most
+//   combinations never come up. With 33 countries, avoid item counts of 11, 22
+//   and 33; lengths 8, 9 and 10 are all fine.
 
 export interface Rotation {
   /** Puzzle #1 date, for the puzzle counter only. Local date "YYYY-MM-DD". */
   epoch: string;
-  /** Day 0 of the rotation, i.e. countryOrder[0]. Local date "YYYY-MM-DD". */
+  /** Day 0 of the rotation, i.e. countryOrder[0] + itemOrder[0]. Local date. */
   startDate: string;
   /** Ordered country codes; today's index = daysSince(startDate) % length. */
   countryOrder: string[];
+  /** Ordered item ids; today's index = daysSince(startDate) % length. */
+  itemOrder: string[];
 }
 
 export const ROTATION: Rotation = {
@@ -28,5 +41,11 @@ export const ROTATION: Rotation = {
     "VN", "GB", "ZA", "AU", "ID", "FR", "TR", "BR", "SA", "IE",
     "CN", "KR", "NZ", "PL", "LB", "IT", "AE", "SE", "PT", "CA",
     "ES", "NL", "SG",
+  ],
+  // Ordered so consecutive days move between categories (restaurant, grocery,
+  // fuel) instead of running three groceries in a row. Append only.
+  itemOrder: [
+    "big-mac", "milk-1l", "cappuccino", "eggs-12",
+    "gasoline-1l", "coke-330ml", "apples-1kg",
   ],
 };

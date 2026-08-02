@@ -43,15 +43,17 @@ export default function ArchiveModal({ open, onClose, today, onPlay }: Props) {
                   }}
                   className="flex w-full items-center justify-between rounded-lg border border-neutral-800 bg-neutral-800/60 px-3 py-2.5 text-left transition hover:border-neutral-600 hover:bg-neutral-800"
                 >
-                  <span className="flex items-center gap-2">
+                  {/* The item changes daily too, so the country alone no longer
+                      identifies a past puzzle. */}
+                  <span className="flex min-w-0 items-center gap-2">
                     <span className="text-lg" aria-hidden>
                       {puzzle.price.flag}
                     </span>
-                    <span>
-                      <span className="font-medium">
-                        {puzzle.price.countryName}
+                    <span className="min-w-0">
+                      <span className="block truncate font-medium">
+                        {puzzle.item.shortName} in {puzzle.price.countryName}
                       </span>
-                      <span className="ml-2 text-xs text-neutral-500">
+                      <span className="block text-xs text-neutral-500">
                         #{puzzle.puzzleNumber}
                       </span>
                     </span>

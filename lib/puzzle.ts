@@ -4,7 +4,7 @@
 
 import pricesData from "@/data/prices.json";
 import { ROTATION } from "@/data/rotation";
-import { ACTIVE_ITEM } from "@/data/item";
+import { getItem, type Item } from "@/data/items";
 
 export interface PriceEntry {
   itemId: string;
@@ -19,7 +19,19 @@ export interface PriceEntry {
   sourceDate: string;
 }
 
-const PRICES = pricesData as PriceEntry[];
+export const PRICES = pricesData as PriceEntry[];
+
+/** Fast lookup for a single (item, country) pair. */
+const PRICE_INDEX = new Map(
+  PRICES.map((p) => [`${p.itemId}:${p.countryCode}`, p])
+);
+
+export function findPrice(
+  itemId: string,
+  countryCode: string
+): PriceEntry | undefined {
+  return PRICE_INDEX.get(`${itemId}:${countryCode}`);
+}
 
 const MS_PER_DAY = 24 * 60 * 60 * 1000;
 
@@ -77,29 +89,48 @@ export function addDaysISO(iso: string, days: number): string {
 
 export interface DailyPuzzle {
   puzzleNumber: number;
-  item: typeof ACTIVE_ITEM;
+  item: Item;
   price: PriceEntry;
 }
 
+/** Positive modulo, so dates before startDate still land in range. */
+function mod(n: number, m: number): number {
+  return ((n % m) + m) % m;
+}
+
 /**
- * Resolve the puzzle for a given day: which country is up, and its price row.
- * Returns null only if the rotation is empty or the country has no price row
- * (a data error we surface rather than crash on).
+ * Resolve the puzzle for a given day: which country and item are up, and the
+ * matching price row.
+ *
+ * The country and item advance on independent cycles (see data/rotation.ts).
+ * Not every country has every item — the price table is deliberately sparse
+ * rather than padded with invented numbers — so when the scheduled pair has no
+ * row we walk forward through itemOrder to the next item that country does
+ * have. That substitution is a pure function of the day index, so a given date
+ * always resolves to the same puzzle on every device and every rebuild.
+ *
+ * Returns null only if the rotation is empty or the country has no rows at all.
  */
 export function getDailyPuzzle(today: Date = new Date()): DailyPuzzle | null {
-  const { countryOrder, startDate } = ROTATION;
-  if (countryOrder.length === 0) return null;
+  const { countryOrder, itemOrder, startDate } = ROTATION;
+  if (countryOrder.length === 0 || itemOrder.length === 0) return null;
 
-  const idx =
-    ((daysSince(startDate, today) % countryOrder.length) +
-      countryOrder.length) %
-    countryOrder.length;
-  const countryCode = countryOrder[idx];
+  const dayIndex = daysSince(startDate, today);
+  const countryCode = countryOrder[mod(dayIndex, countryOrder.length)];
+  const itemIndex = mod(dayIndex, itemOrder.length);
 
-  const price = PRICES.find(
-    (p) => p.itemId === ACTIVE_ITEM.id && p.countryCode === countryCode
-  );
-  if (!price) return null;
+  for (let offset = 0; offset < itemOrder.length; offset++) {
+    const itemId = itemOrder[(itemIndex + offset) % itemOrder.length];
+    const price = findPrice(itemId, countryCode);
+    const item = getItem(itemId);
+    if (price && item) {
+      return { puzzleNumber: puzzleNumber(today), item, price };
+    }
+  }
+  return null;
+}
 
-  return { puzzleNumber: puzzleNumber(today), item: ACTIVE_ITEM, price };
+/** The puzzle for an ISO date string. Convenience for the static archive pages. */
+export function getPuzzleForISO(iso: string): DailyPuzzle | null {
+  return getDailyPuzzle(dateFromISO(iso));
 }

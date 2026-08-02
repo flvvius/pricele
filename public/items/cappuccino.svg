@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Cappuccino cup">
+  <path d="M46 24h6a7 7 0 0 1 0 14h-6z" fill="none" stroke="#c9ccce" stroke-width="4"/>
+  <path d="M12 20h36v18a14 14 0 0 1-14 14h-8a14 14 0 0 1-14-14z" fill="#f2f4f5" stroke="#c9ccce" stroke-width="2"/>
+  <path d="M14 22h32v6H14z" fill="#c8763c"/>
+  <ellipse cx="30" cy="22" rx="16" ry="4" fill="#fbf6ef"/>
+  <ellipse cx="30" cy="22" rx="7" ry="2" fill="#d9a273" opacity="0.8"/>
+  <rect x="8" y="52" width="44" height="5" rx="2.5" fill="#c9ccce"/>
+</svg>

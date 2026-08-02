@@ -2,7 +2,7 @@
 // JSON-LD structured-data builders. Keeping these here means every page emits
 // consistent metadata and schema, and the production URL is set in one place.
 
-import { ACTIVE_ITEM } from "@/data/item";
+import { ITEMS } from "@/data/items";
 
 /**
  * Canonical origin, no trailing slash. Defaults to the production custom domain
@@ -15,11 +15,11 @@ export const SITE_URL = (
 ).replace(/\/$/, "");
 
 export const SITE_NAME = "Pricele";
-export const SITE_TAGLINE = "Guess the price. New country daily.";
+export const SITE_TAGLINE = "Guess the price. New item and country daily.";
 /** Public contact address, surfaced on the Contact page and in policies. */
 export const SITE_EMAIL = "flaviuscojocaru19@gmail.com";
 export const SITE_DESCRIPTION =
-  "Pricele is a free daily game where you guess the price of an everyday item somewhere in the world in 5 tries. New country every day. See how well you actually know what things cost.";
+  "Pricele is a free daily game where you guess what an everyday item costs in a different country each day — a Big Mac in Norway, a cappuccino in Japan, a litre of petrol in Egypt. Five tries, real price data, a new puzzle every day.";
 
 /** Absolute URL for a site-relative path. */
 export function absoluteUrl(path = "/"): string {
@@ -102,5 +102,14 @@ export function faqJsonLd(items: FaqItem[]) {
   };
 }
 
-/** The canonical item name, for reuse in copy and titles. */
-export const ITEM_NAME = ACTIVE_ITEM.name;
+/** "a Big Mac, a cappuccino, a litre of milk…" — item names for prose. */
+export const ITEM_LIST = ITEMS.map((i) => i.shortName.toLowerCase());
+
+/** "Big Mac, Coca-Cola, cappuccino and 4 more" — compact list for meta copy. */
+export function itemSummary(max = 3): string {
+  const names = ITEMS.map((i) => i.shortName);
+  if (names.length <= max) return names.join(", ");
+  return `${names.slice(0, max).join(", ")} and ${names.length - max} more`;
+}
+
+export const ITEM_COUNT = ITEMS.length;

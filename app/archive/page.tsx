@@ -1,0 +1,102 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import ContentPage, { Section, Prose } from "@/components/ContentPage";
+import JsonLd from "@/components/JsonLd";
+import { publishedArchiveDates } from "@/lib/catalog";
+import { getPuzzleForISO } from "@/lib/puzzle";
+import { formatUSD, formatArchiveDate } from "@/lib/format";
+import { absoluteUrl } from "@/lib/seo";
+
+export const revalidate = 3600;
+
+export const metadata: Metadata = {
+  title: "Puzzle archive",
+  description:
+    "Every past Pricele puzzle with its answer — which item, which country, and what it actually cost. Replay any day without affecting your streak.",
+  alternates: { canonical: "/archive" },
+};
+
+export default function ArchiveIndex() {
+  const dates = publishedArchiveDates();
+  const entries = dates
+    .map((iso) => ({ iso, puzzle: getPuzzleForISO(iso) }))
+    .filter((e): e is { iso: string; puzzle: NonNullable<typeof e.puzzle> } =>
+      e.puzzle !== null
+    );
+
+  return (
+    <ContentPage
+      title="Puzzle archive"
+      intro={
+        <>
+          <p>
+            Every Pricele puzzle that has already been played, newest first, with
+            the answer. Each entry has its own page explaining the price and how
+            that country compares.
+          </p>
+          <p>
+            Puzzles from the last two days aren&apos;t listed here — the game
+            rolls over at each player&apos;s local midnight, and these pages are
+            shared by everyone, so recent answers stay in the game only. You can
+            still replay them from the archive button inside the game.
+          </p>
+        </>
+      }
+    >
+      {entries.length === 0 ? (
+        <Prose>
+          <p>
+            No puzzles have finished yet. Come back in a couple of days —{" "}
+            <Link href="/" className="underline hover:text-neutral-300">
+              play today&apos;s
+            </Link>{" "}
+            in the meantime.
+          </p>
+        </Prose>
+      ) : (
+        <Section heading={`${entries.length} past puzzles`}>
+          <ul className="flex flex-col gap-1.5">
+            {entries.map(({ iso, puzzle }) => (
+              <li key={iso}>
+                <Link
+                  href={`/archive/${iso}`}
+                  className="flex items-center gap-3 rounded-lg border border-neutral-800 bg-neutral-900/50 px-3 py-2.5 transition hover:border-neutral-600 hover:bg-neutral-800"
+                >
+                  <span aria-hidden className="text-lg">
+                    {puzzle.price.flag}
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block truncate text-sm font-medium text-neutral-100">
+                      {puzzle.item.shortName} in {puzzle.price.countryName}
+                    </span>
+                    <span className="block text-xs text-neutral-500">
+                      #{puzzle.puzzleNumber} · {formatArchiveDate(iso)}
+                    </span>
+                  </span>
+                  <span className="shrink-0 text-sm tabular-nums text-neutral-300">
+                    {formatUSD(puzzle.price.priceUSD)}
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </Section>
+      )}
+
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          name: "Pricele puzzle archive",
+          url: absoluteUrl("/archive"),
+          description: metadata.description,
+          hasPart: entries.slice(0, 100).map(({ iso, puzzle }) => ({
+            "@type": "WebPage",
+            name: `Pricele #${puzzle.puzzleNumber} — ${puzzle.item.shortName} in ${puzzle.price.countryName}`,
+            url: absoluteUrl(`/archive/${iso}`),
+          })),
+        }}
+      />
+    </ContentPage>
+  );
+}

@@ -24,12 +24,15 @@ export interface ShareInput {
  * it as the dedicated `url` field of the native share sheet).
  *
  * One square per guess, from the band already stored on each guess, so the row
- * reads as the shape of the round at a glance:
- *   Pricele #47 · Lebanon 🇱🇧 · 3/5 (within 4%)
+ * reads as the shape of the round at a glance. The item is named as well as the
+ * country, because both change daily — without it, two people posting the same
+ * country on different days look like they played the same puzzle:
+ *   Pricele #47 · Cappuccino in Lebanon 🇱🇧 · 3/5 (within 4%)
  *   ⬛🟨🟩
  */
 export function buildShareText({
   puzzleNumber,
+  itemName,
   countryName,
   flag,
   guesses,
@@ -39,7 +42,7 @@ export function buildShareText({
   const score = won ? `${guesses.length}/${MAX_GUESSES}` : `X/${MAX_GUESSES}`;
   const acc =
     won && bestPctOff !== undefined ? ` (within ${Math.max(bestPctOff, 1)}%)` : "";
-  const header = `Pricele #${puzzleNumber} · ${countryName} ${flag} · ${score}${acc}`;
+  const header = `Pricele #${puzzleNumber} · ${itemName} in ${countryName} ${flag} · ${score}${acc}`;
   const grid = guesses.map((g) => BAND_EMOJI[g.band]).join("");
   return [header, grid].join("\n");
 }

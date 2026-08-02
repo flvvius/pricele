@@ -1,4 +1,7 @@
+import Link from "next/link";
 import type { PriceEntry } from "@/lib/puzzle";
+import type { Item } from "@/data/items";
+import { countrySlug } from "@/lib/catalog";
 import {
   isPerfect,
   milestoneFor,
@@ -22,7 +25,7 @@ import { AD_SLOTS } from "@/lib/ads";
 
 interface Props {
   puzzleNumber: number;
-  itemName: string;
+  item: Item;
   price: PriceEntry;
   guesses: GuessRecord[];
   won: boolean;
@@ -34,7 +37,7 @@ interface Props {
 
 export default function Reveal({
   puzzleNumber,
-  itemName,
+  item,
   price,
   guesses,
   won,
@@ -64,7 +67,7 @@ export default function Reveal({
 
       <div className="animate-pop rounded-xl border border-neutral-700 bg-neutral-800 p-5 text-center">
         <p className="text-xs uppercase tracking-wide text-neutral-400">
-          Actual price
+          {item.name} in {price.countryName}
         </p>
         <p className="mt-1 text-4xl font-black tabular-nums">
           {formatMoney(price.priceUSD, "USD")}
@@ -78,6 +81,29 @@ export default function Reveal({
         {priceRankLine(price) && (
           <p className="mt-2 text-sm text-neutral-400">{priceRankLine(price)}</p>
         )}
+        <p className="mt-3 text-[11px] leading-relaxed text-neutral-500">
+          Source: {price.source}.{" "}
+          <Link href="/methodology" className="underline hover:text-neutral-300">
+            How we source prices
+          </Link>
+        </p>
+      </div>
+
+      {/* The reveal is where curiosity peaks, so it's the right place to hand
+          players the two reference pages behind today's number. */}
+      <div className="flex gap-2 text-sm">
+        <Link
+          href={`/items/${item.slug}`}
+          className="flex-1 rounded-lg border border-neutral-700 px-3 py-2.5 text-center font-medium text-neutral-200 transition hover:bg-neutral-800"
+        >
+          {item.shortName} in every country
+        </Link>
+        <Link
+          href={`/prices/${countrySlug(price.countryName)}`}
+          className="flex-1 rounded-lg border border-neutral-700 px-3 py-2.5 text-center font-medium text-neutral-200 transition hover:bg-neutral-800"
+        >
+          Prices in {price.countryName}
+        </Link>
       </div>
 
       {!isArchive && won && milestone && (
@@ -108,7 +134,7 @@ export default function Reveal({
 
       <ShareCard
         puzzleNumber={puzzleNumber}
-        itemName={itemName}
+        itemName={item.shortName}
         countryName={price.countryName}
         flag={price.flag}
         guesses={guesses}
@@ -125,7 +151,7 @@ export default function Reveal({
       {!isArchive && (
         <div className="flex items-center justify-between rounded-lg border border-neutral-800 bg-neutral-900 px-4 py-3 text-sm">
           <div>
-            <p className="text-neutral-400">Next country in</p>
+            <p className="text-neutral-400">Next puzzle in</p>
             <Countdown />
           </div>
           <button
