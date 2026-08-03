@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
+import { Instrument_Serif, Archivo, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import JsonLd from "@/components/JsonLd";
+import ThemeScript, { EDITION_THEME_COLOR } from "@/components/ThemeScript";
 import { ADSENSE_CLIENT, ADSENSE_LOADER_SRC, adsEnabled } from "@/lib/ads";
 import {
   SITE_URL,
@@ -9,6 +11,31 @@ import {
   gameJsonLd,
   websiteJsonLd,
 } from "@/lib/seo";
+
+// Self-hosted and subset at build time, so there is no third-party font request
+// and no layout shift. `display: swap` on the two text faces keeps first paint
+// readable; the display face is only ever used at large sizes where a swap is
+// less disruptive than invisible text.
+const display = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+  variable: "--font-display",
+  display: "swap",
+});
+
+const sans = Archivo({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  display: "swap",
+});
+
+const mono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-mono",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -83,8 +110,15 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#171717",
-  colorScheme: "dark",
+  // The browser chrome should match whichever edition the reader is in, so the
+  // status bar never sits as a bright band above a dark page (or vice versa).
+  // These cover the OS-preference case; once the reader picks an edition by
+  // hand, ThemeScript/ThemeToggle overwrite both tags with the chosen colour.
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: EDITION_THEME_COLOR.paper },
+    { media: "(prefers-color-scheme: dark)", color: EDITION_THEME_COLOR.night },
+  ],
+  colorScheme: "light dark",
   width: "device-width",
   initialScale: 1,
   // Make the on-screen keyboard shrink the viewport instead of covering the
@@ -98,8 +132,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      className={`${display.variable} ${sans.variable} ${mono.variable}`}
+      suppressHydrationWarning
+    >
       <head>
+        <ThemeScript />
         {/* Google AdSense: verification meta + loader, on every page. Both are
             gated on a well-formed publisher id (enabled by default). */}
         {adsEnabled() && (
@@ -110,7 +149,9 @@ export default function RootLayout({
         )}
         <JsonLd data={[websiteJsonLd(), gameJsonLd()]} />
       </head>
-      <body className="min-h-dvh antialiased">{children}</body>
+      <body className="min-h-dvh bg-paper font-sans text-ink-body antialiased">
+        {children}
+      </body>
     </html>
   );
 }

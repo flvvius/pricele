@@ -37,7 +37,7 @@ export default function ItemsIndex() {
       }
     >
       <Section heading="All items">
-        <ul className="flex flex-col gap-2">
+        <ul className="border-t border-rule">
           {ITEMS.map((item) => {
             const prices = pricesForItem(item.id);
             const lo = prices[0];
@@ -46,7 +46,7 @@ export default function ItemsIndex() {
               <li key={item.id}>
                 <Link
                   href={`/items/${item.slug}`}
-                  className="flex items-center gap-3 rounded-xl border border-neutral-800 bg-neutral-900/50 p-3 transition hover:border-neutral-600 hover:bg-neutral-800"
+                  className="flex items-center gap-3 border-b border-rule-soft px-1 py-3 transition-[background-color,color] duration-fast ease-out hover:bg-paper-raised"
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
@@ -54,19 +54,19 @@ export default function ItemsIndex() {
                     alt=""
                     width={40}
                     height={40}
-                    className="h-10 w-10 shrink-0 rounded-lg bg-white object-contain p-1"
+                    className="h-10 w-10 shrink-0 border border-rule bg-paper-raised object-contain p-1"
                   />
                   <div className="min-w-0 flex-1">
-                    <h3 className="text-sm font-bold text-neutral-100">
+                    <h3 className="text-sm font-bold text-ink-strong">
                       {item.name}
                     </h3>
-                    <p className="truncate text-xs text-neutral-500">
+                    <p className="truncate text-xs text-ink-meta">
                       {prices.length} countries · median{" "}
                       {formatUSD(medianPriceUSD(item.id))}
                     </p>
                   </div>
                   {lo && hi && (
-                    <span className="shrink-0 text-right text-xs tabular-nums text-neutral-400">
+                    <span className="shrink-0 text-right text-xs tabular-nums text-ink-muted">
                       {formatUSD(lo.priceUSD)} – {formatUSD(hi.priceUSD)}
                     </span>
                   )}

@@ -2,6 +2,10 @@ import type { FaqItem } from "@/lib/seo";
 
 // Visible, crawlable FAQ. Uses <details> so the answers are in the initial HTML
 // (open by default for search engines and assistive tech) while staying compact.
+//
+// Ruled rows, no boxes. The native marker is removed and replaced with a
+// typographic one that rotates on open — the default triangle is a different
+// glyph in every browser and none of them match the rest of the page.
 export default function FaqSection({
   items,
   heading = "Frequently asked questions",
@@ -12,24 +16,33 @@ export default function FaqSection({
   id?: string;
 }) {
   return (
-    <section aria-labelledby={`${id}-heading`} className="flex flex-col gap-3">
-      <h2 id={`${id}-heading`} className="text-lg font-bold text-neutral-100">
+    <section aria-labelledby={`${id}-heading`} className="flex flex-col gap-4">
+      <h2 id={`${id}-heading`} className="display text-2xl text-ink">
         {heading}
       </h2>
-      <dl className="flex flex-col gap-2">
+      {/* Plain div rather than a <dl>: a description list may only contain
+          dt/dd (or div groups wrapping them), so <details> children — and a
+          <dt> nested inside a <summary> — are invalid markup that assistive
+          tech is free to ignore. The FAQ structured data is emitted separately
+          by <JsonLd/>, so nothing depends on the list semantics here. */}
+      <div className="border-t border-rule">
         {items.map((item, i) => (
-          <details
-            key={i}
-            open={i === 0}
-            className="rounded-lg border border-neutral-800 bg-neutral-900/60 p-3"
-          >
-            <summary className="cursor-pointer font-semibold text-neutral-200 marker:text-neutral-600">
-              <dt className="inline">{item.question}</dt>
+          <details key={i} open={i === 0} className="group border-b border-rule-soft">
+            <summary className="flex cursor-pointer list-none items-start gap-3 py-3.5 text-[15px] font-medium text-ink marker:content-none [&::-webkit-details-marker]:hidden">
+              <span
+                aria-hidden
+                className="mt-[3px] shrink-0 font-mono text-[11px] text-ink-faint transition-transform duration-fast ease-out group-open:rotate-90"
+              >
+                &gt;
+              </span>
+              <span className="flex-1">{item.question}</span>
             </summary>
-            <dd className="mt-2 text-sm text-neutral-400">{item.answer}</dd>
+            <div className="pb-4 pl-[1.4rem] text-[13px] leading-relaxed text-ink-muted">
+              {item.answer}
+            </div>
           </details>
         ))}
-      </dl>
+      </div>
     </section>
   );
 }

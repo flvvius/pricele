@@ -24,11 +24,11 @@ export default function Home() {
       <section aria-labelledby="about-heading" className="flex flex-col gap-3">
         <h2
           id="about-heading"
-          className="text-lg font-bold text-neutral-100"
+          className="display text-[1.75rem] text-ink"
         >
           A new price puzzle every day
         </h2>
-        <p className="text-sm leading-relaxed text-neutral-400">
+        <p className="text-[15px] leading-[1.7] text-ink-body">
           Pricele is a free daily game about what things cost around the world.
           Every day you get one country and one everyday item — a Big Mac in
           Norway, a cappuccino in Japan, a litre of petrol in Egypt — and you try
@@ -37,7 +37,7 @@ export default function Home() {
           of the real price. Both the item and the country change at midnight
           your time, so there&apos;s always a fresh one waiting when you wake up.
         </p>
-        <p className="text-sm leading-relaxed text-neutral-400">
+        <p className="text-[15px] leading-[1.7] text-ink-body">
           If you play Wordle or Globle, it&apos;s the same kind of thing: a quick
           puzzle you do once a day, plus a streak you&apos;ll want to keep going.
           The difference is that the answer is a real number — every price comes
@@ -47,20 +47,20 @@ export default function Home() {
       </section>
 
       <section aria-labelledby="items-heading" className="flex flex-col gap-3">
-        <h2 id="items-heading" className="text-lg font-bold text-neutral-100">
+        <h2 id="items-heading" className="display text-[1.75rem] text-ink">
           What&apos;s in the game
         </h2>
-        <p className="text-sm leading-relaxed text-neutral-400">
+        <p className="text-[15px] leading-[1.7] text-ink-body">
           {ITEMS.length} items, priced across {COUNTRIES.length} countries. Each
           item has its own page ranking every country from cheapest to most
           expensive.
         </p>
-        <ul className="flex flex-col gap-1.5">
+        <ul className="border-t border-rule">
           {ITEMS.map((item) => (
             <li key={item.id}>
               <Link
                 href={`/items/${item.slug}`}
-                className="flex items-center justify-between gap-3 rounded-lg border border-neutral-800 bg-neutral-900/50 px-3 py-2.5 transition hover:border-neutral-600 hover:bg-neutral-800"
+                className="flex items-center justify-between gap-3 border-b border-rule-soft px-1 py-2.5 transition-[background-color] duration-fast ease-out hover:bg-paper-raised"
               >
                 <span className="flex min-w-0 items-center gap-2.5">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -69,15 +69,15 @@ export default function Home() {
                     alt=""
                     width={28}
                     height={28}
-                    className="h-7 w-7 shrink-0 rounded bg-white object-contain p-0.5"
+                    className="h-7 w-7 shrink-0 border border-rule bg-paper-raised object-contain p-0.5"
                   />
-                  <span className="truncate text-sm text-neutral-200">
+                  <span className="truncate text-[14px] text-ink-body">
                     {item.name}
                   </span>
                 </span>
-                <span className="shrink-0 text-xs tabular-nums text-neutral-500">
+                <span className="shrink-0 font-mono text-[11px] tabular-nums text-ink-meta">
                   median {formatUSD(medianPriceUSD(item.id))}
-                  <span className="ml-1.5 text-neutral-600">
+                  <span className="ml-1.5 text-ink-faint">
                     · {pricesForItem(item.id).length}
                   </span>
                 </span>
@@ -85,17 +85,17 @@ export default function Home() {
             </li>
           ))}
         </ul>
-        <p className="text-sm text-neutral-400">
+        <p className="text-[15px] leading-[1.7] text-ink-body">
           Or browse{" "}
-          <Link href="/prices" className="underline hover:text-neutral-300">
+          <Link href="/prices" className="underline decoration-rule underline-offset-2 transition-colors duration-fast ease-out hover:text-ink">
             prices by country
           </Link>
           , read the{" "}
-          <Link href="/methodology" className="underline hover:text-neutral-300">
+          <Link href="/methodology" className="underline decoration-rule underline-offset-2 transition-colors duration-fast ease-out hover:text-ink">
             methodology
           </Link>
           , or replay past rounds in the{" "}
-          <Link href="/archive" className="underline hover:text-neutral-300">
+          <Link href="/archive" className="underline decoration-rule underline-offset-2 transition-colors duration-fast ease-out hover:text-ink">
             archive
           </Link>
           .

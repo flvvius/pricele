@@ -29,7 +29,7 @@ export default function ContactPage() {
           <p>
             <a
               href={`mailto:${SITE_EMAIL}`}
-              className="inline-block rounded-lg border border-neutral-700 bg-neutral-900/60 px-4 py-2.5 font-semibold text-neutral-100 transition hover:border-neutral-500"
+              className="inline-block border border-rule px-4 py-2.5 font-mono text-[10px] uppercase tracking-[0.16em] text-ink-body transition-[border-color,background-color,transform] duration-press ease-out hover:border-ink hover:bg-paper-raised active:scale-[0.97]"
             >
               {SITE_EMAIL}
             </a>

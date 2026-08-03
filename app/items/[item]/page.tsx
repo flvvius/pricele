@@ -84,7 +84,7 @@ export default function ItemPage({ params }: { params: { item: string } }) {
     >
       <Section heading="The numbers">
         <PriceTable rows={rows} labelHeader="Country" />
-        <p className="text-xs text-neutral-500">
+        <p className="label">
           Source: {item.sourceNote}{" "}
           <Link href="/methodology" className="underline hover:text-neutral-300">
             Full methodology
@@ -142,7 +142,7 @@ export default function ItemPage({ params }: { params: { item: string } }) {
             <li key={i.id}>
               <Link
                 href={`/items/${i.slug}`}
-                className="inline-block rounded-md border border-neutral-800 px-2 py-1 text-xs text-neutral-400 transition hover:border-neutral-600 hover:text-neutral-200"
+                className="inline-block border border-rule px-2 py-1 font-mono text-[10px] uppercase tracking-[0.1em] text-ink-muted transition-[border-color,color] duration-fast ease-out hover:border-ink hover:text-ink"
               >
                 {i.name}
               </Link>

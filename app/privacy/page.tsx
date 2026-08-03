@@ -15,14 +15,23 @@ export const metadata: Metadata = {
   alternates: { canonical: "/privacy" },
 };
 
+/** Every heading on the page is the same size and weight; say it once. */
+function SectionHeading({ children }: { children: React.ReactNode }) {
+  return <h2 className="display text-[1.5rem] text-ink">{children}</h2>;
+}
+
+/** Shared by the outbound policy links and the two internal ones. */
+const POLICY_LINK =
+  "underline decoration-rule underline-offset-2 transition-colors duration-fast ease-out hover:text-ink";
+
 export default function PrivacyPage() {
   const host = SITE_URL.replace(/^https?:\/\//, "");
   return (
     <main className="mx-auto flex min-h-dvh max-w-2xl flex-col gap-6 px-4 py-6">
       <SiteHeader />
       <header className="flex flex-col gap-2">
-        <h1 className="text-2xl font-bold text-neutral-100">Privacy Policy</h1>
-        <p className="text-xs text-neutral-500">Last updated: {LAST_UPDATED}</p>
+        <h1 className="display text-[2.5rem] text-ink">Privacy Policy</h1>
+        <p className="label">Last updated: {LAST_UPDATED}</p>
       </header>
 
       <div className="flex flex-col gap-6 text-sm leading-relaxed text-neutral-400">
@@ -36,9 +45,7 @@ export default function PrivacyPage() {
         </section>
 
         <section className="flex flex-col gap-2">
-          <h2 className="text-lg font-bold text-neutral-100">
-            Information we collect
-          </h2>
+          <SectionHeading>Information we collect</SectionHeading>
           <p>
             {SITE_NAME} does not require an account and we do not ask you for
             personal information such as your name, email address, or payment
@@ -48,19 +55,17 @@ export default function PrivacyPage() {
             To make the game work, your progress — your guesses for the day, your
             win/loss result, your streak, and a couple of interface preferences —
             is saved locally in your own browser using{" "}
-            <code className="text-neutral-300">localStorage</code>. This data
+            <code className="font-mono text-[13px] text-ink">localStorage</code>. This data
             stays on your device, is not transmitted to us, and you can clear it
             at any time through your browser settings.
           </p>
         </section>
 
         <section className="flex flex-col gap-2">
-          <h2 className="text-lg font-bold text-neutral-100">
-            Cookies and advertising
-          </h2>
+          <SectionHeading>Cookies and advertising</SectionHeading>
           <p>
             {SITE_NAME} is supported by advertising served through{" "}
-            <strong className="text-neutral-300">Google AdSense</strong>, a
+            <strong className="font-semibold text-ink">Google AdSense</strong>, a
             third-party advertising service provided by Google. To show ads,
             Google and its partners may use cookies and similar technologies.
           </p>
@@ -80,7 +85,7 @@ export default function PrivacyPage() {
                 href="https://www.google.com/settings/ads"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-neutral-200 underline hover:text-neutral-100"
+                className={POLICY_LINK}
               >
                 Google Ads Settings
               </a>
@@ -90,7 +95,7 @@ export default function PrivacyPage() {
                 href="https://www.aboutads.info/choices/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-neutral-200 underline hover:text-neutral-100"
+                className={POLICY_LINK}
               >
                 aboutads.info
               </a>
@@ -104,7 +109,7 @@ export default function PrivacyPage() {
               href="https://policies.google.com/technologies/partner-sites"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-neutral-200 underline hover:text-neutral-100"
+              className={POLICY_LINK}
             >
               Google&rsquo;s Privacy &amp; Terms
             </a>
@@ -113,9 +118,7 @@ export default function PrivacyPage() {
         </section>
 
         <section className="flex flex-col gap-2">
-          <h2 className="text-lg font-bold text-neutral-100">
-            Consent for EEA, UK, and Switzerland
-          </h2>
+          <SectionHeading>Consent for EEA, UK, and Switzerland</SectionHeading>
           <p>
             If you are visiting from the European Economic Area, the United
             Kingdom, or Switzerland, you will be shown a consent message before
@@ -127,9 +130,7 @@ export default function PrivacyPage() {
         </section>
 
         <section className="flex flex-col gap-2">
-          <h2 className="text-lg font-bold text-neutral-100">
-            Your choices
-          </h2>
+          <SectionHeading>Your choices</SectionHeading>
           <p>
             You can control or delete cookies through your browser settings and
             clear the locally stored game data at any time. Blocking cookies may
@@ -138,9 +139,7 @@ export default function PrivacyPage() {
         </section>
 
         <section className="flex flex-col gap-2">
-          <h2 className="text-lg font-bold text-neutral-100">
-            Children&rsquo;s privacy
-          </h2>
+          <SectionHeading>Children&rsquo;s privacy</SectionHeading>
           <p>
             {SITE_NAME} is a general-audience game and is not directed at
             children under the age of 13. We do not knowingly collect personal
@@ -149,9 +148,7 @@ export default function PrivacyPage() {
         </section>
 
         <section className="flex flex-col gap-2">
-          <h2 className="text-lg font-bold text-neutral-100">
-            Changes to this policy
-          </h2>
+          <SectionHeading>Changes to this policy</SectionHeading>
           <p>
             We may update this Privacy Policy from time to time. When we do, we
             will revise the &ldquo;Last updated&rdquo; date at the top of this
@@ -161,19 +158,19 @@ export default function PrivacyPage() {
         </section>
 
         <section className="flex flex-col gap-2">
-          <h2 className="text-lg font-bold text-neutral-100">Contact</h2>
+          <SectionHeading>Contact</SectionHeading>
           <p>
             If you have any questions about this Privacy Policy, email us at{" "}
             <a
               href={`mailto:${SITE_EMAIL}`}
-              className="text-neutral-200 underline hover:text-neutral-100"
+              className={POLICY_LINK}
             >
               {SITE_EMAIL}
             </a>{" "}
             or visit the{" "}
             <Link
               href="/contact"
-              className="text-neutral-200 underline hover:text-neutral-100"
+              className={POLICY_LINK}
             >
               contact page
             </Link>

@@ -99,7 +99,7 @@ export default function CountryPage({ params }: { params: { country: string } })
     >
       <Section heading="What things cost">
         <PriceTable rows={rows} labelHeader="Item" />
-        <p className="text-xs text-neutral-500">
+        <p className="label">
           Local-currency figures are converted from US dollars at recent exchange
           rates, except the Big Mac, which is published in local currency by The
           Economist and converted the other way. Work time divides the dollar
@@ -180,7 +180,7 @@ export default function CountryPage({ params }: { params: { country: string } })
             <li key={c.code}>
               <Link
                 href={`/prices/${c.slug}`}
-                className="inline-flex items-center gap-1.5 rounded-md border border-neutral-800 px-2 py-1 text-xs text-neutral-400 transition hover:border-neutral-600 hover:text-neutral-200"
+                className="inline-flex items-center gap-1.5 border border-rule px-2 py-1 font-mono text-[10px] uppercase tracking-[0.1em] text-ink-muted transition-[border-color,color] duration-fast ease-out hover:border-ink hover:text-ink"
               >
                 <span aria-hidden>{c.flag}</span>
                 {c.name}

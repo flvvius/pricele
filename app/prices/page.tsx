@@ -48,7 +48,7 @@ export default function PricesIndex() {
           <p>
             Figures come from The Economist&apos;s Big Mac Index and
             Numbeo&apos;s country price rankings. See{" "}
-            <Link href="/methodology" className="underline hover:text-neutral-300">
+            <Link href="/methodology" className="underline decoration-rule underline-offset-2 transition-colors duration-fast ease-out hover:text-ink">
               methodology
             </Link>{" "}
             for how each number is produced and where it is weakest.
@@ -57,26 +57,26 @@ export default function PricesIndex() {
       }
     >
       <Section heading={`All ${COUNTRIES.length} countries`}>
-        <ul className="grid grid-cols-1 gap-1.5 sm:grid-cols-2">
+        <ul className="grid grid-cols-1 border-t border-rule sm:grid-cols-2">
           {rows.map(({ country, count, basket, visible }) => (
             <li key={country.code}>
               <Link
                 href={`/prices/${country.slug}`}
-                className="flex items-center justify-between gap-3 rounded-lg border border-neutral-800 bg-neutral-900/50 px-3 py-2.5 transition hover:border-neutral-600 hover:bg-neutral-800"
+                className="flex items-center justify-between gap-3 border-b border-rule-soft px-1 py-2.5 transition-[background-color,color] duration-fast ease-out hover:bg-paper-raised"
               >
                 <span className="flex min-w-0 items-center gap-2">
                   <span aria-hidden className="text-lg">
                     {country.flag}
                   </span>
-                  <span className="truncate text-sm font-medium text-neutral-100">
+                  <span className="truncate text-sm font-medium text-ink-strong">
                     {country.name}
                   </span>
                 </span>
                 <span className="shrink-0 text-right">
-                  <span className="block text-sm tabular-nums text-neutral-300">
+                  <span className="block text-sm tabular-nums text-ink-body">
                     {visible > 0 ? formatUSD(basket) : "—"}
                   </span>
-                  <span className="block text-[10px] text-neutral-500">
+                  <span className="block text-[10px] text-ink-meta">
                     {count} item{count === 1 ? "" : "s"}
                   </span>
                 </span>
@@ -98,7 +98,7 @@ export default function PricesIndex() {
           <p>
             For a like-for-like comparison of a single product across every
             country, use the{" "}
-            <Link href="/items" className="underline hover:text-neutral-300">
+            <Link href="/items" className="underline decoration-rule underline-offset-2 transition-colors duration-fast ease-out hover:text-ink">
               item pages
             </Link>{" "}
             instead — those rank one product at a time.

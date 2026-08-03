@@ -12,9 +12,9 @@ interface Props {
 
 function Stat({ value, label }: { value: string | number; label: string }) {
   return (
-    <div className="flex flex-col items-center">
-      <span className="text-2xl font-bold tabular-nums">{value}</span>
-      <span className="text-center text-xs leading-tight text-neutral-400">
+    <div className="flex flex-col items-center gap-1.5 px-1">
+      <span className="display text-3xl tabular-nums text-ink">{value}</span>
+      <span className="text-center font-mono text-[9px] uppercase leading-tight tracking-[0.12em] text-ink-meta">
         {label}
       </span>
     </div>
@@ -34,42 +34,55 @@ export default function StatsPanel({
 
   return (
     <Modal open={open} onClose={onClose} title="Statistics">
-      <div className="flex flex-col gap-6">
-        <div className="grid grid-cols-4 gap-2">
+      <div className="flex flex-col gap-7">
+        {/* Hairline gutters instead of gaps: four figures in a row are a table,
+            and a table has rules between its columns. */}
+        <div className="grid grid-cols-4 divide-x divide-rule border-y border-rule py-4">
           <Stat value={stats.played} label="Played" />
           <Stat value={`${winPct}%`} label="Win rate" />
-          <Stat value={stats.currentStreak} label="Current streak" />
-          <Stat value={stats.maxStreak} label="Max streak" />
+          <Stat value={stats.currentStreak} label="Streak" />
+          <Stat value={stats.maxStreak} label="Best" />
         </div>
 
         <div>
-          <h3 className="mb-2 text-sm font-semibold text-neutral-300">
-            Guess distribution
-          </h3>
+          <h3 className="label rule-label mb-3">Guess distribution</h3>
           {stats.wins === 0 ? (
-            <p className="text-sm text-neutral-500">
-              Win a game to start your distribution.
+            <p className="text-[13px] text-ink-meta">
+              Win a round to start your distribution.
             </p>
           ) : (
-            <div className="flex flex-col gap-1.5">
+            <div className="flex flex-col gap-2">
               {stats.distribution.map((count, i) => {
                 const isHighlight = highlightGuess === i + 1;
-                const pct = Math.round((count / maxCount) * 100);
+                const pct = count === 0 ? 0 : (count / maxCount) * 100;
                 return (
-                  <div key={i} className="flex items-center gap-2 text-sm">
-                    <span className="w-3 text-neutral-400">{i + 1}</span>
-                    <div className="flex-1">
+                  <div key={i} className="flex items-center gap-2.5">
+                    <span className="w-3 font-mono text-[11px] tabular-nums text-ink-meta">
+                      {i + 1}
+                    </span>
+                    {/* The track is always full width so the bars share a
+                        baseline and can actually be compared to each other. */}
+                    <div className="h-5 flex-1 bg-paper-sunk">
                       <div
-                        className={`flex h-6 min-w-[1.5rem] items-center justify-end rounded px-2 font-medium tabular-nums transition-all ${
-                          isHighlight
-                            ? "bg-green-600 text-white"
-                            : "bg-neutral-700 text-neutral-200"
-                        }`}
-                        style={{ width: `${Math.max(pct, count > 0 ? 12 : 8)}%` }}
-                      >
-                        {count}
-                      </div>
+                        className="h-full"
+                        style={{
+                          width: `${pct}%`,
+                          backgroundColor: isHighlight
+                            ? "rgb(var(--win))"
+                            : "rgb(var(--ink-faint))",
+                        }}
+                      />
                     </div>
+                    <span
+                      className="w-5 text-right font-mono text-[11px] tabular-nums"
+                      style={{
+                        color: isHighlight
+                          ? "rgb(var(--win))"
+                          : "rgb(var(--ink-muted))",
+                      }}
+                    >
+                      {count}
+                    </span>
                   </div>
                 );
               })}
@@ -77,8 +90,8 @@ export default function StatsPanel({
           )}
         </div>
 
-        <div className="flex items-center justify-between border-t border-neutral-800 pt-4 text-sm">
-          <span className="text-neutral-400">Next country in</span>
+        <div className="flex items-center justify-between border-t border-rule pt-4">
+          <span className="label">Next edition</span>
           <Countdown />
         </div>
       </div>

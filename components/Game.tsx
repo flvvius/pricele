@@ -23,6 +23,9 @@ import Reveal from "./Reveal";
 import HowToPlay from "./HowToPlay";
 import StatsPanel from "./StatsPanel";
 import ArchiveModal from "./ArchiveModal";
+import ThemeToggle from "./ThemeToggle";
+import IconButton from "./IconButton";
+import { IconArchive, IconHelp, IconStats } from "./Icons";
 
 const INTRO_KEY = "pricele:seen-intro";
 
@@ -36,24 +39,16 @@ function vibrate(pattern: number | number[]) {
   }
 }
 
-function IconButton({
-  label,
-  onClick,
-  children,
-}: {
-  label: string;
-  onClick: () => void;
-  children: React.ReactNode;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      aria-label={label}
-      className="grid h-9 w-9 place-items-center rounded-full text-neutral-400 transition hover:bg-neutral-800 hover:text-white"
-    >
-      {children}
-    </button>
-  );
+/** The dateline under the masthead, in the reader's own locale. */
+function dateline(iso: string): string {
+  if (!iso) return "";
+  return dateFromISO(iso)
+    .toLocaleDateString(undefined, {
+      weekday: "short",
+      day: "numeric",
+      month: "short",
+    })
+    .toUpperCase();
 }
 
 export default function Game() {
@@ -128,7 +123,7 @@ export default function Game() {
   const atRisk = mounted && !isArchive && !state.done && streakAtRisk(stats, today);
 
   return (
-    // One self-contained screen: the header and item bar are fixed height, the
+    // One self-contained screen: the masthead and lot bar are fixed height, the
     // board flexes to fill whatever is left, and the input sits at the bottom.
     // With interactive-widget=resizes-content, the keyboard shrinks the viewport
     // and this whole column reflows, so typing and results stay on one screen.
@@ -136,75 +131,80 @@ export default function Game() {
       className="flex flex-col gap-3 pt-3 pb-[max(0.5rem,env(safe-area-inset-bottom))]"
       style={{ height: "var(--vvh, 100dvh)" }}
     >
-      <header className="flex shrink-0 items-center justify-between">
-        <IconButton label="How to play" onClick={() => setShowHowTo(true)}>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-            <circle cx="12" cy="12" r="10" />
-            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
-            <line x1="12" y1="17" x2="12.01" y2="17" />
-          </svg>
-        </IconButton>
-        <div className="text-center">
-          <h1 className="text-xl font-black leading-tight tracking-tight">Pricele</h1>
-          <p className="text-[10px] text-neutral-500">New item &amp; country daily</p>
+      <header className="shrink-0">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center">
+            <IconButton label="How to play" onClick={() => setShowHowTo(true)}>
+              <IconHelp size={17} />
+            </IconButton>
+            <ThemeToggle />
+          </div>
+
+          <h1 className="display text-masthead text-ink">Pricele</h1>
+
+          <div className="flex items-center">
+            <IconButton label="Archive" onClick={() => setShowArchive(true)}>
+              <IconArchive size={17} />
+            </IconButton>
+            <IconButton label="Statistics" onClick={() => setShowStats(true)}>
+              <IconStats size={17} />
+            </IconButton>
+          </div>
         </div>
-        <div className="flex items-center">
-          <IconButton label="Archive" onClick={() => setShowArchive(true)}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-              <path d="M3 3v5h5" />
-              <path d="M3.05 13A9 9 0 1 0 6 5.3L3 8" />
-              <path d="M12 7v5l3 2" />
-            </svg>
-          </IconButton>
-          <IconButton label="Statistics" onClick={() => setShowStats(true)}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-              <line x1="6" y1="20" x2="6" y2="12" />
-              <line x1="12" y1="20" x2="12" y2="4" />
-              <line x1="18" y1="20" x2="18" y2="14" />
-            </svg>
-          </IconButton>
+
+        {/* The double rule under a masthead: one heavy, one hair. It is the
+            oldest signal in print that everything below is the paper proper,
+            and it does the work five stacked bordered cards were doing. */}
+        <div className="mt-2 h-[2px] bg-ink" />
+        <div className="mt-[3px] h-px bg-ink" />
+
+        <div className="mt-1.5 flex items-baseline justify-between">
+          <span className="label">
+            {puzzle ? `No. ${puzzle.puzzleNumber}` : " "}
+          </span>
+          <span className="label">{dateline(activeDate)}</span>
         </div>
       </header>
 
       {isArchive && puzzle && (
-        <div className="flex shrink-0 items-center justify-between rounded-lg border border-amber-800/60 bg-amber-950/30 px-3 py-1.5 text-xs">
-          <span className="text-amber-300">
-            Archive · Pricele #{puzzle.puzzleNumber}
-          </span>
+        <div className="flex shrink-0 items-center justify-between border-l-2 border-accent bg-accent/[0.07] py-1.5 pl-2.5 pr-2">
+          <span className="label !text-accent">Back number</span>
           <button
             onClick={() => selectDate(today)}
-            className="font-medium text-amber-200 underline underline-offset-2"
+            className="font-mono text-[10px] uppercase tracking-[0.14em] text-accent underline underline-offset-[3px] transition-transform duration-press ease-out active:scale-[0.97]"
           >
-            Back to today
+            Today&apos;s edition
           </button>
         </div>
       )}
 
-      {/* Both the item and the country change daily, so this bar is the only
-          place that tells the player what they are actually pricing today. */}
-      <div className="flex shrink-0 items-center gap-3 rounded-xl border border-neutral-800 bg-neutral-900/60 p-2.5">
+      {/* Both the item and the country change daily, so this band is the only
+          place that states what the player is actually pricing today. */}
+      <div className="flex shrink-0 items-center gap-3.5 border-y border-rule py-2.5">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={puzzle?.item.imageUrl ?? "/items/placeholder.svg"}
-          alt={puzzle?.item.name ?? ""}
-          width={40}
-          height={40}
-          className="h-10 w-10 shrink-0 rounded-lg bg-white object-contain p-1"
+          alt=""
+          width={44}
+          height={44}
+          className="h-11 w-11 shrink-0 border border-rule bg-paper-raised object-contain p-1.5"
         />
         <div className="min-w-0">
-          <h2 className="truncate text-sm font-bold leading-tight">
-            {puzzle ? puzzle.item.name : "Today's item"}
-          </h2>
-          <p className="truncate text-sm text-neutral-300">
+          <p className="label">Today&apos;s lot</p>
+          <h2 className="display mt-1 truncate text-[1.5rem] text-ink">
             {puzzle ? (
               <>
-                in {puzzle.price.countryName}{" "}
-                <span aria-hidden>{puzzle.price.flag}</span>
+                {puzzle.item.name}{" "}
+                <span className="text-ink-muted">in</span>{" "}
+                {puzzle.price.countryName}{" "}
+                <span aria-hidden className="text-[1.1rem]">
+                  {puzzle.price.flag}
+                </span>
               </>
             ) : (
-              <span className="text-neutral-500">Loading today&apos;s puzzle</span>
+              <span className="text-ink-faint">Setting today&apos;s lot</span>
             )}
-          </p>
+          </h2>
         </div>
       </div>
 
@@ -227,17 +227,19 @@ export default function Game() {
         ) : (
           <>
             {atRisk && (
-              <p className="animate-pop shrink-0 rounded-lg border border-orange-800/60 bg-orange-950/30 px-3 py-1.5 text-center text-xs font-medium text-orange-300">
+              <p className="animate-set-in shrink-0 border-l-2 border-streak bg-streak/[0.08] py-1.5 pl-2.5 font-mono text-[10px] uppercase tracking-[0.14em] text-streak">
                 {stats.currentStreak}-day streak on the line
               </p>
             )}
+
             <GuessHistory guesses={state.guesses} />
+
             <div className="shrink-0">
               {state.guesses.length === 0 && (
-                <p className="mb-2 text-center text-xs text-neutral-500">
-                  For scale, the median {puzzle.item.shortName.toLowerCase()}{" "}
-                  across all countries is{" "}
-                  <span className="font-semibold text-neutral-300">
+                <p className="mb-2.5 text-center text-[11px] leading-relaxed text-ink-meta">
+                  For scale, the median{" "}
+                  {puzzle.item.shortName.toLowerCase()} across all countries is{" "}
+                  <span className="font-mono tabular-nums text-ink-body">
                     {formatMoney(anchorPriceUSD(puzzle.item.id), "USD")}
                   </span>
                   .
@@ -253,7 +255,7 @@ export default function Game() {
         )
       ) : (
         <div className="flex min-h-0 flex-1 items-center justify-center">
-          <p className="text-sm text-neutral-500">Loading…</p>
+          <p className="label">Setting today&apos;s page</p>
         </div>
       )}
 

@@ -2,51 +2,480 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ============================================================================
+   TOKENS
+
+   Two editions of one broadsheet: Paper (default) and Night. Everything is a
+   channel triplet so Tailwind's `/60` alpha modifiers keep working through the
+   variables — `bg-surface/60` compiles to `rgb(var(--surface) / 0.6)`.
+
+   Colour roles, not colour names. A component asks for "rule" or "ink-muted",
+   never for a grey, which is why swapping the whole edition below is a dozen
+   lines rather than a sweep through fifty files.
+   ========================================================================= */
+
+:root,
+[data-theme="paper"] {
+  color-scheme: light;
+
+  /* Surfaces — warm newsprint stock, never a neutral grey. */
+  --paper: 242 237 225; /* #F2EDE1 the page itself */
+  --paper-raised: 250 247 239; /* #FAF7EF cards sit *above* the page */
+  --paper-sunk: 232 226 211; /* #E8E2D3 wells and tinted blocks */
+
+  /* Ink — five steps, warm-biased so it reads as printed, not rendered. */
+  --ink: 26 22 19; /* #1A1613 headlines */
+  --ink-strong: 38 32 25; /* #262019 emphasis inside body copy */
+  --ink-body: 61 53 44; /* #3D352C running text */
+  --ink-muted: 107 96 85; /* #6B6055 secondary */
+  --ink-meta: 140 129 117; /* #8C8175 bylines, captions, counts */
+  --ink-faint: 173 162 148; /* #ADA294 disabled, placeholder marks */
+
+  /* Rules — a broadsheet separates with hairlines, not with boxes. */
+  --rule: 213 204 184; /* #D5CCB8 structural */
+  --rule-soft: 228 220 202; /* #E4DCCA incidental */
+
+  /* Signal — one accent, spent sparingly. */
+  --accent: 196 50 28; /* #C4321C vermilion */
+  --accent-ink: 253 248 238; /* text sitting on the accent */
+  --win: 28 107 69; /* #1C6B45 */
+  --streak: 178 88 20; /* #B25814 */
+
+  /* Temperature ramp — the hotter/colder mechanic, cold to scorching. */
+  --warm-0: 62 110 150; /* freezing */
+  --warm-1: 110 147 168; /* cold */
+  --warm-2: 192 147 56; /* warm */
+  --warm-3: 210 102 42; /* hot */
+  --warm-4: 196 50 28; /* scorching */
+
+  --grain-opacity: 0.055;
+  --grain-blend: multiply;
+}
+
+/* The Night edition is reachable two ways — the reader flips the switch, or
+   their OS is dark and they never touched it — and CSS cannot share one
+   declaration block across a selector and a media query. So the values live
+   here once, and both blocks below only *assign* them. Retuning the edition is
+   an edit in one place; before this, the two copies could silently drift. */
 :root {
+  --night-paper: 18 16 13; /* #12100D warm black, not #171717 */
+  --night-paper-raised: 28 25 21; /* #1C1915 */
+  --night-paper-sunk: 12 10 8; /* #0C0A08 */
+
+  --night-ink: 246 241 230; /* #F6F1E6 */
+  --night-ink-strong: 237 231 218;
+  --night-ink-body: 214 206 191;
+  --night-ink-muted: 156 146 132;
+  --night-ink-meta: 124 115 101;
+  --night-ink-faint: 94 86 74;
+
+  --night-rule: 50 44 36; /* #322C24 */
+  --night-rule-soft: 38 33 25;
+
+  --night-accent: 242 84 58; /* #F2543A lifted for dark ground */
+  --night-accent-ink: 23 18 14;
+  --night-win: 79 191 135;
+  --night-streak: 233 148 70;
+
+  --night-warm-0: 92 147 196;
+  --night-warm-1: 127 176 208;
+  --night-warm-2: 224 182 77;
+  --night-warm-3: 238 133 68;
+  --night-warm-4: 242 84 58;
+
+  --night-grain-opacity: 0.05;
+  --night-grain-blend: screen;
+}
+
+[data-theme="night"] {
   color-scheme: dark;
+
+  --paper: var(--night-paper);
+  --paper-raised: var(--night-paper-raised);
+  --paper-sunk: var(--night-paper-sunk);
+
+  --ink: var(--night-ink);
+  --ink-strong: var(--night-ink-strong);
+  --ink-body: var(--night-ink-body);
+  --ink-muted: var(--night-ink-muted);
+  --ink-meta: var(--night-ink-meta);
+  --ink-faint: var(--night-ink-faint);
+
+  --rule: var(--night-rule);
+  --rule-soft: var(--night-rule-soft);
+
+  --accent: var(--night-accent);
+  --accent-ink: var(--night-accent-ink);
+  --win: var(--night-win);
+  --streak: var(--night-streak);
+
+  --warm-0: var(--night-warm-0);
+  --warm-1: var(--night-warm-1);
+  --warm-2: var(--night-warm-2);
+  --warm-3: var(--night-warm-3);
+  --warm-4: var(--night-warm-4);
+
+  --grain-opacity: var(--night-grain-opacity);
+  --grain-blend: var(--night-grain-blend);
+}
+
+/* Honour the OS unless the reader has picked an edition themselves. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    color-scheme: dark;
+
+    --paper: var(--night-paper);
+    --paper-raised: var(--night-paper-raised);
+    --paper-sunk: var(--night-paper-sunk);
+
+    --ink: var(--night-ink);
+    --ink-strong: var(--night-ink-strong);
+    --ink-body: var(--night-ink-body);
+    --ink-muted: var(--night-ink-muted);
+    --ink-meta: var(--night-ink-meta);
+    --ink-faint: var(--night-ink-faint);
+
+    --rule: var(--night-rule);
+    --rule-soft: var(--night-rule-soft);
+
+    --accent: var(--night-accent);
+    --accent-ink: var(--night-accent-ink);
+    --win: var(--night-win);
+    --streak: var(--night-streak);
+
+    --warm-0: var(--night-warm-0);
+    --warm-1: var(--night-warm-1);
+    --warm-2: var(--night-warm-2);
+    --warm-3: var(--night-warm-3);
+    --warm-4: var(--night-warm-4);
+
+    --grain-opacity: var(--night-grain-opacity);
+    --grain-blend: var(--night-grain-blend);
+  }
+}
+
+/* ============================================================================
+   MOTION
+
+   The stock CSS easings are too weak to read as intentional. These are the
+   curves everything animates on; nothing in the app is allowed a bare
+   `ease-out`, and nothing uses `ease-in` — starting slow is exactly the moment
+   the user is watching hardest.
+   ========================================================================= */
+
+:root {
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-sheet: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+/* ============================================================================
+   BASE
+   ========================================================================= */
+
+html {
+  /* The rubber-band area past the top/bottom of the document should be paper,
+     not the browser's default white. */
+  background: rgb(var(--paper));
 }
 
 body {
-  background: #171717;
-  color: #fafafa;
+  background: rgb(var(--paper));
+  color: rgb(var(--ink-body));
+  font-feature-settings: "kern" 1;
 }
 
-@keyframes pop {
-  0% {
-    transform: scale(0.96);
-    opacity: 0;
-  }
-  60% {
-    transform: scale(1.02);
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
+/* Printed paper has tooth. This is the single cheapest way to stop a screen
+   reading as a screen — a static grain plate over the whole viewport at a few
+   percent, blended rather than layered so it darkens the paper instead of
+   fogging it. It never intercepts a click. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: var(--grain-opacity);
+  mix-blend-mode: var(--grain-blend);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-@keyframes slide-up {
+/* Selection in the accent, because a default blue highlight is the fastest way
+   to tell a reader nobody looked at this page. */
+::selection {
+  background: rgb(var(--accent) / 0.22);
+  color: rgb(var(--ink));
+}
+
+/* One focus ring for the entire app. Offset so it never crowds the glyphs. */
+:focus-visible {
+  outline: 2px solid rgb(var(--accent));
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Numerals are the subject matter of both games; they get the mono face, lining
+   figures and fixed advance width everywhere, without a class on every span. */
+.tnum,
+[class*="tabular-nums"] {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+/* ============================================================================
+   TYPE UTILITIES
+   ========================================================================= */
+
+/* Masthead / display setting. Instrument Serif has a tall, tight fit, so it
+   needs negative leading and a touch of negative tracking at large sizes to
+   sit like a printed headline rather than a web heading. */
+.display {
+  font-family: var(--font-display), Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+}
+
+/* Small caps label: the standing head above a stat or a section. Broadsheets
+   use these constantly and AI-generated UI almost never does. */
+.label {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.625rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgb(var(--ink-meta));
+}
+
+/* A hairline that carries a word — the rule breaks around the label the way a
+   section head does in print. */
+.rule-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.rule-label::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: rgb(var(--rule));
+}
+
+/* ============================================================================
+   ANIMATION
+
+   Enter animations only. Anything the player triggers dozens of times a day —
+   submitting a guess, opening the keyboard — stays instant.
+   ========================================================================= */
+
+/* Type setting into place: rises and settles, no scale bounce. A number that
+   springs is a toy; a number that sets is a fact. */
+@keyframes set-in {
   from {
-    transform: translateY(16px);
     opacity: 0;
+    transform: translateY(6px);
   }
   to {
-    transform: translateY(0);
     opacity: 1;
+    transform: translateY(0);
   }
 }
 
-.animate-pop {
-  animation: pop 260ms ease-out both;
+/* Print reveal: the figure is unmasked from the baseline up, like ink meeting
+   paper. Paired with a small rise so it doesn't read as a wipe. */
+@keyframes print-in {
+  from {
+    opacity: 0;
+    clip-path: inset(0 0 100% 0);
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+    transform: translateY(0);
+  }
 }
 
-.animate-slide-up {
-  animation: slide-up 220ms ease-out both;
+/* The temperature wash behind a played row. Driven by --fill (0..1) and --warm
+   set per row, so one class serves all five tiers.
+
+   scaleX rather than width: width is a layout property and animating it on a row
+   that also contains type forces a reflow of that type on every frame. The
+   120ms delay is deliberate — the figure lands first and is read, *then* the
+   temperature arrives behind it. Both at once and the player's eye has nowhere
+   to start. */
+@keyframes wash-in {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(var(--fill));
+  }
+}
+
+.wash {
+  transform-origin: left center;
+  transform: scaleX(var(--fill));
+  /* Fades to fully transparent rather than to a low alpha: any residual colour
+     at the right end leaves a hard vertical seam where the scaled element
+     stops, and that seam reads as a rendering bug rather than a gauge. */
+  background-image: linear-gradient(
+    to right,
+    rgb(var(--warm) / 0.28) 0%,
+    rgb(var(--warm) / 0.16) 55%,
+    rgb(var(--warm) / 0) 100%
+  );
+  animation: wash-in 520ms var(--ease-out) 120ms both;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .animate-pop,
-  .animate-slide-up {
-    animation: none;
+  .wash {
+    animation: veil-in 200ms var(--ease-out) both;
+  }
+}
+
+@keyframes sheet-in {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes sheet-out {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
+
+/* Modals are not anchored to a trigger, so they scale from their own centre.
+   0.97, never 0 — nothing in the world appears out of nothing. */
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes dialog-out {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+}
+
+@keyframes veil-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes veil-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.animate-set-in {
+  animation: set-in 260ms var(--ease-out) both;
+}
+
+.animate-print-in {
+  animation: print-in 460ms var(--ease-out) both;
+}
+
+.animate-veil-in {
+  animation: veil-in 180ms var(--ease-out) both;
+}
+
+.animate-veil-out {
+  animation: veil-out 160ms var(--ease-out) both;
+}
+
+/* Sheet on phones, dialog on desks. Exits run faster than entrances: the user
+   has already decided by the time they hit Escape. */
+.animate-panel-in {
+  animation: sheet-in 340ms var(--ease-sheet) both;
+}
+
+.animate-panel-out {
+  animation: sheet-out 220ms var(--ease-sheet) both;
+}
+
+@media (min-width: 640px) {
+  .animate-panel-in {
+    animation: dialog-in 200ms var(--ease-out) both;
+  }
+
+  .animate-panel-out {
+    animation: dialog-out 140ms var(--ease-out) both;
+  }
+}
+
+/* Stagger for the reveal stack. Short steps — long ones read as latency. */
+.stagger > * {
+  animation: set-in 300ms var(--ease-out) both;
+}
+
+.stagger > *:nth-child(1) {
+  animation-delay: 0ms;
+}
+.stagger > *:nth-child(2) {
+  animation-delay: 45ms;
+}
+.stagger > *:nth-child(3) {
+  animation-delay: 90ms;
+}
+.stagger > *:nth-child(4) {
+  animation-delay: 135ms;
+}
+.stagger > *:nth-child(5) {
+  animation-delay: 180ms;
+}
+.stagger > *:nth-child(n + 6) {
+  animation-delay: 210ms;
+}
+
+/* Reduced motion keeps the fades — they aid comprehension — and drops every
+   translation, scale and clip. Fewer and gentler, not none. */
+@media (prefers-reduced-motion: reduce) {
+  .animate-set-in,
+  .animate-print-in,
+  .animate-panel-in,
+  .stagger > * {
+    animation: veil-in 160ms var(--ease-out) both;
+  }
+
+  .animate-panel-out {
+    animation: veil-out 120ms var(--ease-out) both;
+  }
+
+  .stagger > * {
+    animation-delay: 0ms !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
   }
 }

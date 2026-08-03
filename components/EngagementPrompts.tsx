@@ -12,6 +12,11 @@ import {
   remindersSupported,
 } from "@/lib/pwa";
 
+/** Secondary control: outlined, never filled. Only one thing on the reveal is
+    allowed to be a solid block of ink, and it is the share button. */
+const BUTTON =
+  "border border-rule px-3 py-2 font-mono text-[10px] uppercase tracking-[0.14em] text-ink-body transition-[border-color,background-color,transform] duration-press ease-out hover:border-ink hover:bg-paper-raised active:scale-[0.97] disabled:opacity-50";
+
 /**
  * Retention CTAs surfaced after a game: install the PWA (a home-screen icon is
  * the most reliable daily nudge) and opt into a daily reminder. Each control
@@ -58,16 +63,14 @@ export default function EngagementPrompts() {
   if (!showInstall && !showReminder) return null;
 
   return (
-    <div className="flex flex-col gap-2 rounded-lg border border-neutral-800 bg-neutral-900/60 p-3">
-      <p className="text-center text-xs text-neutral-400">
-        Never miss a day
-      </p>
-      <div className="flex flex-wrap justify-center gap-2">
+    <div className="flex flex-col gap-3 border-y border-rule-soft py-3.5">
+      <p className="label">Never miss an edition</p>
+      <div className="flex flex-wrap gap-2">
         {showInstall && (
           <button
             onClick={onInstall}
             disabled={busy}
-            className="rounded-lg border border-neutral-700 px-3 py-2 text-sm font-medium text-neutral-200 transition hover:bg-neutral-800 disabled:opacity-50"
+            className={BUTTON}
           >
             Add to home screen
           </button>
@@ -76,16 +79,12 @@ export default function EngagementPrompts() {
           (reminderOn ? (
             <button
               onClick={onDisableReminder}
-              className="rounded-lg border border-green-700 bg-green-950/40 px-3 py-2 text-sm font-medium text-green-300 transition hover:bg-green-950/70"
+              className={`${BUTTON} !border-win !text-win`}
             >
-              Daily reminder on · turn off
+              Reminder on · turn off
             </button>
           ) : (
-            <button
-              onClick={onEnableReminder}
-              disabled={busy}
-              className="rounded-lg border border-neutral-700 px-3 py-2 text-sm font-medium text-neutral-200 transition hover:bg-neutral-800 disabled:opacity-50"
-            >
+            <button onClick={onEnableReminder} disabled={busy} className={BUTTON}>
               Remind me daily
             </button>
           ))}

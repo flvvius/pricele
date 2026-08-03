@@ -47,7 +47,10 @@ export default function ArchiveIndex() {
         <Prose>
           <p>
             No puzzles have finished yet. Come back in a couple of days —{" "}
-            <Link href="/" className="underline hover:text-neutral-300">
+            <Link
+              href="/"
+              className="underline decoration-rule underline-offset-2 transition-colors duration-fast ease-out hover:text-ink"
+            >
               play today&apos;s
             </Link>{" "}
             in the meantime.
@@ -55,25 +58,25 @@ export default function ArchiveIndex() {
         </Prose>
       ) : (
         <Section heading={`${entries.length} past puzzles`}>
-          <ul className="flex flex-col gap-1.5">
+          <ul className="border-t border-rule">
             {entries.map(({ iso, puzzle }) => (
               <li key={iso}>
                 <Link
                   href={`/archive/${iso}`}
-                  className="flex items-center gap-3 rounded-lg border border-neutral-800 bg-neutral-900/50 px-3 py-2.5 transition hover:border-neutral-600 hover:bg-neutral-800"
+                  className="flex items-center gap-3 border-b border-rule-soft px-1 py-2.5 transition-[background-color,color] duration-fast ease-out hover:bg-paper-raised"
                 >
                   <span aria-hidden className="text-lg">
                     {puzzle.price.flag}
                   </span>
                   <span className="min-w-0 flex-1">
-                    <span className="block truncate text-sm font-medium text-neutral-100">
+                    <span className="block truncate text-sm font-medium text-ink-strong">
                       {puzzle.item.shortName} in {puzzle.price.countryName}
                     </span>
-                    <span className="block text-xs text-neutral-500">
+                    <span className="block text-xs text-ink-meta">
                       #{puzzle.puzzleNumber} · {formatArchiveDate(iso)}
                     </span>
                   </span>
-                  <span className="shrink-0 text-sm tabular-nums text-neutral-300">
+                  <span className="shrink-0 text-sm tabular-nums text-ink-body">
                     {formatUSD(puzzle.price.priceUSD)}
                   </span>
                 </Link>

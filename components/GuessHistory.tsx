@@ -1,64 +1,99 @@
-import { BAND_EMOJI, tierFromCloseness, WARMTH_LEVELS } from "@/lib/scoring";
+import { tierFromCloseness, WARMTH_LEVELS } from "@/lib/scoring";
 import type { GuessRecord } from "@/lib/storage";
 import { MAX_GUESSES } from "@/lib/share";
 import { formatMoney } from "@/lib/format";
+import { IconCheck, IconDown, IconUp } from "./Icons";
 
-// Phrased around the real price, not the guess, so it's unambiguous: "the real
+// Phrased around the real price, not the guess, so it is unambiguous: "the real
 // price is higher than what you typed" rather than the confusing bare "Higher".
-const HINT: Record<GuessRecord["direction"], { label: string }> = {
-  too_high: { label: "↓ Real price is lower" },
-  too_low: { label: "↑ Real price is higher" },
-  exact: { label: "✓ Exact" },
+const HINT: Record<GuessRecord["direction"], { label: string; Icon: typeof IconUp }> = {
+  too_high: { label: "Lower", Icon: IconDown },
+  too_low: { label: "Higher", Icon: IconUp },
+  exact: { label: "Exact", Icon: IconCheck },
 };
 
-const FILL: Record<GuessRecord["band"], string> = {
-  green: "#16a34a",
-  yellow: "#d9a400",
-  black: "#6b7280",
-};
-
-// One compact row per guess. Warmth is the row's background fill rather than a
-// separate bar underneath, so the whole five-row board fits above the keyboard
-// without scrolling. Rows flex to share whatever height is available.
-//
-// Both the label and the fill use the coarse warmth tier, never an exact
-// percentage: a precise figure would let a player invert the scoring formula
-// and win on their second guess.
-function Row({ guess }: { guess: GuessRecord }) {
+/**
+ * Five slots, ruled like a ledger rather than drawn as five separate cards.
+ *
+ * The old board was five rounded boxes with their own borders, which put ten
+ * competing edges on screen and made the figures — the only thing a player
+ * actually reads — fight for attention with the containers holding them. A
+ * single hairline between rows says the same thing and disappears while saying
+ * it.
+ *
+ * Both the label and the fill use the coarse warmth tier, never an exact
+ * percentage: a precise figure would let a player invert the scoring formula
+ * and win on their second guess.
+ */
+function Row({ guess, index }: { guess: GuessRecord; index: number }) {
   const tier = tierFromCloseness(guess.closeness);
-  const fillPct = ((tier.level + 1) / WARMTH_LEVELS) * 100;
+  const { label, Icon } = HINT[guess.direction];
+  const fill = (tier.level + 1) / WARMTH_LEVELS;
+
   return (
-    <li className="animate-pop relative min-h-[24px] max-h-[80px] flex-1 overflow-hidden rounded-lg border border-neutral-700 bg-neutral-800">
-      <div
-        className="absolute inset-y-0 left-0 opacity-25 transition-all duration-500"
-        style={{ width: `${fillPct}%`, backgroundColor: FILL[guess.band] }}
-        aria-hidden
-      />
-      <div className="relative flex h-full items-center justify-between gap-2 px-3">
-        <span className="shrink-0 text-sm font-semibold tabular-nums">
-          {formatMoney(guess.value, "USD")}
+    <li
+      className="animate-set-in relative flex min-h-[2.75rem] flex-1 items-center gap-3 overflow-hidden border-b border-rule-soft px-3"
+      style={
+        {
+          "--warm": `var(--warm-${tier.level})`,
+          "--fill": fill,
+        } as React.CSSProperties
+      }
+    >
+      <span className="wash absolute inset-0" aria-hidden />
+
+      <span className="relative font-mono text-[10px] tabular-nums text-ink-faint">
+        {String(index + 1).padStart(2, "0")}
+      </span>
+
+      <span className="relative shrink-0 font-mono text-base font-medium tabular-nums text-ink">
+        {formatMoney(guess.value, "USD")}
+      </span>
+
+      <span className="relative ml-auto flex min-w-0 items-center gap-2.5">
+        <Thermometer level={tier.level} />
+        {/* Set in ink, not in the ramp colour. The mid-ramp ochre is around
+            2.3:1 against paper, which is unreadable at 10px — the gauge beside
+            it and the wash behind it already carry the colour, and neither of
+            them is text.
+
+            sr-only rather than hidden below xs: the warmth is otherwise carried
+            only by the aria-hidden gauge and the background wash, so `hidden`
+            left a screen reader on a small phone with no way to know how close
+            the guess was. */}
+        <span className="sr-only font-mono text-[10px] uppercase tracking-[0.14em] text-ink-body xs:not-sr-only xs:inline">
+          {tier.label}
         </span>
-        <span className="flex min-w-0 items-center gap-2">
-          <span
-            className={`truncate text-xs ${
-              guess.direction === "too_high"
-                ? "text-sky-300"
-                : guess.direction === "too_low"
-                  ? "text-orange-300"
-                  : "text-green-300"
-            }`}
-          >
-            {HINT[guess.direction].label}
-          </span>
-          <span className="shrink-0 text-xs font-semibold text-neutral-300">
-            {tier.label}
-          </span>
-          <span className="shrink-0 text-sm" aria-hidden>
-            {BAND_EMOJI[guess.band]}
-          </span>
+        <span
+          className="flex shrink-0 items-center gap-1 text-[11px] font-medium text-ink-muted"
+          style={
+            guess.direction === "exact" ? { color: "rgb(var(--win))" } : undefined
+          }
+        >
+          <Icon size={13} />
+          {label}
         </span>
-      </div>
+      </span>
     </li>
+  );
+}
+
+/** Five ticks, filled to the tier. Reads as a gauge at a glance and as a
+    redundant encoding of the colour for anyone who cannot separate the ramp. */
+function Thermometer({ level }: { level: number }) {
+  return (
+    <span className="flex shrink-0 items-center gap-[3px]" aria-hidden>
+      {Array.from({ length: WARMTH_LEVELS }, (_, i) => (
+        <span
+          key={i}
+          className="h-3 w-[3px]"
+          style={{
+            backgroundColor:
+              i <= level ? `rgb(var(--warm-${level}))` : "rgb(var(--rule))",
+          }}
+        />
+      ))}
+    </span>
   );
 }
 
@@ -71,18 +106,20 @@ export default function GuessHistory({ guesses }: { guesses: GuessRecord[] }) {
   // end up overlapping the input.
   return (
     <ul
-      className="flex min-h-0 flex-1 flex-col justify-start gap-1.5 overflow-y-auto"
+      className="flex min-h-0 flex-1 flex-col justify-start overflow-y-auto border-t border-rule"
       aria-label="Your guesses"
     >
       {guesses.map((g, i) => (
-        <Row key={i} guess={g} />
+        <Row key={i} guess={g} index={i} />
       ))}
       {Array.from({ length: empties }, (_, i) => (
         <li
           key={`empty-${i}`}
-          className="flex min-h-[24px] max-h-[80px] flex-1 items-center justify-center rounded-lg border border-dashed border-neutral-800 text-neutral-700"
+          className="flex min-h-[2.75rem] flex-1 items-center gap-3 border-b border-rule-soft px-3"
         >
-          <span aria-hidden>·</span>
+          <span className="font-mono text-[10px] tabular-nums text-ink-faint/60">
+            {String(guesses.length + i + 1).padStart(2, "0")}
+          </span>
         </li>
       ))}
     </ul>
