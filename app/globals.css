@@ -52,36 +52,71 @@
   --grain-blend: multiply;
 }
 
+/* The Night edition is reachable two ways — the reader flips the switch, or
+   their OS is dark and they never touched it — and CSS cannot share one
+   declaration block across a selector and a media query. So the values live
+   here once, and both blocks below only *assign* them. Retuning the edition is
+   an edit in one place; before this, the two copies could silently drift. */
+:root {
+  --night-paper: 18 16 13; /* #12100D warm black, not #171717 */
+  --night-paper-raised: 28 25 21; /* #1C1915 */
+  --night-paper-sunk: 12 10 8; /* #0C0A08 */
+
+  --night-ink: 246 241 230; /* #F6F1E6 */
+  --night-ink-strong: 237 231 218;
+  --night-ink-body: 214 206 191;
+  --night-ink-muted: 156 146 132;
+  --night-ink-meta: 124 115 101;
+  --night-ink-faint: 94 86 74;
+
+  --night-rule: 50 44 36; /* #322C24 */
+  --night-rule-soft: 38 33 25;
+
+  --night-accent: 242 84 58; /* #F2543A lifted for dark ground */
+  --night-accent-ink: 23 18 14;
+  --night-win: 79 191 135;
+  --night-streak: 233 148 70;
+
+  --night-warm-0: 92 147 196;
+  --night-warm-1: 127 176 208;
+  --night-warm-2: 224 182 77;
+  --night-warm-3: 238 133 68;
+  --night-warm-4: 242 84 58;
+
+  --night-grain-opacity: 0.05;
+  --night-grain-blend: screen;
+}
+
 [data-theme="night"] {
   color-scheme: dark;
 
-  --paper: 18 16 13; /* #12100D warm black, not #171717 */
-  --paper-raised: 28 25 21; /* #1C1915 */
-  --paper-sunk: 12 10 8; /* #0C0A08 */
+  --paper: var(--night-paper);
+  --paper-raised: var(--night-paper-raised);
+  --paper-sunk: var(--night-paper-sunk);
 
-  --ink: 246 241 230; /* #F6F1E6 */
-  --ink-strong: 237 231 218;
-  --ink-body: 214 206 191;
-  --ink-muted: 156 146 132;
-  --ink-meta: 124 115 101;
-  --ink-faint: 94 86 74;
+  --ink: var(--night-ink);
+  --ink-strong: var(--night-ink-strong);
+  --ink-body: var(--night-ink-body);
+  --ink-muted: var(--night-ink-muted);
+  --ink-meta: var(--night-ink-meta);
+  --ink-faint: var(--night-ink-faint);
 
-  --rule: 50 44 36; /* #322C24 */
-  --rule-soft: 38 33 25;
+  --rule: var(--night-rule);
+  --rule-soft: var(--night-rule-soft);
 
-  --accent: 242 84 58; /* #F2543A lifted for dark ground */
-  --accent-ink: 23 18 14;
-  --win: 79 191 135;
-  --streak: 233 148 70;
+  --accent: var(--night-accent);
+  --accent-ink: var(--night-accent-ink);
+  --win: var(--night-win);
+  --streak: var(--night-streak);
 
-  --warm-0: 92 147 196;
-  --warm-1: 127 176 208;
-  --warm-2: 224 182 77;
-  --warm-3: 238 133 68;
-  --warm-4: 242 84 58;
+  --warm-0: var(--night-warm-0);
+  --warm-1: var(--night-warm-1);
+  --warm-2: var(--night-warm-2);
+  --warm-3: var(--night-warm-3);
+  --warm-4: var(--night-warm-4);
 
-  --grain-opacity: 0.05;
-  --grain-blend: screen;
+  --grain-opacity: var(--night-grain-opacity);
+  --grain-blend: var(--night-grain-blend);
 }
 
 /* Honour the OS unless the reader has picked an edition themselves. */
@@ -89,33 +124,33 @@
   :root:not([data-theme]) {
     color-scheme: dark;
 
-    --paper: 18 16 13;
-    --paper-raised: 28 25 21;
-    --paper-sunk: 12 10 8;
+    --paper: var(--night-paper);
+    --paper-raised: var(--night-paper-raised);
+    --paper-sunk: var(--night-paper-sunk);
 
-    --ink: 246 241 230;
-    --ink-strong: 237 231 218;
-    --ink-body: 214 206 191;
-    --ink-muted: 156 146 132;
-    --ink-meta: 124 115 101;
-    --ink-faint: 94 86 74;
+    --ink: var(--night-ink);
+    --ink-strong: var(--night-ink-strong);
+    --ink-body: var(--night-ink-body);
+    --ink-muted: var(--night-ink-muted);
+    --ink-meta: var(--night-ink-meta);
+    --ink-faint: var(--night-ink-faint);
 
-    --rule: 50 44 36;
-    --rule-soft: 38 33 25;
+    --rule: var(--night-rule);
+    --rule-soft: var(--night-rule-soft);
 
-    --accent: 242 84 58;
-    --accent-ink: 23 18 14;
-    --win: 79 191 135;
-    --streak: 233 148 70;
+    --accent: var(--night-accent);
+    --accent-ink: var(--night-accent-ink);
+    --win: var(--night-win);
+    --streak: var(--night-streak);
 
-    --warm-0: 92 147 196;
-    --warm-1: 127 176 208;
-    --warm-2: 224 182 77;
-    --warm-3: 238 133 68;
-    --warm-4: 242 84 58;
+    --warm-0: var(--night-warm-0);
+    --warm-1: var(--night-warm-1);
+    --warm-2: var(--night-warm-2);
+    --warm-3: var(--night-warm-3);
+    --warm-4: var(--night-warm-4);
 
-    --grain-opacity: 0.05;
-    --grain-blend: screen;
+    --grain-opacity: var(--night-grain-opacity);
+    --grain-blend: var(--night-grain-blend);
   }
 }
 

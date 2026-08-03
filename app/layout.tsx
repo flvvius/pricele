@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Instrument_Serif, Archivo, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import JsonLd from "@/components/JsonLd";
-import ThemeScript from "@/components/ThemeScript";
+import ThemeScript, { EDITION_THEME_COLOR } from "@/components/ThemeScript";
 import { ADSENSE_CLIENT, ADSENSE_LOADER_SRC, adsEnabled } from "@/lib/ads";
 import {
   SITE_URL,
@@ -112,9 +112,11 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   // The browser chrome should match whichever edition the reader is in, so the
   // status bar never sits as a bright band above a dark page (or vice versa).
+  // These cover the OS-preference case; once the reader picks an edition by
+  // hand, ThemeScript/ThemeToggle overwrite both tags with the chosen colour.
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#F2EDE1" },
-    { media: "(prefers-color-scheme: dark)", color: "#12100D" },
+    { media: "(prefers-color-scheme: light)", color: EDITION_THEME_COLOR.paper },
+    { media: "(prefers-color-scheme: dark)", color: EDITION_THEME_COLOR.night },
   ],
   colorScheme: "light dark",
   width: "device-width",

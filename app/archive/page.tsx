@@ -47,7 +47,10 @@ export default function ArchiveIndex() {
         <Prose>
           <p>
             No puzzles have finished yet. Come back in a couple of days —{" "}
-            <Link href="/" className="underline hover:text-neutral-300">
+            <Link
+              href="/"
+              className="underline decoration-rule underline-offset-2 transition-colors duration-fast ease-out hover:text-ink"
+            >
               play today&apos;s
             </Link>{" "}
             in the meantime.
@@ -66,14 +69,14 @@ export default function ArchiveIndex() {
                     {puzzle.price.flag}
                   </span>
                   <span className="min-w-0 flex-1">
-                    <span className="block truncate text-sm font-medium text-neutral-100">
+                    <span className="block truncate text-sm font-medium text-ink-strong">
                       {puzzle.item.shortName} in {puzzle.price.countryName}
                     </span>
-                    <span className="block text-xs text-neutral-500">
+                    <span className="block text-xs text-ink-meta">
                       #{puzzle.puzzleNumber} · {formatArchiveDate(iso)}
                     </span>
                   </span>
-                  <span className="shrink-0 text-sm tabular-nums text-neutral-300">
+                  <span className="shrink-0 text-sm tabular-nums text-ink-body">
                     {formatUSD(puzzle.price.priceUSD)}
                   </span>
                 </Link>

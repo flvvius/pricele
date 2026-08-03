@@ -20,7 +20,12 @@ export default function FaqSection({
       <h2 id={`${id}-heading`} className="display text-2xl text-ink">
         {heading}
       </h2>
-      <dl className="border-t border-rule">
+      {/* Plain div rather than a <dl>: a description list may only contain
+          dt/dd (or div groups wrapping them), so <details> children — and a
+          <dt> nested inside a <summary> — are invalid markup that assistive
+          tech is free to ignore. The FAQ structured data is emitted separately
+          by <JsonLd/>, so nothing depends on the list semantics here. */}
+      <div className="border-t border-rule">
         {items.map((item, i) => (
           <details key={i} open={i === 0} className="group border-b border-rule-soft">
             <summary className="flex cursor-pointer list-none items-start gap-3 py-3.5 text-[15px] font-medium text-ink marker:content-none [&::-webkit-details-marker]:hidden">
@@ -30,14 +35,14 @@ export default function FaqSection({
               >
                 &gt;
               </span>
-              <dt className="flex-1">{item.question}</dt>
+              <span className="flex-1">{item.question}</span>
             </summary>
-            <dd className="pb-4 pl-[1.4rem] text-[13px] leading-relaxed text-ink-muted">
+            <div className="pb-4 pl-[1.4rem] text-[13px] leading-relaxed text-ink-muted">
               {item.answer}
-            </dd>
+            </div>
           </details>
         ))}
-      </dl>
+      </div>
     </section>
   );
 }

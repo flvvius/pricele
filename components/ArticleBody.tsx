@@ -21,6 +21,14 @@ export default function ArticleBody({ blocks }: { blocks: ArticleBlock[] }) {
   );
 }
 
+/**
+ * The article measure. Every paragraph in a piece — running copy, the intro to a
+ * list, the intro to a table, the callout — has to sit on the same baseline
+ * rhythm, so the setting is defined once and only once here.
+ */
+const PROSE_P =
+  "text-[15px] leading-[1.75] text-ink-body sm:text-base sm:leading-8";
+
 /** Section heading. Sized well above body copy so scanning the page works. */
 function Heading({ children }: { children: string }) {
   return (
@@ -34,7 +42,7 @@ function Paragraphs({ paragraphs }: { paragraphs: string[] }) {
   return (
     <>
       {paragraphs.map((p, i) => (
-        <p key={i} className="text-[15px] leading-[1.75] text-ink-body sm:text-base sm:leading-8">
+        <p key={i} className={PROSE_P}>
           {renderInline(p)}
         </p>
       ))}
@@ -80,11 +88,7 @@ function Block({ block }: { block: ArticleBlock }) {
       return (
         <section className="flex flex-col gap-4">
           {block.heading && <Heading>{block.heading}</Heading>}
-          {block.intro && (
-            <p className="text-[15px] leading-[1.75] text-ink-body sm:text-base sm:leading-8">
-              {renderInline(block.intro)}
-            </p>
-          )}
+          {block.intro && <p className={PROSE_P}>{renderInline(block.intro)}</p>}
           <ol className="flex flex-col gap-2.5">
             {block.items.map((item, i) => (
               <li
@@ -108,11 +112,7 @@ function Block({ block }: { block: ArticleBlock }) {
       return (
         <section className="flex flex-col gap-4">
           {block.heading && <Heading>{block.heading}</Heading>}
-          {block.intro && (
-            <p className="text-[15px] leading-[1.75] text-ink-body sm:text-base sm:leading-8">
-              {renderInline(block.intro)}
-            </p>
-          )}
+          {block.intro && <p className={PROSE_P}>{renderInline(block.intro)}</p>}
           {/* Scrolls inside its own box so the page body never moves sideways. */}
           <div className="-mx-4 overflow-x-auto px-4">
             <table className="w-full min-w-[26rem] border-collapse text-sm sm:text-[15px]">
@@ -190,10 +190,7 @@ function Block({ block }: { block: ArticleBlock }) {
             </h3>
           )}
           {block.paragraphs.map((p, i) => (
-            <p
-              key={i}
-              className="text-[15px] leading-[1.75] text-ink-body sm:text-base sm:leading-8"
-            >
+            <p key={i} className={PROSE_P}>
               {renderInline(p)}
             </p>
           ))}

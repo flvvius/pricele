@@ -57,16 +57,16 @@ export default function ItemsIndex() {
                     className="h-10 w-10 shrink-0 border border-rule bg-paper-raised object-contain p-1"
                   />
                   <div className="min-w-0 flex-1">
-                    <h3 className="text-sm font-bold text-neutral-100">
+                    <h3 className="text-sm font-bold text-ink-strong">
                       {item.name}
                     </h3>
-                    <p className="truncate text-xs text-neutral-500">
+                    <p className="truncate text-xs text-ink-meta">
                       {prices.length} countries · median{" "}
                       {formatUSD(medianPriceUSD(item.id))}
                     </p>
                   </div>
                   {lo && hi && (
-                    <span className="shrink-0 text-right text-xs tabular-nums text-neutral-400">
+                    <span className="shrink-0 text-right text-xs tabular-nums text-ink-muted">
                       {formatUSD(lo.priceUSD)} – {formatUSD(hi.priceUSD)}
                     </span>
                   )}

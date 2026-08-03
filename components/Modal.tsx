@@ -23,6 +23,14 @@ export default function Modal({ open, onClose, title, children }: Props) {
   const panelRef = useRef<HTMLDivElement>(null);
   const restoreFocus = useRef<HTMLElement | null>(null);
 
+  // Callers pass `onClose` as an inline arrow, so it is a new function on every
+  // parent render. Holding it in a ref keeps it out of the effect below: with it
+  // in the dependency array the effect tore down and re-ran on every unrelated
+  // parent render, and its cleanup pulls focus back to the trigger — so the
+  // dialog kept yanking focus out of whatever the user had just tabbed to.
+  const onCloseRef = useRef(onClose);
+  onCloseRef.current = onClose;
+
   useEffect(() => {
     if (open) {
       setPresent(true);
@@ -38,8 +46,13 @@ export default function Modal({ open, onClose, title, children }: Props) {
     return () => window.clearTimeout(id);
   }, [open, present]);
 
+  // Gated on `present` as well as `open`, because the panel is not in the DOM on
+  // the render where `open` first flips: the effect above is what promotes
+  // `present`, so on that first pass panelRef is still null and the initial
+  // focus was silently dropped. Waiting for both means this runs on the render
+  // that actually mounts the panel.
   useEffect(() => {
-    if (!open) return;
+    if (!open || !present) return;
 
     restoreFocus.current = document.activeElement as HTMLElement | null;
     panelRef.current?.focus();
@@ -48,7 +61,7 @@ export default function Modal({ open, onClose, title, children }: Props) {
     // strands a keyboard user in dead space behind the veil.
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        onClose();
+        onCloseRef.current();
         return;
       }
       if (e.key !== "Tab" || !panelRef.current) return;
@@ -75,7 +88,7 @@ export default function Modal({ open, onClose, title, children }: Props) {
       document.body.style.overflow = previousOverflow;
       restoreFocus.current?.focus?.();
     };
-  }, [open, onClose]);
+  }, [open, present]);
 
   if (!present) return null;
 

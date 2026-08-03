@@ -55,8 +55,13 @@ function Row({ guess, index }: { guess: GuessRecord; index: number }) {
         {/* Set in ink, not in the ramp colour. The mid-ramp ochre is around
             2.3:1 against paper, which is unreadable at 10px — the gauge beside
             it and the wash behind it already carry the colour, and neither of
-            them is text. */}
-        <span className="hidden font-mono text-[10px] uppercase tracking-[0.14em] text-ink-body xs:inline">
+            them is text.
+
+            sr-only rather than hidden below xs: the warmth is otherwise carried
+            only by the aria-hidden gauge and the background wash, so `hidden`
+            left a screen reader on a small phone with no way to know how close
+            the guess was. */}
+        <span className="sr-only font-mono text-[10px] uppercase tracking-[0.14em] text-ink-body xs:not-sr-only xs:inline">
           {tier.label}
         </span>
         <span

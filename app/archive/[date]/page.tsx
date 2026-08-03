@@ -106,18 +106,18 @@ export default function ArchiveDatePage({
     >
       <Section heading="The answer">
         <div className="border border-rule border-t-2 border-t-ink bg-paper-raised p-5 text-center">
-          <p className="text-xs uppercase tracking-wide text-neutral-400">
+          <p className="text-xs uppercase tracking-wide text-ink-muted">
             {item.name} · {price.countryName}
           </p>
-          <p className="mt-1 text-4xl font-black tabular-nums text-neutral-50">
+          <p className="mt-1 text-4xl font-black tabular-nums text-ink">
             {formatUSD(price.priceUSD)}
           </p>
-          <p className="text-neutral-400">{formatLocal(price)}</p>
-          <p className="mt-3 border-t border-neutral-700 pt-3 text-sm text-neutral-300">
+          <p className="text-ink-muted">{formatLocal(price)}</p>
+          <p className="mt-3 border-t border-rule pt-3 text-sm text-ink-body">
             {affordanceLine(price)}
           </p>
           {priceRankLine(price) && (
-            <p className="mt-2 text-sm text-neutral-400">{priceRankLine(price)}</p>
+            <p className="mt-2 text-sm text-ink-muted">{priceRankLine(price)}</p>
           )}
         </div>
         <p className="label">Source: {price.source}.</p>
@@ -177,14 +177,14 @@ export default function ArchiveDatePage({
             See the full table for{" "}
             <Link
               href={`/items/${item.slug}`}
-              className="underline hover:text-neutral-300"
+              className="underline decoration-rule underline-offset-2 transition-colors duration-fast ease-out hover:text-ink"
             >
               {item.shortName.toLowerCase()} in every country
             </Link>{" "}
             or everything priced in{" "}
             <Link
               href={`/prices/${countrySlug(price.countryName)}`}
-              className="underline hover:text-neutral-300"
+              className="underline decoration-rule underline-offset-2 transition-colors duration-fast ease-out hover:text-ink"
             >
               {price.countryName}
             </Link>

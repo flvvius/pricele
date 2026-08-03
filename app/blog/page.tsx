@@ -25,7 +25,7 @@ export default function BlogIndex() {
     <ContentPage
       title="Guides"
       intro={
-        <p className="text-base leading-7 text-neutral-200 sm:text-lg sm:leading-8">
+        <p className="text-base leading-7 text-ink-body sm:text-lg sm:leading-8">
           Longer pieces on what prices actually measure: why a receipt from 1997
           says something the official inflation figure doesn&apos;t, what the same
           phone costs in days of work around the world, and why almost everyone
@@ -42,10 +42,10 @@ export default function BlogIndex() {
                   href={`/blog/${a.slug}`}
                   className="flex flex-col gap-1 border-b border-rule-soft px-1 py-3.5 transition-[background-color,color] duration-fast ease-out hover:bg-paper-raised"
                 >
-                  <h3 className="text-base font-bold leading-snug text-neutral-50 sm:text-lg">
+                  <h3 className="text-base font-bold leading-snug text-ink sm:text-lg">
                     {a.title}
                   </h3>
-                  <p className="text-sm leading-relaxed text-neutral-300">
+                  <p className="text-sm leading-relaxed text-ink-body">
                     {a.description}
                   </p>
                   <p className="label">
@@ -63,12 +63,15 @@ export default function BlogIndex() {
               The first guides are being written. In the meantime, the{" "}
               <Link
                 href="/methodology"
-                className="underline hover:text-neutral-300"
+                className="underline decoration-rule underline-offset-2 transition-colors duration-fast ease-out hover:text-ink"
               >
                 methodology page
               </Link>{" "}
               covers where every price comes from, and the{" "}
-              <Link href="/items" className="underline hover:text-neutral-300">
+              <Link
+                href="/items"
+                className="underline decoration-rule underline-offset-2 transition-colors duration-fast ease-out hover:text-ink"
+              >
                 item pages
               </Link>{" "}
               explain what drives the spread for each product.

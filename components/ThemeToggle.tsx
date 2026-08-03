@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { THEME_KEY } from "./ThemeScript";
+import { THEME_KEY, applyThemeColor } from "./ThemeScript";
+import IconButton from "./IconButton";
 import { IconMoon, IconSun } from "./Icons";
 
 type Edition = "paper" | "night";
@@ -39,6 +40,10 @@ export default function ThemeToggle() {
     const next: Edition = edition === "night" ? "paper" : "night";
     setEdition(next);
     document.documentElement.setAttribute("data-theme", next);
+    // The status bar has to follow the page. Without this it kept answering the
+    // OS preference, so switching to Night on a light phone left a strip of
+    // newsprint above a black page.
+    applyThemeColor(next);
     try {
       window.localStorage.setItem(THEME_KEY, next);
     } catch {
@@ -49,14 +54,13 @@ export default function ThemeToggle() {
   if (!edition) return <span className="block h-9 w-9" aria-hidden />;
 
   return (
-    <button
+    <IconButton
       onClick={toggle}
-      aria-label={
+      label={
         edition === "night" ? "Switch to paper edition" : "Switch to night edition"
       }
-      className="grid h-9 w-9 place-items-center rounded-full text-ink-muted transition-[color,background-color,transform] duration-press ease-out hover:bg-paper-sunk hover:text-ink active:scale-[0.94]"
     >
       {edition === "night" ? <IconSun size={17} /> : <IconMoon size={17} />}
-    </button>
+    </IconButton>
   );
 }

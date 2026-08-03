@@ -24,6 +24,7 @@ import HowToPlay from "./HowToPlay";
 import StatsPanel from "./StatsPanel";
 import ArchiveModal from "./ArchiveModal";
 import ThemeToggle from "./ThemeToggle";
+import IconButton from "./IconButton";
 import { IconArchive, IconHelp, IconStats } from "./Icons";
 
 const INTRO_KEY = "pricele:seen-intro";
@@ -48,26 +49,6 @@ function dateline(iso: string): string {
       month: "short",
     })
     .toUpperCase();
-}
-
-function IconButton({
-  label,
-  onClick,
-  children,
-}: {
-  label: string;
-  onClick: () => void;
-  children: React.ReactNode;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      aria-label={label}
-      className="grid h-9 w-9 place-items-center rounded-full text-ink-muted transition-[color,background-color,transform] duration-press ease-out hover:bg-paper-sunk hover:text-ink active:scale-[0.94]"
-    >
-      {children}
-    </button>
-  );
 }
 
 export default function Game() {
