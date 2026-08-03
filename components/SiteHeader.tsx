@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { SITE_NAME } from "@/lib/seo";
+import ThemeToggle from "./ThemeToggle";
 
 // Server-rendered nav for the reference pages. The game screen deliberately has
 // no nav — it owns the full viewport — so this only appears on content pages,
@@ -14,33 +15,47 @@ const LINKS = [
 
 export default function SiteHeader() {
   return (
-    <header className="flex flex-col gap-3 border-b border-neutral-800 pb-4">
-      <Link
-        href="/"
-        className="text-lg font-black tracking-tight text-neutral-100 hover:text-white"
-      >
-        {SITE_NAME}
-      </Link>
-      <nav aria-label="Sections" className="-mx-1 overflow-x-auto">
-        <ul className="flex items-center gap-1 text-sm whitespace-nowrap">
+    // The same masthead the game uses, so a reader arriving on a country page
+    // from search lands on something recognisably the same paper.
+    <header className="flex flex-col">
+      <div className="flex items-center justify-between gap-4">
+        <Link
+          href="/"
+          className="display text-masthead text-ink transition-colors duration-fast ease-out hover:text-accent"
+        >
+          {SITE_NAME}
+        </Link>
+        <ThemeToggle />
+      </div>
+
+      <div className="mt-2 h-[2px] bg-ink" />
+      <div className="mt-[3px] h-px bg-ink" />
+
+      <nav aria-label="Sections" className="-mx-4 mt-2.5 overflow-x-auto px-4">
+        <ul className="flex items-center gap-5 whitespace-nowrap">
+          {/* Play leads the run rather than trailing it. This strip scrolls
+              horizontally on a phone, and the six items do not fit — anything
+              pushed to the right sits permanently past the clip edge, which is
+              the worst possible place for the one link that returns you to the
+              game. */}
+          <li>
+            <Link
+              href="/"
+              className="inline-block bg-ink px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-paper-raised transition-transform duration-press ease-out active:scale-[0.97]"
+            >
+              Play
+            </Link>
+          </li>
           {LINKS.map((l) => (
             <li key={l.href}>
               <Link
                 href={l.href}
-                className="rounded-md px-2 py-1 text-neutral-400 transition hover:bg-neutral-800 hover:text-neutral-100"
+                className="font-mono text-[10px] uppercase tracking-[0.14em] text-ink-muted transition-colors duration-fast ease-out hover:text-ink"
               >
                 {l.label}
               </Link>
             </li>
           ))}
-          <li>
-            <Link
-              href="/"
-              className="rounded-md bg-neutral-100 px-2.5 py-1 font-semibold text-neutral-900 transition hover:bg-white"
-            >
-              Play
-            </Link>
-          </li>
         </ul>
       </nav>
     </header>

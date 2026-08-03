@@ -46,7 +46,9 @@ export default function PriceTable({
     <div className="-mx-4 overflow-x-auto px-4">
       <table className="w-full min-w-[30rem] border-collapse text-sm">
         <thead>
-          <tr className="border-b border-neutral-700 text-left text-xs uppercase tracking-wide text-neutral-500">
+          {/* Column heads in the meta face, same as every other standing head
+              in the paper, over the same heavy rule the masthead uses. */}
+          <tr className="border-b-2 border-ink text-left font-mono text-[10px] uppercase tracking-[0.14em] text-ink-meta">
             <th scope="col" className="py-2 pr-3 font-semibold">
               {labelHeader}
             </th>
@@ -65,8 +67,8 @@ export default function PriceTable({
         </thead>
         <tbody>
           {rows.map((r) => (
-            <tr key={r.key} className="border-b border-neutral-800/70">
-              <th scope="row" className="py-2.5 pr-3 text-left font-normal text-neutral-200">
+            <tr key={r.key} className="border-b border-rule-soft">
+              <th scope="row" className="py-2.5 pr-3 text-left font-normal text-ink-body">
                 {r.icon && (
                   <span aria-hidden className="mr-1.5">
                     {r.icon}
@@ -83,21 +85,21 @@ export default function PriceTable({
               {r.hidden || !r.price ? (
                 <td
                   colSpan={showLocal ? 3 : 2}
-                  className="py-2.5 text-right text-xs italic text-neutral-500"
+                  className="py-2.5 text-right font-mono text-[11px] text-ink-faint"
                 >
                   {r.hidden ? "hidden — in play right now" : "no data"}
                 </td>
               ) : (
                 <>
-                  <td className="py-2.5 pr-3 text-right tabular-nums text-neutral-100">
+                  <td className="py-2.5 pr-3 text-right font-mono tabular-nums text-ink">
                     {formatUSD(r.price.priceUSD)}
                   </td>
                   {showLocal && (
-                    <td className="py-2.5 pr-3 text-right tabular-nums text-neutral-400">
+                    <td className="py-2.5 pr-3 text-right font-mono text-[13px] tabular-nums text-ink-muted">
                       {formatLocal(r.price)}
                     </td>
                   )}
-                  <td className="py-2.5 text-right tabular-nums text-neutral-400">
+                  <td className="py-2.5 text-right font-mono text-[13px] tabular-nums text-ink-muted">
                     {wageLabel(r.price)}
                   </td>
                 </>

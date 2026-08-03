@@ -21,8 +21,8 @@ export default function PrivacyPage() {
     <main className="mx-auto flex min-h-dvh max-w-2xl flex-col gap-6 px-4 py-6">
       <SiteHeader />
       <header className="flex flex-col gap-2">
-        <h1 className="text-2xl font-bold text-neutral-100">Privacy Policy</h1>
-        <p className="text-xs text-neutral-500">Last updated: {LAST_UPDATED}</p>
+        <h1 className="display text-[2.5rem] text-ink">Privacy Policy</h1>
+        <p className="label">Last updated: {LAST_UPDATED}</p>
       </header>
 
       <div className="flex flex-col gap-6 text-sm leading-relaxed text-neutral-400">
@@ -36,7 +36,7 @@ export default function PrivacyPage() {
         </section>
 
         <section className="flex flex-col gap-2">
-          <h2 className="text-lg font-bold text-neutral-100">
+          <h2 className="display text-[1.5rem] text-ink">
             Information we collect
           </h2>
           <p>
@@ -48,19 +48,19 @@ export default function PrivacyPage() {
             To make the game work, your progress — your guesses for the day, your
             win/loss result, your streak, and a couple of interface preferences —
             is saved locally in your own browser using{" "}
-            <code className="text-neutral-300">localStorage</code>. This data
+            <code className="font-mono text-[13px] text-ink">localStorage</code>. This data
             stays on your device, is not transmitted to us, and you can clear it
             at any time through your browser settings.
           </p>
         </section>
 
         <section className="flex flex-col gap-2">
-          <h2 className="text-lg font-bold text-neutral-100">
+          <h2 className="display text-[1.5rem] text-ink">
             Cookies and advertising
           </h2>
           <p>
             {SITE_NAME} is supported by advertising served through{" "}
-            <strong className="text-neutral-300">Google AdSense</strong>, a
+            <strong className="font-semibold text-ink">Google AdSense</strong>, a
             third-party advertising service provided by Google. To show ads,
             Google and its partners may use cookies and similar technologies.
           </p>
@@ -80,7 +80,7 @@ export default function PrivacyPage() {
                 href="https://www.google.com/settings/ads"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-neutral-200 underline hover:text-neutral-100"
+                className="underline decoration-rule underline-offset-2 transition-colors duration-fast ease-out hover:text-ink"
               >
                 Google Ads Settings
               </a>
@@ -90,7 +90,7 @@ export default function PrivacyPage() {
                 href="https://www.aboutads.info/choices/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-neutral-200 underline hover:text-neutral-100"
+                className="underline decoration-rule underline-offset-2 transition-colors duration-fast ease-out hover:text-ink"
               >
                 aboutads.info
               </a>
@@ -104,7 +104,7 @@ export default function PrivacyPage() {
               href="https://policies.google.com/technologies/partner-sites"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-neutral-200 underline hover:text-neutral-100"
+              className="underline decoration-rule underline-offset-2 transition-colors duration-fast ease-out hover:text-ink"
             >
               Google&rsquo;s Privacy &amp; Terms
             </a>
@@ -113,7 +113,7 @@ export default function PrivacyPage() {
         </section>
 
         <section className="flex flex-col gap-2">
-          <h2 className="text-lg font-bold text-neutral-100">
+          <h2 className="display text-[1.5rem] text-ink">
             Consent for EEA, UK, and Switzerland
           </h2>
           <p>
@@ -127,7 +127,7 @@ export default function PrivacyPage() {
         </section>
 
         <section className="flex flex-col gap-2">
-          <h2 className="text-lg font-bold text-neutral-100">
+          <h2 className="display text-[1.5rem] text-ink">
             Your choices
           </h2>
           <p>
@@ -138,7 +138,7 @@ export default function PrivacyPage() {
         </section>
 
         <section className="flex flex-col gap-2">
-          <h2 className="text-lg font-bold text-neutral-100">
+          <h2 className="display text-[1.5rem] text-ink">
             Children&rsquo;s privacy
           </h2>
           <p>
@@ -149,7 +149,7 @@ export default function PrivacyPage() {
         </section>
 
         <section className="flex flex-col gap-2">
-          <h2 className="text-lg font-bold text-neutral-100">
+          <h2 className="display text-[1.5rem] text-ink">
             Changes to this policy
           </h2>
           <p>
@@ -161,19 +161,19 @@ export default function PrivacyPage() {
         </section>
 
         <section className="flex flex-col gap-2">
-          <h2 className="text-lg font-bold text-neutral-100">Contact</h2>
+          <h2 className="display text-[1.5rem] text-ink">Contact</h2>
           <p>
             If you have any questions about this Privacy Policy, email us at{" "}
             <a
               href={`mailto:${SITE_EMAIL}`}
-              className="text-neutral-200 underline hover:text-neutral-100"
+              className="underline decoration-rule underline-offset-2 transition-colors duration-fast ease-out hover:text-ink"
             >
               {SITE_EMAIL}
             </a>{" "}
             or visit the{" "}
             <Link
               href="/contact"
-              className="text-neutral-200 underline hover:text-neutral-100"
+              className="underline decoration-rule underline-offset-2 transition-colors duration-fast ease-out hover:text-ink"
             >
               contact page
             </Link>

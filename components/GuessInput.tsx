@@ -35,37 +35,58 @@ export default function GuessInput({ disabled, remaining, onGuess }: Props) {
 
   return (
     <form onSubmit={submit} className="flex flex-col gap-2">
-      <div className="flex gap-2">
-        <div className="relative flex-1">
-          <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400">
-            $
-          </span>
-          <input
-            type="text"
-            inputMode="decimal"
-            enterKeyHint="done"
-            autoComplete="off"
-            autoFocus
-            disabled={disabled}
-            value={value}
-            onChange={(e) => setValue(sanitize(e.target.value))}
-            placeholder="Your guess in USD"
-            aria-label="Your guess in USD"
-            className="w-full rounded-lg border border-neutral-700 bg-neutral-800 py-3 pl-7 pr-3 text-lg tabular-nums outline-none focus:border-neutral-400 disabled:opacity-50"
-          />
-        </div>
+      {/* Field and button share one frame with a rule between them, so the pair
+          reads as a single instrument rather than two floating controls. The
+          frame — not the input — carries the focus state, which is why there is
+          no ring stacked on top of a border here. */}
+      <div
+        className={`flex items-stretch border bg-paper-raised transition-[border-color,box-shadow] duration-fast ease-out ${
+          error
+            ? "border-accent"
+            : "border-rule focus-within:border-ink focus-within:shadow-[inset_0_0_0_1px_rgb(var(--ink))]"
+        }`}
+      >
+        <span
+          className="grid place-items-center pl-3.5 font-mono text-base text-ink-meta"
+          aria-hidden
+        >
+          $
+        </span>
+        <input
+          type="text"
+          inputMode="decimal"
+          enterKeyHint="done"
+          autoComplete="off"
+          autoFocus
+          disabled={disabled}
+          value={value}
+          onChange={(e) => {
+            setValue(sanitize(e.target.value));
+            if (error) setError(null);
+          }}
+          placeholder="0.00"
+          aria-label="Your guess in USD"
+          aria-invalid={error ? true : undefined}
+          className="w-full min-w-0 bg-transparent py-3.5 pl-2 pr-3 font-mono text-lg tabular-nums text-ink outline-none placeholder:text-ink-faint disabled:opacity-50"
+        />
         <button
           type="submit"
           disabled={disabled}
-          className="rounded-lg bg-white px-5 py-3 font-semibold text-neutral-900 transition hover:bg-neutral-200 disabled:opacity-40"
+          // Submitting is the most repeated action in the game, so it gets
+          // press feedback and nothing else — no hover lift, no glow. The
+          // scale is on transform only, which never touches layout.
+          className="shrink-0 border-l border-rule bg-ink px-5 font-mono text-xs font-semibold uppercase tracking-[0.16em] text-paper-raised transition-transform duration-press ease-out active:scale-[0.97] disabled:opacity-40"
         >
           Guess
         </button>
       </div>
+
       {/* One compact status line: the error replaces the hint when present, so
           the input block never changes height and the board doesn't jump. */}
       <p
-        className={`text-center text-xs ${error ? "text-red-400" : "text-neutral-500"}`}
+        className={`text-center font-mono text-[10px] uppercase tracking-[0.14em] ${
+          error ? "text-accent" : "text-ink-meta"
+        }`}
         role={error ? "alert" : undefined}
       >
         {error ??

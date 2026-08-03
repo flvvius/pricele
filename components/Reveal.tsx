@@ -51,84 +51,93 @@ export default function Reveal({
   const perfect = isPerfect(stats);
 
   return (
-    <div className="flex flex-col gap-5">
+    // The stagger runs once, at the end of a round, on a screen the player has
+    // been staring at for a minute. It is the one place in the game where a
+    // beat of choreography earns its keep.
+    <div className="stagger flex flex-col gap-6 pt-1">
       <div className="text-center">
-        {won ? (
-          <p className="animate-pop text-xl font-bold text-green-400">
-            Solved in {guesses.length}/{MAX_GUESSES}
-          </p>
-        ) : (
-          <p className="text-xl font-bold text-neutral-200">Out of guesses</p>
-        )}
-        <p className="mt-1 text-sm text-neutral-300">
+        {/* The verdict is the second-loudest thing on the screen after the
+            figure itself, so it is set, not labelled. How close you got is the
+            footnote to it, not the other way round. */}
+        <p
+          className="display text-[1.75rem]"
+          style={{ color: won ? "rgb(var(--win))" : "rgb(var(--ink))" }}
+        >
+          {won ? `Solved in ${guesses.length} of ${MAX_GUESSES}` : "Out of guesses"}
+        </p>
+        <p className="mt-1.5 text-[13px] text-ink-muted">
           {accuracyLine(bestOff, won)}
         </p>
       </div>
 
-      <div className="animate-pop rounded-xl border border-neutral-700 bg-neutral-800 p-5 text-center">
-        <p className="text-xs uppercase tracking-wide text-neutral-400">
+      {/* The stat plate. A heavy top rule and a hairline frame — the way a
+          broadsheet sets a table apart from the column it interrupts. */}
+      <figure className="border border-rule border-t-2 border-t-ink bg-paper-raised px-5 pb-4 pt-4 text-center">
+        <figcaption className="label">
           {item.name} in {price.countryName}
-        </p>
-        <p className="mt-1 text-4xl font-black tabular-nums">
+        </figcaption>
+
+        <p className="display animate-print-in mt-3 text-figure text-ink">
           {formatMoney(price.priceUSD, "USD")}
         </p>
-        <p className="text-neutral-400">
+        <p className="mt-1.5 font-mono text-sm tabular-nums text-ink-muted">
           {formatMoney(price.priceLocal, price.localCurrency)}
         </p>
-        <p className="mt-3 border-t border-neutral-700 pt-3 text-sm text-neutral-300">
-          {affordanceLine(price)}
-        </p>
-        {priceRankLine(price) && (
-          <p className="mt-2 text-sm text-neutral-400">{priceRankLine(price)}</p>
-        )}
-        <p className="mt-3 text-[11px] leading-relaxed text-neutral-500">
+
+        <div className="mt-4 flex flex-col gap-1.5 border-t border-rule pt-3.5 text-[13px] leading-relaxed text-ink-body">
+          <p>{affordanceLine(price)}</p>
+          {priceRankLine(price) && (
+            <p className="text-ink-muted">{priceRankLine(price)}</p>
+          )}
+        </div>
+
+        <p className="mt-3.5 border-t border-rule-soft pt-3 text-[11px] leading-relaxed text-ink-meta">
           Source: {price.source}.{" "}
-          <Link href="/methodology" className="underline hover:text-neutral-300">
+          <Link
+            href="/methodology"
+            className="underline decoration-rule underline-offset-2 transition-colors duration-fast ease-out hover:text-ink"
+          >
             How we source prices
           </Link>
         </p>
-      </div>
+      </figure>
 
-      {/* The reveal is where curiosity peaks, so it's the right place to hand
+      {/* The reveal is where curiosity peaks, so it is the right place to hand
           players the two reference pages behind today's number. */}
-      <div className="flex gap-2 text-sm">
+      <div className="grid grid-cols-2 gap-px border-y border-rule bg-rule">
         <Link
           href={`/items/${item.slug}`}
-          className="flex-1 rounded-lg border border-neutral-700 px-3 py-2.5 text-center font-medium text-neutral-200 transition hover:bg-neutral-800"
+          className="bg-paper px-3 py-3 text-center text-[13px] font-medium text-ink-body transition-[background-color,color] duration-fast ease-out hover:bg-paper-raised hover:text-ink"
         >
-          {item.shortName} in every country
+          {item.shortName} everywhere
         </Link>
         <Link
           href={`/prices/${countrySlug(price.countryName)}`}
-          className="flex-1 rounded-lg border border-neutral-700 px-3 py-2.5 text-center font-medium text-neutral-200 transition hover:bg-neutral-800"
+          className="bg-paper px-3 py-3 text-center text-[13px] font-medium text-ink-body transition-[background-color,color] duration-fast ease-out hover:bg-paper-raised hover:text-ink"
         >
           Prices in {price.countryName}
         </Link>
       </div>
 
       {!isArchive && won && milestone && (
-        <div className="animate-pop rounded-xl border border-orange-700/70 bg-orange-950/40 p-3 text-center">
-          <p className="text-base font-bold text-orange-200">
-            {milestone}-day streak
-          </p>
-          <p className="mt-0.5 text-xs text-orange-300/80">
-            {milestone >= 30
-              ? "That's a serious habit."
-              : "Nice run. Keep it going."}
+        <div className="border-l-2 border-streak bg-streak/[0.08] py-3 pl-4 pr-3">
+          <p className="display text-xl text-streak">{milestone}-day streak</p>
+          <p className="mt-1 text-[13px] text-ink-muted">
+            {milestone >= 30 ? "That's a serious habit." : "Nice run. Keep it going."}
           </p>
         </div>
       )}
 
       {!isArchive && won && !milestone && stats.currentStreak > 1 && (
-        <p className="text-center text-sm text-orange-300">
+        <p className="text-center font-mono text-[11px] uppercase tracking-[0.14em] text-streak">
           {stats.currentStreak}-day streak
-          {upcoming ? ` · ${upcoming - stats.currentStreak} to go until ${upcoming}` : ""}
+          {upcoming ? ` · ${upcoming - stats.currentStreak} to ${upcoming}` : ""}
         </p>
       )}
 
       {!isArchive && perfect && (
-        <p className="text-center text-xs text-neutral-400">
-          Perfect record: {stats.wins}/{stats.played}
+        <p className="label text-center">
+          Perfect record · {stats.wins} of {stats.played}
         </p>
       )}
 
@@ -149,16 +158,16 @@ export default function Reveal({
       <AdSlot slot={AD_SLOTS.reveal} />
 
       {!isArchive && (
-        <div className="flex items-center justify-between rounded-lg border border-neutral-800 bg-neutral-900 px-4 py-3 text-sm">
+        <div className="flex items-center justify-between border-t border-rule pt-4">
           <div>
-            <p className="text-neutral-400">Next puzzle in</p>
+            <p className="label">Next edition</p>
             <Countdown />
           </div>
           <button
             onClick={onShowStats}
-            className="rounded-lg border border-neutral-700 px-3 py-2 font-medium text-neutral-200 transition hover:bg-neutral-800"
+            className="border border-rule px-4 py-2.5 font-mono text-[10px] uppercase tracking-[0.16em] text-ink-body transition-[background-color,border-color,transform] duration-press ease-out hover:border-ink hover:bg-paper-raised active:scale-[0.97]"
           >
-            View stats
+            Statistics
           </button>
         </div>
       )}

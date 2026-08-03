@@ -81,14 +81,14 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
 
           {article.sources && article.sources.length > 0 && (
             <Section heading="Sources">
-              <ul className="flex flex-col gap-2">
+              <ul className="border-t border-rule">
                 {article.sources.map((s) => (
                   <li key={s.url} className="text-sm leading-relaxed">
                     <a
                       href={s.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-neutral-300 underline decoration-neutral-700 underline-offset-4 transition hover:text-neutral-100 hover:decoration-neutral-400"
+                      className="text-ink-body underline decoration-rule underline-offset-4 transition-colors duration-fast ease-out hover:text-ink"
                     >
                       {s.label}
                     </a>
@@ -100,17 +100,17 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
 
           {others.length > 0 && (
             <Section heading="More guides">
-              <ul className="flex flex-col gap-2">
+              <ul className="border-t border-rule">
                 {others.map((a) => (
                   <li key={a.slug}>
                     <Link
                       href={`/blog/${a.slug}`}
-                      className="flex flex-col gap-1 rounded-xl border border-neutral-800 bg-neutral-900/50 p-4 transition hover:border-neutral-600 hover:bg-neutral-800"
+                      className="flex flex-col gap-1 border-b border-rule-soft px-1 py-3.5 transition-[background-color,color] duration-fast ease-out hover:bg-paper-raised"
                     >
                       <span className="text-sm font-bold text-neutral-100">
                         {a.title}
                       </span>
-                      <span className="text-sm leading-relaxed text-neutral-400">
+                      <span className="text-[15px] leading-[1.7] text-ink-body">
                         {a.description}
                       </span>
                     </Link>

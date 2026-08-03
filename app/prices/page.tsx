@@ -57,12 +57,12 @@ export default function PricesIndex() {
       }
     >
       <Section heading={`All ${COUNTRIES.length} countries`}>
-        <ul className="grid grid-cols-1 gap-1.5 sm:grid-cols-2">
+        <ul className="grid grid-cols-1 border-t border-rule sm:grid-cols-2">
           {rows.map(({ country, count, basket, visible }) => (
             <li key={country.code}>
               <Link
                 href={`/prices/${country.slug}`}
-                className="flex items-center justify-between gap-3 rounded-lg border border-neutral-800 bg-neutral-900/50 px-3 py-2.5 transition hover:border-neutral-600 hover:bg-neutral-800"
+                className="flex items-center justify-between gap-3 border-b border-rule-soft px-1 py-2.5 transition-[background-color,color] duration-fast ease-out hover:bg-paper-raised"
               >
                 <span className="flex min-w-0 items-center gap-2">
                   <span aria-hidden className="text-lg">

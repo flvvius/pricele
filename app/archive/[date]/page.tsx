@@ -105,7 +105,7 @@ export default function ArchiveDatePage({
       }
     >
       <Section heading="The answer">
-        <div className="rounded-xl border border-neutral-700 bg-neutral-800/60 p-5 text-center">
+        <div className="border border-rule border-t-2 border-t-ink bg-paper-raised p-5 text-center">
           <p className="text-xs uppercase tracking-wide text-neutral-400">
             {item.name} · {price.countryName}
           </p>
@@ -120,7 +120,7 @@ export default function ArchiveDatePage({
             <p className="mt-2 text-sm text-neutral-400">{priceRankLine(price)}</p>
           )}
         </div>
-        <p className="text-xs text-neutral-500">Source: {price.source}.</p>
+        <p className="label">Source: {price.source}.</p>
       </Section>
 
       <Section heading={`About ${item.shortName.toLowerCase()}`}>
@@ -198,7 +198,7 @@ export default function ArchiveDatePage({
           {older && (
             <Link
               href={`/archive/${older}`}
-              className="rounded-lg border border-neutral-800 px-3 py-2 text-neutral-300 transition hover:border-neutral-600"
+              className="border border-rule px-3 py-2 font-mono text-[10px] uppercase tracking-[0.14em] text-ink-body transition-[border-color,background-color,transform] duration-press ease-out hover:border-ink hover:bg-paper-raised active:scale-[0.97]"
             >
               ← Previous puzzle
             </Link>
@@ -206,20 +206,20 @@ export default function ArchiveDatePage({
           {newer && (
             <Link
               href={`/archive/${newer}`}
-              className="rounded-lg border border-neutral-800 px-3 py-2 text-neutral-300 transition hover:border-neutral-600"
+              className="border border-rule px-3 py-2 font-mono text-[10px] uppercase tracking-[0.14em] text-ink-body transition-[border-color,background-color,transform] duration-press ease-out hover:border-ink hover:bg-paper-raised active:scale-[0.97]"
             >
               Next puzzle →
             </Link>
           )}
           <Link
             href="/archive"
-            className="rounded-lg border border-neutral-800 px-3 py-2 text-neutral-300 transition hover:border-neutral-600"
+            className="border border-rule px-3 py-2 font-mono text-[10px] uppercase tracking-[0.14em] text-ink-body transition-[border-color,background-color,transform] duration-press ease-out hover:border-ink hover:bg-paper-raised active:scale-[0.97]"
           >
             All puzzles
           </Link>
           <Link
             href="/"
-            className="rounded-lg bg-neutral-100 px-3 py-2 font-semibold text-neutral-900 transition hover:bg-white"
+            className="bg-ink px-4 py-2.5 font-mono text-[10px] uppercase tracking-[0.16em] text-paper-raised transition-transform duration-press ease-out active:scale-[0.97]"
           >
             Play today&apos;s
           </Link>

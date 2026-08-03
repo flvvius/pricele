@@ -8,6 +8,7 @@ import {
   SHARE_URL,
   type ShareInput,
 } from "@/lib/share";
+import { IconCheck, IconShare } from "./Icons";
 
 export default function ShareCard(props: ShareInput) {
   const [copied, setCopied] = useState(false);
@@ -30,15 +31,20 @@ export default function ShareCard(props: ShareInput) {
   }
 
   return (
-    <div className="flex flex-col gap-3">
-      <pre className="whitespace-pre-wrap rounded-lg border border-neutral-700 bg-neutral-900 p-4 text-center text-sm leading-relaxed">
+    // Slip and button are one object: the button is the bottom edge of the
+    // frame, not a second element floating under it.
+    <div className="flex flex-col">
+      {/* The emoji grid stays. It is the artefact that actually gets pasted
+          into a group chat, and it has to survive as plain text. */}
+      <pre className="whitespace-pre-wrap border border-rule bg-paper-raised p-4 text-center font-mono text-[13px] leading-relaxed text-ink-body">
         {text}
       </pre>
       <button
         onClick={onShare}
-        className="rounded-lg bg-green-600 px-5 py-3 text-base font-semibold text-white shadow-lg shadow-green-900/30 transition hover:bg-green-500 active:scale-[0.99]"
+        className="flex items-center justify-center gap-2.5 bg-ink px-5 py-3.5 font-mono text-[11px] uppercase tracking-[0.18em] text-paper-raised transition-transform duration-press ease-out active:scale-[0.98]"
       >
-        {copied ? "Copied to clipboard!" : "Share result"}
+        {copied ? <IconCheck size={14} /> : <IconShare size={14} />}
+        {copied ? "Copied" : "Share result"}
       </button>
     </div>
   );

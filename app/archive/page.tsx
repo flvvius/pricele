@@ -55,12 +55,12 @@ export default function ArchiveIndex() {
         </Prose>
       ) : (
         <Section heading={`${entries.length} past puzzles`}>
-          <ul className="flex flex-col gap-1.5">
+          <ul className="border-t border-rule">
             {entries.map(({ iso, puzzle }) => (
               <li key={iso}>
                 <Link
                   href={`/archive/${iso}`}
-                  className="flex items-center gap-3 rounded-lg border border-neutral-800 bg-neutral-900/50 px-3 py-2.5 transition hover:border-neutral-600 hover:bg-neutral-800"
+                  className="flex items-center gap-3 border-b border-rule-soft px-1 py-2.5 transition-[background-color,color] duration-fast ease-out hover:bg-paper-raised"
                 >
                   <span aria-hidden className="text-lg">
                     {puzzle.price.flag}

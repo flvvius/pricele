@@ -34,12 +34,12 @@ export default function AdSlot({ slot, className, format = "auto" }: Props) {
 
   return (
     <aside
-      className={`overflow-hidden rounded-xl border border-neutral-800 bg-neutral-900/40 ${className ?? ""}`}
+      className={`overflow-hidden border-y border-rule-soft ${className ?? ""}`}
       aria-label="Advertisement"
     >
-      <p className="px-3 pt-2 text-[10px] uppercase tracking-wider text-neutral-600">
-        Advertisement
-      </p>
+      {/* Labelled the way a paper labels one: small, set in the meta face, and
+          honest about what it is rather than dressed up as another card. */}
+      <p className="label py-1.5">Advertisement</p>
       <ins
         className="adsbygoogle"
         style={{ display: "block", minHeight: 100 }}

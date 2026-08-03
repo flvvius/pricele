@@ -35,12 +35,12 @@ export default function BlogIndex() {
     >
       {HAS_ARTICLES ? (
         <Section heading={`${PUBLISHED_ARTICLES.length} guides`}>
-          <ul className="flex flex-col gap-2">
+          <ul className="border-t border-rule">
             {PUBLISHED_ARTICLES.map((a) => (
               <li key={a.slug}>
                 <Link
                   href={`/blog/${a.slug}`}
-                  className="flex flex-col gap-1 rounded-xl border border-neutral-800 bg-neutral-900/50 p-4 transition hover:border-neutral-600 hover:bg-neutral-800"
+                  className="flex flex-col gap-1 border-b border-rule-soft px-1 py-3.5 transition-[background-color,color] duration-fast ease-out hover:bg-paper-raised"
                 >
                   <h3 className="text-base font-bold leading-snug text-neutral-50 sm:text-lg">
                     {a.title}
@@ -48,7 +48,7 @@ export default function BlogIndex() {
                   <p className="text-sm leading-relaxed text-neutral-300">
                     {a.description}
                   </p>
-                  <p className="text-xs text-neutral-500">
+                  <p className="label">
                     {formatArchiveDate(a.date)} · {a.readingMinutes} min read
                   </p>
                 </Link>
