@@ -16,7 +16,11 @@ export default function FaqSection({
   id?: string;
 }) {
   return (
-    <section aria-labelledby={`${id}-heading`} className="flex flex-col gap-4">
+    <section
+      aria-labelledby={`${id}-heading`}
+      // Standing head in a left rail from lg up, plain stack below it.
+      className="flex flex-col gap-4 lg:grid lg:grid-cols-[13rem_minmax(0,1fr)] lg:gap-x-12"
+    >
       <h2 id={`${id}-heading`} className="display text-2xl text-ink">
         {heading}
       </h2>

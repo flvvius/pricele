@@ -15,9 +15,31 @@ export const metadata: Metadata = {
   alternates: { canonical: "/privacy" },
 };
 
-/** Every heading on the page is the same size and weight; say it once. */
-function SectionHeading({ children }: { children: React.ReactNode }) {
-  return <h2 className="display text-[1.5rem] text-ink">{children}</h2>;
+/**
+ * One clause of the policy. Every heading on the page is the same size and
+ * weight, so it is said once here.
+ *
+ * From lg up the heading moves into a left rail beside its copy, matching the
+ * reference pages; below lg it is the same plain gap-2 stack it has always
+ * been. The opening clause has no heading and holds the rail column empty.
+ */
+function Clause({
+  heading,
+  children,
+}: {
+  heading?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <section className="flex flex-col gap-2 lg:grid lg:grid-cols-[13rem_minmax(0,1fr)] lg:gap-x-12">
+      {heading ? (
+        <h2 className="display text-[1.5rem] text-ink">{heading}</h2>
+      ) : (
+        <div aria-hidden className="hidden lg:block" />
+      )}
+      <div className="flex flex-col gap-2">{children}</div>
+    </section>
+  );
 }
 
 /** Shared by the outbound policy links and the two internal ones. */
@@ -27,25 +49,26 @@ const POLICY_LINK =
 export default function PrivacyPage() {
   const host = SITE_URL.replace(/^https?:\/\//, "");
   return (
-    <main className="mx-auto flex min-h-dvh max-w-2xl flex-col gap-6 px-4 py-6">
+    <main className="mx-auto flex min-h-dvh max-w-2xl flex-col gap-6 px-4 py-6 lg:max-w-5xl">
       <SiteHeader />
-      <header className="flex flex-col gap-2">
-        <h1 className="display text-[2.5rem] text-ink">Privacy Policy</h1>
-        <p className="label">Last updated: {LAST_UPDATED}</p>
+      <header className="flex flex-col gap-2 lg:grid lg:grid-cols-[13rem_minmax(0,1fr)] lg:gap-x-12">
+        <h1 className="display text-[2.5rem] text-ink lg:col-span-2">
+          Privacy Policy
+        </h1>
+        <p className="label lg:col-start-2">Last updated: {LAST_UPDATED}</p>
       </header>
 
       <div className="flex flex-col gap-6 text-sm leading-relaxed text-neutral-400">
-        <section className="flex flex-col gap-2">
+        <Clause>
           <p>
             This Privacy Policy explains how {SITE_NAME} (&ldquo;we&rdquo;,
             &ldquo;us&rdquo;, or &ldquo;the site&rdquo;), available at {host},
             handles information when you play the game. By using the site you
             agree to the practices described here.
           </p>
-        </section>
+        </Clause>
 
-        <section className="flex flex-col gap-2">
-          <SectionHeading>Information we collect</SectionHeading>
+        <Clause heading="Information we collect">
           <p>
             {SITE_NAME} does not require an account and we do not ask you for
             personal information such as your name, email address, or payment
@@ -59,10 +82,9 @@ export default function PrivacyPage() {
             stays on your device, is not transmitted to us, and you can clear it
             at any time through your browser settings.
           </p>
-        </section>
+        </Clause>
 
-        <section className="flex flex-col gap-2">
-          <SectionHeading>Cookies and advertising</SectionHeading>
+        <Clause heading="Cookies and advertising">
           <p>
             {SITE_NAME} is supported by advertising served through{" "}
             <strong className="font-semibold text-ink">Google AdSense</strong>, a
@@ -115,10 +137,9 @@ export default function PrivacyPage() {
             </a>
             .
           </p>
-        </section>
+        </Clause>
 
-        <section className="flex flex-col gap-2">
-          <SectionHeading>Consent for EEA, UK, and Switzerland</SectionHeading>
+        <Clause heading="Consent for EEA, UK, and Switzerland">
           <p>
             If you are visiting from the European Economic Area, the United
             Kingdom, or Switzerland, you will be shown a consent message before
@@ -127,38 +148,34 @@ export default function PrivacyPage() {
             Where required, non-personalized ads may be shown if you decline
             consent.
           </p>
-        </section>
+        </Clause>
 
-        <section className="flex flex-col gap-2">
-          <SectionHeading>Your choices</SectionHeading>
+        <Clause heading="Your choices">
           <p>
             You can control or delete cookies through your browser settings and
             clear the locally stored game data at any time. Blocking cookies may
             affect the ads you see but will not stop you from playing the game.
           </p>
-        </section>
+        </Clause>
 
-        <section className="flex flex-col gap-2">
-          <SectionHeading>Children&rsquo;s privacy</SectionHeading>
+        <Clause heading="Children’s privacy">
           <p>
             {SITE_NAME} is a general-audience game and is not directed at
             children under the age of 13. We do not knowingly collect personal
             information from children.
           </p>
-        </section>
+        </Clause>
 
-        <section className="flex flex-col gap-2">
-          <SectionHeading>Changes to this policy</SectionHeading>
+        <Clause heading="Changes to this policy">
           <p>
             We may update this Privacy Policy from time to time. When we do, we
             will revise the &ldquo;Last updated&rdquo; date at the top of this
             page. Continued use of the site after changes take effect means you
             accept the revised policy.
           </p>
-        </section>
+        </Clause>
 
-        <section className="flex flex-col gap-2">
-          <SectionHeading>Contact</SectionHeading>
+        <Clause heading="Contact">
           <p>
             If you have any questions about this Privacy Policy, email us at{" "}
             <a
@@ -176,7 +193,7 @@ export default function PrivacyPage() {
             </Link>
             .
           </p>
-        </section>
+        </Clause>
       </div>
 
       <SiteFooter />

@@ -127,8 +127,12 @@ export default function Game() {
     // board flexes to fill whatever is left, and the input sits at the bottom.
     // With interactive-widget=resizes-content, the keyboard shrinks the viewport
     // and this whole column reflows, so typing and results stay on one screen.
+    //
+    // The board keeps a column measure on a desk rather than stretching to the
+    // page: five ledger rows spread across a full-width screen stop reading as
+    // a stack. It widens by a third and then centres itself.
     <div
-      className="flex flex-col gap-3 pt-3 pb-[max(0.5rem,env(safe-area-inset-bottom))]"
+      className="flex flex-col gap-3 pt-3 pb-[max(0.5rem,env(safe-area-inset-bottom))] lg:mx-auto lg:w-full lg:max-w-xl"
       style={{ height: "var(--vvh, 100dvh)" }}
     >
       <header className="shrink-0">

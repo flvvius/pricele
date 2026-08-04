@@ -16,37 +16,51 @@ export const dynamic = "force-static";
 
 export default function Home() {
   return (
-    <main className="mx-auto flex max-w-md flex-col gap-10 px-4 pb-6">
+    // max-w-md is the phone column and stays the phone column. From lg up the
+    // page opens to a broadsheet measure and the sections below set as a
+    // standing head beside its copy — see the `lg:grid` rails below.
+    <main className="mx-auto flex max-w-md flex-col gap-10 px-4 pb-6 lg:max-w-4xl">
       {/* The game occupies exactly the first screen; the prose below is for
           readers and crawlers and sits deliberately below the fold. */}
       <Game />
 
-      <section aria-labelledby="about-heading" className="flex flex-col gap-3">
+      <section
+        aria-labelledby="about-heading"
+        className="flex flex-col gap-3 lg:grid lg:grid-cols-[13rem_minmax(0,1fr)] lg:gap-x-12"
+      >
         <h2
           id="about-heading"
           className="display text-[1.75rem] text-ink"
         >
           A new price puzzle every day
         </h2>
-        <p className="text-[15px] leading-[1.7] text-ink-body">
-          Pricele is a free daily game about what things cost around the world.
-          Every day you get one country and one everyday item — a Big Mac in
-          Norway, a cappuccino in Japan, a litre of petrol in Egypt — and you try
-          to guess the price in US dollars. You get five guesses, with
-          higher-or-lower hints along the way, and you win if you land within 5%
-          of the real price. Both the item and the country change at midnight
-          your time, so there&apos;s always a fresh one waiting when you wake up.
-        </p>
-        <p className="text-[15px] leading-[1.7] text-ink-body">
-          If you play Wordle or Globle, it&apos;s the same kind of thing: a quick
-          puzzle you do once a day, plus a streak you&apos;ll want to keep going.
-          The difference is that the answer is a real number — every price comes
-          from a published source, and the reveal tells you where that country
-          sits against the rest of the world.
-        </p>
+        {/* Wrapper, not bare siblings: under the lg grid every child becomes a
+            cell, and the copy has to stay one. Below lg it inherits the same
+            gap-3 the section had, so the phone stack is unchanged. */}
+        <div className="flex flex-col gap-3">
+          <p className="text-[15px] leading-[1.7] text-ink-body">
+            Pricele is a free daily game about what things cost around the world.
+            Every day you get one country and one everyday item — a Big Mac in
+            Norway, a cappuccino in Japan, a litre of petrol in Egypt — and you try
+            to guess the price in US dollars. You get five guesses, with
+            higher-or-lower hints along the way, and you win if you land within 5%
+            of the real price. Both the item and the country change at midnight
+            your time, so there&apos;s always a fresh one waiting when you wake up.
+          </p>
+          <p className="text-[15px] leading-[1.7] text-ink-body">
+            If you play Wordle or Globle, it&apos;s the same kind of thing: a quick
+            puzzle you do once a day, plus a streak you&apos;ll want to keep going.
+            The difference is that the answer is a real number — every price comes
+            from a published source, and the reveal tells you where that country
+            sits against the rest of the world.
+          </p>
+        </div>
       </section>
 
-      <section aria-labelledby="items-heading" className="flex flex-col gap-3">
+      <section
+        aria-labelledby="items-heading"
+        className="flex flex-col gap-3 lg:grid lg:grid-cols-[13rem_minmax(0,1fr)] lg:gap-x-12"
+      >
         <h2 id="items-heading" className="display text-[1.75rem] text-ink">
           What&apos;s in the game
         </h2>
@@ -55,12 +69,14 @@ export default function Home() {
           item has its own page ranking every country from cheapest to most
           expensive.
         </p>
-        <ul className="border-t border-rule">
+        {/* The index runs the full measure and sets in two columns on a desk —
+            seven one-line rows down a narrow column is a lot of empty page. */}
+        <ul className="border-t border-rule lg:col-span-2 lg:grid lg:grid-cols-2 lg:gap-x-10">
           {ITEMS.map((item) => (
             <li key={item.id}>
               <Link
                 href={`/items/${item.slug}`}
-                className="flex items-center justify-between gap-3 border-b border-rule-soft px-1 py-2.5 transition-[background-color] duration-fast ease-out hover:bg-paper-raised"
+                className="flex items-center justify-between gap-3 border-b border-rule-soft px-1 py-2.5 transition-[background-color] duration-fast ease-out hover:bg-paper-raised lg:h-full"
               >
                 <span className="flex min-w-0 items-center gap-2.5">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -85,7 +101,9 @@ export default function Home() {
             </li>
           ))}
         </ul>
-        <p className="text-[15px] leading-[1.7] text-ink-body">
+        {/* Auto-flow would drop this back into the rail column after the
+            full-width index above; keep it under the copy where it belongs. */}
+        <p className="text-[15px] leading-[1.7] text-ink-body lg:col-start-2">
           Or browse{" "}
           <Link href="/prices" className="underline decoration-rule underline-offset-2 transition-colors duration-fast ease-out hover:text-ink">
             prices by country

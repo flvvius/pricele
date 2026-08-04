@@ -38,14 +38,12 @@ export default function GuessInput({ disabled, remaining, onGuess }: Props) {
       {/* Field and button share one frame with a rule between them, so the pair
           reads as a single instrument rather than two floating controls. The
           frame — not the input — carries the focus state, which is why there is
-          no ring stacked on top of a border here. */}
-      <div
-        className={`flex items-stretch border bg-paper-raised transition-[border-color,box-shadow] duration-fast ease-out ${
-          error
-            ? "border-accent"
-            : "border-rule focus-within:border-ink focus-within:shadow-[inset_0_0_0_1px_rgb(var(--ink))]"
-        }`}
-      >
+          no ring stacked on top of a border here.
+
+          The frame never recolours on an invalid guess: the status line below
+          already says what is wrong, and aria-invalid carries it to assistive
+          tech. */}
+      <div className="flex items-stretch border border-rule bg-paper-raised transition-[border-color,box-shadow] duration-fast ease-out focus-within:border-ink focus-within:shadow-[inset_0_0_0_1px_rgb(var(--ink))]">
         <span
           className="grid place-items-center pl-3.5 font-mono text-base text-ink-meta"
           aria-hidden
