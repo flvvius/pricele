@@ -17,7 +17,7 @@ export const HOME_FAQ: FaqItem[] = [
   {
     question: "How do you play Pricele?",
     answer:
-      "Each day you get one item and one country. Type your best guess of the price in US dollars. After every guess, Pricele tells you whether the real price is higher or lower and roughly how close you got. Land within 5% of the real price to win. You have five guesses.",
+      "Each day you get one item and one country. Type your best guess of the price in US dollars or euros — switch between the two next to the guess box. After every guess, Pricele tells you whether the real price is higher or lower and roughly how close you got. Land within 5% of the real price to win. You have five guesses. Because the win is a percentage rather than a fixed amount, the currency you play in doesn't change how close a guess needs to be.",
   },
   {
     question: "Which items are in the game?",

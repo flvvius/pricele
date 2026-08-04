@@ -13,10 +13,12 @@ import { MAX_GUESSES } from "@/lib/share";
 import {
   affordanceLine,
   formatMoney,
+  formatPrice,
   bestPctOff,
   accuracyLine,
   priceRankLine,
 } from "@/lib/format";
+import { USD_TO_EUR, type Currency } from "@/lib/currency";
 import ShareCard from "./ShareCard";
 import Countdown from "./Countdown";
 import EngagementPrompts from "./EngagementPrompts";
@@ -31,6 +33,8 @@ interface Props {
   won: boolean;
   stats: Stats;
   onShowStats: () => void;
+  /** The currency the player guessed in. The headline figure is shown in it. */
+  currency: Currency;
   /** True when replaying a past puzzle: hide today-only chrome (streak, reminders). */
   isArchive?: boolean;
 }
@@ -43,6 +47,7 @@ export default function Reveal({
   won,
   stats,
   onShowStats,
+  currency,
   isArchive = false,
 }: Props) {
   const bestOff = bestPctOff(guesses, price.priceUSD);
@@ -77,8 +82,12 @@ export default function Reveal({
           {item.name} in {price.countryName}
         </figcaption>
 
+        {/* The answer leads in whatever currency the player guessed in — a
+            figure in the currency you were just typing is the one you can judge
+            your guess against without doing arithmetic. The price as actually
+            charged locally stays underneath it either way. */}
         <p className="display animate-print-in mt-3 text-figure text-ink">
-          {formatMoney(price.priceUSD, "USD")}
+          {formatPrice(price.priceUSD, currency)}
         </p>
         <p className="mt-1.5 font-mono text-sm tabular-nums text-ink-muted">
           {formatMoney(price.priceLocal, price.localCurrency)}
@@ -93,6 +102,15 @@ export default function Reveal({
 
         <p className="mt-3.5 border-t border-rule-soft pt-3 text-[11px] leading-relaxed text-ink-meta">
           Source: {price.source}.{" "}
+          {/* Said plainly rather than hidden: the euro headline is arithmetic on
+              a dollar figure, not a price anyone was charged, and on eurozone
+              rows it sits a cent or two from the published euro price below. */}
+          {currency === "EUR" && (
+            <>
+              Euro figures are converted from US dollars at a fixed reference
+              rate of €{USD_TO_EUR.toFixed(2)}.{" "}
+            </>
+          )}
           <Link
             href="/methodology"
             className="underline decoration-rule underline-offset-2 transition-colors duration-fast ease-out hover:text-ink"

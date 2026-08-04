@@ -21,11 +21,20 @@ export default function HowToPlay({
       <div className="flex flex-col gap-6 text-[13px] leading-relaxed text-ink-body">
         <p>
           Guess what today&apos;s item costs in the featured country. You get{" "}
-          <strong className="font-semibold text-ink">five tries</strong>, always
-          in <strong className="font-semibold text-ink">US dollars</strong>, and
-          you win by landing within{" "}
+          <strong className="font-semibold text-ink">five tries</strong>, and you
+          win by landing within{" "}
           <strong className="font-semibold text-ink">5%</strong> of the real
           price.
+        </p>
+
+        <p className="text-ink-muted">
+          Guess in{" "}
+          <strong className="font-semibold text-ink-body">dollars</strong> or{" "}
+          <strong className="font-semibold text-ink-body">euros</strong>: the
+          pair of buttons inside the guess box switches between them at any
+          point, mid-round included, and remembers which you picked. Because you
+          win on a percentage rather than a fixed amount, the currency you play
+          in never changes how close a guess counts as.
         </p>
 
         <div>

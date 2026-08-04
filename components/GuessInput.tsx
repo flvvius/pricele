@@ -1,11 +1,16 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import { toUSD, type Currency } from "@/lib/currency";
+import CurrencyToggle from "./CurrencyToggle";
 
 interface Props {
   disabled: boolean;
   remaining: number;
-  onGuess: (value: number) => void;
+  currency: Currency;
+  onCurrencyChange: (currency: Currency) => void;
+  /** Receives the guess in USD, whatever currency it was typed in. */
+  onGuess: (usd: number) => void;
 }
 
 // Keep only digits and a single decimal separator. Allowing both "." and ","
@@ -17,7 +22,13 @@ function sanitize(raw: string): string {
   return cleaned.slice(0, sep + 1) + cleaned.slice(sep + 1).replace(/[.,]/g, "");
 }
 
-export default function GuessInput({ disabled, remaining, onGuess }: Props) {
+export default function GuessInput({
+  disabled,
+  remaining,
+  currency,
+  onCurrencyChange,
+  onGuess,
+}: Props) {
   const [value, setValue] = useState("");
   const [error, setError] = useState<string | null>(null);
 
@@ -30,7 +41,18 @@ export default function GuessInput({ disabled, remaining, onGuess }: Props) {
     }
     setError(null);
     setValue("");
-    onGuess(n);
+    // The game is scored in dollars, so the typed figure is converted here and
+    // nothing downstream has to care which currency it was entered in.
+    onGuess(toUSD(n, currency));
+  }
+
+  // Switching currency mid-entry would silently reinterpret a half-typed number
+  // — "6" meant as dollars becoming 6 euros — so the field is cleared.
+  function changeCurrency(next: Currency) {
+    if (next === currency) return;
+    setValue("");
+    setError(null);
+    onCurrencyChange(next);
   }
 
   return (
@@ -44,12 +66,11 @@ export default function GuessInput({ disabled, remaining, onGuess }: Props) {
           already says what is wrong, and aria-invalid carries it to assistive
           tech. */}
       <div className="flex items-stretch border border-rule bg-paper-raised transition-[border-color,box-shadow] duration-fast ease-out focus-within:border-ink focus-within:shadow-[inset_0_0_0_1px_rgb(var(--ink))]">
-        <span
-          className="grid place-items-center pl-3.5 font-mono text-base text-ink-meta"
-          aria-hidden
-        >
-          $
-        </span>
+        <CurrencyToggle
+          currency={currency}
+          onChange={changeCurrency}
+          disabled={disabled}
+        />
         <input
           type="text"
           inputMode="decimal"
@@ -63,7 +84,9 @@ export default function GuessInput({ disabled, remaining, onGuess }: Props) {
             if (error) setError(null);
           }}
           placeholder="0.00"
-          aria-label="Your guess in USD"
+          aria-label={
+            currency === "EUR" ? "Your guess in euros" : "Your guess in US dollars"
+          }
           aria-invalid={error ? true : undefined}
           className="w-full min-w-0 bg-transparent py-3.5 pl-2 pr-3 font-mono text-lg tabular-nums text-ink outline-none placeholder:text-ink-faint disabled:opacity-50"
         />

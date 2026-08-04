@@ -10,6 +10,7 @@
 import type { PriceEntry } from "@/lib/puzzle";
 import { PRICES } from "@/lib/puzzle";
 import { getItem } from "@/data/items";
+import { fromUSD, type Currency } from "@/lib/currency";
 
 /** "140 JPY", "45,000 LBP" — the price in its local currency. */
 export function formatLocal(price: PriceEntry): string {
@@ -30,6 +31,15 @@ export function formatUSD(priceUSD: number): string {
  * client components only; the SEO reference pages use the en-US helpers above so
  * their HTML stays byte-for-byte deterministic across builds.
  */
+/**
+ * A canonical USD figure, converted and formatted for whichever currency the
+ * player is reading in. The one helper the game screen should use for prices —
+ * it keeps the conversion and the formatting from drifting apart.
+ */
+export function formatPrice(priceUSD: number, currency: Currency): string {
+  return formatMoney(fromUSD(priceUSD, currency), currency);
+}
+
 export function formatMoney(value: number, currency: string): string {
   try {
     return new Intl.NumberFormat(undefined, {

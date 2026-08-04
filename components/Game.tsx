@@ -14,7 +14,8 @@ import {
   type Stats,
 } from "@/lib/storage";
 import { MAX_GUESSES } from "@/lib/share";
-import { anchorPriceUSD, formatMoney } from "@/lib/format";
+import { anchorPriceUSD, formatPrice } from "@/lib/format";
+import { loadCurrency, saveCurrency, type Currency } from "@/lib/currency";
 import { initPwa } from "@/lib/pwa";
 import { useKeyboardViewport } from "./useKeyboardViewport";
 import GuessInput from "./GuessInput";
@@ -62,6 +63,10 @@ export default function Game() {
     won: false,
   });
   const [stats, setStats] = useState<Stats>(EMPTY_STATS);
+  // Dollars until the client tells us otherwise. The saved choice and the locale
+  // sniff both need `window`, so they can only be read after mount — starting on
+  // USD keeps the first paint identical to the server's.
+  const [currency, setCurrency] = useState<Currency>("USD");
   const [showHowTo, setShowHowTo] = useState(false);
   const [showStats, setShowStats] = useState(false);
   const [showArchive, setShowArchive] = useState(false);
@@ -74,6 +79,7 @@ export default function Game() {
     setActiveDate(day);
     setState(loadDayState(day));
     setStats(loadStats());
+    setCurrency(loadCurrency());
     setMounted(true);
     initPwa();
 
@@ -92,13 +98,20 @@ export default function Game() {
     setState(loadDayState(date));
   }
 
-  function handleGuess(value: number) {
+  function changeCurrency(next: Currency) {
+    setCurrency(next);
+    saveCurrency(next);
+  }
+
+  // Always in USD — GuessInput converts before it gets here, so guesses stay
+  // comparable across a mid-round currency switch and in the saved day state.
+  function handleGuess(usd: number) {
     if (!puzzle || state.done) return;
-    const result = evaluate(value, puzzle.price.priceUSD);
+    const result = evaluate(usd, puzzle.price.priceUSD);
     const guesses = [
       ...state.guesses,
       {
-        value,
+        value: usd,
         band: result.band,
         direction: result.direction,
         closeness: result.closeness,
@@ -225,6 +238,7 @@ export default function Game() {
               won={state.won}
               stats={stats}
               onShowStats={() => setShowStats(true)}
+              currency={currency}
               isArchive={isArchive}
             />
           </div>
@@ -236,7 +250,7 @@ export default function Game() {
               </p>
             )}
 
-            <GuessHistory guesses={state.guesses} />
+            <GuessHistory guesses={state.guesses} currency={currency} />
 
             <div className="shrink-0">
               {state.guesses.length === 0 && (
@@ -244,7 +258,7 @@ export default function Game() {
                   For scale, the median{" "}
                   {puzzle.item.shortName.toLowerCase()} across all countries is{" "}
                   <span className="font-mono tabular-nums text-ink-body">
-                    {formatMoney(anchorPriceUSD(puzzle.item.id), "USD")}
+                    {formatPrice(anchorPriceUSD(puzzle.item.id), currency)}
                   </span>
                   .
                 </p>
@@ -252,6 +266,8 @@ export default function Game() {
               <GuessInput
                 disabled={state.done}
                 remaining={MAX_GUESSES - state.guesses.length}
+                currency={currency}
+                onCurrencyChange={changeCurrency}
                 onGuess={handleGuess}
               />
             </div>

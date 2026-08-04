@@ -1,7 +1,8 @@
 import { tierFromCloseness, WARMTH_LEVELS } from "@/lib/scoring";
 import type { GuessRecord } from "@/lib/storage";
 import { MAX_GUESSES } from "@/lib/share";
-import { formatMoney } from "@/lib/format";
+import { formatPrice } from "@/lib/format";
+import type { Currency } from "@/lib/currency";
 import { IconCheck, IconDown, IconUp } from "./Icons";
 
 // Phrased around the real price, not the guess, so it is unambiguous: "the real
@@ -25,7 +26,15 @@ const HINT: Record<GuessRecord["direction"], { label: string; Icon: typeof IconU
  * percentage: a precise figure would let a player invert the scoring formula
  * and win on their second guess.
  */
-function Row({ guess, index }: { guess: GuessRecord; index: number }) {
+function Row({
+  guess,
+  index,
+  currency,
+}: {
+  guess: GuessRecord;
+  index: number;
+  currency: Currency;
+}) {
   const tier = tierFromCloseness(guess.closeness);
   const { label, Icon } = HINT[guess.direction];
   const fill = (tier.level + 1) / WARMTH_LEVELS;
@@ -47,7 +56,7 @@ function Row({ guess, index }: { guess: GuessRecord; index: number }) {
       </span>
 
       <span className="relative shrink-0 font-mono text-base font-medium tabular-nums text-ink">
-        {formatMoney(guess.value, "USD")}
+        {formatPrice(guess.value, currency)}
       </span>
 
       <span className="relative ml-auto flex min-w-0 items-center gap-2.5">
@@ -97,7 +106,13 @@ function Thermometer({ level }: { level: number }) {
   );
 }
 
-export default function GuessHistory({ guesses }: { guesses: GuessRecord[] }) {
+export default function GuessHistory({
+  guesses,
+  currency,
+}: {
+  guesses: GuessRecord[];
+  currency: Currency;
+}) {
   const empties = Math.max(0, MAX_GUESSES - guesses.length);
 
   // overflow-y-auto is a safety valve for extremely short viewports (a small
@@ -110,7 +125,7 @@ export default function GuessHistory({ guesses }: { guesses: GuessRecord[] }) {
       aria-label="Your guesses"
     >
       {guesses.map((g, i) => (
-        <Row key={i} guess={g} index={i} />
+        <Row key={i} guess={g} index={i} currency={currency} />
       ))}
       {Array.from({ length: empties }, (_, i) => (
         <li
