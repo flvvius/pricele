@@ -62,7 +62,9 @@ export default function SiteFooter() {
         ))}
       </nav>
 
-      <div className="flex flex-col gap-2 border-t border-rule-soft pt-5">
+      {/* Capped on wide pages: the colophon is 12px type, and left to run the
+          full broadsheet measure it would set at well over 150 characters. */}
+      <div className="flex flex-col gap-2 border-t border-rule-soft pt-5 lg:max-w-prose">
         <p>
           Prices are national averages compiled from public sources and are
           published for general interest, not as shopping or financial advice.
