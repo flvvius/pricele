@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Instrument_Serif, Archivo, IBM_Plex_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import JsonLd from "@/components/JsonLd";
 import ThemeScript, { EDITION_THEME_COLOR } from "@/components/ThemeScript";
@@ -151,6 +152,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-dvh bg-paper font-sans text-ink-body antialiased">
         {children}
+        <Analytics />
       </body>
     </html>
   );
