@@ -189,6 +189,59 @@ export default function MethodologyPage() {
         </Prose>
       </Section>
 
+      {/* The `license` of the Dataset schema on every /prices and /items page
+          points at this section, so it has to state terms rather than gesture
+          at them. */}
+      <Section heading="Reuse and licensing" id="reuse">
+        <Prose>
+          <p>
+            The price tables here are a compilation of third-party data, so the
+            underlying numbers are not ours to place under an open licence. The
+            Big Mac figures remain The Economist&apos;s and are governed by the
+            terms on its{" "}
+            <a
+              href="https://github.com/TheEconomist/big-mac-data"
+              rel="noopener noreferrer nofollow"
+              target="_blank"
+              className="underline hover:text-neutral-300"
+            >
+              published dataset
+            </a>
+            ; the cappuccino, milk, egg, apple and petrol figures remain
+            Numbeo&apos;s and are governed by{" "}
+            <a
+              href="https://www.numbeo.com/common/terms_of_use.jsp"
+              rel="noopener noreferrer nofollow"
+              target="_blank"
+              className="underline hover:text-neutral-300"
+            >
+              Numbeo&apos;s terms of use
+            </a>
+            .
+          </p>
+          <p>
+            What is ours is the compilation itself — the country and item
+            selection, the local-currency and work-time calculations, the wage
+            estimates and the writing. You may quote individual figures or a
+            small extract of a table for editorial, educational or
+            non-commercial use, with attribution to Pricele and a link to the
+            page you took it from. Republishing a table wholesale, or any
+            commercial use, needs permission from the original source rather
+            than from us.
+          </p>
+          <p>
+            For anything this doesn&apos;t cover, email{" "}
+            <a
+              href={`mailto:${SITE_EMAIL}`}
+              className="underline hover:text-neutral-300"
+            >
+              {SITE_EMAIL}
+            </a>{" "}
+            and ask.
+          </p>
+        </Prose>
+      </Section>
+
       <Section heading="Corrections">
         <Prose>
           <p>

@@ -85,6 +85,9 @@ Everything is statically rendered for search engines and AI answer engines:
 - **Structured data** (`lib/seo.ts`, `components/JsonLd.tsx`): site-wide
   `VideoGame` and `WebSite` schema, `FAQPage` on the home page, `Dataset` on the
   price and item pages, `Article` on archive entries, `BlogPosting` on guides.
+  `Dataset` is built by `datasetJsonLd()` rather than inline, so every one of
+  them carries the `license` Search Console asks for — it points at the reuse
+  terms in `/methodology#reuse`, since the underlying prices are third-party.
 - **Crawlable content**: every reference page is server-rendered HTML. The home
   page ships copy and an FAQ below the (client-side) game, so crawlers get real
   text, not an empty shell.

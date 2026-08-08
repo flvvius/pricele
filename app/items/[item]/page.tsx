@@ -13,7 +13,7 @@ import {
   wageMinutes,
 } from "@/lib/catalog";
 import { formatUSD } from "@/lib/format";
-import { absoluteUrl } from "@/lib/seo";
+import { datasetJsonLd } from "@/lib/seo";
 
 export const revalidate = 3600;
 
@@ -152,15 +152,11 @@ export default function ItemPage({ params }: { params: { item: string } }) {
       </Section>
 
       <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@type": "Dataset",
+        data={datasetJsonLd({
           name: `${item.name} prices by country`,
           description: `Price of ${item.name.toLowerCase()} across ${prices.length} countries in US dollars and local currency.`,
-          url: absoluteUrl(`/items/${item.slug}`),
-          isAccessibleForFree: true,
-          creator: { "@type": "Organization", name: "Pricele" },
-        }}
+          path: `/items/${item.slug}`,
+        })}
       />
     </ContentPage>
   );

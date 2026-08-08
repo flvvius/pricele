@@ -59,10 +59,18 @@ export function Section({
   return (
     <section
       id={id}
-      aria-labelledby={id ?? undefined}
+      // The label is the heading, not the section itself: with the id on the
+      // section, aria-labelledby has to point one level down or it resolves to
+      // the whole block.
+      aria-labelledby={id ? `${id}-heading` : undefined}
       className="flex flex-col gap-4 lg:grid lg:grid-cols-[13rem_minmax(0,1fr)] lg:gap-x-12"
     >
-      <h2 className="display text-[1.75rem] text-ink">{heading}</h2>
+      <h2
+        id={id ? `${id}-heading` : undefined}
+        className="display text-[1.75rem] text-ink"
+      >
+        {heading}
+      </h2>
       {/* One cell for the body, whatever the caller passed: under the lg grid
           bare siblings would each claim their own cell and alternate between
           the rail and the copy column. Below lg this is the same gap-4 stack. */}

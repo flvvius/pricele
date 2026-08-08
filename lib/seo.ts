@@ -81,6 +81,54 @@ export function websiteJsonLd() {
   };
 }
 
+/**
+ * Reuse terms for the price tables, as required by `Dataset` schema (Search
+ * Console flags a Dataset with no `license`). It points at the methodology page
+ * rather than at a blanket open licence because the underlying numbers are
+ * third-party — The Economist's Big Mac Index and Numbeo's rankings keep their
+ * own terms, and a compilation can't relicense its sources.
+ */
+export const DATA_LICENSE_URL = absoluteUrl("/methodology#reuse");
+
+export interface DatasetInput {
+  name: string;
+  description: string;
+  /** Site-relative path of the page the dataset is published on. */
+  path: string;
+  /** Country name, when the dataset covers exactly one. */
+  spatialCoverage?: string;
+}
+
+/**
+ * Dataset schema for the reference pages that publish price tables. Built in
+ * one place so every Dataset on the site carries the same creator and licence
+ * — the two properties Search flags when they go missing.
+ */
+export function datasetJsonLd({
+  name,
+  description,
+  path,
+  spatialCoverage,
+}: DatasetInput) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Dataset",
+    name,
+    description,
+    url: absoluteUrl(path),
+    license: DATA_LICENSE_URL,
+    isAccessibleForFree: true,
+    creator: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      url: SITE_URL,
+    },
+    ...(spatialCoverage
+      ? { spatialCoverage: { "@type": "Country", name: spatialCoverage } }
+      : {}),
+  };
+}
+
 export interface FaqItem {
   question: string;
   answer: string;

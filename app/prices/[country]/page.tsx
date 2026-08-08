@@ -17,7 +17,7 @@ import {
 import { ITEMS, getItem } from "@/data/items";
 import { COUNTRY_NOTES } from "@/data/countries";
 import { formatUSD } from "@/lib/format";
-import { absoluteUrl } from "@/lib/seo";
+import { datasetJsonLd } from "@/lib/seo";
 
 export const revalidate = 3600;
 
@@ -191,16 +191,12 @@ export default function CountryPage({ params }: { params: { country: string } })
       </Section>
 
       <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@type": "Dataset",
+        data={datasetJsonLd({
           name: `Everyday prices in ${country.name}`,
           description: `Prices for ${ITEMS.length} everyday items in ${country.name}, in US dollars and ${country.localCurrency}.`,
-          url: absoluteUrl(`/prices/${country.slug}`),
-          isAccessibleForFree: true,
-          spatialCoverage: { "@type": "Country", name: country.name },
-          creator: { "@type": "Organization", name: "Pricele" },
-        }}
+          path: `/prices/${country.slug}`,
+          spatialCoverage: country.name,
+        })}
       />
     </ContentPage>
   );
