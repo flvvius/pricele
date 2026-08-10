@@ -170,6 +170,58 @@ export default function MethodologyPage() {
         </Prose>
       </Section>
 
+      <Section heading="Consumption tax" id="tax">
+        <Prose>
+          <p>
+            Each country page states that country&apos;s standard VAT, GST or
+            consumption tax rate, and how ordinary groceries are treated under
+            it. Consumption tax is the largest single wedge between what two
+            countries charge for a physically identical item, and it is the one
+            component of a price that is set deliberately rather than emerging
+            from a market — so it is worth reading separately from the price
+            itself.
+          </p>
+          <p>
+            <strong className="font-semibold text-neutral-300">
+              Standard rates come from PwC&apos;s Worldwide Tax Summaries VAT
+              quick chart.
+            </strong>{" "}
+            That is one source for all {COUNTRIES.length} countries, used
+            deliberately: rates assembled from {COUNTRIES.length} different
+            national pages would be internally inconsistent in exactly the way
+            that makes cross-country comparison meaningless. Reduced,
+            super-reduced and zero rates for European countries are cross-checked
+            against the Tax Foundation&apos;s annual VAT rates in Europe table.
+          </p>
+          <p>
+            The grocery treatment matters more here than the headline rate does,
+            because six of the {ITEMS.length} items are food or drink. A country
+            can charge 23% on most things and nothing at all on bread — Ireland
+            does — so quoting only its standard rate would actively mislead you
+            about its food prices.
+          </p>
+          <p>
+            Two honest limits. First, where a country&apos;s food treatment could
+            not be confirmed from either source, the field is left empty rather
+            than filled in from memory; a missing line means we could not verify
+            it, not that no relief exists. Second, three countries genuinely
+            cannot be reduced to one number: Brazil overlaps federal, state and
+            municipal levies, the United States has no VAT and leaves sales tax
+            to states and municipalities, and India and China both band their
+            rates by category. Those are described in words instead, and their
+            rows should be read as national approximations.
+          </p>
+          <p>
+            A rate is not a full explanation of a price. Switzerland charges 2.6%
+            on food and is still the most expensive country in this table; the
+            United States has no VAT at all and sits mid-range. Tax tells you
+            what the state adds. Wages, distance, tariffs, subsidies and what a
+            country grows for itself do the rest, which is what the note at the
+            top of each country page is for.
+          </p>
+        </Prose>
+      </Section>
+
       <Section heading="What a single national price cannot capture">
         <Prose>
           <p>

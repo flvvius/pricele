@@ -15,7 +15,7 @@ import {
   wageMinutes,
 } from "@/lib/catalog";
 import { ITEMS, getItem } from "@/data/items";
-import { COUNTRY_NOTES } from "@/data/countries";
+import { COUNTRY_NOTES, COUNTRY_TAX } from "@/data/countries";
 import { formatUSD } from "@/lib/format";
 import { datasetJsonLd, pageMetadata } from "@/lib/seo";
 
@@ -82,6 +82,7 @@ export default function CountryPage({ params }: { params: { country: string } })
   const cheapest = [...ranked].sort((a, b) => b.rank - a.rank)[0];
   const hardest = [...visible].sort((a, b) => wageMinutes(b) - wageMinutes(a))[0];
   const note = COUNTRY_NOTES[country.code];
+  const tax = COUNTRY_TAX[country.code];
 
   return (
     <ContentPage
@@ -153,6 +154,33 @@ export default function CountryPage({ params }: { params: { country: string } })
                 interesting number.
               </p>
             )}
+          </Prose>
+        </Section>
+      )}
+
+      {tax && (
+        <Section heading="What the state takes">
+          {/* Deliberately short. The sourcing and caveats live on /methodology
+              rather than here: repeated verbatim across 33 country pages they
+              were ~70 words of boilerplate each, which is the exact problem the
+              written notes above exist to solve. */}
+          <Prose>
+            <p>
+              Standard rate in {country.name}:{" "}
+              <strong className="font-semibold text-ink">{tax.standard}</strong>
+              {tax.food ? (
+                <>
+                  . Ordinary groceries:{" "}
+                  <strong className="font-semibold text-ink">{tax.food}</strong>.
+                </>
+              ) : (
+                "."
+              )}{" "}
+              <Link href="/methodology#tax" className="underline">
+                Where these come from
+              </Link>
+              .
+            </p>
           </Prose>
         </Section>
       )}
