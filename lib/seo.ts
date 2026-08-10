@@ -2,17 +2,65 @@
 // JSON-LD structured-data builders. Keeping these here means every page emits
 // consistent metadata and schema, and the production URL is set in one place.
 
+import type { Metadata } from "next";
 import { ITEMS } from "@/data/items";
 
 /**
- * Canonical origin, no trailing slash. Defaults to the production custom domain
- * so canonical tags, Open Graph URLs, the sitemap, and JSON-LD always point at
- * pricele.online — never at a Vercel per-deployment URL, which must never be
- * treated as canonical. Override per-deploy with NEXT_PUBLIC_SITE_URL if needed.
+ * The host the site is actually served from.
+ *
+ * This is the www subdomain, because that is the primary domain on Vercel: the
+ * apex 308-redirects to it. That distinction is the whole reason this constant
+ * exists. This file used to declare the apex as canonical, which pointed every
+ * <link rel="canonical">, every og:url, every sitemap <loc> and the robots.txt
+ * Sitemap line at a URL that redirects — and a canonical URL has to answer 200.
+ * Search Console reported the consequences twice over:
+ *
+ *   - "Page with redirect", because every URL in the submitted sitemap 308'd
+ *     instead of serving the page it was supposed to index; and
+ *   - "Duplicate without user-selected canonical", because a canonical that
+ *     redirects is not a usable canonical, so Google was left with the apex and
+ *     the www copy of every page and no declared preference between them.
+ *
+ * If the primary domain in Vercel ever moves to the apex, change it there
+ * first, then change this to match. Nothing else needs touching: the sitemap,
+ * robots.txt, canonicals, og:url and JSON-LD all derive from here.
  */
-export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL || "https://pricele.online"
-).replace(/\/$/, "");
+const CANONICAL_HOST = "www.pricele.online";
+
+/** Hosts that 308 to CANONICAL_HOST, and so can never be canonical themselves. */
+const REDIRECTING_HOSTS = ["pricele.online"];
+
+/**
+ * Normalise an origin to the one that serves 200s: no trailing slash, and never
+ * a host that only redirects.
+ *
+ * The redirect check is not paranoia — NEXT_PUBLIC_SITE_URL is set per
+ * environment, and one left pointing at the apex would quietly re-create the
+ * exact indexing bug this replaced. Hosts that aren't the apex (preview
+ * deployments, localhost) are left alone.
+ */
+export function canonicalOrigin(raw?: string): string {
+  const fallback = `https://${CANONICAL_HOST}`;
+  if (!raw) return fallback;
+
+  let url: URL;
+  try {
+    url = new URL(raw);
+  } catch {
+    return fallback;
+  }
+
+  if (REDIRECTING_HOSTS.includes(url.hostname)) url.hostname = CANONICAL_HOST;
+  return `${url.protocol}//${url.host}${url.pathname}`.replace(/\/+$/, "");
+}
+
+/**
+ * Canonical origin, no trailing slash. Every canonical tag, Open Graph URL,
+ * sitemap entry and JSON-LD url on the site is built from this, so it must
+ * always be an origin that serves the site directly — never a Vercel
+ * per-deployment URL, and never a host that redirects.
+ */
+export const SITE_URL = canonicalOrigin(process.env.NEXT_PUBLIC_SITE_URL);
 
 export const SITE_NAME = "Pricele";
 export const SITE_TAGLINE = "Guess the price. New item and country daily.";
@@ -24,6 +72,92 @@ export const SITE_DESCRIPTION =
 /** Absolute URL for a site-relative path. */
 export function absoluteUrl(path = "/"): string {
   return new URL(path, SITE_URL).toString();
+}
+
+/** Home page title, and the template every other page's title runs through. */
+export const TITLE_DEFAULT = "Pricele — Guess the Price, a New Country Daily";
+export const TITLE_TEMPLATE = `%s · ${SITE_NAME}`;
+
+/** The full title a page ends up with, template included. */
+export function titleFor(title?: string): string {
+  return title ? TITLE_TEMPLATE.replace("%s", title) : TITLE_DEFAULT;
+}
+
+/** The share card. One image, one place. */
+const OG_IMAGE = {
+  url: "/og.svg",
+  width: 1200,
+  height: 630,
+  alt: "Pricele — guess the price",
+};
+
+export interface PageMetaInput {
+  /** Site-relative path of this page, no trailing slash. e.g. "/items/big-mac". */
+  path: string;
+  /** Page title, without the site suffix — the template adds that. */
+  title?: string;
+  description?: string;
+  /** "article" for blog posts. Everything else is a "website". */
+  type?: "website" | "article";
+  /** ISO date, for articles. */
+  publishedTime?: string;
+  /** Set false to keep a page (an empty index, a draft) out of the index. */
+  index?: boolean;
+}
+
+/**
+ * The metadata block for a page, canonical URL included.
+ *
+ * Every page goes through this for two reasons.
+ *
+ * The first is that the three things Google reads as canonicalisation signals —
+ * <link rel="canonical">, og:url and the sitemap <loc> — have to agree, and
+ * agree on a URL that serves a 200. Deriving all of them from one `path` is
+ * what keeps them from drifting apart.
+ *
+ * The second is that Next.js does not deep-merge `openGraph`: a page that
+ * declares one of its own replaces the layout's wholesale. Writing
+ * `openGraph: { url }` inline therefore looks like it sets one field, and
+ * silently drops the share image, the locale and the site name with it. Build
+ * the whole object here and that can't happen.
+ */
+export function pageMetadata({
+  path,
+  title,
+  description,
+  type = "website",
+  publishedTime,
+  index = true,
+}: PageMetaInput): Metadata {
+  const fullTitle = titleFor(title);
+  const desc = description ?? SITE_DESCRIPTION;
+  // Next renders `canonical: "/"` as the bare origin, and the sitemap lists the
+  // home page the same way. Match that here so og:url doesn't disagree with the
+  // canonical over a trailing slash.
+  const url = path === "/" ? SITE_URL : absoluteUrl(path);
+
+  return {
+    ...(title ? { title } : {}),
+    ...(description ? { description } : {}),
+    alternates: { canonical: path },
+    ...(index ? {} : { robots: { index: false, follow: true } }),
+    openGraph: {
+      type,
+      locale: "en_US",
+      siteName: SITE_NAME,
+      url,
+      title: fullTitle,
+      description: desc,
+      images: [OG_IMAGE],
+      ...(publishedTime ? { publishedTime } : {}),
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: fullTitle,
+      description: desc,
+      images: [OG_IMAGE.url],
+    },
+  };
 }
 
 /**

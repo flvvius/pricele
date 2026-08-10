@@ -93,12 +93,27 @@ Everything is statically rendered for search engines and AI answer engines:
   text, not an empty shell.
 - **Technical SEO**: dynamic `sitemap.xml` (which excludes anything noindexed),
   `robots.txt`, PWA `manifest`, canonical URLs, Open Graph / Twitter cards.
+- **One canonical origin** (`CANONICAL_HOST` in `lib/seo.ts`): `www.pricele.online`,
+  because that is the primary domain on Vercel and the apex 308s to it. Every
+  canonical tag, `og:url`, sitemap `<loc>` and JSON-LD `url` derives from it, so
+  they cannot drift apart — and none of them can end up naming a URL that
+  redirects, which is not a thing a canonical is allowed to be.
 
 ```bash
-NEXT_PUBLIC_SITE_URL=https://your-domain.com        # falls back to pricele.online
+NEXT_PUBLIC_SITE_URL=https://your-domain.com        # falls back to www.pricele.online
 NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION=...            # optional
 NEXT_PUBLIC_BING_SITE_VERIFICATION=...              # optional
 ```
+
+> **Changing the domain.** Change the primary domain in Vercel first, then set
+> `CANONICAL_HOST` in `lib/seo.ts` to match. The two have to agree: a canonical
+> URL must answer `200`, and the apex/`www` pair only ever has one host that
+> does. `lib/seo.test.ts` fails if the canonical origin goes back to the apex,
+> and `canonicalOrigin()` rewrites a `NEXT_PUBLIC_SITE_URL` that points there.
+>
+> In Search Console, use a **Domain property** rather than a URL-prefix one.
+> A URL-prefix property registered on the apex reports on URLs the site no
+> longer serves.
 
 ### Guides
 

@@ -10,6 +10,8 @@ import {
   SITE_URL,
   SITE_NAME,
   SITE_DESCRIPTION,
+  TITLE_DEFAULT,
+  TITLE_TEMPLATE,
   gameJsonLd,
   websiteJsonLd,
 } from "@/lib/seo";
@@ -42,8 +44,8 @@ const mono = IBM_Plex_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Pricele — Guess the Price, a New Country Daily",
-    template: "%s · Pricele",
+    default: TITLE_DEFAULT,
+    template: TITLE_TEMPLATE,
   },
   description: SITE_DESCRIPTION,
   applicationName: SITE_NAME,
@@ -62,9 +64,12 @@ export const metadata: Metadata = {
   authors: [{ name: SITE_NAME }],
   creator: SITE_NAME,
   publisher: SITE_NAME,
-  alternates: {
-    canonical: "/",
-  },
+  // No canonical here on purpose. Metadata is inherited, so a canonical set on
+  // the layout is a canonical on every route that doesn't override it —
+  // including 404s and any page whose generateMetadata bails out, all of which
+  // would then declare themselves to be the home page. Each page sets its own
+  // through pageMetadata(); a route that forgets now emits none, which is a far
+  // better failure than a wrong one.
   robots: {
     index: true,
     follow: true,
@@ -76,12 +81,14 @@ export const metadata: Metadata = {
       "max-video-preview": -1,
     },
   },
+  // Site-wide fallback only; every page builds its own from pageMetadata(), and
+  // Next.js replaces this object rather than merging into it when they do.
   openGraph: {
     type: "website",
     locale: "en_US",
     url: SITE_URL,
     siteName: SITE_NAME,
-    title: "Pricele — Guess the Price, a New Country Daily",
+    title: TITLE_DEFAULT,
     description: SITE_DESCRIPTION,
     images: [
       { url: "/og.svg", width: 1200, height: 630, alt: "Pricele — guess the price" },
@@ -89,7 +96,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Pricele — Guess the Price, a New Country Daily",
+    title: TITLE_DEFAULT,
     description:
       "A free daily game: guess the price of an everyday item around the world in 5 tries. New country every day.",
     images: ["/og.svg"],

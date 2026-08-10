@@ -1,10 +1,11 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Game from "@/components/Game";
 import FaqSection from "@/components/FaqSection";
 import SiteFooter from "@/components/SiteFooter";
 import JsonLd from "@/components/JsonLd";
 import { HOME_FAQ } from "@/lib/faq";
-import { faqJsonLd } from "@/lib/seo";
+import { faqJsonLd, pageMetadata } from "@/lib/seo";
 import { ITEMS } from "@/data/items";
 import { COUNTRIES, pricesForItem, medianPriceUSD } from "@/lib/catalog";
 import { formatUSD } from "@/lib/format";
@@ -13,6 +14,11 @@ import { formatUSD } from "@/lib/format";
 // then <Game/> hydrates and takes over client-side. The prose and FAQ below are
 // server-rendered so crawlers and AI answer engines read them without running JS.
 export const dynamic = "force-static";
+
+// The home page declares its own canonical like every other page. It used to
+// rely on the one set in the layout, which is exactly what made that layout
+// canonical leak onto routes it was never meant to describe.
+export const metadata: Metadata = pageMetadata({ path: "/" });
 
 export default function Home() {
   return (

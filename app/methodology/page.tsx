@@ -4,16 +4,16 @@ import ContentPage, { Section, Prose } from "@/components/ContentPage";
 import { ITEMS } from "@/data/items";
 import { COUNTRIES } from "@/lib/catalog";
 import { pricesForItem } from "@/lib/catalog";
-import { SITE_EMAIL } from "@/lib/seo";
+import { SITE_EMAIL, pageMetadata } from "@/lib/seo";
 
 export const dynamic = "force-static";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: "/methodology",
   title: "Methodology",
   description:
     "Where every price on Pricele comes from, how local currencies and work-time figures are calculated, and the specific ways these numbers can be wrong.",
-  alternates: { canonical: "/methodology" },
-};
+});
 
 export default function MethodologyPage() {
   return (

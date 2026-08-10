@@ -13,7 +13,7 @@ import {
   wageMinutes,
 } from "@/lib/catalog";
 import { formatUSD } from "@/lib/format";
-import { datasetJsonLd } from "@/lib/seo";
+import { datasetJsonLd, pageMetadata } from "@/lib/seo";
 
 export const revalidate = 3600;
 
@@ -29,11 +29,11 @@ export function generateMetadata({
   const item = getItemBySlug(params.item);
   if (!item) return {};
   const n = pricesForItem(item.id).length;
-  return {
+  return pageMetadata({
+    path: `/items/${item.slug}`,
     title: `${item.name} prices by country`,
     description: `What ${item.name.toLowerCase()} costs in ${n} countries, ranked cheapest to most expensive, in US dollars and local currency — and how long the average local wage takes to earn one.`,
-    alternates: { canonical: `/items/${item.slug}` },
-  };
+  });
 }
 
 export default function ItemPage({ params }: { params: { item: string } }) {

@@ -1,18 +1,18 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import ContentPage, { Section, Prose } from "@/components/ContentPage";
-import { SITE_NAME, SITE_EMAIL } from "@/lib/seo";
+import { SITE_NAME, SITE_EMAIL, pageMetadata } from "@/lib/seo";
 import { ITEMS } from "@/data/items";
 import { COUNTRIES } from "@/lib/catalog";
 
 export const dynamic = "force-static";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: "/about",
   title: "About",
   description:
     "What Pricele is, how the daily price puzzle works, where the price data comes from, and who makes it.",
-  alternates: { canonical: "/about" },
-};
+});
 
 export default function AboutPage() {
   return (

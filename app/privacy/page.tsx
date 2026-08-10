@@ -2,18 +2,18 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import { SITE_NAME, SITE_URL, SITE_EMAIL } from "@/lib/seo";
+import { SITE_NAME, SITE_URL, SITE_EMAIL, pageMetadata } from "@/lib/seo";
 
 export const dynamic = "force-static";
 
 // Last substantive update. Bump when the policy content changes.
 const LAST_UPDATED = "July 24, 2026";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: "/privacy",
   title: "Privacy Policy",
   description: `How ${SITE_NAME} handles data, cookies, and advertising, including Google AdSense.`,
-  alternates: { canonical: "/privacy" },
-};
+});
 
 /**
  * One clause of the policy. Every heading on the page is the same size and

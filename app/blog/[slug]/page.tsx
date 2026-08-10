@@ -11,7 +11,7 @@ import {
   PUBLISHED_ARTICLES,
 } from "@/data/articles";
 import { formatArchiveDate } from "@/lib/format";
-import { absoluteUrl, SITE_NAME } from "@/lib/seo";
+import { absoluteUrl, SITE_NAME, pageMetadata } from "@/lib/seo";
 
 export const dynamic = "force-static";
 
@@ -27,23 +27,16 @@ export function generateMetadata({
   const article = getArticle(params.slug);
   if (!article) return {};
   const live = isPublished(article);
-  return {
+  return pageMetadata({
+    path: `/blog/${article.slug}`,
     title: article.title,
     description: article.description,
-    alternates: { canonical: `/blog/${article.slug}` },
+    type: "article",
+    publishedTime: article.date,
     // Unwritten drafts stay out of the index. Flipping status to "published"
     // (with a body) is all it takes to make a page indexable.
-    robots: live ? undefined : { index: false, follow: false },
-    openGraph: live
-      ? {
-          type: "article",
-          title: article.title,
-          description: article.description,
-          publishedTime: article.date,
-          url: absoluteUrl(`/blog/${article.slug}`),
-        }
-      : undefined,
-  };
+    index: live,
+  });
 }
 
 export default function ArticlePage({ params }: { params: { slug: string } }) {

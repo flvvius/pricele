@@ -5,16 +5,16 @@ import JsonLd from "@/components/JsonLd";
 import { ITEMS } from "@/data/items";
 import { pricesForItem, medianPriceUSD, COUNTRIES } from "@/lib/catalog";
 import { formatUSD } from "@/lib/format";
-import { absoluteUrl } from "@/lib/seo";
+import { absoluteUrl, pageMetadata } from "@/lib/seo";
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: "/items",
   title: "Items",
   description:
     "The seven everyday items priced across 33 countries in Pricele — Big Mac, Coca-Cola, cappuccino, milk, eggs, apples and petrol — with the price range for each.",
-  alternates: { canonical: "/items" },
-};
+});
 
 export default function ItemsIndex() {
   return (

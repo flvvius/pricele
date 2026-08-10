@@ -4,21 +4,21 @@ import ContentPage, { Section, Prose } from "@/components/ContentPage";
 import JsonLd from "@/components/JsonLd";
 import { PUBLISHED_ARTICLES } from "@/data/articles";
 import { formatArchiveDate } from "@/lib/format";
-import { absoluteUrl } from "@/lib/seo";
+import { absoluteUrl, pageMetadata } from "@/lib/seo";
 
 export const dynamic = "force-static";
 
 const HAS_ARTICLES = PUBLISHED_ARTICLES.length > 0;
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: "/blog",
   title: "Guides",
   description:
     "Long reads on what everyday prices actually measure — viral grocery receipts, why official inflation misses your cart, time prices, the two-income trap, and how to fix your own price instincts.",
-  alternates: { canonical: "/blog" },
-  // An empty index is not worth indexing. This flips on by itself as soon as
-  // the first article is published.
-  robots: HAS_ARTICLES ? undefined : { index: false, follow: true },
-};
+  // An empty index is not worth indexing. This flips on by itself as soon
+  // as the first article is published.
+  index: HAS_ARTICLES,
+});
 
 export default function BlogIndex() {
   return (

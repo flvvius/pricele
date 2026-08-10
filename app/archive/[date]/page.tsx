@@ -24,7 +24,7 @@ import {
   affordanceLine,
   priceRankLine,
 } from "@/lib/format";
-import { absoluteUrl } from "@/lib/seo";
+import { absoluteUrl, pageMetadata } from "@/lib/seo";
 
 export const revalidate = 3600;
 
@@ -47,15 +47,15 @@ export function generateMetadata({
   const puzzle = getPuzzleForISO(params.date);
   if (!puzzle || !isPublishedArchiveDate(params.date)) return {};
   const { item, price, puzzleNumber } = puzzle;
-  return {
+  return pageMetadata({
+    path: `/archive/${params.date}`,
     title: `Pricele #${puzzleNumber} — ${item.shortName} in ${price.countryName}`,
     description: `The answer to Pricele #${puzzleNumber} (${formatArchiveDate(
       params.date
     )}): ${item.name.toLowerCase()} in ${price.countryName} cost ${formatUSD(
       price.priceUSD
     )}. See how that compares with every other country.`,
-    alternates: { canonical: `/archive/${params.date}` },
-  };
+  });
 }
 
 export default function ArchiveDatePage({

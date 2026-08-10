@@ -5,18 +5,18 @@ import JsonLd from "@/components/JsonLd";
 import { COUNTRIES, pricesForCountry, suppressedPairs } from "@/lib/catalog";
 import { ITEMS } from "@/data/items";
 import { formatUSD } from "@/lib/format";
-import { absoluteUrl, SITE_NAME } from "@/lib/seo";
+import { absoluteUrl, SITE_NAME, pageMetadata } from "@/lib/seo";
 
 // Regenerated hourly so the "in play right now" suppression window keeps moving
 // with the rotation instead of freezing at whatever the last deploy saw.
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: "/prices",
   title: "Prices by country",
   description:
     "What everyday things cost in 33 countries — a Big Mac, a cappuccino, a litre of milk, a dozen eggs, a kilo of apples, a litre of petrol — in US dollars and local currency.",
-  alternates: { canonical: "/prices" },
-};
+});
 
 export default function PricesIndex() {
   const suppressed = suppressedPairs();

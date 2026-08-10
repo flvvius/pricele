@@ -5,16 +5,16 @@ import JsonLd from "@/components/JsonLd";
 import { publishedArchiveDates } from "@/lib/catalog";
 import { getPuzzleForISO } from "@/lib/puzzle";
 import { formatUSD, formatArchiveDate } from "@/lib/format";
-import { absoluteUrl } from "@/lib/seo";
+import { absoluteUrl, pageMetadata } from "@/lib/seo";
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: "/archive",
   title: "Puzzle archive",
   description:
     "Every past Pricele puzzle with its answer — which item, which country, and what it actually cost. Replay any day without affecting your streak.",
-  alternates: { canonical: "/archive" },
-};
+});
 
 export default function ArchiveIndex() {
   const dates = publishedArchiveDates();

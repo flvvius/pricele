@@ -17,7 +17,7 @@ import {
 import { ITEMS, getItem } from "@/data/items";
 import { COUNTRY_NOTES } from "@/data/countries";
 import { formatUSD } from "@/lib/format";
-import { datasetJsonLd } from "@/lib/seo";
+import { datasetJsonLd, pageMetadata } from "@/lib/seo";
 
 export const revalidate = 3600;
 
@@ -32,11 +32,11 @@ export function generateMetadata({
 }): Metadata {
   const country = getCountryBySlug(params.country);
   if (!country) return {};
-  return {
+  return pageMetadata({
+    path: `/prices/${country.slug}`,
     title: `Prices in ${country.name}`,
     description: `What everyday items cost in ${country.name} — a Big Mac, a cappuccino, milk, eggs, apples and petrol — in US dollars, in ${country.localCurrency}, and in how long the average local wage takes to earn them.`,
-    alternates: { canonical: `/prices/${country.slug}` },
-  };
+  });
 }
 
 /** Ordinal suffix for a rank: 1st, 2nd, 3rd, 4th. */

@@ -1,17 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import ContentPage, { Section, Prose } from "@/components/ContentPage";
-import { SITE_NAME, SITE_EMAIL } from "@/lib/seo";
+import { SITE_NAME, SITE_EMAIL, pageMetadata } from "@/lib/seo";
 import { COUNTRIES } from "@/lib/catalog";
 import { ITEMS } from "@/data/items";
 
 export const dynamic = "force-static";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: "/contact",
   title: "Contact",
   description: `How to reach ${SITE_NAME} — report a price that looks wrong, suggest a country or item, or get in touch about anything else.`,
-  alternates: { canonical: "/contact" },
-};
+});
 
 export default function ContactPage() {
   return (
