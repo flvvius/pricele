@@ -4,7 +4,7 @@ import type { FaqItem } from "@/lib/seo";
 // (open by default for search engines and assistive tech) while staying compact.
 //
 // Ruled rows, no boxes. The native marker is removed and replaced with a
-// typographic one that rotates on open — the default triangle is a different
+// typographic one that rotates on open. The default triangle is a different
 // glyph in every browser and none of them match the rest of the page.
 export default function FaqSection({
   items,
@@ -25,8 +25,8 @@ export default function FaqSection({
         {heading}
       </h2>
       {/* Plain div rather than a <dl>: a description list may only contain
-          dt/dd (or div groups wrapping them), so <details> children — and a
-          <dt> nested inside a <summary> — are invalid markup that assistive
+          dt/dd (or div groups wrapping them), so <details> children, and a
+          <dt> nested inside a <summary>, are invalid markup that assistive
           tech is free to ignore. The FAQ structured data is emitted separately
           by <JsonLd/>, so nothing depends on the list semantics here. */}
       <div className="border-t border-rule">

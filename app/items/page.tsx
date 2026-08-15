@@ -13,7 +13,7 @@ export const metadata: Metadata = pageMetadata({
   path: "/items",
   title: "Items",
   description:
-    "The seven everyday items priced across 33 countries in Pricele — Big Mac, Coca-Cola, cappuccino, milk, eggs, apples and petrol — with the price range for each.",
+    "The seven everyday items priced across 33 countries in Pricele (Big Mac, Coca-Cola, cappuccino, milk, eggs, apples and petrol) with the price range for each.",
 });
 
 export default function ItemsIndex() {
@@ -29,7 +29,7 @@ export default function ItemsIndex() {
           </p>
           <p>
             Each item page ranks every country from cheapest to most expensive
-            and explains what actually drives the spread — which is different in
+            and explains what actually drives the spread, which is different in
             every case. Fuel is almost pure tax policy; apples are mostly
             climate and freight; a cappuccino is nearly all local rent and wages.
           </p>
@@ -83,8 +83,9 @@ export default function ItemsIndex() {
             The gap between the cheapest and most expensive country is not the
             same size for every product, and the reason is usually structural
             rather than about wealth. Goods that are heavy, perishable or grown
-            in a specific climate — milk, apples — are priced by local supply.
-            Goods that trade on a world market — fuel, coffee beans — should in
+            in a specific climate, such as milk and apples, are priced by local
+            supply. Goods that trade on a world market, such as fuel and coffee
+            beans, should in
             theory cost the same everywhere, so whatever spread remains is
             mostly tax, subsidy and retail margin.
           </p>

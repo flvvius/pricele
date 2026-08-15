@@ -32,7 +32,7 @@ export function generateMetadata({
   return pageMetadata({
     path: `/items/${item.slug}`,
     title: `${item.name} prices by country`,
-    description: `What ${item.name.toLowerCase()} costs in ${n} countries, ranked cheapest to most expensive, in US dollars and local currency — and how long the average local wage takes to earn one.`,
+    description: `What ${item.name.toLowerCase()} costs in ${n} countries, ranked cheapest to most expensive, in US dollars and local currency, plus how long the average local wage takes to earn one.`,
   });
 }
 
@@ -63,7 +63,7 @@ export default function ItemPage({ params }: { params: { item: string } }) {
       ? dearest.priceUSD / cheapest.priceUSD
       : null;
 
-  // Work time reorders the table completely — that contrast is the most useful
+  // Work time reorders the table completely, and that contrast is the most useful
   // thing on the page, so it gets its own short list.
   const byWork = [...visible].sort((a, b) => wageMinutes(b) - wageMinutes(a));
   const worstWork = byWork[0];
@@ -118,11 +118,11 @@ export default function ItemPage({ params }: { params: { item: string } }) {
             {worstWork && bestWork && worstWork !== bestWork && (
               <p>
                 Ranking by earnings instead of dollars rearranges the table.{" "}
-                {worstWork.countryName} has the longest wait — about{" "}
+                {worstWork.countryName} has the longest wait, about{" "}
                 {wageMinutes(worstWork) < 90
                   ? `${Math.round(wageMinutes(worstWork))} minutes`
                   : `${(wageMinutes(worstWork) / 60).toFixed(1)} hours`}{" "}
-                of the average local wage — while in {bestWork.countryName} it is
+                of the average local wage, while in {bestWork.countryName} it is
                 roughly{" "}
                 {wageMinutes(bestWork) < 1
                   ? "under a minute"

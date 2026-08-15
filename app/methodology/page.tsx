@@ -117,7 +117,7 @@ export default function MethodologyPage() {
             Crowd-sourced data has real weaknesses. Contributions skew towards
             large cities and towards people who use the internet in English, so
             a national average can lean urban and middle-class. Sample sizes vary
-            a lot between countries — a figure for Switzerland rests on far more
+            a lot between countries: a figure for Switzerland rests on far more
             submissions than one for Egypt. Numbeo filters outliers, but a
             country with few contributors will always be noisier than one with
             many.
@@ -137,8 +137,8 @@ export default function MethodologyPage() {
           <p>
             This means local-currency prices for the five Numbeo items are
             derived, not observed. For most currencies that distinction is
-            invisible. For currencies that move fast — the Argentine peso, the
-            Turkish lira, the Egyptian pound — it matters, and a figure can drift
+            invisible. For fast-moving currencies like the Argentine peso, the
+            Turkish lira and the Egyptian pound, it matters, and a figure can drift
             noticeably from what a shopper actually pays within weeks. Argentina
             is the extreme case, because official and parallel exchange rates
             have historically differed enough that any single conversion is
@@ -159,7 +159,7 @@ export default function MethodologyPage() {
               These wage estimates are the least rigorous numbers on the site.
             </strong>{" "}
             They are our own approximations, not drawn from a single official
-            series, and they compress an enormous amount of variation — formal
+            series, and they compress an enormous amount of variation: formal
             versus informal employment, regional differences, and the gap between
             mean and median earnings, which is very wide in some of these
             countries. Treat work-time figures as illustrative of the general
@@ -178,7 +178,7 @@ export default function MethodologyPage() {
             it. Consumption tax is the largest single wedge between what two
             countries charge for a physically identical item, and it is the one
             component of a price that is set deliberately rather than emerging
-            from a market — so it is worth reading separately from the price
+            from a market, so it is worth reading separately from the price
             itself.
           </p>
           <p>
@@ -196,8 +196,8 @@ export default function MethodologyPage() {
           <p>
             The grocery treatment matters more here than the headline rate does,
             because six of the {ITEMS.length} items are food or drink. A country
-            can charge 23% on most things and nothing at all on bread — Ireland
-            does — so quoting only its standard rate would actively mislead you
+            can charge 23% on most things and nothing at all on bread, as Ireland
+            does, so quoting only its standard rate would actively mislead you
             about its food prices.
           </p>
           <p>
@@ -272,7 +272,7 @@ export default function MethodologyPage() {
             .
           </p>
           <p>
-            What is ours is the compilation itself — the country and item
+            What is ours is the compilation itself: the country and item
             selection, the local-currency and work-time calculations, the wage
             estimates and the writing. You may quote individual figures or a
             small extract of a table for editorial, educational or

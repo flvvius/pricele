@@ -75,8 +75,8 @@ export default function PrivacyPage() {
             details. We do not run our own analytics or tracking scripts.
           </p>
           <p>
-            To make the game work, your progress — your guesses for the day, your
-            win/loss result, your streak, and a couple of interface preferences —
+            To make the game work, your progress (your guesses for the day, your
+            win/loss result, your streak, and a couple of interface preferences)
             is saved locally in your own browser using{" "}
             <code className="font-mono text-[13px] text-ink">localStorage</code>. This data
             stays on your device, is not transmitted to us, and you can clear it

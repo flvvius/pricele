@@ -17,8 +17,8 @@ const HINT: Record<GuessRecord["direction"], { label: string; Icon: typeof IconU
  * Five slots, ruled like a ledger rather than drawn as five separate cards.
  *
  * The old board was five rounded boxes with their own borders, which put ten
- * competing edges on screen and made the figures — the only thing a player
- * actually reads — fight for attention with the containers holding them. A
+ * competing edges on screen and made the figures, the only thing a player
+ * actually reads, fight for attention with the containers holding them. A
  * single hairline between rows says the same thing and disappears while saying
  * it.
  *
@@ -62,7 +62,7 @@ function Row({
       <span className="relative ml-auto flex min-w-0 items-center gap-2.5">
         <Thermometer level={tier.level} />
         {/* Set in ink, not in the ramp colour. The mid-ramp ochre is around
-            2.3:1 against paper, which is unreadable at 10px — the gauge beside
+            2.3:1 against paper, which is unreadable at 10px. The gauge beside
             it and the wash behind it already carry the colour, and neither of
             them is text.
 

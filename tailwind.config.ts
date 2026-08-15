@@ -5,8 +5,8 @@ import type { Config } from "tailwindcss";
  * are the same build with a different `:root` block.
  *
  * `neutral` is deliberately overwritten rather than removed. The scale keeps its
- * original *meaning* — low numbers are the strongest text, high numbers are the
- * deepest surface — so every `text-neutral-400` already in the codebase still
+ * original *meaning*, where low numbers are the strongest text and high numbers
+ * the deepest surface, so every `text-neutral-400` already in the codebase still
  * means "secondary text" and now resolves to warm ink instead of Tailwind grey.
  * That is what lets the reference pages inherit the new edition without a
  * find-and-replace across fifty files.
@@ -22,7 +22,7 @@ const config: Config = {
       screens: { xs: "380px" },
 
       colors: {
-        // Semantic names — what new code should reach for.
+        // Semantic names, which is what new code should reach for.
         paper: {
           DEFAULT: ink("--paper"),
           raised: ink("--paper-raised"),
@@ -75,7 +75,7 @@ const config: Config = {
       fontFamily: {
         // Instrument Serif for anything that behaves like a headline, Archivo
         // (a grotesque drawn for newsprint) for running UI, Geist Mono for every
-        // figure. No Inter anywhere — it is the single loudest tell there is.
+        // figure. No Inter anywhere: it is the single loudest tell there is.
         display: ["var(--font-display)", "Georgia", "Times New Roman", "serif"],
         sans: ["var(--font-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
         mono: ["var(--font-mono)", "ui-monospace", "SFMono-Regular", "monospace"],

@@ -103,8 +103,8 @@ function mod(n: number, m: number): number {
  * matching price row.
  *
  * The country and item advance on independent cycles (see data/rotation.ts).
- * Not every country has every item — the price table is deliberately sparse
- * rather than padded with invented numbers — so when the scheduled pair has no
+ * Not every country has every item, since the price table is deliberately sparse
+ * rather than padded with invented numbers, so when the scheduled pair has no
  * row we walk forward through itemOrder to the next item that country does
  * have. That substitution is a pure function of the day index, so a given date
  * always resolves to the same puzzle on every device and every rebuild.

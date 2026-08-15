@@ -35,7 +35,7 @@ export function generateMetadata({
   return pageMetadata({
     path: `/prices/${country.slug}`,
     title: `Prices in ${country.name}`,
-    description: `What everyday items cost in ${country.name} — a Big Mac, a cappuccino, milk, eggs, apples and petrol — in US dollars, in ${country.localCurrency}, and in how long the average local wage takes to earn them.`,
+    description: `What everyday items cost in ${country.name}: a Big Mac, a cappuccino, milk, eggs, apples and petrol, priced in US dollars, in ${country.localCurrency}, and in how long the average local wage takes to earn them.`,
   });
 }
 
@@ -104,7 +104,7 @@ export default function CountryPage({ params }: { params: { country: string } })
           Local-currency figures are converted from US dollars at recent exchange
           rates, except the Big Mac, which is published in local currency by The
           Economist and converted the other way. Work time divides the dollar
-          price by an estimated average hourly wage — the roughest number on this
+          price by an estimated average hourly wage, the roughest number on this
           page. See{" "}
           <Link href="/methodology" className="underline hover:text-neutral-300">
             methodology
@@ -125,7 +125,7 @@ export default function CountryPage({ params }: { params: { country: string } })
                 </strong>
                 , where it ranks {ordinal(priciest.rank)} out of{" "}
                 {priciest.total} countries at{" "}
-                {formatUSD(priciest.price.priceUSD)} — against a global median of{" "}
+                {formatUSD(priciest.price.priceUSD)}, against a global median of{" "}
                 {formatUSD(medianPriceUSD(priciest.price.itemId))}.
               </p>
             )}
@@ -136,7 +136,7 @@ export default function CountryPage({ params }: { params: { country: string } })
                   {getItem(cheapest.price.itemId)?.shortName.toLowerCase()}
                 </strong>{" "}
                 at {formatUSD(cheapest.price.priceUSD)}, which is{" "}
-                {ordinal(cheapest.rank)} of {cheapest.total} — only{" "}
+                {ordinal(cheapest.rank)} of {cheapest.total}, only{" "}
                 {cheapest.total - cheapest.rank} countries in the game are
                 cheaper.
               </p>
@@ -150,7 +150,7 @@ export default function CountryPage({ params }: { params: { country: string } })
                   ? `${Math.round(wageMinutes(hardest))} minutes`
                   : `${(wageMinutes(hardest) / 60).toFixed(1)} hours`}{" "}
                 of the average wage. Dollar prices and work-time prices often
-                rank countries very differently — that gap is usually the more
+                rank countries very differently, and that gap is usually the more
                 interesting number.
               </p>
             )}

@@ -22,7 +22,7 @@ export default function ShareCard(props: ShareInput) {
         await navigator.share({ text: buildShareText(props), url: SHARE_URL });
         return;
       } catch {
-        /* user dismissed or unsupported — fall through to copy */
+        /* user dismissed or unsupported, so fall through to copy */
       }
     }
     const ok = await copyToClipboard(text);

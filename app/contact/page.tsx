@@ -10,7 +10,7 @@ export const dynamic = "force-static";
 export const metadata: Metadata = pageMetadata({
   path: "/contact",
   title: "Contact",
-  description: `How to reach ${SITE_NAME} — report a price that looks wrong, suggest a country or item, or get in touch about anything else.`,
+  description: `How to reach ${SITE_NAME}: report a price that looks wrong, suggest a country or item, or get in touch about anything else.`,
 });
 
 export default function ContactPage() {
@@ -46,7 +46,7 @@ export default function ContactPage() {
           </p>
           <p>
             To make a correction actionable, include the country, the item, what
-            you actually see locally, and roughly where — a supermarket chain and
+            you actually see locally, and roughly where, such as a supermarket chain and
             a city is plenty. If it&apos;s a big discrepancy rather than a small
             one, say so; that usually points at a unit or currency problem rather
             than ordinary regional variation.
@@ -72,7 +72,7 @@ export default function ContactPage() {
         <Prose>
           <p>
             There are currently {ITEMS.length} items across {COUNTRIES.length}{" "}
-            countries. Both lists can grow, and suggestions are welcome — the
+            countries. Both lists can grow, and suggestions are welcome. The
             main constraint is source data. An item needs a public dataset that
             covers most of the country list on a consistent definition, otherwise
             it can&apos;t be compared fairly. A country needs coverage across
@@ -95,7 +95,7 @@ export default function ContactPage() {
             <Link href="/privacy" className="underline hover:text-neutral-300">
               privacy policy
             </Link>{" "}
-            sets out what is and isn&apos;t stored — in short, your game results
+            sets out what is and isn&apos;t stored. In short, your game results
             never leave your own browser, so there is usually nothing on our side
             to delete.
           </p>

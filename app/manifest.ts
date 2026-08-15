@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { SITE_NAME, SITE_TAGLINE, SITE_DESCRIPTION } from "@/lib/seo";
 
 // PWA web app manifest. Lets phones "Add to Home Screen" and gives the game an
-// installable, app-like identity — a positive mobile-experience signal.
+// installable, app-like identity, which is a positive mobile-experience signal.
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: `${SITE_NAME} — ${SITE_TAGLINE}`,

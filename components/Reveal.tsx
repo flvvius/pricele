@@ -75,14 +75,14 @@ export default function Reveal({
         </p>
       </div>
 
-      {/* The stat plate. A heavy top rule and a hairline frame — the way a
+      {/* The stat plate. A heavy top rule and a hairline frame, the way a
           broadsheet sets a table apart from the column it interrupts. */}
       <figure className="border border-rule border-t-2 border-t-ink bg-paper-raised px-5 pb-4 pt-4 text-center">
         <figcaption className="label">
           {item.name} in {price.countryName}
         </figcaption>
 
-        {/* The answer leads in whatever currency the player guessed in — a
+        {/* The answer leads in whatever currency the player guessed in, since a
             figure in the currency you were just typing is the one you can judge
             your guess against without doing arithmetic. The price as actually
             charged locally stays underneath it either way. */}

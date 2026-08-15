@@ -74,7 +74,7 @@ export default function HowToPlay({
           </ul>
           <p className="mt-3 text-ink-muted">
             The bar behind each guess fills with its temperature. It never tells
-            you the exact gap — that would hand you the answer on your second
+            you the exact gap, which would hand you the answer on your second
             try.
           </p>
         </div>

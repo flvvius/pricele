@@ -1,32 +1,32 @@
 // Long-form guides.
 //
-// HOW THIS WORKS — read before writing:
-//   Every article starts as `status: "draft"`. A draft is reachable by direct
-//   URL but carries a noindex robots tag, is left out of the sitemap, and is not
-//   listed on /blog. Nothing half-written is ever offered to a search engine or
-//   an ad reviewer, which matters: a pile of empty pages is worse for a site's
-//   standing than having no blog at all.
+// READ THIS BEFORE WRITING ONE.
+//   Every article starts life as `status: "draft"`. Drafts are reachable by
+//   direct URL, but they carry a noindex tag, stay out of the sitemap, and
+//   don't appear on /blog. That matters more than it sounds. A pile of
+//   half-finished pages does a site's standing more harm than having no blog at
+//   all, and search engines and ad reviewers both notice.
 //
-//   To publish one: fill in `body`, delete the `outline`, and flip `status` to
-//   "published". That single change adds it to /blog, the sitemap and the index.
-//   Nothing else to wire up.
+//   Publishing takes three edits. Fill in `body`, delete the `outline`, set
+//   `status` to "published". The article then shows up on /blog, in the sitemap
+//   and in the index. There is nothing else to wire up.
 //
-//   The outlines are a plan, not filler — they never render on the page.
+//   The outlines are a plan rather than filler. They never render on the page.
 //
-// COPY RULES:
-//   Paragraph strings understand exactly two inline forms, **emphasis** and
-//   [label](/path) — see lib/richtext.tsx. Emphasis is for the number or phrase
-//   a reader should carry away from the paragraph, not for whole sentences.
-//   Anything structural (a table, a pulled quote, a stat row) gets its own
-//   block so components/ArticleBody.tsx can style it properly.
+// COPY RULES.
+//   Paragraph strings understand two inline forms and no others: **emphasis**
+//   and [label](/path). See lib/richtext.tsx. Use emphasis on the number or
+//   phrase a reader should walk away with, never on a whole sentence. Anything
+//   structural (a table, a pulled quote, a stat row) needs its own block so
+//   components/ArticleBody.tsx can style it.
 //
-//   Every article ends with a `cta` block. These pieces all argue the same
-//   thing — that knowing what things cost is a trainable skill — so each one
-//   closes by pointing at the game where you train it.
+//   Every article closes with a `cta` block. They all argue the same thing,
+//   that knowing what things cost is a trainable skill, so they all end by
+//   pointing at the game where you train it.
 
 /** A source the article draws on. Rendered as a list at the foot of the page. */
 export interface ArticleSource {
-  /** Publication, then what the piece is. Keep it short enough to scan. */
+  /** Publication first, then what the piece is. Short enough to scan. */
   label: string;
   url: string;
 }
@@ -34,7 +34,7 @@ export interface ArticleSource {
 export type ArticleBlock =
   /** Body copy, optionally under a section heading. */
   | { kind: "prose"; heading?: string; paragraphs: string[] }
-  /** Three or four display-size figures. One block per article at most. */
+  /** Three or four display-size figures. At most one block per article. */
   | {
       kind: "stats";
       heading?: string;
@@ -48,7 +48,7 @@ export type ArticleBlock =
       ordered?: boolean;
       items: string[];
     }
-  /** First column is the row header; the rest are right-aligned figures. */
+  /** First column is the row header. The rest are right-aligned figures. */
   | {
       kind: "table";
       heading?: string;
@@ -58,7 +58,7 @@ export type ArticleBlock =
       rows: string[][];
     }
   | { kind: "quote"; text: string; attribution?: string }
-  /** The paragraph the article would be pointless without. */
+  /** The paragraph without which the article has no point. */
   | { kind: "callout"; heading?: string; paragraphs: string[] }
   /** Closing call to action. Always links to the game. */
   | { kind: "cta"; heading: string; paragraphs: string[]; buttonLabel: string };
@@ -66,22 +66,22 @@ export type ArticleBlock =
 export interface Article {
   slug: string;
   title: string;
-  /** Meta description and the summary shown on /blog. Aim for 140-160 chars. */
+  /** Meta description, and the summary /blog shows. Aim for 140-160 chars. */
   description: string;
-  /** ISO date. Set it to the day you actually publish. */
+  /** ISO date. Use the day you actually publish, not the day you started. */
   date: string;
   status: "draft" | "published";
-  /** Roughly how long it takes to read, in minutes. Update when you write it. */
+  /** Rough reading time in minutes. Update it once the piece is written. */
   readingMinutes: number;
-  /** Notes to yourself. Never rendered. Delete once `body` is written. */
+  /** Notes to yourself. Never rendered. Delete once `body` exists. */
   outline?: string[];
   /** The article itself. Rendered in order. */
   body?: ArticleBlock[];
   sources?: ArticleSource[];
 }
 
-// Sources cited by more than one article. Defined once so a URL fix lands
-// everywhere at the same time.
+// Sources more than one article cites. Defined once here so that fixing a URL
+// fixes it everywhere at the same time.
 const S = {
   today1997: {
     label: "TODAY — 1997 grocery receipt price comparison goes viral",
@@ -219,7 +219,7 @@ export const ARTICLES: Article[] = [
     slug: "1997-grocery-receipt-vs-today",
     title: "A grocery receipt from 1997 made millions of people furious",
     description:
-      "122 items for $155 in 1997. The same cart today costs just over $500. Official inflation says it should be $312 — and that missing $190 is the whole story.",
+      "122 items for $155 in 1997. The same cart today costs just over $500. Official inflation says it should be $312, and that missing $190 is the whole story.",
     date: "2026-06-14",
     status: "published",
     readingMinutes: 7,
@@ -266,7 +266,7 @@ export const ARTICLES: Article[] = [
       {
         kind: "prose",
         paragraphs: [
-          "Look at the corn dogs — the great equalizer of 90s childhood dinners, up nearly **six times**. Then look at the diapers, which is the line on that receipt you cannot skip, cannot substitute, and cannot “just budget better” around.",
+          "Look at the corn dogs, the great equalizer of 90s childhood dinners, up nearly **six times**. Then look at the diapers, which is the line on that receipt you cannot skip, cannot substitute, and cannot “just budget better” around.",
           "One commenter summed up the collective reaction to the produce prices in four words.",
         ],
       },
@@ -280,7 +280,7 @@ export const ARTICLES: Article[] = [
         kind: "prose",
         heading: "“But that's just inflation” is exactly the wrong take",
         paragraphs: [
-          "Here's where I lose patience with the reflexive economics-brained response, the one that shows up under every viral receipt saying well, actually, prices rise over time, this is normal.",
+          "This is where I lose patience with the reflexive economics-brained reply, the one under every viral receipt saying well, actually, prices rise over time, this is normal.",
           "Run the official math. According to the Bureau of Labor Statistics inflation calculator, $155 in 1997 should be about **$312** today.",
           "The cart cost **$500**.",
         ],
@@ -297,7 +297,7 @@ export const ARTICLES: Article[] = [
         kind: "prose",
         paragraphs: [
           "And prices are only half of the equation. The other half is what you earn to pay them.",
-          "When that receipt was printed in June 1997, the federal minimum wage was $4.75. Today it's $7.25 — an increase of **52 percent** against a grocery basket that went up **220**. To keep pace with that one cart of groceries, the minimum wage would need to be **$15.30 an hour**.",
+          "When that receipt was printed in June 1997, the federal minimum wage was $4.75. Today it's $7.25, an increase of **52 percent** against a grocery basket that went up **220**. To keep pace with that one cart of groceries, the minimum wage would need to be **$15.30 an hour**.",
           "One commenter did the arithmetic that every worker feels in their bones but rarely sees written out: the same basket of goods now requires about **79 percent more hours of work** than it did in 1997.",
           "Read that again. Not “prices went up.” You have to trade 79 percent more of your one finite life for the same groceries.",
         ],
@@ -317,7 +317,7 @@ export const ARTICLES: Article[] = [
       {
         kind: "prose",
         paragraphs: [
-          "This is why the receipt hit so hard. It isn't nostalgia. It's evidence. For years, an entire generation has been told the problem is personal: the lattes, the takeout, the avocado toast, the “just work harder” chorus. And then a piece of thermal paper from a baby book shows up and says, in fading ink: no. The math changed. You didn't.",
+          "This is why the receipt hit so hard. It works as evidence rather than nostalgia. For years an entire generation has been told the problem is personal: the lattes, the takeout, the avocado toast, the “just work harder” chorus. And then a piece of thermal paper from a baby book turns up and says, in fading ink: no. The math changed. You didn't.",
           "Dippel, a 24-year-old dental hygienist who says she's fortunate to be making ends meet herself, put it plainly after reading thousands of these stories: “It shouldn't be this hard to live. An entire generation is struggling to imagine buying a home, building savings or planning for the future.”",
           "She's right. And the fact that a grocery receipt had to say it, because decades of official statistics somehow didn't, tells you how wide the gap between the data and the dinner table has grown.",
         ],
@@ -335,7 +335,7 @@ export const ARTICLES: Article[] = [
         kind: "prose",
         heading: "So here's a question: how good is your price radar, really?",
         paragraphs: [
-          "Here's the uncomfortable part, and I say this with love: most of us are terrible at prices. We anchor to whatever things cost when we first started paying attention, and we never update. It's why parents genuinely believe milk is still $2, and why a 23-year-old spending $350 a month on basic groceries gets lectured about lattes. Everyone is walking around with a mental price list that's five, ten, thirty years out of date.",
+          "Now the uncomfortable part, and I say this with love: most of us are terrible at prices. We anchor to whatever things cost when we first started paying attention, and then we never update. It's why parents genuinely believe milk is still $2, and why a 23-year-old spending $350 a month on basic groceries gets lectured about lattes. Everyone is walking around with a mental price list that's five, ten, thirty years out of date.",
           "You just proved it to yourself, probably. Scroll back up. What did you guess for that 1997 cart? Were you within $50 of $500? Within $100?",
           "That gap between what you think things cost and what they actually cost is exactly the blind spot these viral receipts keep exposing. And it's trainable.",
         ],
@@ -344,7 +344,7 @@ export const ARTICLES: Article[] = [
         kind: "cta",
         heading: "Find out how far your price radar has drifted",
         paragraphs: [
-          "Pricele is a one-minute daily game: one real item, you guess what it costs, you find out how close you landed. Fair warning — the first few days are humbling.",
+          "Pricele is a one-minute daily game: one real item, you guess what it costs, you find out how close you landed. Fair warning, the first few days are humbling.",
           "The 1997 receipt made millions of people realise they'd lost track of what things cost. Playing every day is how you get it back.",
         ],
         buttonLabel: "Play today's Pricele",
@@ -369,7 +369,7 @@ export const ARTICLES: Article[] = [
     slug: "official-inflation-vs-your-receipt",
     title: "Official inflation says 87%. Your receipt says 220%.",
     description:
-      "Someone is wrong about inflation, and it isn't your receipt. Four structural reasons the official number was never measuring your life in the first place.",
+      "Someone is wrong about inflation, and it isn't your receipt. Four structural reasons why the official number was never measuring your life to begin with.",
     date: "2026-06-21",
     status: "published",
     readingMinutes: 9,
@@ -379,7 +379,7 @@ export const ARTICLES: Article[] = [
         paragraphs: [
           "There's a moment everyone has had at the checkout in the last few years. The total flashes up, and your brain does a little stutter-step. That can't be right. You scan the cart looking for the wagyu you didn't buy, the truffle oil that must have fallen in. Nope. Eggs, bread, coffee, dish soap. Just groceries.",
           "Then you go home, turn on the news, and a very calm person tells you inflation is running at 3 percent. Under control. Cooling, even.",
-          "Both of these things cannot be true. And I'm going to argue something that sounds conspiratorial but is actually just arithmetic: **the official number is not measuring your life**. It's measuring someone else's — an “average” person who does not exist, buying a basket of things you don't buy, with statistical adjustments you'd never agree to if anyone asked.",
+          "Both of these things cannot be true. And I'm going to argue something that sounds conspiratorial but is really just arithmetic: **the official number is not measuring your life**. It measures someone else's, an “average” person who does not exist, buying a basket of things you don't buy, with statistical adjustments you'd never agree to if anyone asked.",
           "Let me show you the receipts. Literally.",
         ],
       },
@@ -387,10 +387,10 @@ export const ARTICLES: Article[] = [
         kind: "prose",
         heading: "The $190 hole",
         paragraphs: [
-          "When a 1997 H-E-B grocery receipt went viral last year — 122 items for $155 — the internet did the obvious thing and re-bought the whole haul at today's prices. The new total: **just over $500**.",
-          "Here's the part that matters. According to the Bureau of Labor Statistics' own inflation calculator, $155 in 1997 should equal about **$312** today.",
+          "When a 1997 H-E-B grocery receipt went viral last year, 122 items for $155, the internet did the obvious thing and re-bought the whole haul at today's prices. The new total: **just over $500**.",
+          "The part that matters comes next. According to the Bureau of Labor Statistics' own inflation calculator, $155 in 1997 should equal about **$312** today.",
           "$312 is what inflation says happened. $500 is what actually happened. That's a **$190 hole per cart**, every cart, and one commenter nailed why it stings: “Adjusted for inflation $155 would be $312. The extra $192 needed is the problem.”",
-          "So where did the $190 go? It didn't vanish. It's hiding in four places the official number is structurally bad at seeing.",
+          "So where did the $190 go? Nowhere, really. It's hiding in four places the official number is structurally bad at seeing.",
         ],
       },
       {
@@ -399,23 +399,23 @@ export const ARTICLES: Article[] = [
         paragraphs: [
           "Before you even get to price increases, there's the increase they don't print on the tag. The 500g pack becomes 450g. The six-pack becomes five. The chocolate bar quietly loses two squares. The shelf price barely moves, the index records almost nothing, and your actual cost per unit just jumped **9 to 16 percent**.",
           "Statisticians will tell you, correctly, that CPI tries to track price per unit. But shrinkflation works precisely because you don't compare unit prices; you compare the package to your memory of the package. A cereal box that drops from 18 oz to 15 oz at the same price is a **17 percent** per-ounce increase that doesn't feel like inflation at all.",
-          "One analyst called shrinkflation “a tax on consumer attention,” and I can't improve on that. Consumer research estimates that shrinkflation and its uglier cousin skimpflation — same price, worse product — added roughly **2 to 4 percentage points** to the inflation real households experienced from 2021 to 2024, on top of the official figure.",
+          "One analyst called shrinkflation “a tax on consumer attention,” and I can't improve on that. Consumer research estimates that shrinkflation and its uglier cousin skimpflation, same price and worse product, added roughly **2 to 4 percentage points** to the inflation real households experienced from 2021 to 2024, on top of the official figure.",
         ],
       },
       {
         kind: "prose",
         heading: "Hiding place 2: the statisticians assume you downgraded",
         paragraphs: [
-          "Here's a methodological choice most people have never heard of, and it should make you angry. Official CPI builds in **substitution**: when beef gets expensive, the model assumes you rationally switch to chicken, so measured inflation gets adjusted downward — whether or not you actually switched, and whether or not a genuine substitute exists for your situation.",
+          "There's a methodological choice buried in here that most people have never heard of, and it should make you angry. Official CPI builds in **substitution**: when beef gets expensive, the model assumes you rationally switch to chicken, so measured inflation gets adjusted downward, whether or not you actually switched, and whether or not a genuine substitute exists for your situation.",
           "Think about what that means. If you kept buying the food your family actually eats, the index quietly assumed you didn't, and marked your inflation lower for it. The cheaper flat two boroughs away is not a substitute for the flat near your kid's school. The methodology isn't fraud; it's a simplifying assumption. But it is, by design, a downward distortion of the price increases faced by anyone with real constraints.",
-          "Same story with **hedonic adjustments**: if this year's product is judged higher-quality than last year's, part of its price increase is simply not counted as inflation. That's defensible for laptops. It's insulting for a chicken breast.",
+          "Same story with **hedonic adjustments**: if this year's product is judged higher-quality than last year's, part of its price increase simply doesn't count as inflation. Defensible for laptops. Insulting for a chicken breast.",
         ],
       },
       {
         kind: "prose",
         heading: "Hiding place 3: the basket isn't your basket",
         paragraphs: [
-          "CPI is a weighted average across a standardised basket for a hypothetical average urban consumer. Nobody is that consumer. If housing eats **45 percent** of your budget while the official basket weights it at **25**, and rents are rising fast, your real inflation runs well above the headline — and both numbers are technically true.",
+          "CPI is a weighted average across a standardised basket for a hypothetical average urban consumer. Nobody is that consumer. If housing eats **45 percent** of your budget while the official basket weights it at **25**, and rents are rising fast, your real inflation runs well above the headline, and both numbers are technically true.",
           "And the categories that ran hottest since 2020 are precisely the ones you can't opt out of.",
         ],
       },
@@ -446,7 +446,7 @@ export const ARTICLES: Article[] = [
         kind: "prose",
         heading: "Hiding place 4: your brain (yes, some of the gap is you)",
         paragraphs: [
-          "Honesty requires this section, so here it is. Part of the perception gap runs the other way. Humans weight price increases far more heavily than decreases; when researchers built an index that trims out the steep price declines consumers mentally ignore, the gap between measured and perceived inflation **nearly vanished**.",
+          "Honesty requires this section, so here it is. Part of the perception gap runs the other way. Humans weight price increases far more heavily than decreases, and when researchers built an index trimming out the steep price declines consumers mentally ignore, the gap between measured and perceived inflation **nearly vanished**.",
           "We also over-index on things we buy weekly — food, fuel — and under-index on things we buy rarely, the well-documented frequency bias. And once inflation grabs your attention, the attention sticks: perceptions stay elevated long after the actual rate falls.",
           "So no, CPI is not a conspiracy. It's a consistent, carefully defined statistical average, and its limitations come from the same standardisation that makes it useful.",
         ],
@@ -455,7 +455,7 @@ export const ARTICLES: Article[] = [
         kind: "callout",
         heading: "What the honest accounting actually adds up to",
         paragraphs: [
-          "The statisticians' answer to “why doesn't the official number match my life?” is: because it was never measuring your life. It measures an average basket you don't buy, adjusted by substitutions you didn't make, for quality improvements you didn't ask for, with your biggest cost — housing — imputed rather than observed.",
+          "The statisticians' answer to “why doesn't the official number match my life?” is that it was never measuring your life. It measures an average basket you don't buy, adjusted by substitutions you didn't make, for quality improvements you didn't ask for, with your biggest cost, housing, imputed rather than observed.",
           "Your receipt, meanwhile, measures exactly one thing with perfect accuracy: what it costs to be you. When the two disagree, the receipt isn't lying.",
         ],
       },
@@ -463,8 +463,8 @@ export const ARTICLES: Article[] = [
         kind: "prose",
         heading: "The only inflation rate that matters is yours",
         paragraphs: [
-          "Here's the practical takeaway, and it's more empowering than the doom-scroll version. Since no headline number describes your life, the only useful move is to actually know your own numbers. People who track their real category spending routinely discover their personal inflation rate sits **2 to 5 points** away from the official figure, in either direction.",
-          "A renter with a new lease and a grocery-heavy budget is living in a different economy than a homeowner with a 2021 fixed rate — and both of them are living in a different economy than the evening news.",
+          "The practical takeaway is more empowering than the doom-scroll version. Since no headline number describes your life, the only useful move is knowing your own numbers. People who track their real category spending routinely find their personal inflation rate sitting **2 to 5 points** away from the official figure, in one direction or the other.",
+          "A renter with a new lease and a grocery-heavy budget lives in a different economy than a homeowner on a 2021 fixed rate, and both of them live in a different economy than the evening news.",
           "Which raises an uncomfortable question: how well do you actually know what things cost right now? Not what they cost when you first started paying attention. Now. Most people's mental price list is years out of date, and the gap between remembered prices and real ones is exactly where shrinkflation and quiet repricing live.",
         ],
       },
@@ -518,7 +518,7 @@ export const ARTICLES: Article[] = [
     slug: "time-prices-work-hours-not-dollars",
     title: "Stop asking what things cost. Ask how long you work for them.",
     description:
-      "In 1919 an egg cost 12 minutes of work. Today it costs 2.4 minutes, even at panic prices. Time prices are the true price of everything — and they cut both ways.",
+      "In 1919 an egg cost 12 minutes of work. Today it costs 2.4 minutes, even at panic prices. Time prices are the true price of everything, and they cut both ways.",
     date: "2026-06-28",
     status: "published",
     readingMinutes: 8,
@@ -526,9 +526,9 @@ export const ARTICLES: Article[] = [
       {
         kind: "prose",
         paragraphs: [
-          "Here's a bar-trivia question that will rewire how you think about every price you see for the rest of your life.",
+          "Bar-trivia question, and it will rewire how you think about every price you see for the rest of your life.",
           "In 1919, a dozen eggs cost 61 cents. Today they can hit $8 and beyond. So: **when were eggs more expensive?**",
-          "If you answered “today,” congratulations, you've fallen for the oldest illusion in economics — the same one your grandfather falls for when he tells you a Coke used to cost a nickel. Because in 1919, an unskilled worker earned about 25 cents an hour, which means one egg cost roughly **12 minutes of work**. Today, at around $17 an hour, that same egg costs about **2.4 minutes**. Measured in the only currency you can never print more of, eggs are **80 percent cheaper** than in 1919, even at panic-headline prices.",
+          "If you answered “today,” congratulations, you've fallen for the oldest illusion in economics, the same one your grandfather falls for when he tells you a Coke used to cost a nickel. In 1919 an unskilled worker earned about 25 cents an hour, which means one egg cost roughly **12 minutes of work**. Today, at around $17 an hour, that same egg costs about **2.4 minutes**. Measured in the only currency you can never print more of, eggs are **80 percent cheaper** than in 1919, even at panic-headline prices.",
           "The nickel Coke is an even better trick. In 1900, a dime bought you a Hershey bar and a bottle of Coca-Cola, and it sounds like paradise until you learn wages were about 14 cents an hour. An ounce of chocolate cost over 21 minutes of work; today it costs about 1.25 minutes. An ounce of Coke went from 3.3 minutes to about 3.6 seconds.",
         ],
       },
@@ -556,7 +556,7 @@ export const ARTICLES: Article[] = [
         kind: "prose",
         heading: "Your great-grandmother's grocery bill would horrify you",
         paragraphs: [
-          "Run the time-price lens backwards and the past stops being the affordable golden age everyone's nostalgia insists on. Researchers priced a basket of 42 everyday food items — sirloin, eggs, oranges, bread — in 1919 and again in 2019, in hours of work.",
+          "Run the time-price lens backwards and the past stops being the affordable golden age everyone's nostalgia insists on. Researchers priced a basket of 42 everyday food items (sirloin, eggs, oranges, bread) in 1919 and again in 2019, in hours of work.",
         ],
       },
       {
@@ -577,11 +577,11 @@ export const ARTICLES: Article[] = [
       },
       {
         kind: "prose",
-        heading: "So why don't you feel rich? (Here's where I annoy everyone)",
+        heading: "So why don't you feel rich? (This is where I annoy everyone)",
         paragraphs: [
-          "If you've read this far you may be getting irritated, because this cheerful arithmetic seems to collide head-on with your bank account — and with those viral receipts showing groceries needing 79 percent more work-time than in 1997. Both things are true, and anyone who tells you only one of them is selling something.",
-          "Here's the honest picture. Even over the recent, painful stretch from 2000 to 2024, US wages rose **123 percent** against an **87 percent** rise in overall prices, so the average consumption basket got about **19 percent cheaper in time**. Food, cars, clothing, furnishings: all up in dollars, all down in hours. The optimists are right about the burger, the eggs, and the TV.",
-          "But the same analysis shows a handful of categories where the time price rose even after that 123 percent wage growth — and they happen to be the ones you cannot skip and cannot substitute: **the roof, the hospital, the childcare, the degree**. Housing, healthcare and childcare have consistently run far above headline inflation.",
+          "If you've read this far you may be getting irritated, because this cheerful arithmetic seems to collide head-on with your bank account, and with those viral receipts showing groceries needing 79 percent more work-time than in 1997. Both things are true, and anyone who tells you only one of them is selling something.",
+          "The honest picture goes like this. Even over the recent, painful stretch from 2000 to 2024, US wages rose **123 percent** against an **87 percent** rise in overall prices, so the average consumption basket got about **19 percent cheaper in time**. Food, cars, clothing, furnishings: all up in dollars, all down in hours. The optimists are right about the burger, the eggs, and the TV.",
+          "But the same analysis shows a handful of categories where the time price rose even after that 123 percent wage growth, and they happen to be the ones you cannot skip and cannot substitute: **the roof, the hospital, the childcare, the degree**. Housing, healthcare and childcare have consistently run far above headline inflation.",
           "So the modern deal is genuinely weird: the stuff of life has never cost less of your time, while the foundations of life have rarely cost more. You can furnish an apartment for a day's wages and spend half your income on the right to put the furniture somewhere.",
           "That's the fight worth having, and the time-price lens is what lets you have it honestly. The doomer who says everything is unaffordable is wrong about the eggs. The optimist who says you've never had it better is wrong about the rent. Precision beats vibes, and precision is measured in minutes of your life.",
         ],
@@ -590,7 +590,7 @@ export const ARTICLES: Article[] = [
         kind: "prose",
         heading: "The lens is free. Use it.",
         paragraphs: [
-          "Here's what changes once you adopt it. Every price becomes a question with a real answer: **how many minutes of me is this?** A $6 latte at $30 an hour is 12 minutes — fine, that's a fair trade for joy. A $1,099 phone at the median Swiss wage is about two days of work; the same phone at the median Indian wage is closer to six months. Same object, wildly different bite out of a life. You'll never look at a “global” price tag the same way.",
+          "What changes once you adopt it is this. Every price becomes a question with a real answer: **how many minutes of me is this?** A $6 latte at $30 an hour is 12 minutes. Fine, that's a fair trade for joy. A $1,099 phone at the median Swiss wage is about two days of work; the same phone at the median Indian wage is closer to six months. Same object, wildly different bite out of a life. You'll never look at a “global” price tag the same way.",
           "And you'll start noticing how badly calibrated your own price instincts are, how much your brain still runs on the prices of whatever decade you first paid rent in. Mine certainly did.",
         ],
       },
@@ -599,7 +599,7 @@ export const ARTICLES: Article[] = [
         heading: "Then try the advanced version in your head",
         paragraphs: [
           "Pricele is a one-minute daily game where you guess what real things actually cost right now and find out how far off you are. Play it for a week and you'll feel the recalibration happen.",
-          "Then go one step further: don't just guess the price, divide it by your wage. That number — the minutes — is what you're really paying.",
+          "Then go one step further: don't just guess the price, divide it by your wage. That number, the minutes, is what you're really paying.",
         ],
         buttonLabel: "Play today's Pricele",
       },
@@ -665,7 +665,7 @@ export const ARTICLES: Article[] = [
           "There is exactly one product on Earth that works as a global unit of measurement. Not gold, not oil, not the dollar. It's the iPhone.",
           "Think about why. It's the identical object everywhere: same chip, same camera, same glass slab, assembled in the same factories, sold with the same keynote. Apple even publishes the price in every country, in public, on its own website. Which means the iPhone accidentally does something no economist ever managed: it measures, with brutal precision, what an hour of human work is worth in every country on the planet.",
           "And the answer is ugly.",
-          "A Swiss worker earns a base iPhone 17 in about **17 hours**, roughly two working days. An American needs around **21 hours**. An Indian worker on the average wage needs somewhere between **600 and 970 hours** depending on the study and the model — four to six months of full-time work. For the Pro Max, an average Egyptian worker needs roughly **266 working days**, most of a year.",
+          "A Swiss worker earns a base iPhone 17 in about **17 hours**, roughly two working days. An American needs around **21 hours**. An Indian worker on the average wage needs somewhere between **600 and 970 hours** depending on the study and the model, which is four to six months of full-time work. For the Pro Max, an average Egyptian worker needs roughly **266 working days**, most of a year.",
           "Same phone. Same Tim Cook. Somewhere between two days and one year of a human life.",
         ],
       },
@@ -673,7 +673,7 @@ export const ARTICLES: Article[] = [
         kind: "prose",
         heading: "The rankings (find your country, feel your feelings)",
         paragraphs: [
-          "Before you look: guess where your country lands. Not the price — the days of work for an average earner. Hold that number.",
+          "Before you look: guess where your country lands. Not the price, the days of work for an average earner. Hold that number.",
         ],
       },
       {
@@ -709,12 +709,12 @@ export const ARTICLES: Article[] = [
           ["Egypt", "~266"],
         ],
         caption:
-          "A worker in Lisbon needs roughly six times as long as one in Zurich — same continent, and for much of it the same currency.",
+          "A worker in Lisbon needs roughly six times as long as one in Zurich. Same continent, and for much of it the same currency.",
       },
       {
         kind: "prose",
         paragraphs: [
-          "Cross into Türkiye and the phone costs four months of average wages. This isn't a gadget affordability chart. It's an X-ray of the global wage ladder, and most of us have never seen our own rung this clearly.",
+          "Cross into Türkiye and the phone costs four months of average wages. Forget gadget affordability: this is an X-ray of the global wage ladder, and most of us have never seen our own rung this clearly.",
         ],
       },
       {
@@ -725,7 +725,7 @@ export const ARTICLES: Article[] = [
           "**Apple does the opposite.**",
           "The US pays the benchmark price. Europe pays roughly 18 to 30 percent more. And India, where the median formal-sector worker takes home about $385 a month, pays a **38 percent premium** over the US list price: ₹125,900 for a 256GB Pro, about $1,517 at the exchange rate, versus $1,099 in America. Türkiye is worse: import duties and luxury taxes push the iPhone 17's starting price to around $1,885, some **120 percent** above the US.",
           "Stack the two effects. India's price is 38 percent higher, its median wage roughly 12 times lower, and the multiplication is merciless: **sixteen times more hours of work** for the identical object.",
-          "Part of this is genuinely not Apple: import duties, VAT, currency hedging, distribution costs. Governments in Ankara and New Delhi are co-authors of those price tags. But one analysis makes the uncomfortable observation that Apple's pricing is more dispersed than its competitors', and the dispersion runs inversely with median wages — premium pricing pointed at poor countries, which is the opposite of what cost-plus pricing would predict and tells you something about market power. When a product becomes a status symbol, the seller can charge the most exactly where it hurts the most. And does.",
+          "Part of this is genuinely not Apple: import duties, VAT, currency hedging, distribution costs. Governments in Ankara and New Delhi are co-authors of those price tags. But one analysis makes the uncomfortable observation that Apple's pricing is more dispersed than its competitors', and that the dispersion runs inversely with median wages. Premium pricing aimed at poor countries is the opposite of what cost-plus pricing would predict, and it tells you something about market power. When a product becomes a status symbol, the seller can charge the most exactly where it hurts the most. And does.",
         ],
       },
       {
@@ -741,7 +741,7 @@ export const ARTICLES: Article[] = [
         kind: "prose",
         heading: "Why this one stat travels further than any GDP table",
         paragraphs: [
-          "Here's my actual thesis, and it's the reason this article exists. Nobody feels a Gini coefficient. Nobody has ever gasped at purchasing-power-parity-adjusted GDP per capita. But “you work two days for it, he works six months for it, and it's the same phone” lands in the chest, not the spreadsheet.",
+          "My actual thesis, and the reason this article exists: nobody feels a Gini coefficient. Nobody has ever gasped at purchasing-power-parity-adjusted GDP per capita. But “you work two days for it, he works six months for it, and it's the same phone” lands in the chest rather than the spreadsheet.",
           "The iPhone works as a measuring stick precisely because you know it. You've held one. You can feel what six months of commutes, alarms and shifts means, in a way you cannot feel a decimal point of GDP.",
           "That's also the humbling part. Because if you're reading this in a rich country, the iPhone index is a mirror with a caption: the thing you upgrade out of boredom is, for most working humans alive, a major capital purchase requiring months of saving. Not because they work less hard. Because of where the ladder happened to put them.",
         ],
@@ -750,7 +750,7 @@ export const ARTICLES: Article[] = [
         kind: "prose",
         heading: "One last question before you go",
         paragraphs: [
-          "You just spent five minutes reading about what an iPhone costs in 25 countries. Quick test: what does a litre of milk cost in your supermarket, right now, this week? A dozen eggs? The exact phone in your pocket, today — not when you bought it?",
+          "You just spent five minutes reading about what an iPhone costs in 25 countries. Quick test: what does a litre of milk cost in your supermarket, right now, this week? A dozen eggs? The exact phone in your pocket, today, rather than when you bought it?",
           "If you hesitated, you're normal. We're all walking around with price lists in our heads that are years stale, and we mostly find out when the checkout total ambushes us.",
         ],
       },
@@ -797,7 +797,7 @@ export const ARTICLES: Article[] = [
     slug: "one-salary-used-to-buy-a-whole-life",
     title: "Your dad's salary bought a house, a car and a stay-at-home spouse",
     description:
-      "Yours buys rent. Same salary, one generation apart, wildly different lives — here is the line-by-line forensics of where the money actually went.",
+      "Yours buys rent. Same salary, one generation apart, wildly different lives. Here's the line-by-line forensics of where the money actually went.",
     date: "2026-07-12",
     status: "published",
     readingMinutes: 9,
@@ -814,9 +814,9 @@ export const ARTICLES: Article[] = [
         kind: "prose",
         heading: "Exhibit A: the house ate your raise",
         paragraphs: [
-          "Start with the biggest line item on any family's ledger. In 1970, the median American home cost $24,000 against a median income of $9,870: a ratio of **2.4 years** of income. By 1990 it was 2.6. Today it's roughly **5.6** — a $420,000 home against $75,000. In many major markets the mortgage-to-income ratio has gone from three-to-four times income fifty years ago to **eight-to-ten times** today.",
+          "Start with the biggest line item on any family's ledger. In 1970, the median American home cost $24,000 against a median income of $9,870: a ratio of **2.4 years** of income. By 1990 it was 2.6. Today it's roughly **5.6**, a $420,000 home against $75,000. In many major markets the mortgage-to-income ratio has gone from three-to-four times income fifty years ago to **eight-to-ten times** today.",
           "Since 2000 alone, median home prices have outpaced median household income growth nearly two to one: **177 percent** against **92**.",
-          "Here's the detail that should end the “your generation just wants luxury” argument forever: the houses barely changed. The median owner-occupied home grew from 5.7 rooms in 1975 to 6.1 by the late 1990s — less than half a room, probably a second bathroom. Your parents' generation isn't living in smaller houses than you aspire to. They're living in the same houses. **The house didn't get better. It got repriced.**",
+          "The detail that should end the “your generation just wants luxury” argument forever is that the houses barely changed. The median owner-occupied home grew from 5.7 rooms in 1975 to 6.1 by the late 1990s, less than half a room, probably a second bathroom. Your parents' generation isn't living in smaller houses than you aspire to. They're living in the same houses. **The house didn't get better. It got repriced.**",
         ],
       },
       {
@@ -847,7 +847,7 @@ export const ARTICLES: Article[] = [
         kind: "prose",
         heading: "Exhibit C: the two-income trap snapped shut",
         paragraphs: [
-          "Here's the cruellest mechanism, documented by Elizabeth Warren and Amelia Warren Tyagi before Warren was a senator. When the second earner became normal, the market simply repriced everything around two paychecks. Housing absorbed the second income: mortgages and rents rose to what two salaries could bid, especially in the school-district bidding wars.",
+          "The cruellest mechanism was documented by Elizabeth Warren and Amelia Warren Tyagi, before Warren was a senator. When the second earner became normal, the market simply repriced everything around two paychecks. Housing absorbed the second income: mortgages and rents rose to what two salaries could bid, especially in the school-district bidding wars.",
           "Their data comparison is the single most damning table in modern economics. The one-earner family of the early 1970s kept **46 percent** of its income as discretionary money after fixed costs. The two-earner family of the 2000s, with nearly double the income, kept **25 percent**. By 2023, the average dual-income household was spending roughly **75 percent** of combined income on housing, transportation, childcare and healthcare, versus about **50 percent** for a 1970s single-income household.",
           "The second income didn't buy a better life. It bought the same life, at the new price, with double the labour and double the risk: lose one of two jobs and the math collapses instantly, because the mortgage was calibrated to both. As one analysis put it, the second income “just raised the minimum needed to participate in the economy.”",
           "Today, only about **4 in 10** married families with young children get by on one income or one-and-a-part, a near-record low. Six-figure earners describe single-income life as nearly impossible.",
@@ -860,7 +860,7 @@ export const ARTICLES: Article[] = [
         paragraphs: [
           "Now the part that will annoy the doomers, because honesty requires it.",
           "Measured by median net worth at the same age, adjusted for inflation, millennials are actually **ahead**: $84,941 at ages 26-41 in 2022, versus $78,333 for Gen X at the same point and $58,101 for boomers.",
-          "And University of Chicago research found the real story isn't between generations but within them: the average millennial has 30 percent less wealth at 35 than boomers did, yet the richest tenth of millennials has 20 percent more than the richest boomers did, while millennials with typical working-class trajectories did no better — and sometimes worse — than their parents' equivalents.",
+          "And University of Chicago research found the real story runs within generations rather than between them: the average millennial has 30 percent less wealth at 35 than boomers did, yet the richest tenth of millennials has 20 percent more than the richest boomers did, while millennials on typical working-class trajectories did no better, and sometimes worse, than their parents' equivalents.",
         ],
       },
       {
@@ -882,7 +882,7 @@ export const ARTICLES: Article[] = [
         kind: "prose",
         heading: "Have the conversation, but bring the numbers",
         paragraphs: [
-          "Here's my actual advice, and it's not financial. Show this to your parents. Not as an accusation — as a translation. Because most of the generational sniping (the avocado toast, the lazy kids, the boomers had it easy) comes from two groups of people arguing from price lists that are decades apart.",
+          "My actual advice isn't financial. Show this to your parents, as a translation rather than an accusation, because most of the generational sniping (the avocado toast, the lazy kids, the boomers had it easy) comes from two groups of people arguing from price lists decades apart.",
           "Your dad's brain still runs 1985 prices the way yours will someday run 2015 prices. A woman on Reddit spending $350 a month on basic groceries got lectured by parents who genuinely believed milk still cost $2. Nobody in that argument was lying. They were living in different price universes.",
           "The fix is calibration, in both directions. Sit your parents down and make them guess what things cost now: a semester of college, a month of infant care, the rent on your apartment. Then let them watch you guess what things cost in 1975, because you'll be wrong too, in the other direction.",
         ],
@@ -948,7 +948,7 @@ export const ARTICLES: Article[] = [
         paragraphs: [
           "A 23-year-old walks out of a big-box store having spent $350 on a month of groceries. Eggs, bread, store brands, nothing exotic. Their opening line online: “I'm not Jeff Bezos, I am literally just trying to survive.”",
           "Their parents' diagnosis? Must be the lattes. The takeout. Something. Because in the parents' heads, **milk is $2**, and $350 for basics simply does not compute.",
-          "Here's the thing that makes this story interesting instead of just another generational spat: the parents aren't lying, and they aren't stupid. They're running outdated software. And before you feel smug about it, so are you. So am I.",
+          "What makes this story interesting rather than just another generational spat: the parents aren't lying, and they aren't stupid. They're running outdated software. And before you feel smug about it, so are you. So am I.",
           "Every single one of us is walking around with a mental price list that stopped updating years ago. Today I want to show you exactly how that list gets written, why it freezes, and how to tell whose is more wrong at your next family dinner.",
         ],
       },
@@ -956,10 +956,10 @@ export const ARTICLES: Article[] = [
         kind: "prose",
         heading: "Your brain writes prices in permanent marker",
         paragraphs: [
-          "Psychologists have a name for the price you carry in your head: the **internal reference price**, the number you drag out of memory to judge whether today's shelf price is fair or an outrage. Every time you see $4.89 on the milk, your brain isn't evaluating $4.89. It's comparing it to a ghost — some half-remembered milk price from the era when you first started paying attention.",
+          "Psychologists have a name for the price you carry in your head: the **internal reference price**, the number you drag out of memory to judge whether today's shelf price is fair or an outrage. Every time you see $4.89 on the milk, your brain isn't evaluating $4.89. It's comparing it against a ghost, some half-remembered milk price from the era when you first started paying attention.",
           "And that ghost is stubborn. The anchoring effect, first documented by Tversky and Kahneman, is one of the most robust biases in all of human decision-making: the first number you absorb acts, in the researchers' words, like an anchor dropped into the deep sea, fixing your mind and dragging every later judgment toward it.",
           "It works even when the anchor is meaningless. In famous experiments, people's willingness to pay for products was swayed by the last digits of their own social security number. And it doesn't wash out: studies tracking people over time found that a single arbitrary anchor still bent their valuations **eight weeks later**, as if the number had been imprinted.",
-          "Now consider what that means for prices you encountered not eight weeks ago but eight thousand times, at an impressionable age, when money was new and every purchase stung. The prices of your first independent years — first rent, first tank of gas, first solo grocery run — aren't memories. They're the factory settings.",
+          "Now consider what that means for prices you encountered not eight weeks ago but eight thousand times, at an impressionable age, when money was new and every purchase stung. The prices of your first independent years, the first rent, the first tank of gas, the first solo grocery run, aren't memories. They're the factory settings.",
           "Your parents' factory settings were installed in 1985. Yours, maybe 2010. **Neither of you ever ran the update.**",
         ],
       },
@@ -970,7 +970,7 @@ export const ARTICLES: Article[] = [
           "Three reasons the list stays frozen, and they're all a bit humiliating.",
         items: [
           "**You don't actually read prices most of the time.** For routine purchases, price memory is implicit: your brain retrieves it lazily, outside of awareness, using shortcuts rather than the actual number on the tag. You grab the milk. You do not study the milk.",
-          "**The update is asymmetric.** Consumers weight price increases far more heavily than decreases when forming their sense of inflation; when researchers built an index excluding the price drops people mentally ignore, the gap between perceived and actual inflation nearly disappeared. So the list doesn't just lag — it lags angrily, cataloguing every insult and forgetting every discount.",
+          "**The update is asymmetric.** Consumers weight price increases far more heavily than decreases when forming their sense of inflation; when researchers built an index excluding the price drops people mentally ignore, the gap between perceived and actual inflation nearly disappeared. So the list doesn't merely lag, it lags angrily, cataloguing every insult and forgetting every discount.",
           "**The lag gets worse with age.** Research prepared for the European Parliament found that in high-inflation periods, people over 65 show a larger inflation-perception bias than younger groups, partly because updating your beliefs takes active information-gathering that gets harder to sustain, and partly because a lifetime of past price regimes is a lot of old anchors to fight.",
         ],
       },
@@ -986,7 +986,7 @@ export const ARTICLES: Article[] = [
         heading: "The dinner-table diagnostic",
         paragraphs: [
           "So back to the $350 grocery run and the latte lecture. What's actually happening in that argument is two internally consistent price lists colliding: the parents comparing today's receipt to their 1985 factory settings and concluding reckless child; the kid comparing it to 2026 shelf reality and concluding out-of-touch parents.",
-          "Official data sides with the kid on this one — a few hundred dollars a month for a nutritious home-cooked diet is baseline USDA math now, not extravagance. But here's the twist worth being honest about: on other items, the kid's list is broken too. Young people who've never bought diapers, or a water heater, or car insurance in their own name routinely lowball those by half.",
+          "Official data sides with the kid on this one: a few hundred dollars a month for a nutritious home-cooked diet is baseline USDA math now, not extravagance. The twist worth being honest about, though, is that on other items the kid's list is broken too. Young people who've never bought diapers, or a water heater, or car insurance in their own name routinely lowball those by half.",
           "Which suggests a better format for the family argument. Make it a quiz. Everyone guesses, then someone looks up the real number.",
         ],
       },
@@ -1015,7 +1015,7 @@ export const ARTICLES: Article[] = [
         kind: "prose",
         heading: "Calibration is a skill, and it's weirdly fun to train",
         paragraphs: [
-          "Here's the optimistic ending. Unlike most cognitive biases, this one has a straightforward fix: **feedback**. Guess a price, see the real one, feel the gap, repeat. Your internal reference prices are learned from exposure, so deliberate exposure retrains them. The gasp when you're wrong is the update installing.",
+          "Now the optimistic ending. Unlike most cognitive biases, this one has a straightforward fix: **feedback**. Guess a price, see the real one, feel the gap, repeat. Your internal reference prices are learned from exposure, so deliberate exposure retrains them. The gasp when you're wrong is the update installing.",
         ],
       },
       {
@@ -1023,7 +1023,7 @@ export const ARTICLES: Article[] = [
         heading:
           "Turn the world's most repetitive family argument into a scoreboard",
         paragraphs: [
-          "Pricele is a one-minute daily game where you guess what a real item costs right now and get scored on how close you land. Play it solo to fix your own list — or, and I genuinely recommend this, play it against your parents.",
+          "Pricele is a one-minute daily game where you guess what a real item costs right now and get scored on how close you land. Play it solo to fix your own list, or, and I genuinely recommend this, play it against your parents.",
           "The loser buys the coffee. At whatever it costs these days. Neither of you knows. That's the bit.",
         ],
         buttonLabel: "Play today's Pricele",
@@ -1048,7 +1048,7 @@ export const ARTICLES: Article[] = [
     slug: "where-your-money-is-secretly-rich",
     title: "Where your money is secretly rich",
     description:
-      "The countries where $2,000 buys a $6,000 life — plus the two traps the geoarbitrage videos never mention, including the one where you become the price rise.",
+      "The countries where $2,000 buys a $6,000 life, plus the two traps the geoarbitrage videos never mention, including the one where you become the price rise.",
     date: "2026-07-26",
     status: "published",
     readingMinutes: 8,
@@ -1058,7 +1058,7 @@ export const ARTICLES: Article[] = [
         paragraphs: [
           "Your money has a passport, and it's worth different amounts depending on where it lands. Not slightly different. Absurdly different.",
           "The cleanest way to see it is the burger. The same $10 buys nearly **five Big Macs** in South Africa and **fewer than two** in Switzerland. Six of the ten cheapest Big Macs on Earth are in Asia; Switzerland's is 38 percent dearer than America's, the highest premium among 54 countries tracked.",
-          "Economists have a duller name for this — purchasing power parity — and a sharper metric buried inside World Bank data: the **price level ratio**, which tells you what a dollar actually buys on the ground. Vietnam's sits around **0.30** against the United States, meaning the same basket of goods and services costs roughly 30 cents on the dollar.",
+          "Economists have a duller name for this, purchasing power parity, and a sharper metric buried inside World Bank data: the **price level ratio**, which tells you what a dollar actually buys on the ground. Vietnam's sits around **0.30** against the United States, meaning the same basket of goods and services costs roughly 30 cents on the dollar.",
           "Read that as a plain sentence: there are functioning, beautiful, fast-wifi countries where existence is 70 percent off.",
         ],
       },
@@ -1067,7 +1067,7 @@ export const ARTICLES: Article[] = [
         heading: "The arithmetic that makes people quit their leases",
         paragraphs: [
           "This is why geoarbitrage went from finance-blog jargon to a life strategy. Earn in a strong-currency job, spend in a low-price-level country, and the gap becomes your savings rate.",
-          "The numbers are genuinely startling. A remote worker keeping a US salary while living in Chiang Mai on about $1,300 a month can hit an **84 percent savings rate**; the extra $32,400 a year, compounding at 7 percent, grows to over **$450,000 in a decade**. A software engineer clearing $78,000 after tax saves maybe $33,000 a year in New York and **$66,000 in Thailand** — double, for the same job.",
+          "The numbers are genuinely startling. A remote worker keeping a US salary while living in Chiang Mai on about $1,300 a month can hit an **84 percent savings rate**; the extra $32,400 a year, compounding at 7 percent, grows to over **$450,000 in a decade**. A software engineer clearing $78,000 after tax saves maybe $33,000 a year in New York and **$66,000 in Thailand**. Double, for the same job.",
         ],
       },
       {
@@ -1098,8 +1098,8 @@ export const ARTICLES: Article[] = [
         kind: "prose",
         heading: "Trap 1: you probably won't get local prices",
         paragraphs: [
-          "Here's what the YouTube thumbnails leave out. The advertised paradise budget assumes **local** prices, and short-term visitors mostly don't get them. One Canadian writer who tried trading Toronto rent for São Paulo ended up on Airbnb paying more than double the neighbourhood's average rent, “not far off from the typical cost of a Toronto apartment.” The markup is systematic: in Mexico City, the median one-bedroom Airbnb runs about **66 percent above** average local rent.",
-          "The $500-a-month luxury life you've seen advertised is usually describing the rent line of someone with a year-long local lease, a local SIM and local shopping habits. Real comfortable budgets start around **$1,000** in even the cheapest hubs — before you add flights home, visa runs ($480-720 a year in Vietnam, which still has no nomad visa), international health insurance at $200-400 a month, and the productivity tax of moving constantly.",
+          "The YouTube thumbnails leave something out. The advertised paradise budget assumes **local** prices, and short-term visitors mostly don't get them. One Canadian writer who tried trading Toronto rent for São Paulo ended up on Airbnb paying more than double the neighbourhood's average rent, “not far off from the typical cost of a Toronto apartment.” The markup is systematic: in Mexico City, the median one-bedroom Airbnb runs about **66 percent above** average local rent.",
+          "The $500-a-month luxury life you've seen advertised is usually describing the rent line of someone with a year-long local lease, a local SIM and local shopping habits. Real comfortable budgets start around **$1,000** in even the cheapest hubs, before you add flights home, visa runs ($480-720 a year in Vietnam, which still has no nomad visa), international health insurance at $200-400 a month, and the productivity tax of moving constantly.",
           "The arbitrage is real. The influencer version of it is a rent line cosplaying as a budget.",
         ],
       },
@@ -1117,8 +1117,8 @@ export const ARTICLES: Article[] = [
         kind: "callout",
         heading: "The bitter symmetry",
         paragraphs: [
-          "Viral grocery receipts, the two-income trap, the “how does that make sense” comments — that's what it feels like when prices decouple from local wages. Geoarbitrage is you being on the winning side of that same decoupling.",
-          "It doesn't mean don't go. It means go like a guest: long leases over Airbnb, local businesses over expat bubbles, secondary cities over the three neighbourhoods every YouTuber colonises, and learn the language of the place subsidising your savings rate. Rural Thailand at $800-1,000 a month for a couple is both cheaper and lighter-footprint than fighting locals for central Bangkok.",
+          "Viral grocery receipts, the two-income trap, the “how does that make sense” comments: that's what it feels like when prices decouple from local wages. Geoarbitrage is you being on the winning side of that same decoupling.",
+          "None of which means don't go. It means go like a guest: long leases over Airbnb, local businesses over expat bubbles, secondary cities over the three neighbourhoods every YouTuber colonises, and learn the language of the place subsidising your savings rate. Rural Thailand at $800-1,000 a month for a couple is both cheaper and lighter-footprint than fighting locals for central Bangkok.",
         ],
       },
       {
@@ -1192,7 +1192,7 @@ export const ARTICLES: Article[] = [
     title:
       "Everything is more expensive, except the things that quietly became almost free",
     description:
-      "TVs fell 98%. Light fell 500,000-fold. Batteries fell 99%. Here is why the price collapses went uncelebrated — and why you still feel poorer anyway.",
+      "TVs fell 98%. Light fell 500,000-fold. Batteries fell 99%. Why the price collapses went uncelebrated, and why you still feel poorer anyway.",
     date: "2026-07-29",
     status: "published",
     readingMinutes: 8,
@@ -1210,7 +1210,7 @@ export const ARTICLES: Article[] = [
         heading: "The television: down 98 percent, and nobody threw a parade",
         paragraphs: [
           "In 1997, Fujitsu's first 42-inch flat-screen cost around **$15,000-$22,900**. In 2005, a 40-inch Sony LCD was $4,000. Today a 65-inch 4K smart TV goes for **under $300** at Walmart.",
-          "An analysis of 25 years of Black Friday ads found TV prices down more than 90 percent since 2000 — before even adjusting for the fact that screens quadrupled in size and resolution. The official quality-adjusted CPI index for televisions fell **98.5 percent** since 1996; no other item in the entire index comes close.",
+          "An analysis of 25 years of Black Friday ads found TV prices down more than 90 percent since 2000, before even adjusting for the fact that screens quadrupled in size and resolution. The official quality-adjusted CPI index for televisions fell **98.5 percent** since 1996, and no other item in the entire index comes close.",
           "Imagine the reverse headline. “TVs up 4,000 percent” would be civilizational news. The actual story got zero riots, zero congressional hearings, zero viral receipts. **Deflation is the tree that falls silently in the forest.**",
         ],
       },
@@ -1218,8 +1218,8 @@ export const ARTICLES: Article[] = [
         kind: "prose",
         heading: "Light: the most beautiful price chart in human history",
         paragraphs: [
-          "Here's my favourite price of all time. In the 1700s, George Washington calculated that burning one good candle five hours a night for a year would cost him the equivalent of over **$1,000 today**.",
-          "Economist William Nordhaus reconstructed the full arc: a 60-hour week of hard labour bought about **54 minutes** of quality light in the deep past; by 1990, **ten years** of light; today, around **52 years**. In the UK's long-run data, a million lumen-hours cost about £34,000 in the 1300s (in 2000 prices) and £2.15 by 2023 — a 16,000-fold decline.",
+          "My favourite price of all time. In the 1700s, George Washington calculated that burning one good candle five hours a night for a year would cost him the equivalent of over **$1,000 today**.",
+          "Economist William Nordhaus reconstructed the full arc: a 60-hour week of hard labour bought about **54 minutes** of quality light in the deep past; by 1990, **ten years** of light; today, around **52 years**. In the UK's long-run data, a million lumen-hours cost about £34,000 in the 1300s (in 2000 prices) and £2.15 by 2023, a 16,000-fold decline.",
           "The price of banishing darkness fell by a factor of roughly **500,000**. A thing once so precious that people rationed it minute by minute is now so cheap you forget to turn it off. That sentence describes the single greatest consumer bargain in history, and it has never once trended.",
         ],
       },
@@ -1249,8 +1249,8 @@ export const ARTICLES: Article[] = [
         heading: "Why the collapses happened (and where they didn't)",
         paragraphs: [
           "The cheap things share a signature: **globally traded, technologically compounding, ferociously competitive**. TVs got cheap because LCD manufacturing scaled through billion-dollar fabs pumping out a million displays a day, mother-glass generations cut equipment cost per panel by 80 percent, and competition was so brutal one Corning presentation called the industry “a 25 year suicide pact for display manufacturers.”",
-          "Batteries and solar follow learning curves: every doubling of cumulative production cuts prices roughly 18 to 20 percent — thousands of small improvements compounding, no single breakthrough.",
-          "Now list what didn't collapse: **housing, healthcare, childcare, education**. They share the opposite signature: local, labour-intensive, supply-constrained and heavily gatekept. You can't manufacture an apartment in Shenzhen and ship it to Toronto. Regulation is part of the story — one industry estimate puts government-imposed costs at roughly 24 percent of a new US single-family home's price — though how much weight to give regulation versus land scarcity, labour costs and demand is genuinely contested territory, and anyone who tells you it's all one villain is selling a politics, not an analysis.",
+          "Batteries and solar follow learning curves: every doubling of cumulative production cuts prices roughly 18 to 20 percent, thousands of small improvements compounding with no single breakthrough.",
+          "Now list what didn't collapse: **housing, healthcare, childcare, education**. They share the opposite signature: local, labour-intensive, supply-constrained and heavily gatekept. You can't manufacture an apartment in Shenzhen and ship it to Toronto. Regulation is part of the story, and one industry estimate puts government-imposed costs at roughly 24 percent of a new US single-family home's price, though how much weight to give regulation versus land scarcity, labour costs and demand is genuinely contested territory. Anyone telling you it's all one villain is selling a politics rather than an analysis.",
           "The honest summary: we got spectacularly good at making **things** cheap, and we remain terrible at making **places and care** cheap. Same economy, two opposite curves.",
         ],
       },
@@ -1260,14 +1260,14 @@ export const ARTICLES: Article[] = [
           "So why do you feel poorer? Because the discount went to the optional stuff",
         paragraphs: [
           "The stuff that collapsed in price is mostly the stuff you can skip or stretch: the TV you replace every decade, the clothes, the gadgets, the lumens. The stuff that exploded is the stuff you cannot skip this month: the rent, the premium, the daycare.",
-          "Your brain compounds the injury. People systematically over-weight price increases and mentally discard decreases when forming their sense of inflation — and you buy groceries 52 times a year but a TV once, so frequency bias buries the good news.",
+          "Your brain compounds the injury. People systematically over-weight price increases and mentally discard decreases when forming their sense of inflation, and you buy groceries 52 times a year but a TV once, so frequency bias buries the good news.",
         ],
       },
       {
         kind: "prose",
         paragraphs: [
           "So the optimist is right that your ancestors would weep at your abundance: 52 years of light for a week's wages, a supercomputer in your pocket, strawberries in January. And the doomer is right that the entry tickets to a stable adult life have inflated beyond an ordinary wage.",
-          "Neither is lying. They're describing the two halves of the same weird economy, and the argument between them — the one currently detonating in every family group chat — is really an argument about which half you're forced to buy more of.",
+          "Neither is lying. They're describing two halves of the same weird economy, and the argument between them, the one currently detonating in every family group chat, is really an argument about which half you're forced to buy more of.",
         ],
       },
       {
@@ -1282,7 +1282,7 @@ export const ARTICLES: Article[] = [
         kind: "cta",
         heading: "You should at least know the score",
         paragraphs: [
-          "Pricele is a once-a-day ritual: one real item, you guess its price, you learn whether your mental number is stale. Most people discover they've been overestimating the collapsed stuff and underestimating the exploded stuff — exactly the distortion this article is about.",
+          "Pricele is a once-a-day ritual: one real item, you guess its price, you learn whether your mental number is stale. Most people discover they've been overestimating the collapsed stuff and underestimating the exploded stuff, which is exactly the distortion this article is about.",
           "The age you live in gives you 52 years of light for a week's work and charges you a fortune for a roof. One minute a day fixes the part you can control.",
         ],
         buttonLabel: "Play today's Pricele",
@@ -1348,7 +1348,7 @@ export const ARTICLES: Article[] = [
       {
         kind: "prose",
         paragraphs: [
-          "There's a specific kind of silence that happens at kitchen tables now. It's the end of the month. Two adults, two jobs, two incomes, sometimes two degrees. The spreadsheet is open. And the number at the bottom — after nothing extravagant has happened, no holiday, no disaster, no avocado-related indiscretions — is close to zero.",
+          "There's a specific kind of silence that happens at kitchen tables now. It's the end of the month. Two adults, two jobs, two incomes, sometimes two degrees. The spreadsheet is open. And the number at the bottom, after nothing extravagant has happened, no holiday, no disaster, no avocado-related indiscretions, sits close to zero.",
           "The first reaction is always private shame: **we must be doing something wrong.** So before anything else, let's run the actual numbers, because the most useful thing anyone can tell that couple is that the spreadsheet isn't lying and neither are they.",
         ],
       },
@@ -1356,7 +1356,7 @@ export const ARTICLES: Article[] = [
         kind: "table",
         heading: "The autopsy",
         intro:
-          "A representative dual-income American household earning **$120,000** — a sum that still sounds like wealth to anyone who formed their price instincts before 2015:",
+          "A representative dual-income American household earning **$120,000**, a sum that still sounds like wealth to anyone who formed their price instincts before 2015:",
         columns: ["Line item", "Monthly", "Share"],
         rows: [
           ["Taxes (federal, state, payroll)", "$2,500", "25%"],
@@ -1373,7 +1373,7 @@ export const ARTICLES: Article[] = [
         kind: "prose",
         paragraphs: [
           "Read that last line again. **Everything else: $350.** Clothes, birthdays, a dentist's surprise, the school trip, the car repair, savings, retirement, one pizza. On a hundred and twenty thousand dollars a year.",
-          "Notice what's missing from the table: waste. There is no line to cut that fixes this. The four biggest items — taxes, housing, childcare, transport — are the price of being able to go to work at all.",
+          "Notice what's missing from the table: waste. There is no line to cut that fixes this. The four biggest items, taxes and housing and childcare and transport, are the price of being able to go to work at all.",
           "This is the two-income trap in a single table: the second salary didn't buy a better life, it bought the childcare and the second car required to earn the second salary, while housing repriced itself to what two salaries could bid. The 1970s single-earner family kept **46 percent** of its income as discretionary money; the 2000s dual-earner family, with nearly double the income, kept **25**. By 2023, the average dual-income household was spending about **75 percent** of everything on housing, transport, childcare and healthcare, against roughly **50 percent** for the single-income 1970s household.",
           "The math has been checked. **It's not you.**",
         ],
@@ -1403,14 +1403,14 @@ export const ARTICLES: Article[] = [
         kind: "callout",
         heading: "The cruellest part is the arithmetic of risk",
         paragraphs: [
-          "The one-earner family of the past had a built-in shock absorber: if disaster struck the breadwinner, the second adult could enter the workforce. Today's family has already spent that reserve. Both adults work, the mortgage was approved against both salaries, and so a single job loss doesn't halve the safety margin — it deletes it.",
+          "The one-earner family of the past had a built-in shock absorber: if disaster struck the breadwinner, the second adult could enter the workforce. Today's family has already spent that reserve. Both adults work, the mortgage was approved against both salaries, and so a single job loss doesn't halve the safety margin. It deletes it.",
           "The two-earner family faces roughly **double** the annual probability of experiencing a job loss, precisely because there are two jobs to lose and no backup earner left to deploy.",
         ],
       },
       {
         kind: "prose",
         paragraphs: [
-          "That's what the kitchen-table silence is actually about. Not the $350. The knowledge that the whole structure is load-bearing everywhere, and one bad quarter — one diagnosis, one restructuring email — brings it down. Two incomes was supposed to mean security. It turned out to mean two points of failure and zero slack, and everyone living inside that math feels it in their sleep.",
+          "That's what the kitchen-table silence is actually about. Not the $350. The knowledge that the whole structure is load-bearing everywhere, and that one bad quarter, one diagnosis, one restructuring email, brings it down. Two incomes was supposed to mean security. It turned out to mean two points of failure and zero slack, and everyone living inside that math feels it in their sleep.",
           "So no, the fix is not a budgeting app's cheerful suggestion to cancel a streaming service. The serious personal responses all attack the fixed lines — housing costs, car count, debt, location. The serious collective responses are about supply and support: more homes, cheaper childcare, benefits pegged to what essentials actually cost, as the Trussell Trust argues with its Essentials Guarantee campaign. Anything else is rearranging the $350.",
         ],
       },
@@ -1419,14 +1419,14 @@ export const ARTICLES: Article[] = [
         heading: "Talk about the numbers out loud",
         paragraphs: [
           "One more thing, and it's the reason stories like K's video and Andrew's interview matter beyond sympathy. Every family at that silent kitchen table believes it is uniquely failing, because nobody publishes their budget.",
-          "The moment someone does — a Sydney mum on camera, a receipt on TikTok, a Reddit post about $350 groceries — thousands of replies say the same thing: oh thank god, it's not just us. **Shame survives in the dark and dies in the comparison.** The single most financially healthy thing most couples could do this month is show one trusted friend their real numbers, and look at theirs.",
+          "The moment someone does, whether a Sydney mum on camera, a receipt on TikTok or a Reddit post about $350 groceries, thousands of replies say the same thing: oh thank god, it's not just us. **Shame survives in the dark and dies in the comparison.** The single most financially healthy thing most couples could do this month is show one trusted friend their real numbers, and look at theirs.",
         ],
       },
       {
         kind: "cta",
         heading: "A gentler on-ramp to talking about money out loud",
         paragraphs: [
-          "Pricele is a one-minute daily game where you guess what real things cost right now — groceries, bills, the stuff of this article — and see how close you land. Couples tell me it's oddly disarming: arguing about whether daycare costs $1,400 or $2,000 a month is easier when it's a quiz.",
+          "Pricele is a one-minute daily game where you guess what real things cost right now, whether groceries, bills, or the stuff of this article, and see how close you land. Couples tell me it's oddly disarming: arguing about whether daycare costs $1,400 or $2,000 a month is easier when it's a quiz.",
           "The spreadsheet was never the enemy. The silence was.",
         ],
         buttonLabel: "Play today's Pricele",
@@ -1464,7 +1464,7 @@ export const ARTICLES: Article[] = [
     slug: "how-well-do-you-know-prices",
     title: "How well do you actually know prices? Take the test.",
     description:
-      "Ten questions, real answers, no partial credit for vibes. Then the four documented reasons everybody fails — and the one-minute habit that fixes it.",
+      "Ten questions, real answers, no partial credit for vibes. Then the four documented reasons everybody fails, and the one-minute habit that fixes it.",
     date: "2026-08-02",
     status: "published",
     readingMinutes: 7,
@@ -1473,9 +1473,9 @@ export const ARTICLES: Article[] = [
         kind: "prose",
         paragraphs: [
           "You have opinions about prices. Strong ones. You've muttered at a checkout screen this month. You have a firm position on whether groceries are outrageous, whether rent is insane, whether everything costs double now.",
-          "Here's my uncomfortable question: **when did you last check whether your numbers are right?**",
-          "Because here's the secret the entire inflation debate is built on: almost nobody actually knows what things cost. We know what things used to cost, when we first started paying attention, and we've been arguing from that ghost ledger ever since.",
-          "Today, instead of another opinion, I'm offering a mirror. Ten questions. Write your guesses down — actual numbers — before scrolling to the answers. No partial credit for vibes.",
+          "So here's an uncomfortable question: **when did you last check whether your numbers are right?**",
+          "The entire inflation debate rests on a secret, which is that almost nobody actually knows what things cost. We know what things used to cost, back when we first started paying attention, and we've been arguing from that ghost ledger ever since.",
+          "Today, instead of another opinion, I'm offering a mirror. Ten questions. Write your guesses down, actual numbers, before scrolling to the answers. No partial credit for vibes.",
         ],
       },
       {
@@ -1501,9 +1501,9 @@ export const ARTICLES: Article[] = [
         heading: "The reveals",
         paragraphs: [
           "**The Big Mac (7):** about **$5.79** in the US. Most people guess low, still anchored to the burger of their student years.",
-          "**The iPhone in India (8):** ₹125,900 for a 256GB Pro, roughly **$1,517** — a 38 percent premium over the US price, in a country where the median formal worker earns about $385 a month. Nearly everyone guesses that poorer countries pay less. The opposite is true, and that single wrong assumption distorts how people reason about global inequality.",
+          "**The iPhone in India (8):** ₹125,900 for a 256GB Pro, roughly **$1,517**, a 38 percent premium over the US price, in a country where the median formal worker earns about $385 a month. Nearly everyone guesses that poorer countries pay less. The opposite is true, and that single wrong assumption distorts how people reason about global inequality.",
           "**The 1997 cart (9):** about **$500**, not the ~$312 the official inflation calculator predicts. If you guessed near $312, congratulations, you know the statistics; if you guessed near $500, you know the store. The gap between those two answers is the entire cost-of-living debate in one number.",
-          "**The TV (5):** **under $300**. Most people guess $600-1,000, because their TV anchor was installed decades ago and TVs are the rare item that collapsed — down 90-plus percent since 2000. Price blindness runs in both directions: we overestimate the collapsed stuff and underestimate the exploded stuff.",
+          "**The TV (5):** **under $300**. Most people guess $600-1,000, because their TV anchor was installed decades ago and TVs are the rare item that collapsed, down 90-plus percent since 2000. Price blindness runs in both directions: we overestimate the collapsed stuff and underestimate the exploded stuff.",
           "**The daycare (4):** US centre-based infant care averages around **$19,000 a year**, over $1,500 a month. People who've never bought childcare routinely guess half that, and it's the single most common source of “why are they always broke?” misjudgment of other families.",
           "**The shrinking box (10):** typical shrinkflation moves cut **9 to 16 percent** of the product while the price holds. A cereal box dropping from 18 to 15 ounces is a 17 percent per-ounce increase that most shoppers never register.",
           "Items 1-3 and 6: check against your own store and your own bill. Be honest about the gaps.",
@@ -1526,9 +1526,9 @@ export const ARTICLES: Article[] = [
           "Your errors weren't random, and they weren't stupidity. They were four well-documented bugs firing at once.",
         items: [
           "**You never read the price in the first place.** For routine purchases, price memory is implicit: your brain files a vague “normal-ish” and moves on, retrieving it later through lazy shortcuts rather than actual numbers.",
-          "**Your anchors are ancient.** The first prices you absorbed act as anchors that drag every later judgment toward them; the effect is among the most robust in psychology and persists for weeks even when the anchor is meaningless, like digits of your own social security number. Your first rent, your first tank of gas — those aren't memories, they're calibration errors with tenure.",
+          "**Your anchors are ancient.** The first prices you absorbed act as anchors that drag every later judgment toward them; the effect is among the most robust in psychology and persists for weeks even when the anchor is meaningless, like digits of your own social security number. Your first rent and your first tank of gas aren't memories. They're calibration errors with tenure.",
           "**You only file the increases.** People weight rising prices far more than falling ones; strip the ignored price declines out of the index and the gap between perceived and actual inflation almost disappears. Your internal ledger is an outrage diary, not an accounting document.",
-          "**The shelf is gaslighting you.** Retailers actively supply fake reference points — the eternal “was $89.99, now $49.99” — because externally supplied anchors measurably bend what you'll judge as fair and what you'll pay. Meanwhile shrinkflation, “a tax on consumer attention,” harvests the gap between the package and your memory of the package.",
+          "**The shelf is gaslighting you.** Retailers actively supply fake reference points, the eternal “was $89.99, now $49.99”, because externally supplied anchors measurably bend what you'll judge as fair and what you'll pay. Meanwhile shrinkflation, “a tax on consumer attention,” harvests the gap between the package and your memory of the package.",
         ],
       },
       {
@@ -1537,7 +1537,7 @@ export const ARTICLES: Article[] = [
         paragraphs: [
           "This isn't trivia. A miscalibrated price sense costs you money and judgment in specific, compounding ways.",
           "You can't spot a genuinely good deal, because “50% off” only means something relative to a true price you don't know. You can't detect shrinkflation without a unit-price instinct. You can't budget accurately with a mental ledger that logs increases and deletes decreases. You can't negotiate salary sensibly without knowing what your cost of living actually did this year, as opposed to what the headline says the average person's did.",
-          "And, maybe most corrosive of all, you can't argue fairly — with your parents, your partner, or the internet — when both sides are quoting numbers from different decades.",
+          "And, maybe most corrosive of all, you can't argue fairly with your parents, your partner, or the internet when both sides are quoting numbers from different decades.",
           "**Price literacy is the closest thing personal finance has to a foundational skill**, and it's the one nobody teaches, because everyone assumes they already have it. You just took the test. Do you?",
         ],
       },
@@ -1554,7 +1554,7 @@ export const ARTICLES: Article[] = [
         heading: "Ten questions ago you had opinions. Now you have a score.",
         paragraphs: [
           "That's exactly what Pricele is, and this article is, I'll admit it, the mission statement. One real item a day, you guess the price, you get scored on how close you landed.",
-          "If the test stung, good — that's fixable. Come play tomorrow's round, and bring someone whose price list is even older than yours.",
+          "If the test stung, good. That's the fixable kind of sting. Come play tomorrow's round, and bring someone whose price list is even older than yours.",
         ],
         buttonLabel: "Play today's Pricele",
       },

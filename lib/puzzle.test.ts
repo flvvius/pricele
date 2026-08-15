@@ -69,7 +69,7 @@ describe("daily puzzle rotation", () => {
       seen.add(`${pair!.itemId}:${pair!.countryCode}`);
     }
     // Lebanon only stocks 2 of the 7 items, so its 7 scheduled slots collapse
-    // onto those 2 — every other country contributes 7 distinct pairs.
+    // onto those 2, while every other country contributes 7 distinct pairs.
     expect(seen.size).toBeGreaterThan(200);
 
     // And the cycle really does close: day 231 matches day 0.
@@ -99,7 +99,7 @@ describe("daily puzzle rotation", () => {
 
   it("substitutes deterministically when a country lacks the scheduled item", () => {
     // Lebanon has no milk row, so whichever day pairs LB with milk must fall
-    // through to an item it does have — and do so identically every call.
+    // through to an item it does have, and do so identically every call.
     const lbDays: number[] = [];
     for (let i = 0; i < 231; i++) {
       const pair = pairForDate(dateFromISO(addDaysISO(ROTATION.startDate, i)));

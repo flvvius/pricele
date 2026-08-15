@@ -7,11 +7,11 @@
 // a given pair only recurs after 33 x 7 = 231 days: a different country every
 // day, a different item every day, and the same combination about twice a year.
 //
-// STABILITY RULE — read before editing:
+// STABILITY RULE. Read this before editing:
 //   To keep a given day's puzzle from ever changing, only ever *append* to
 //   countryOrder or itemOrder, and never move startDate or reorder the existing
 //   entries. Appending changes a list's length, and therefore the modulo for
-//   every day past the current cycle — so append at the END only, never insert
+//   every day past the current cycle, so append at the END only, never insert
 //   in the middle. (Reordering countryOrder under a fixed startDate is exactly
 //   what shifted the puzzle from India to Lebanon once before.)
 //

@@ -3,7 +3,7 @@ import type { PriceEntry } from "@/lib/puzzle";
 import { formatUSD, formatLocal } from "@/lib/format";
 import { wageMinutes } from "@/lib/catalog";
 
-/** "about 12 min" / "about 2.4 h" of local wage. Rounded hard — see /methodology. */
+/** "about 12 min" / "about 2.4 h" of local wage. Rounded hard; see /methodology. */
 export function wageLabel(price: PriceEntry): string {
   const m = wageMinutes(price);
   if (m < 1) return "<1 min";
@@ -28,7 +28,7 @@ export interface Row {
  *
  * Rows whose price is currently in play render as a "hidden until tomorrow"
  * placeholder rather than being dropped, so the table still shows that the item
- * exists — dropping the row would make the omission itself a hint.
+ * exists, since dropping the row would make the omission itself a hint.
  *
  * Scrolls horizontally inside its own container on narrow screens so the page
  * body never scrolls sideways.
@@ -87,7 +87,7 @@ export default function PriceTable({
                   colSpan={showLocal ? 3 : 2}
                   className="py-2.5 text-right font-mono text-[11px] text-ink-faint"
                 >
-                  {r.hidden ? "hidden — in play right now" : "no data"}
+                  {r.hidden ? "hidden, in play right now" : "no data"}
                 </td>
               ) : (
                 <>

@@ -17,7 +17,7 @@ type Edition = "paper" | "night";
  *
  * There is no transition on the swap. This is a control someone will hit once
  * and then leave alone for months, but the colour change it causes covers the
- * entire viewport — cross-fading a whole page reads as a slow repaint, not as
+ * entire viewport. Cross-fading a whole page reads as a slow repaint, not as
  * polish.
  */
 export default function ThemeToggle() {
@@ -47,7 +47,7 @@ export default function ThemeToggle() {
     try {
       window.localStorage.setItem(THEME_KEY, next);
     } catch {
-      /* private mode — the choice just won't survive a reload */
+      /* private mode, so the choice just won't survive a reload */
     }
   }
 

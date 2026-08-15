@@ -1,7 +1,7 @@
 /**
  * The whole icon set, drawn on one 24px grid at a 1.75 stroke.
  *
- * Emoji were doing this job before — ✕ for close, ▸ for play, ✓/✗ for results.
+ * Emoji were doing this job before: ✕ for close, ▸ for play, ✓/✗ for results.
  * Emoji render in a different face on every platform, ignore `currentColor`, sit
  * off the text baseline and cannot be sized against the type scale, so a UI
  * built from them can never look drawn on purpose. These inherit colour and

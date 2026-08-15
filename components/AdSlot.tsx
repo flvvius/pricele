@@ -26,7 +26,7 @@ export default function AdSlot({ slot, className, format = "auto" }: Props) {
       ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push({});
       pushed.current = true;
     } catch {
-      /* AdSense not loaded (e.g. blocked) — fail silently. */
+      /* AdSense not loaded (e.g. blocked). Fail silently. */
     }
   }, [slot]);
 

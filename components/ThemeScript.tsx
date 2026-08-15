@@ -1,7 +1,7 @@
 export const THEME_KEY = "pricele:edition";
 
 /**
- * Browser-chrome colour per edition — the `--paper` value of each, since that is
+ * Browser-chrome colour per edition, the `--paper` value of each, since that is
  * what the status bar sits flush against. Shared with the `viewport` export in
  * app/layout.tsx so the two can never drift apart.
  */
@@ -15,7 +15,7 @@ export const EDITION_THEME_COLOR = {
  *
  * The tags layout.tsx renders are media-gated (`prefers-color-scheme`), which is
  * correct only while the OS is in charge. Once a reader picks an edition by
- * hand, the matching media query can be the wrong one — a light OS with the
+ * hand, the matching media query can be the wrong one. A light OS with the
  * Night edition selected left a bright status bar above a dark page. Writing the
  * same colour into both tags makes whichever one matches give the right answer.
  */
@@ -29,7 +29,7 @@ export function applyThemeColor(edition: keyof typeof EDITION_THEME_COLOR) {
 
 // Runs before first paint, ahead of React, so a reader who chose the Night
 // edition never sees a white flash on the way in. It only ever writes the
-// attribute when there is a stored preference — with no attribute the CSS falls
+// attribute when there is a stored preference. With no attribute the CSS falls
 // through to the `prefers-color-scheme` block, so the OS stays in charge by
 // default. The theme-color pass is deferred to DOMContentLoaded because this
 // script runs above the meta tags Next emits, so they do not exist yet.

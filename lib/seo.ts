@@ -12,7 +12,7 @@ import { ITEMS } from "@/data/items";
  * apex 308-redirects to it. That distinction is the whole reason this constant
  * exists. This file used to declare the apex as canonical, which pointed every
  * <link rel="canonical">, every og:url, every sitemap <loc> and the robots.txt
- * Sitemap line at a URL that redirects — and a canonical URL has to answer 200.
+ * Sitemap line at a URL that redirects, and a canonical URL has to answer 200.
  * Search Console reported the consequences twice over:
  *
  *   - "Page with redirect", because every URL in the submitted sitemap 308'd
@@ -34,7 +34,7 @@ const REDIRECTING_HOSTS = ["pricele.online"];
  * Normalise an origin to the one that serves 200s: no trailing slash, and never
  * a host that only redirects.
  *
- * The redirect check is not paranoia — NEXT_PUBLIC_SITE_URL is set per
+ * The redirect check is not paranoia. NEXT_PUBLIC_SITE_URL is set per
  * environment, and one left pointing at the apex would quietly re-create the
  * exact indexing bug this replaced. Hosts that aren't the apex (preview
  * deployments, localhost) are left alone.
@@ -57,7 +57,7 @@ export function canonicalOrigin(raw?: string): string {
 /**
  * Canonical origin, no trailing slash. Every canonical tag, Open Graph URL,
  * sitemap entry and JSON-LD url on the site is built from this, so it must
- * always be an origin that serves the site directly — never a Vercel
+ * always be an origin that serves the site directly, never a Vercel
  * per-deployment URL, and never a host that redirects.
  */
 export const SITE_URL = canonicalOrigin(process.env.NEXT_PUBLIC_SITE_URL);
@@ -67,7 +67,7 @@ export const SITE_TAGLINE = "Guess the price. New item and country daily.";
 /** Public contact address, surfaced on the Contact page and in policies. */
 export const SITE_EMAIL = "flaviuscojocaru19@gmail.com";
 export const SITE_DESCRIPTION =
-  "Pricele is a free daily game where you guess what an everyday item costs in a different country each day — a Big Mac in Norway, a cappuccino in Japan, a litre of petrol in Egypt. Five tries, real price data, a new puzzle every day.";
+  "Pricele is a free daily game where you guess what an everyday item costs in a different country each day: a Big Mac in Norway, a cappuccino in Japan, a litre of petrol in Egypt. Five tries, real price data, a new puzzle every day.";
 
 /** Absolute URL for a site-relative path. */
 export function absoluteUrl(path = "/"): string {
@@ -88,13 +88,13 @@ const OG_IMAGE = {
   url: "/og.svg",
   width: 1200,
   height: 630,
-  alt: "Pricele — guess the price",
+  alt: "Pricele: guess the price",
 };
 
 export interface PageMetaInput {
   /** Site-relative path of this page, no trailing slash. e.g. "/items/big-mac". */
   path: string;
-  /** Page title, without the site suffix — the template adds that. */
+  /** Page title, without the site suffix; the template adds that. */
   title?: string;
   description?: string;
   /** "article" for blog posts. Everything else is a "website". */
@@ -110,8 +110,8 @@ export interface PageMetaInput {
  *
  * Every page goes through this for two reasons.
  *
- * The first is that the three things Google reads as canonicalisation signals —
- * <link rel="canonical">, og:url and the sitemap <loc> — have to agree, and
+ * The first is that the three things Google reads as canonicalisation signals,
+ * <link rel="canonical">, og:url and the sitemap <loc>, have to agree, and
  * agree on a URL that serves a 200. Deriving all of them from one `path` is
  * what keeps them from drifting apart.
  *
@@ -219,7 +219,7 @@ export function websiteJsonLd() {
  * Reuse terms for the price tables, as required by `Dataset` schema (Search
  * Console flags a Dataset with no `license`). It points at the methodology page
  * rather than at a blanket open licence because the underlying numbers are
- * third-party — The Economist's Big Mac Index and Numbeo's rankings keep their
+ * third-party. The Economist's Big Mac Index and Numbeo's rankings keep their
  * own terms, and a compilation can't relicense its sources.
  */
 export const DATA_LICENSE_URL = absoluteUrl("/methodology#reuse");
@@ -236,7 +236,7 @@ export interface DatasetInput {
 /**
  * Dataset schema for the reference pages that publish price tables. Built in
  * one place so every Dataset on the site carries the same creator and licence
- * — the two properties Search flags when they go missing.
+ * These are the two properties Search flags when they go missing.
  */
 export function datasetJsonLd({
   name,
@@ -284,10 +284,10 @@ export function faqJsonLd(items: FaqItem[]) {
   };
 }
 
-/** "a Big Mac, a cappuccino, a litre of milk…" — item names for prose. */
+/** "a Big Mac, a cappuccino, a litre of milk…": item names for prose. */
 export const ITEM_LIST = ITEMS.map((i) => i.shortName.toLowerCase());
 
-/** "Big Mac, Coca-Cola, cappuccino and 4 more" — compact list for meta copy. */
+/** "Big Mac, Coca-Cola, cappuccino and 4 more": compact list for meta copy. */
 export function itemSummary(max = 3): string {
   const names = ITEMS.map((i) => i.shortName);
   if (names.length <= max) return names.join(", ");

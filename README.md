@@ -1,7 +1,7 @@
 # Pricele
 
-A daily price-guessing game. Each day pairs one everyday item with one country —
-a Big Mac in Norway, a cappuccino in Japan, a litre of petrol in Egypt — and you
+A daily price-guessing game. Each day pairs one everyday item with one country:
+a Big Mac in Norway, a cappuccino in Japan, a litre of petrol in Egypt. You
 guess the price in USD in up to 5 tries, with hotter/colder feedback on a log
 scale. Both the item and the country change daily.
 
@@ -12,7 +12,7 @@ built with Next.js and statically generated, so it deploys to Vercel with no con
 
 ## Content model
 
-7 items × 33 countries, 226 price rows. The table is deliberately **sparse** —
+7 items × 33 countries, 226 price rows. The table is deliberately **sparse**:
 a pair exists only where there's a real sourced number, never padded with
 invented ones. Lebanon, for example, has only 2 of the 7 items.
 
@@ -48,16 +48,16 @@ the day index, so it's identical on every device and every rebuild.
 
 ### Where the prices come from
 
-- **Big Mac** — The Economist's Big Mac Index, published openly at
+- **Big Mac.** The Economist's Big Mac Index, published openly at
   [TheEconomist/big-mac-data](https://github.com/TheEconomist/big-mac-data).
   Reproducible: `pnpm refresh-big-mac`. A snapshot of the upstream CSV is
   committed at `data/sources/`. The euro area is published as a single price, so
   all 7 eurozone countries share it, labelled as such.
-- **Cappuccino, milk, eggs, apples, gasoline** — Numbeo country price rankings,
+- **Cappuccino, milk, eggs, apples, gasoline.** Numbeo country price rankings,
   retrieved by hand (they rate-limit, and bulk scraping is against their terms).
   Edited directly in `data/prices.json`.
-- **Coca-Cola** — hand-curated table carried over from the original dataset.
-- **Wage figures** — our own estimates, and the weakest numbers here. `/methodology`
+- **Coca-Cola.** A hand-curated table carried over from the original dataset.
+- **Wage figures.** Our own estimates, and the weakest numbers here. `/methodology`
   says so plainly rather than burying it.
 
 Every row carries its own `source` and `sourceDate`, both surfaced in the UI.
@@ -70,8 +70,8 @@ and tests assert the two agree:
 - **`suppressedPairs()`** hides the (item, country) pairs for yesterday, today and
   tomorrow in UTC. The game rolls over at each player's *local* midnight but these
   pages are statically cached, so a three-day window covers UTC-12 to UTC+14.
-  Suppressed rows render as "hidden — in play right now" rather than being dropped:
-  an absent row would itself be a hint.
+  Suppressed rows render as "hidden, in play right now" rather than being dropped,
+  since an absent row would itself be a hint.
 - **`publishedArchiveDates()`** stops two days back, for the same reason. Recent
   dates 404 rather than rendering.
 
@@ -86,7 +86,7 @@ Everything is statically rendered for search engines and AI answer engines:
   `VideoGame` and `WebSite` schema, `FAQPage` on the home page, `Dataset` on the
   price and item pages, `Article` on archive entries, `BlogPosting` on guides.
   `Dataset` is built by `datasetJsonLd()` rather than inline, so every one of
-  them carries the `license` Search Console asks for — it points at the reuse
+  them carries the `license` Search Console asks for, pointing at the reuse
   terms in `/methodology#reuse`, since the underlying prices are third-party.
 - **Crawlable content**: every reference page is server-rendered HTML. The home
   page ships copy and an FAQ below the (client-side) game, so crawlers get real
@@ -96,7 +96,7 @@ Everything is statically rendered for search engines and AI answer engines:
 - **One canonical origin** (`CANONICAL_HOST` in `lib/seo.ts`): `www.pricele.online`,
   because that is the primary domain on Vercel and the apex 308s to it. Every
   canonical tag, `og:url`, sitemap `<loc>` and JSON-LD `url` derives from it, so
-  they cannot drift apart — and none of them can end up naming a URL that
+  they cannot drift apart, and none of them can end up naming a URL that
   redirects, which is not a thing a canonical is allowed to be.
 
 ```bash
@@ -119,8 +119,8 @@ NEXT_PUBLIC_BING_SITE_VERIFICATION=...              # optional
 
 `data/articles.ts` holds 10 article scaffolds. Each starts as `status: "draft"`:
 reachable by direct URL, but `noindex`, absent from the sitemap, and unlisted on
-`/blog`. Fill in `body`, drop the `outline`, flip `status` to `"published"` — the
-index, sitemap and robots tag all follow automatically. Nothing half-written is
+`/blog`. Fill in `body`, drop the `outline`, flip `status` to `"published"`, and
+the index, sitemap and robots tag all follow automatically. Nothing half-written is
 ever offered to a crawler.
 
 ## Ads
@@ -128,11 +128,11 @@ ever offered to a crawler.
 Monetization is Google AdSense, placed manually for the best revenue-to-UX
 ratio rather than intrusive Auto Ads. The loader script and the
 `google-adsense-account` verification meta ship on every page, and `/ads.txt`
-is generated from the publisher id (`app/ads.txt/route.ts`) — all driven by
+is generated from the publisher id (`app/ads.txt/route.ts`), all driven by
 `lib/ads.ts`. The publisher id defaults to the site's account and is
 overridable per-deploy.
 
-Ad **units** are opt-in and never appear during play — the one labeled unit
+Ad **units** are opt-in and never appear during play. The one labeled unit
 sits on the post-game Reveal screen, with space reserved so a slow ad never
 shifts the layout (`components/AdSlot.tsx`). A unit renders only once its slot
 id is set, so there are never empty placeholder boxes:

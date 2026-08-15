@@ -26,7 +26,7 @@ export default function Modal({ open, onClose, title, children }: Props) {
   // Callers pass `onClose` as an inline arrow, so it is a new function on every
   // parent render. Holding it in a ref keeps it out of the effect below: with it
   // in the dependency array the effect tore down and re-ran on every unrelated
-  // parent render, and its cleanup pulls focus back to the trigger — so the
+  // parent render, and its cleanup pulls focus back to the trigger, so the
   // dialog kept yanking focus out of whatever the user had just tabbed to.
   const onCloseRef = useRef(onClose);
   onCloseRef.current = onClose;

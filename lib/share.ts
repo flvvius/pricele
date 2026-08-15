@@ -20,12 +20,12 @@ export interface ShareInput {
 }
 
 /**
- * Build the shareable text (without the URL — callers append SHARE_URL, or pass
+ * Build the shareable text (without the URL; callers append SHARE_URL, or pass
  * it as the dedicated `url` field of the native share sheet).
  *
  * One square per guess, from the band already stored on each guess, so the row
  * reads as the shape of the round at a glance. The item is named as well as the
- * country, because both change daily — without it, two people posting the same
+ * country, because both change daily. Without it, two people posting the same
  * country on different days look like they played the same puzzle:
  *   Pricele #47 · Cappuccino in Lebanon 🇱🇧 · 3/5 (within 4%)
  *   ⬛🟨🟩

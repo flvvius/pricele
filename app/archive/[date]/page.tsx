@@ -135,7 +135,7 @@ export default function ArchiveDatePage({
             <p>
               Of the {total} countries priced for {item.shortName.toLowerCase()},{" "}
               {price.countryName} ranks #{rank} from the top at{" "}
-              {formatUSD(price.priceUSD)} — {price.priceUSD > median
+              {formatUSD(price.priceUSD)}, {price.priceUSD > median
                 ? `${(price.priceUSD / median).toFixed(1)}× the median`
                 : `${((1 - price.priceUSD / median) * 100).toFixed(0)}% below the median`}{" "}
               of {formatUSD(median)}.

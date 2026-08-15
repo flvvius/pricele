@@ -21,7 +21,7 @@ export default function AboutPage() {
       intro={
         <p>
           A free daily guessing game about what everyday things cost around the
-          world — and a small reference site for the price data behind it.
+          world, plus a small reference site for the price data behind it.
         </p>
       }
     >
@@ -70,7 +70,7 @@ export default function AboutPage() {
             <Link href="/prices" className="underline hover:text-neutral-300">
               a page
             </Link>{" "}
-            showing what a basket of ordinary things costs there — in dollars, in
+            showing what a basket of ordinary things costs there: in dollars, in
             local currency, and in how long the average local wage takes to earn
             it. That last measure often reverses the ranking entirely.
           </p>
@@ -96,7 +96,7 @@ export default function AboutPage() {
               methodology page
             </Link>{" "}
             goes through each source in detail and is candid about where the data
-            is weak — particularly the wage estimates, which are the roughest
+            is weak, particularly the wage estimates, which are the roughest
             numbers here, and fast-moving currencies like the Argentine peso,
             where any single conversion is contestable.
           </p>
@@ -113,7 +113,7 @@ export default function AboutPage() {
           <p>
             There is no account, no sign-in and no tracking of who you are. Your
             results, statistics and streak are stored in your own browser and
-            never uploaded — clearing your browser data clears them.
+            never uploaded, and clearing your browser data clears them.
           </p>
           <p>
             The site is free and carries advertising, which is shown after a
@@ -142,7 +142,7 @@ export default function AboutPage() {
             <Link href="/contact" className="underline hover:text-neutral-300">
               contact page
             </Link>
-            . Corrections are genuinely welcome — if you live somewhere covered
+            . Corrections are genuinely welcome. If you live somewhere covered
             here and a number looks off, you know better than the dataset does.
           </p>
         </Prose>

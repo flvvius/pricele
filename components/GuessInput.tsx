@@ -47,7 +47,7 @@ export default function GuessInput({
   }
 
   // Switching currency mid-entry would silently reinterpret a half-typed number
-  // — "6" meant as dollars becoming 6 euros — so the field is cleared.
+  // with "6" meant as dollars becoming 6 euros, so the field is cleared.
   function changeCurrency(next: Currency) {
     if (next === currency) return;
     setValue("");
@@ -59,7 +59,7 @@ export default function GuessInput({
     <form onSubmit={submit} className="flex flex-col gap-2">
       {/* Field and button share one frame with a rule between them, so the pair
           reads as a single instrument rather than two floating controls. The
-          frame — not the input — carries the focus state, which is why there is
+          frame, not the input, carries the focus state, which is why there is
           no ring stacked on top of a border here.
 
           The frame never recolours on an invalid guess: the status line below
@@ -94,7 +94,7 @@ export default function GuessInput({
           type="submit"
           disabled={disabled}
           // Submitting is the most repeated action in the game, so it gets
-          // press feedback and nothing else — no hover lift, no glow. The
+          // press feedback and nothing else: no hover lift, no glow. The
           // scale is on transform only, which never touches layout.
           className="shrink-0 border-l border-rule bg-ink px-5 font-mono text-xs font-semibold uppercase tracking-[0.16em] text-paper-raised transition-transform duration-press ease-out active:scale-[0.97] disabled:opacity-40"
         >

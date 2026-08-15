@@ -9,7 +9,7 @@ import { keyboardIsOpen } from "@/lib/viewport";
  *
  * Android/Chromium honours viewport interactive-widget=resizes-content: the
  * layout viewport (and so 100dvh) shrinks on its own and everything already
- * fits. iOS Safari — and iOS Chrome, which is also WebKit — ignores that hint.
+ * fits. iOS Safari, and iOS Chrome, which is also WebKit, ignores that hint.
  * There the layout viewport keeps its full height and the browser scrolls the
  * page instead to reveal the focused field, which pushes the item card and the
  * earlier guesses off the top of the screen.

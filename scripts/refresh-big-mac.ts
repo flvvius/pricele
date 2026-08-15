@@ -7,7 +7,7 @@
  *
  * WHY ONLY BIG MAC
  *   Of the seven items, only this one has a machine-readable upstream that is
- *   published for reuse — The Economist puts the raw index on GitHub under
+ *   published for reuse. The Economist puts the raw index on GitHub under
  *   TheEconomist/big-mac-data. The Numbeo-sourced items (cappuccino, milk,
  *   eggs, apples, gasoline) are collected by hand from Numbeo's country price
  *   rankings, because bulk-scraping them is both rate-limited and against their

@@ -3,7 +3,7 @@ import { SITE_URL, canonicalOrigin, absoluteUrl, pageMetadata, titleFor } from "
 
 // These guard the canonical origin, which is the one piece of SEO config the
 // site cannot self-correct. A canonical URL that redirects is not a canonical
-// URL, and when this file previously named the apex — which 308s to www —
+// URL, and when this file previously named the apex, which 308s to www,
 // Search Console stopped indexing on the strength of it.
 
 describe("canonicalOrigin", () => {

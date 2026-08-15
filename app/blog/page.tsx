@@ -14,7 +14,7 @@ export const metadata: Metadata = pageMetadata({
   path: "/blog",
   title: "Guides",
   description:
-    "Long reads on what everyday prices actually measure — viral grocery receipts, why official inflation misses your cart, time prices, the two-income trap, and how to fix your own price instincts.",
+    "Long reads on what everyday prices actually measure: viral grocery receipts, why official inflation misses your cart, time prices, the two-income trap, and how to fix your own price instincts.",
   // An empty index is not worth indexing. This flips on by itself as soon
   // as the first article is published.
   index: HAS_ARTICLES,

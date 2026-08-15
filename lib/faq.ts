@@ -12,12 +12,12 @@ export const HOME_FAQ: FaqItem[] = [
   {
     question: "What is Pricele?",
     answer:
-      "Pricele is a free daily browser game where you guess what an everyday item costs in a different country each day. Both the item and the country change every day — it might be a Big Mac in Norway on Monday and a cappuccino in Japan on Tuesday. You get five tries and hotter/colder feedback after each guess.",
+      "Pricele is a free daily browser game where you guess what an everyday item costs in a different country each day. Both the item and the country change every day: it might be a Big Mac in Norway on Monday and a cappuccino in Japan on Tuesday. You get five tries and hotter/colder feedback after each guess.",
   },
   {
     question: "How do you play Pricele?",
     answer:
-      "Each day you get one item and one country. Type your best guess of the price in US dollars or euros — switch between the two next to the guess box. After every guess, Pricele tells you whether the real price is higher or lower and roughly how close you got. Land within 5% of the real price to win. You have five guesses. Because the win is a percentage rather than a fixed amount, the currency you play in doesn't change how close a guess needs to be.",
+      "Each day you get one item and one country. Type your best guess of the price in US dollars or euros; there's a toggle next to the guess box. After every guess, Pricele tells you whether the real price is higher or lower and roughly how close you got. Land within 5% of the real price to win. You have five guesses. Because the win is a percentage rather than a fixed amount, the currency you play in doesn't change how close a guess needs to be.",
   },
   {
     question: "Which items are in the game?",
@@ -51,6 +51,6 @@ export const HOME_FAQ: FaqItem[] = [
   {
     question: "Why is the price different from what I pay locally?",
     answer:
-      "Because a single national number can't capture a whole country. Prices vary by city, by shop and by season, and the figures here are national averages converted to US dollars at recent exchange rates. They're accurate enough to make the game fair, but they aren't shopping advice — a mismatch with your local shop is normal rather than an error.",
+      "Because a single national number can't capture a whole country. Prices vary by city, by shop and by season, and the figures here are national averages converted to US dollars at recent exchange rates. They're accurate enough to make the game fair, but they aren't shopping advice, so a mismatch with your local shop is normal rather than an error.",
   },
 ];

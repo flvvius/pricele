@@ -21,7 +21,7 @@ export default function ArchiveModal({ open, onClose, today, onPlay }: Props) {
   return (
     <Modal open={open} onClose={onClose} title="Back numbers">
       <p className="mb-4 text-[13px] leading-relaxed text-ink-muted">
-        Replay a past edition. These are practice — they never touch your streak.
+        Replay a past edition. These are practice and never touch your streak.
       </p>
 
       {dates.length === 0 ? (
@@ -29,7 +29,7 @@ export default function ArchiveModal({ open, onClose, today, onPlay }: Props) {
           No back numbers yet
         </p>
       ) : (
-        // A stack of rows, ruled rather than boxed — the same ledger the board
+        // A stack of rows, ruled rather than boxed, matching the ledger the board
         // uses, so the archive reads as another page of the same paper.
         <ul className="max-h-[58dvh] overflow-y-auto border-t border-rule">
           {dates.map((date) => {

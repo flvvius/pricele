@@ -65,7 +65,7 @@ export const metadata: Metadata = {
   creator: SITE_NAME,
   publisher: SITE_NAME,
   // No canonical here on purpose. Metadata is inherited, so a canonical set on
-  // the layout is a canonical on every route that doesn't override it —
+  // the layout is a canonical on every route that doesn't override it, and
   // including 404s and any page whose generateMetadata bails out, all of which
   // would then declare themselves to be the home page. Each page sets its own
   // through pageMetadata(); a route that forgets now emits none, which is a far
@@ -91,7 +91,7 @@ export const metadata: Metadata = {
     title: TITLE_DEFAULT,
     description: SITE_DESCRIPTION,
     images: [
-      { url: "/og.svg", width: 1200, height: 630, alt: "Pricele — guess the price" },
+      { url: "/og.svg", width: 1200, height: 630, alt: "Pricele: guess the price" },
     ],
   },
   twitter: {

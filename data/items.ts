@@ -3,7 +3,7 @@
 // /items/<slug>, a unit the price is quoted in, and a paragraph explaining what
 // the number actually measures and where it comes from.
 //
-// STABILITY RULE — read before editing:
+// STABILITY RULE. Read this before editing:
 //   Item ids are baked into data/prices.json and into the daily schedule (see
 //   data/rotation.ts). Never rename or reorder an existing id; only append. A
 //   reorder silently rewrites which item every past puzzle used, which breaks
@@ -38,7 +38,7 @@ export const ITEMS: Item[] = [
     sourceNote:
       "The Economist's Big Mac Index, January 2026 edition, which collects local-currency prices from McDonald's outlets and franchisee sites in 54 economies.",
     blurb:
-      "The Big Mac is the most-quoted price in economics. The Economist started publishing its Big Mac Index in 1986 as a light-hearted way to test purchasing-power parity — the theory that a currency should buy the same basket of goods anywhere. Because the burger is close to identical everywhere it is sold, the gap between what it costs in two countries is a rough read on whether a currency is over- or undervalued.",
+      "The Big Mac is the most-quoted price in economics. The Economist started publishing its Big Mac Index in 1986 as a light-hearted way to test purchasing-power parity, the theory that a currency should buy the same basket of goods anywhere. Because the burger is close to identical everywhere it is sold, the gap between what it costs in two countries is a rough read on whether a currency is over- or undervalued.",
   },
   {
     id: "coke-330ml",
@@ -50,7 +50,7 @@ export const ITEMS: Item[] = [
     sourceNote:
       "A curated table of everyday retail prices assembled from published cost-of-living figures and converted to US dollars. These are the least precise numbers in the game and are best read as ballpark figures.",
     blurb:
-      "Coca-Cola is sold in more countries than almost any other branded product, which makes it a useful yardstick — but a noisy one. The same can costs very different amounts in a supermarket, a corner shop and a hotel minibar, and Coca-Cola deliberately prices to the local market rather than converting a single global price.",
+      "Coca-Cola is sold in more countries than almost any other branded product, which makes it a useful yardstick, though a noisy one. The same can costs very different amounts in a supermarket, a corner shop and a hotel minibar, and Coca-Cola deliberately prices to the local market rather than converting a single global price.",
   },
   {
     id: "cappuccino",
@@ -74,7 +74,7 @@ export const ITEMS: Item[] = [
     sourceNote:
       "Numbeo's country price rankings for 'Milk (regular), 1 litre' in the markets category, retrieved August 2026.",
     blurb:
-      "Milk is heavy, perishable and awkward to ship, so it is almost always produced close to where it is drunk. That makes its price a read on local farming costs rather than world markets — and in much of the EU, on agricultural subsidies, which push retail prices below what production alone would imply.",
+      "Milk is heavy, perishable and awkward to ship, so it is almost always produced close to where it is drunk. That makes its price a read on local farming costs rather than world markets, and in much of the EU on agricultural subsidies, which push retail prices below what production alone would imply.",
   },
   {
     id: "eggs-12",
@@ -98,7 +98,7 @@ export const ITEMS: Item[] = [
     sourceNote:
       "Numbeo's country price rankings for 'Apples (1 kg)' in the markets category, retrieved August 2026.",
     blurb:
-      "Apples separate the countries that grow them from the countries that fly them in. They need a temperate climate and cold storage, so in tropical and high-income import markets a kilogram can cost several times what it does in a producing country — which is why the top of this table looks nothing like the top of the others.",
+      "Apples separate the countries that grow them from the countries that fly them in. They need a temperate climate and cold storage, so in tropical and high-income import markets a kilogram can cost several times what it does in a producing country, which is why the top of this table looks nothing like the top of the others.",
   },
   {
     id: "gasoline-1l",

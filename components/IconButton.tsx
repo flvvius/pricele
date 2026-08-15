@@ -3,7 +3,7 @@
  * icon itself carrying the whole affordance until you touch it.
  *
  * Shared rather than duplicated because the masthead reads as one row of
- * controls — help, edition, archive, stats — and the moment two of them are
+ * controls (help, edition, archive, stats) and the moment two of them are
  * defined in different files, one of them eventually gets a different hover or a
  * different press scale and the row stops looking like a row.
  */

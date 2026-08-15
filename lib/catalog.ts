@@ -102,7 +102,7 @@ export function wageMinutes(price: PriceEntry): number {
 
 /**
  * The (item, country) pairs that must not show a price on a public reference
- * page, because they are — or are about to be, or have just been — the live
+ * page, because each one is, or is about to be, or has just been, the live
  * puzzle.
  *
  * The game rolls over at each player's LOCAL midnight, but these pages are
@@ -158,7 +158,7 @@ export function isSuppressed(
  *
  * The in-game archive (a client component) can show everything up to yesterday,
  * because it knows the player's real local date. These static pages don't, so
- * they stop two days back — the same reasoning as suppressedPairs: a server
+ * they stop two days back, on the same reasoning as suppressedPairs: a server
  * rendering "yesterday" in UTC may be describing a date that is still today for
  * a player in Honolulu or Auckland.
  */

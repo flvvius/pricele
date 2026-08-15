@@ -8,7 +8,7 @@ import ContentPage, { Section, Prose } from "@/components/ContentPage";
  *
  * The point of the file is what it does *not* say: no canonical. Before it
  * existed the layout's canonical was inherited here, so every 404 on the site
- * announced itself as a copy of the home page — a duplicate signal sent by
+ * announced itself as a copy of the home page. That's a duplicate signal sent by
  * pages that should be telling Google nothing at all.
  *
  * The noindex below is belt and braces; Next emits one of its own for this
@@ -35,21 +35,21 @@ export default function NotFound() {
         <Prose>
           <ul>
             <li>
-              <Link href="/">Today&apos;s puzzle</Link> — a new item and country
+              <Link href="/">Today&apos;s puzzle</Link>. A new item and country
               every day.
             </li>
             <li>
-              <Link href="/archive">The archive</Link> — every past puzzle with
+              <Link href="/archive">The archive</Link>. Every past puzzle with
               its answer. Puzzles from the last couple of days are held back
               until the day has finished everywhere.
             </li>
             <li>
               <Link href="/prices">Prices by country</Link> and{" "}
-              <Link href="/items">prices by item</Link> — the full tables behind
+              <Link href="/items">prices by item</Link>, the full tables behind
               the game.
             </li>
             <li>
-              <Link href="/blog">Guides</Link> — longer pieces on what everyday
+              <Link href="/blog">Guides</Link>. Longer pieces on what everyday
               prices actually measure.
             </li>
           </ul>

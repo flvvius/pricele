@@ -3,7 +3,7 @@
 // this module only converts on the way in and out of the UI.
 //
 // WHY THE RATE CANNOT AFFECT FAIRNESS
-//   lib/scoring is multiplicative — it compares log(guess / actual), so what it
+//   lib/scoring is multiplicative: it compares log(guess / actual), so what it
 //   measures is a ratio. Converting both sides by the same constant leaves that
 //   ratio untouched. A player guessing in euros therefore gets exactly the band
 //   a player guessing the equivalent dollar figure would, and the reference rate
@@ -32,7 +32,7 @@ export function toUSD(value: number, currency: Currency): number {
   return currency === "EUR" ? value / USD_TO_EUR : value;
 }
 
-/** The other currency — what a toggle switches to. */
+/** The other currency, i.e. what a toggle switches to. */
 export function otherCurrency(currency: Currency): Currency {
   return currency === "USD" ? "EUR" : "USD";
 }
@@ -41,7 +41,7 @@ export function currencySymbol(currency: Currency): string {
   return currency === "EUR" ? "€" : "$";
 }
 
-// Eurozone territories that sit outside the Europe/ tree — the Canaries and
+// Eurozone territories that sit outside the Europe/ tree, such as the Canaries and
 // Madeira are Spain and Portugal, Ceuta is Spain, and the French overseas
 // departments are all in the euro area.
 const EURO_ZONES = new Set([
@@ -69,7 +69,7 @@ const EURO_REGIONS = new Set([
  *
  * Every Europe/ zone counts, not just the twenty euro-area members. A Pole or a
  * Swede does not pay in euros, but the euro is still the price they see quoted
- * across the border and on every airline and hotel site — a far more legible
+ * across the border and on every airline and hotel site, which is far more legible
  * reference than the dollar. Drawing the line at the eurozone proper would send
  * most of the continent to USD to split a hair, and the toggle is one tap for
  * anyone who disagrees.
@@ -79,7 +79,7 @@ export function isEuropean(): boolean {
     const zone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     if (zone) return zone.startsWith("Europe/") || EURO_ZONES.has(zone);
   } catch {
-    /* no Intl or no zone — fall through to the language tag */
+    /* no Intl or no zone, so fall through to the language tag */
   }
   try {
     const region = new Intl.Locale(navigator.language).region;
@@ -110,7 +110,7 @@ export function loadCurrency(): Currency {
     const stored = window.localStorage.getItem(CURRENCY_KEY);
     if (stored === "USD" || stored === "EUR") return stored;
   } catch {
-    /* private mode — fall back to the default */
+    /* private mode, so fall back to the default */
   }
   return defaultCurrency();
 }
@@ -120,6 +120,6 @@ export function saveCurrency(currency: Currency): void {
   try {
     window.localStorage.setItem(CURRENCY_KEY, currency);
   } catch {
-    /* private mode — the choice just won't survive a reload */
+    /* private mode, so the choice just won't survive a reload */
   }
 }

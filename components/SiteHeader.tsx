@@ -3,7 +3,7 @@ import { SITE_NAME } from "@/lib/seo";
 import ThemeToggle from "./ThemeToggle";
 
 // Server-rendered nav for the reference pages. The game screen deliberately has
-// no nav — it owns the full viewport — so this only appears on content pages,
+// no nav, since it owns the full viewport, so this only appears on content pages,
 // where it gives readers (and crawlers) a path between every section.
 const LINKS = [
   { href: "/prices", label: "Prices" },
@@ -34,7 +34,7 @@ export default function SiteHeader() {
       <nav aria-label="Sections" className="-mx-4 mt-2.5 overflow-x-auto px-4">
         <ul className="flex items-center gap-5 whitespace-nowrap">
           {/* Play leads the run rather than trailing it. This strip scrolls
-              horizontally on a phone, and the six items do not fit — anything
+              horizontally on a phone, and the six items do not fit. Anything
               pushed to the right sits permanently past the clip edge, which is
               the worst possible place for the one link that returns you to the
               game. */}

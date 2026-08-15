@@ -22,8 +22,8 @@ export default function ArticleBody({ blocks }: { blocks: ArticleBlock[] }) {
 }
 
 /**
- * The article measure. Every paragraph in a piece — running copy, the intro to a
- * list, the intro to a table, the callout — has to sit on the same baseline
+ * The article measure. Every paragraph in a piece, whether running copy, the
+ * intro to a list, the intro to a table or the callout, has to sit on the same baseline
  * rhythm, so the setting is defined once and only once here.
  */
 const PROSE_P =
@@ -61,7 +61,7 @@ function Block({ block }: { block: ArticleBlock }) {
       );
 
     // Three or four numbers pulled out of the prose at display size. Used once
-    // per article at most — the moment every tile is a headline, none of them is.
+    // per article at most. The moment every tile is a headline, none of them is.
     case "stats":
       return (
         <section className="flex flex-col gap-4">
@@ -205,7 +205,7 @@ function Block({ block }: { block: ArticleBlock }) {
 /**
  * Closing call to action. Inverted against the page so it reads as the one
  * button on the article rather than another paragraph, and it points at the
- * game itself — every one of these pieces exists to argue that price
+ * game itself. Every one of these pieces exists to argue that price
  * calibration is a skill, and the game is where you practise it.
  */
 function ArticleCta({

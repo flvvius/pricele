@@ -13,7 +13,7 @@ export const metadata: Metadata = pageMetadata({
   path: "/archive",
   title: "Puzzle archive",
   description:
-    "Every past Pricele puzzle with its answer — which item, which country, and what it actually cost. Replay any day without affecting your streak.",
+    "Every past Pricele puzzle with its answer: which item, which country, and what it actually cost. Replay any day without affecting your streak.",
 });
 
 export default function ArchiveIndex() {
@@ -35,7 +35,7 @@ export default function ArchiveIndex() {
             that country compares.
           </p>
           <p>
-            Puzzles from the last two days aren&apos;t listed here — the game
+            Puzzles from the last two days aren&apos;t listed here, because the game
             rolls over at each player&apos;s local midnight, and these pages are
             shared by everyone, so recent answers stay in the game only. You can
             still replay them from the archive button inside the game.
@@ -46,7 +46,7 @@ export default function ArchiveIndex() {
       {entries.length === 0 ? (
         <Prose>
           <p>
-            No puzzles have finished yet. Come back in a couple of days —{" "}
+            No puzzles have finished yet. Come back in a couple of days, and{" "}
             <Link
               href="/"
               className="underline decoration-rule underline-offset-2 transition-colors duration-fast ease-out hover:text-ink"

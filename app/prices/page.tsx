@@ -15,7 +15,7 @@ export const metadata: Metadata = pageMetadata({
   path: "/prices",
   title: "Prices by country",
   description:
-    "What everyday things cost in 33 countries — a Big Mac, a cappuccino, a litre of milk, a dozen eggs, a kilo of apples, a litre of petrol — in US dollars and local currency.",
+    "What everyday things cost in 33 countries: a Big Mac, a cappuccino, a litre of milk, a dozen eggs, a kilo of apples and a litre of petrol, in US dollars and local currency.",
 });
 
 export default function PricesIndex() {
@@ -42,7 +42,7 @@ export default function PricesIndex() {
             Every country in {SITE_NAME}, with what {ITEMS.length} everyday items
             cost there in US dollars and in the local currency. Each country page
             also shows roughly how long someone earning the average local wage
-            works to buy one — which is often a bigger difference than the price
+            works to buy one, which is often a bigger difference than the price
             itself.
           </p>
           <p>
@@ -101,7 +101,7 @@ export default function PricesIndex() {
             <Link href="/items" className="underline decoration-rule underline-offset-2 transition-colors duration-fast ease-out hover:text-ink">
               item pages
             </Link>{" "}
-            instead — those rank one product at a time.
+            instead, since those rank one product at a time.
           </p>
         </Prose>
       </Section>

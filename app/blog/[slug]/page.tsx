@@ -137,7 +137,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
         </>
       ) : (
         // Placeholder state. Deliberately says nothing about the topic beyond
-        // the description above — a stub padded out with filler is exactly the
+        // the description above. A stub padded out with filler is exactly the
         // kind of page this scaffolding exists to avoid shipping.
         <Section heading="Not published yet">
           <Prose>

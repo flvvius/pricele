@@ -14,7 +14,7 @@ export const ADSENSE_CLIENT = (
 export const ADSENSE_LOADER_SRC = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`;
 
 export const AD_SLOTS = {
-  // Shown on the Reveal screen once a puzzle is finished — never during play.
+  // Shown on the Reveal screen once a puzzle is finished, never during play.
   reveal: (process.env.NEXT_PUBLIC_ADSENSE_SLOT_REVEAL ?? "").trim(),
 } as const;
 

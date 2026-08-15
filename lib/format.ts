@@ -3,7 +3,7 @@
 // copy stay identical everywhere.
 //
 // Everything that compares prices is scoped to a single item id. There is no
-// longer one "active item" — each day has its own — so a helper that ranked or
+// longer one "active item", since each day has its own, so a helper that ranked or
 // averaged across the whole table would silently mix Big Macs in with litres of
 // milk.
 
@@ -12,7 +12,7 @@ import { PRICES } from "@/lib/puzzle";
 import { getItem } from "@/data/items";
 import { fromUSD, type Currency } from "@/lib/currency";
 
-/** "140 JPY", "45,000 LBP" — the price in its local currency. */
+/** "140 JPY", "45,000 LBP": the price in its local currency. */
 export function formatLocal(price: PriceEntry): string {
   const n = price.priceLocal.toLocaleString("en-US", {
     maximumFractionDigits: 2,
@@ -20,20 +20,20 @@ export function formatLocal(price: PriceEntry): string {
   return `${n} ${price.localCurrency}`;
 }
 
-/** "$1.55" — the price in USD. */
+/** "$1.55": the price in USD. */
 export function formatUSD(priceUSD: number): string {
   return `$${priceUSD.toFixed(2)}`;
 }
 
 /**
- * Locale-aware currency formatting for the interactive client — it uses the
+ * Locale-aware currency formatting for the interactive client. It uses the
  * visitor's browser locale for separators and symbol placement. Use this in
  * client components only; the SEO reference pages use the en-US helpers above so
  * their HTML stays byte-for-byte deterministic across builds.
  */
 /**
  * A canonical USD figure, converted and formatted for whichever currency the
- * player is reading in. The one helper the game screen should use for prices —
+ * player is reading in. The one helper the game screen should use for prices,
  * it keeps the conversion and the formatting from drifting apart.
  */
 export function formatPrice(priceUSD: number, currency: Currency): string {
@@ -85,7 +85,7 @@ export function bestPctOff(
 }
 
 /**
- * A short, punchy line about how close the player landed — the "mini WordleBot"
+ * A short, punchy line about how close the player landed, the "mini WordleBot"
  * accuracy read. Different framing for a win (celebrate) vs. a loss (near-miss
  * sting that pulls them back tomorrow).
  */

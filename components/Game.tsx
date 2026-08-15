@@ -64,7 +64,7 @@ export default function Game() {
   });
   const [stats, setStats] = useState<Stats>(EMPTY_STATS);
   // Dollars until the client tells us otherwise. The saved choice and the locale
-  // sniff both need `window`, so they can only be read after mount — starting on
+  // sniff both need `window`, so they can only be read after mount, starting on
   // USD keeps the first paint identical to the server's.
   const [currency, setCurrency] = useState<Currency>("USD");
   const [showHowTo, setShowHowTo] = useState(false);
@@ -103,7 +103,7 @@ export default function Game() {
     saveCurrency(next);
   }
 
-  // Always in USD — GuessInput converts before it gets here, so guesses stay
+  // Always in USD. GuessInput converts before it gets here, so guesses stay
   // comparable across a mid-round currency switch and in the saved day state.
   function handleGuess(usd: number) {
     if (!puzzle || state.done) return;
