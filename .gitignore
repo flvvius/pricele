@@ -27,3 +27,6 @@ yarn-error.log*
 
 # scraper cache
 /scripts/.cache/
+
+# Font cache for scripts/generate-og.mjs
+.cache/

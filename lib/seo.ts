@@ -83,9 +83,18 @@ export function titleFor(title?: string): string {
   return title ? TITLE_TEMPLATE.replace("%s", title) : TITLE_DEFAULT;
 }
 
-/** The share card. One image, one place. */
+/**
+ * The share card. One image, one place.
+ *
+ * JPEG, and not the SVG this used to be. No major platform rasterises SVG for a
+ * link preview — WhatsApp, Facebook, iMessage, LinkedIn and Slack all reject it
+ * — so every share of this site arrived with no picture at all. `type` is
+ * declared because some crawlers use it to decide whether to bother fetching.
+ * Regenerate with `pnpm og`; see scripts/generate-og.mjs.
+ */
 const OG_IMAGE = {
-  url: "/og.svg",
+  url: "/og.jpg",
+  type: "image/jpeg",
   width: 1200,
   height: 630,
   alt: "Pricele: guess the price",
@@ -172,7 +181,7 @@ export function gameJsonLd() {
     alternateName: "Pricele: guess the price",
     url: SITE_URL,
     description: SITE_DESCRIPTION,
-    image: absoluteUrl("/og.svg"),
+    image: absoluteUrl("/og.jpg"),
     inLanguage: "en",
     genre: ["Puzzle", "Trivia", "Educational"],
     gamePlatform: "Web browser",

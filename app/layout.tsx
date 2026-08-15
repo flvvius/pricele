@@ -91,7 +91,7 @@ export const metadata: Metadata = {
     title: TITLE_DEFAULT,
     description: SITE_DESCRIPTION,
     images: [
-      { url: "/og.svg", width: 1200, height: 630, alt: "Pricele: guess the price" },
+      { url: "/og.jpg", type: "image/jpeg", width: 1200, height: 630, alt: "Pricele: guess the price" },
     ],
   },
   twitter: {
@@ -99,7 +99,7 @@ export const metadata: Metadata = {
     title: TITLE_DEFAULT,
     description:
       "A free daily game: guess the price of an everyday item around the world in 5 tries. New country every day.",
-    images: ["/og.svg"],
+    images: ["/og.jpg"],
   },
   appleWebApp: {
     capable: true,
