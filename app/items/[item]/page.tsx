@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import ContentPage, { Section, Prose } from "@/components/ContentPage";
 import PriceTable, { type Row } from "@/components/PriceTable";
 import JsonLd from "@/components/JsonLd";
+import RelatedGuides, { GUIDES_BY_ITEM } from "@/components/RelatedGuides";
 import { ITEMS, getItemBySlug } from "@/data/items";
 import {
   pricesForItem,
@@ -150,6 +151,10 @@ export default function ItemPage({ params }: { params: { item: string } }) {
           ))}
         </ul>
       </Section>
+
+      {/* Chosen per item, so the fuel page and the egg page do not recommend
+          the same reading. See components/RelatedGuides.tsx. */}
+      <RelatedGuides slugs={GUIDES_BY_ITEM[item.id] ?? []} />
 
       <JsonLd
         data={datasetJsonLd({

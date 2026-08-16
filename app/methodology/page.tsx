@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import RelatedGuides, { GUIDES_FOR_COUNTRY } from "@/components/RelatedGuides";
 import ContentPage, { Section, Prose } from "@/components/ContentPage";
 import { ITEMS } from "@/data/items";
 import { COUNTRIES } from "@/lib/catalog";
@@ -317,6 +318,11 @@ export default function MethodologyPage() {
           </p>
         </Prose>
       </Section>
+      <RelatedGuides
+        slugs={GUIDES_FOR_COUNTRY}
+        heading="Further reading"
+      />
+
     </ContentPage>
   );
 }

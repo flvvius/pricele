@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import ContentPage, { Section, Prose } from "@/components/ContentPage";
 import PriceTable, { type Row } from "@/components/PriceTable";
 import JsonLd from "@/components/JsonLd";
+import RelatedGuides, { GUIDES_FOR_COUNTRY } from "@/components/RelatedGuides";
 import {
   COUNTRIES,
   getCountryBySlug,
@@ -217,6 +218,11 @@ export default function CountryPage({ params }: { params: { country: string } })
           ))}
         </ul>
       </Section>
+
+      <RelatedGuides
+        slugs={GUIDES_FOR_COUNTRY}
+        heading="Why a country's prices look the way they do"
+      />
 
       <JsonLd
         data={datasetJsonLd({
