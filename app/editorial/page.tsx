@@ -250,8 +250,8 @@ export default function EditorialPage() {
       <Section heading="Use of AI tools" id="ai">
         <Prose>
           <p>
-            Worth stating explicitly, because the honest answer is not
-            &ldquo;none&rdquo;. Software-assisted tooling is used the way a
+            Stating this explicitly, because the honest answer is
+            not &ldquo;none&rdquo;. Software-assisted tooling is used the way a
             spellchecker or a spreadsheet is: to draft the site&rsquo;s code, to
             cross-check arithmetic, and to catch clumsy sentences.
           </p>

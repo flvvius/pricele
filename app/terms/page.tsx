@@ -131,8 +131,8 @@ export default function TermsPage() {
             it wholesale into a product that reproduces it.
           </p>
           <p>
-            The underlying price data is a different matter, because it is not
-            ours to license. It is compiled from third-party sources that keep
+            The underlying price data is a different matter, because we have no
+            right to license it. It is compiled from third-party sources that keep
             their own terms, so the compilation is published under the reuse
             terms set out on the{" "}
             <Link href="/methodology#reuse" className={LINK}>
