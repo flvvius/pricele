@@ -2,16 +2,18 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ArticleBody from "@/components/ArticleBody";
+import AuthorCard, { Byline } from "@/components/AuthorCard";
 import ContentPage, { Section, Prose } from "@/components/ContentPage";
 import JsonLd from "@/components/JsonLd";
 import {
   ARTICLES,
+  countWords,
   getArticle,
   isPublished,
   PUBLISHED_ARTICLES,
 } from "@/data/articles";
 import { formatArchiveDate } from "@/lib/format";
-import { absoluteUrl, SITE_NAME, pageMetadata } from "@/lib/seo";
+import { articleJsonLd, pageMetadata } from "@/lib/seo";
 
 export const dynamic = "force-static";
 
@@ -60,10 +62,12 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
             {article.description}
           </p>
           {live && (
-            <p className="text-xs font-medium uppercase tracking-wide text-ink-meta">
-              {formatArchiveDate(article.date)} · {article.readingMinutes} min
-              read
-            </p>
+            <Byline
+              published={article.date}
+              updated={article.updated}
+              readingMinutes={article.readingMinutes}
+              format={formatArchiveDate}
+            />
           )}
         </>
       }
@@ -71,6 +75,8 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
       {live ? (
         <>
           <ArticleBody blocks={article.body!} />
+
+          <AuthorCard />
 
           {article.sources && article.sources.length > 0 && (
             <Section heading="Sources">
@@ -114,25 +120,15 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
           )}
 
           <JsonLd
-            data={{
-              "@context": "https://schema.org",
-              "@type": "BlogPosting",
-              headline: article.title,
+            data={articleJsonLd({
+              slug: article.slug,
+              title: article.title,
               description: article.description,
-              datePublished: article.date,
-              dateModified: article.date,
-              url: absoluteUrl(`/blog/${article.slug}`),
-              isAccessibleForFree: true,
-              author: { "@type": "Organization", name: SITE_NAME },
-              publisher: { "@type": "Organization", name: SITE_NAME },
-              mainEntityOfPage: {
-                "@type": "WebPage",
-                "@id": absoluteUrl(`/blog/${article.slug}`),
-              },
-              ...(article.sources && article.sources.length > 0
-                ? { citation: article.sources.map((s) => s.url) }
-                : {}),
-            }}
+              date: article.date,
+              updated: article.updated,
+              citations: article.sources?.map((s) => s.url),
+              wordCount: countWords(article.body!),
+            })}
           />
         </>
       ) : (

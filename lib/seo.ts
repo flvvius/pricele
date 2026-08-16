@@ -4,6 +4,7 @@
 
 import type { Metadata } from "next";
 import { ITEMS } from "@/data/items";
+import { AUTHOR, PUBLISHER } from "@/lib/author";
 
 /**
  * The host the site is actually served from.
@@ -170,6 +171,134 @@ export function pageMetadata({
 }
 
 /**
+ * Stable JSON-LD node identifiers.
+ *
+ * Every graph on the site refers to the publisher and the author by `@id`
+ * rather than repeating the object. That way Google resolves one Organization
+ * and one Person across the whole domain instead of treating the copy on each
+ * page as a separate entity, which is what makes the author signal accumulate
+ * rather than fragment. The fragments are arbitrary but must never change once
+ * they have been crawled.
+ */
+export const ORG_ID = `${SITE_URL}/#organization`;
+export const PERSON_ID = `${SITE_URL}/#person`;
+
+/** Reference to the publisher node, for embedding in any other schema. */
+const orgRef = { "@id": ORG_ID } as const;
+
+/**
+ * The named human behind the site.
+ *
+ * This is the E-E-A-T node. An anonymous publisher is the single most common
+ * trust deficiency flagged on sites that compile third-party data, because from
+ * the outside a compilation and a scrape look identical until someone puts
+ * their name on the compiling. `knowsAbout` is deliberately narrow: it claims
+ * familiarity with the subject matter of this site and nothing else.
+ */
+export function personJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "@id": PERSON_ID,
+    name: AUTHOR.name,
+    jobTitle: AUTHOR.role,
+    description: AUTHOR.bio.join(" "),
+    email: `mailto:${AUTHOR.email}`,
+    url: absoluteUrl("/about"),
+    ...(AUTHOR.links.length > 0
+      ? { sameAs: AUTHOR.links.map((l) => l.url) }
+      : {}),
+    knowsAbout: [
+      "Consumer prices",
+      "Cost of living comparisons",
+      "Purchasing power parity",
+      "Consumption taxes",
+    ],
+    worksFor: orgRef,
+  };
+}
+
+/** The site as a publishing entity, tied to the person who runs it. */
+export function organizationJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": ORG_ID,
+    name: SITE_NAME,
+    url: SITE_URL,
+    logo: absoluteUrl("/icon.svg"),
+    email: `mailto:${SITE_EMAIL}`,
+    foundingDate: String(PUBLISHER.foundedYear),
+    founder: { "@id": PERSON_ID },
+    description: SITE_DESCRIPTION,
+    publishingPrinciples: absoluteUrl("/editorial"),
+    // Points at the page that says how to report an error and what happens
+    // next. Schema.org defines it for exactly this, and it is one of the few
+    // machine-readable trust signals a small publisher can offer.
+    correctionsPolicy: absoluteUrl("/editorial#corrections"),
+    actionableFeedbackPolicy: absoluteUrl("/editorial#corrections"),
+    contactPoint: {
+      "@type": "ContactPoint",
+      contactType: "editorial",
+      email: `mailto:${SITE_EMAIL}`,
+      url: absoluteUrl("/contact"),
+      availableLanguage: "English",
+    },
+  };
+}
+
+export interface ArticleSchemaInput {
+  slug: string;
+  title: string;
+  description: string;
+  /** ISO publication date. */
+  date: string;
+  /** ISO date of the last substantive edit. Falls back to `date`. */
+  updated?: string;
+  citations?: string[];
+  /** Rough length in words, which Google reads as a depth signal. */
+  wordCount?: number;
+}
+
+/**
+ * BlogPosting schema with a real author attached.
+ *
+ * The `author` used to be the Organization, which is technically valid and
+ * practically worthless: it tells a rater the site wrote its own articles.
+ * Pointing at the Person node instead is what connects each guide to a named,
+ * contactable human with a biography on /about.
+ */
+export function articleJsonLd({
+  slug,
+  title,
+  description,
+  date,
+  updated,
+  citations,
+  wordCount,
+}: ArticleSchemaInput) {
+  const url = absoluteUrl(`/blog/${slug}`);
+  return {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: title,
+    description,
+    datePublished: date,
+    dateModified: updated ?? date,
+    url,
+    isAccessibleForFree: true,
+    inLanguage: "en",
+    author: { "@id": PERSON_ID },
+    editor: { "@id": PERSON_ID },
+    publisher: orgRef,
+    image: absoluteUrl("/og.jpg"),
+    ...(wordCount ? { wordCount } : {}),
+    mainEntityOfPage: { "@type": "WebPage", "@id": url },
+    ...(citations && citations.length > 0 ? { citation: citations } : {}),
+  };
+}
+
+/**
  * VideoGame schema for the game itself. Powers rich understanding of what
  * Pricele is (a free, browser-based daily game) across Search and AI answers.
  */
@@ -191,12 +320,8 @@ export function gameJsonLd() {
     isAccessibleForFree: true,
     keywords:
       "price guessing game, daily game, wordle-like, cost of living game, guess the price",
-    publisher: {
-      "@type": "Organization",
-      name: SITE_NAME,
-      url: SITE_URL,
-      logo: absoluteUrl("/icon.svg"),
-    },
+    publisher: orgRef,
+    author: { "@id": PERSON_ID },
     offers: {
       "@type": "Offer",
       price: "0",
@@ -215,12 +340,7 @@ export function websiteJsonLd() {
     url: SITE_URL,
     description: SITE_DESCRIPTION,
     inLanguage: "en",
-    publisher: {
-      "@type": "Organization",
-      name: SITE_NAME,
-      url: SITE_URL,
-      logo: absoluteUrl("/icon.svg"),
-    },
+    publisher: orgRef,
   };
 }
 
@@ -261,11 +381,11 @@ export function datasetJsonLd({
     url: absoluteUrl(path),
     license: DATA_LICENSE_URL,
     isAccessibleForFree: true,
-    creator: {
-      "@type": "Organization",
-      name: SITE_NAME,
-      url: SITE_URL,
-    },
+    creator: orgRef,
+    // Who compiled the table, as distinct from who publishes it. On a dataset
+    // assembled by hand from third-party sources this is the property that says
+    // a person did the assembling.
+    maintainer: { "@id": PERSON_ID },
     ...(spatialCoverage
       ? { spatialCoverage: { "@type": "Country", name: spatialCoverage } }
       : {}),

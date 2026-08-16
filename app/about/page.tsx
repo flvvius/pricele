@@ -1,7 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import ContentPage, { Section, Prose } from "@/components/ContentPage";
-import { SITE_NAME, SITE_EMAIL, pageMetadata } from "@/lib/seo";
+import JsonLd from "@/components/JsonLd";
+import {
+  SITE_NAME,
+  SITE_EMAIL,
+  pageMetadata,
+  personJsonLd,
+  organizationJsonLd,
+} from "@/lib/seo";
+import { AUTHOR, PUBLISHER } from "@/lib/author";
 import { ITEMS } from "@/data/items";
 import { COUNTRIES } from "@/lib/catalog";
 
@@ -126,27 +134,85 @@ export default function AboutPage() {
         </Prose>
       </Section>
 
-      <Section heading="Who makes it">
+      {/* The id is linked from every article byline and from the footer of
+          every page, so it must stay put. */}
+      <Section heading="Who makes it" id="author">
         <Prose>
           <p>
-            {SITE_NAME} is an independent side project, built and maintained by
-            one person. If you have a question, spot a price that looks wrong, or
-            want to suggest an item or country to add, email{" "}
+            {SITE_NAME} is an independent side project run by one person,{" "}
+            <strong className="font-semibold text-ink-strong">
+              {AUTHOR.name}
+            </strong>
+            , based in {PUBLISHER.location}. {AUTHOR.role.toLowerCase()} is the
+            whole of the masthead: the same person picks the items and countries,
+            pulls each figure from the source named on the methodology page,
+            checks the conversions, writes the guides, builds the site and
+            answers the mail.
+          </p>
+          {AUTHOR.bio.map((line) => (
+            <p key={line.slice(0, 32)}>{line}</p>
+          ))}
+          <p>
+            If you have a question, spot a price that looks wrong, or want to
+            suggest an item or country to add, email{" "}
             <a
               href={`mailto:${SITE_EMAIL}`}
               className="underline hover:text-neutral-300"
             >
               {SITE_EMAIL}
-            </a>{" "}
-            or use the{" "}
+            </a>
+            {AUTHOR.links.map((l) => (
+              <span key={l.url}>
+                , find the code on{" "}
+                <a
+                  href={l.url}
+                  target="_blank"
+                  rel="noopener noreferrer me"
+                  className="underline hover:text-neutral-300"
+                >
+                  {l.label}
+                </a>
+              </span>
+            ))}
+            , or use the{" "}
             <Link href="/contact" className="underline hover:text-neutral-300">
               contact page
             </Link>
             . Corrections are genuinely welcome. If you live somewhere covered
-            here and a number looks off, you know better than the dataset does.
+            here and a number looks off, you know better than the dataset does,
+            and the{" "}
+            <Link href="/editorial#corrections" className="underline hover:text-neutral-300">
+              corrections policy
+            </Link>{" "}
+            says what happens to a report once it arrives.
           </p>
         </Prose>
       </Section>
+
+      <Section heading="How we decide what to publish" id="standards">
+        <Prose>
+          <p>
+            A figure needs a named public source, the same source across every
+            country that carries the item, a unit that means the same thing
+            everywhere, and a sanity check against its neighbours. A figure that
+            fails any of those is left out rather than estimated, which is why
+            the price grid has holes in it and several countries carry only two
+            or three of the {ITEMS.length} items.
+          </p>
+          <p>
+            Guides are written and edited by hand and are not published until
+            they say something that is not already the first result for the same
+            question. The{" "}
+            <Link href="/editorial" className="underline hover:text-neutral-300">
+              editorial policy
+            </Link>{" "}
+            sets out the full test, what we refuse to do, how corrections are
+            handled and how the site is funded.
+          </p>
+        </Prose>
+      </Section>
+
+      <JsonLd data={[organizationJsonLd(), personJsonLd()]} />
     </ContentPage>
   );
 }

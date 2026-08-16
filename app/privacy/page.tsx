@@ -7,7 +7,7 @@ import { SITE_NAME, SITE_URL, SITE_EMAIL, pageMetadata } from "@/lib/seo";
 export const dynamic = "force-static";
 
 // Last substantive update. Bump when the policy content changes.
-const LAST_UPDATED = "July 24, 2026";
+const LAST_UPDATED = "August 16, 2026";
 
 export const metadata: Metadata = pageMetadata({
   path: "/privacy",
@@ -72,7 +72,24 @@ export default function PrivacyPage() {
           <p>
             {SITE_NAME} does not require an account and we do not ask you for
             personal information such as your name, email address, or payment
-            details. We do not run our own analytics or tracking scripts.
+            details. There is no sign-in, no profile, and no user database.
+          </p>
+          <p>
+            We do use{" "}
+            <a
+              href="https://vercel.com/docs/analytics/privacy-policy"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={POLICY_LINK}
+            >
+              Vercel Web Analytics and Speed Insights
+            </a>{" "}
+            to see which pages are read and how quickly they load. These are
+            cookieless and do not track visitors across sites or build a profile
+            of you: each page view is recorded with the page address, a coarse
+            country, and technical details such as browser and screen size, from
+            which Vercel derives a temporary, non-reversible identifier that is
+            discarded within the day. We see totals, never individuals.
           </p>
           <p>
             To make the game work, your progress (your guesses for the day, your
@@ -142,11 +159,73 @@ export default function PrivacyPage() {
         <Clause heading="Consent for EEA, UK, and Switzerland">
           <p>
             If you are visiting from the European Economic Area, the United
-            Kingdom, or Switzerland, you will be shown a consent message before
-            personalized ads are served. You can choose to accept, decline, or
-            manage your options, and you may change your choice at any time.
-            Where required, non-personalized ads may be shown if you decline
-            consent.
+            Kingdom, or Switzerland, a consent message is shown before
+            personalized ads are served. It is delivered by Google&rsquo;s own
+            consent management platform, which is certified against the IAB
+            Transparency and Consent Framework, and it is the mechanism that
+            records your choice for every advertising partner at once.
+          </p>
+          <p>
+            You can accept, decline, or manage individual purposes and vendors,
+            and you can change your mind at any time: the{" "}
+            <strong className="font-semibold text-ink">
+              Cookie preferences
+            </strong>{" "}
+            link in the footer of every page reopens the same message. If you
+            decline, non-personalized ads may be shown instead, and the game
+            works exactly as it did before.
+          </p>
+        </Clause>
+
+        <Clause heading="Legal bases for processing">
+          <p>
+            Where the GDPR or UK GDPR applies, the legal bases are as follows.
+            Personalized advertising and the cookies it requires rest on your{" "}
+            <strong className="font-semibold text-ink">consent</strong>, given
+            through the message described above and withdrawable at any time.
+            Serving the site itself, keeping it secure, and measuring aggregate
+            page performance rest on our{" "}
+            <strong className="font-semibold text-ink">
+              legitimate interest
+            </strong>{" "}
+            in running a working website. The game data in your browser is not
+            processed by us at all, because it never leaves your device.
+          </p>
+        </Clause>
+
+        <Clause heading="Retention and transfers">
+          <p>
+            We hold no database, so there is nothing on our side to retain.
+            Game progress stays in your browser until you clear it. Email you
+            send us is kept in the mailbox it arrived in for as long as it takes
+            to answer, and correspondence about a correction is kept as a record
+            of the change.
+          </p>
+          <p>
+            Google and the advertising vendors you consent to operate globally
+            and set their own retention periods, which are described in their
+            own policies. That processing may involve transfers outside your
+            country, made under the safeguards those companies publish.
+          </p>
+        </Clause>
+
+        <Clause heading="Your rights">
+          <p>
+            Depending on where you live, you have rights to access, correct,
+            delete, port, or object to the processing of your personal data, and
+            to withdraw consent at any time without affecting processing already
+            carried out. Residents of California and other US states with similar
+            laws additionally have the right to opt out of the sale or sharing of
+            personal information; the consent controls above are how that choice
+            is exercised here.
+          </p>
+          <p>
+            Because {SITE_NAME} keeps no account, no profile and no user
+            database, most requests of this kind concern data held by Google
+            rather than by us, and are best made through Google&rsquo;s own
+            controls. Write to us anyway if you are unsure and we will point you
+            at the right place. If you believe your data has been mishandled, you
+            may also complain to your local data protection authority.
           </p>
         </Clause>
 
@@ -155,6 +234,12 @@ export default function PrivacyPage() {
             You can control or delete cookies through your browser settings and
             clear the locally stored game data at any time. Blocking cookies may
             affect the ads you see but will not stop you from playing the game.
+          </p>
+          <p>
+            Browser-level signals are respected where the ad stack supports them,
+            including Global Privacy Control, which Google treats as an opt-out
+            of the sale and sharing of personal information in the US states that
+            recognise it.
           </p>
         </Clause>
 

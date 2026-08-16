@@ -70,6 +70,15 @@ export interface Article {
   description: string;
   /** ISO date. Use the day you actually publish, not the day you started. */
   date: string;
+  /**
+   * ISO date of the last substantive revision, if there has been one.
+   *
+   * Leave it off until the text actually changes. It drives both the visible
+   * "Updated" line and `dateModified` in the article's structured data, and a
+   * piece that advertises a revision it never had devalues every date on the
+   * site. Fixing a typo is not a revision.
+   */
+  updated?: string;
   status: "draft" | "published";
   /** Rough reading time in minutes. Update it once the piece is written. */
   readingMinutes: number;
@@ -1580,6 +1589,1140 @@ export const ARTICLES: Article[] = [
       S.aolMilk,
     ],
   },
+
+  // ---------------------------------------------------------------------------
+  // THE EXPLAINERS.
+  //   The ten pieces above are arguments about prices. These are explanations of
+  //   the machinery underneath, and they exist because the reference pages kept
+  //   raising questions the reference pages had no room to answer: why the
+  //   ranking flips when you switch to local wages, why fuel refuses to behave
+  //   like the other six items, why two countries with the same average income
+  //   have different price levels. Each one is linked from the page that raises
+  //   the question, which is the only reason to write it.
+  // ---------------------------------------------------------------------------
+  {
+    slug: "why-the-same-thing-costs-different-amounts",
+    title: "Four things set every price, and only one of them is the product",
+    description:
+      "The same can, the same recipe, the same machine that made it, and a five-fold price gap between two countries. Here is what is actually in the difference.",
+    date: "2026-08-02",
+    status: "published",
+    readingMinutes: 8,
+    body: [
+      {
+        kind: "prose",
+        paragraphs: [
+          "Take a bottle of Coca-Cola. Not a similar drink, not a local equivalent: the same recipe, made to the same specification, on machines built by the same handful of suppliers, filled to the same volume, sealed with the same cap.",
+          "Now move it between countries and watch the price move by a factor of five.",
+          "This is the fact the whole site is built around, and the first thing to understand is that almost none of that gap is the drink. The syrup, the aluminium, the sugar and the water are commodities that trade on world markets and cost roughly the same to buy anywhere. What changes is everything wrapped around them.",
+          "There are four wrappers. Once you can name them, price gaps stop looking arbitrary and start looking like arithmetic.",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "1. Whether the thing can travel",
+        paragraphs: [
+          "Economists split everything you can buy into **tradables** and **non-tradables**, and it is the single most useful cut in the subject.",
+          "A tradable is anything that can be put on a ship. A laptop, a barrel of oil, a kilo of coffee beans, a phone. If a laptop were meaningfully cheaper in one country than another, someone would buy it there and sell it here until the gap closed to roughly the cost of shipping and duty. That mechanism is called arbitrage, and it works. Prices of tradable goods across countries sit in a much narrower band than most people expect.",
+          "A non-tradable is anything that has to be produced where it is consumed. A haircut. A restaurant meal. A hotel night. The floor space of a café. Nobody can import a Norwegian haircut into Egypt, so nothing forces the two prices together, and they can differ by a factor of ten indefinitely without anything being wrong.",
+          "Almost every everyday purchase is a blend. A cappuccino is perhaps a fifth tradable, the beans and the milk, and four-fifths non-tradable: the barista's time, the rent on the room you drink it in, the electricity, the dishwasher. That mix is why the coffee price gap between rich and poor countries is enormous while the gap in the price of the beans themselves is small.",
+        ],
+      },
+      {
+        kind: "callout",
+        heading: "The one-sentence version",
+        paragraphs: [
+          "The more of a purchase is somebody's time and somebody's floor space, the more its price tracks the local wage rather than the world market.",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "2. What an hour is worth locally",
+        paragraphs: [
+          "Which leads straight to the second wrapper, and the biggest one.",
+          "Behind almost every non-tradable price is a wage. The cashier, the driver who brought the pallet, the person who cleaned the floor, the shift manager, the accountant who filed the returns. A country where an hour of ordinary labour costs thirty dollars cannot produce a cheap restaurant meal, because the meal is mostly hours.",
+          "This is why the price ranking on a country page and the ranking on the same page's work-time column are so often near-mirrors of each other. In dollar terms, the expensive countries are the rich ones. In time terms, the expensive countries are the poor ones, because a price that is high relative to a local wage is the definition of expensive to the person paying it.",
+          "It also explains an effect that surprises people who have not seen it before: as a country gets richer, its non-tradables get more expensive relative to the rest of the world, even if nothing about the haircut changes. Wages rise across the whole economy, including in the parts of it that never got more productive. The barber is not cutting hair faster than a barber in 1950. He is simply competing for labour with industries that are.",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "3. What the state takes at the till",
+        paragraphs: [
+          "The third wrapper is the one that can be read off a table, and it is startlingly large.",
+          "Most of the world funds itself partly through a tax charged on the sale itself: VAT in Europe, GST in Australia and Canada, IVA in Latin America, a consumption tax in Japan. Standard rates across the countries in this game run from **5 percent** to **27 percent**, and that difference alone can move a shelf price by a fifth before anything else has been considered.",
+          "Two refinements matter more than the headline rate.",
+          "The first is that most countries treat food differently from everything else, and they disagree wildly about how. The United Kingdom zero-rates most supermarket food. Ireland does the same. Mexico zero-rates food and medicine. Denmark charges its full standard rate on groceries with no reduced band at all. Two European countries with almost identical headline rates can therefore tax a shopping basket completely differently.",
+          "The second is that the tax point moves. Japan charges a lower rate on food bought to take away than on the same food eaten in, so a coffee's tax depends on where you stand to drink it. Several countries define a reduced rate for basic staples and a standard rate for anything considered a luxury, and the line between them is drawn by legislatures, which is why it produces court cases about whether a particular biscuit is a cake.",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "4. What it cost to get there",
+        paragraphs: [
+          "The last wrapper is distance, and it is the one people overestimate.",
+          "Container shipping is astonishingly cheap per unit. Moving a tonne of goods across an ocean typically costs less than trucking it a few hundred kilometres inland at the other end, which is why an island economy's prices depend less on being an island than on how far the port is from everyone else.",
+          "Where distance genuinely bites is on the things that cannot wait. Fresh milk, fresh produce, anything that has to arrive cold. A country that has to fly in fruit out of season pays for the plane. A country that grows it pays for a truck. That is most of the apple price gap, and almost none of the gap on a can of soft drink, which will sit happily in a warehouse for a year.",
+          "Import duty is the other half of this wrapper and behaves less predictably, because it is policy rather than geography. A country protecting a domestic dairy industry can put a tariff wall around milk that dwarfs the cost of shipping it.",
+        ],
+      },
+      {
+        kind: "table",
+        heading: "Which wrapper dominates which item",
+        intro:
+          "Rough shares, not precise ones. The point is the pattern, which is that the items people expect to behave alike do not.",
+        columns: ["Item", "Mostly driven by"],
+        rows: [
+          ["Cappuccino", "Local wages and rent"],
+          ["Big Mac", "Local wages, then rent, then beef"],
+          ["Bottled soft drink", "Distribution margin and tax"],
+          ["Litre of milk", "Farm policy and cold-chain distance"],
+          ["Dozen eggs", "Feed cost and disease outbreaks"],
+          ["Kilo of apples", "Climate, season and freight"],
+          ["Litre of petrol", "Tax and subsidy, almost entirely"],
+        ],
+        caption:
+          "Fuel is the outlier: it is a pure global commodity whose retail price is set by national politics.",
+      },
+      {
+        kind: "prose",
+        heading: "Why this is worth carrying around",
+        paragraphs: [
+          "Because it converts a fact you cannot use into a prediction you can.",
+          "Told that a country is rich, you now know which of its prices will be high and which will not. Its restaurant meals, its haircuts and its coffee will be expensive, because those are hours. Its electronics will be close to everyone else's, because those are containers. Its fuel could be anything at all, because that is a vote.",
+          "Told that a country is poor, the same logic runs backwards, with one twist worth remembering: the tradables that look reasonably priced in dollars are the ones that are punishingly expensive in local hours. A phone that costs the same everywhere is not the same purchase everywhere.",
+          "That is the whole trick, and it is why guessing gets easier fast. You are not recalling prices. You are estimating a wage and adding a tax.",
+        ],
+      },
+      {
+        kind: "cta",
+        heading: "Try it on today's country",
+        paragraphs: [
+          "Take the four wrappers to the daily puzzle: ask how much of the item is somebody's hour, what the country taxes it at, and whether it had to travel cold. You will be closer on the first guess than you expect.",
+        ],
+        buttonLabel: "Play today's puzzle",
+      },
+    ],
+    sources: [
+      {
+        label: "The Economist — The Big Mac index",
+        url: "https://www.economist.com/big-mac-index",
+      },
+      {
+        label: "OECD — Purchasing power parities (PPP)",
+        url: "https://www.oecd.org/en/data/indicators/purchasing-power-parities-ppp.html",
+      },
+      {
+        label: "World Bank — International Comparison Program",
+        url: "https://www.worldbank.org/en/programs/icp",
+      },
+      {
+        label: "Tax Foundation — VAT rates in Europe",
+        url: "https://taxfoundation.org/data/all/eu/value-added-tax-2025-vat-rates-europe/",
+      },
+    ],
+  },
+
+  // ---------------------------------------------------------------------------
+  {
+    slug: "petrol-prices-are-a-political-decision",
+    title: "Petrol is the same liquid everywhere and costs whatever a government wants",
+    description:
+      "Crude oil trades at one world price. Pump prices differ by a factor of forty. Nearly all of that gap is tax in one direction and subsidy in the other.",
+    date: "2026-08-04",
+    status: "published",
+    readingMinutes: 8,
+    body: [
+      {
+        kind: "prose",
+        paragraphs: [
+          "Of the seven items in this game, six behave the way you would expect. Rich country, higher price; poor country, lower price; a spread of maybe five to one between the extremes.",
+          "Fuel does something else entirely. The spread between the cheapest and most expensive countries in the world runs past **forty to one**, the ranking scrambles rich and poor countries together, and several major oil exporters sit at both ends of it.",
+          "There is a reason fuel is the item people get most wrong, and it is that they are trying to reason about it as a commodity. It is not. It is a tax rate wearing a commodity's clothes.",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "Start with what is actually in the tank",
+        paragraphs: [
+          "Crude oil is the most thoroughly globalised product on earth. It trades continuously against two main benchmarks, Brent and WTI, and the price differences between them are a matter of a couple of dollars a barrel reflecting quality and location. There is no such thing as cheap national crude for domestic use, because any barrel sold domestically below the world price is a barrel someone could have exported instead.",
+          "Refining adds a margin that varies with capacity and season but not by anything like an order of magnitude. Distribution adds a few cents. By the time a litre of petrol is sitting in a tanker at the forecourt, its cost is remarkably similar across the world.",
+          "Everything that happens after that point is policy.",
+        ],
+      },
+      {
+        kind: "stats",
+        heading: "The gap, roughly",
+        items: [
+          { value: "1 world", label: "Price for the crude going in" },
+          { value: "~40×", label: "Spread between cheapest and dearest pumps" },
+          { value: "50%+", label: "Share of a European pump price that is tax" },
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "One direction: excise duty",
+        paragraphs: [
+          "Most of Europe layers two taxes onto fuel. First an excise duty, a fixed amount per litre that does not move when the oil price does. Then VAT, charged as a percentage on top of the duty-inclusive price, so the state charges tax on its own tax.",
+          "The result is that in a typical Western European country, **more than half** of what you hand over at the pump is government revenue, and in several it is closer to two-thirds. This is not an accident or an oversight. Fuel duty is close to a perfect tax from a treasury's point of view: demand barely moves in the short run, collection is trivial because there are few refineries and importers to invoice, and it can be presented as an environmental measure rather than a revenue measure.",
+          "Because the duty is a fixed amount per litre rather than a percentage, it also acts as a shock absorber. When crude doubles, a European pump price rises by much less in percentage terms than an American one, because the tax component did not move. This is one of the reasons European drivers experience oil shocks as milder than American drivers do, despite paying far more per litre in absolute terms.",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "The other direction: subsidy",
+        paragraphs: [
+          "Run the same logic backwards and you get the other end of the table.",
+          "A number of oil-producing states sell fuel domestically at below the world price, funding the difference out of the export revenue of the same oil. In the most extreme cases fuel has been sold for a few cents a litre, cheaper than the bottled water sold next to it in the same forecourt.",
+          "This is enormously expensive and famously difficult to reverse. The International Monetary Fund has spent years documenting the arithmetic: consumer fuel subsidies absorb budget that would otherwise fund health or schools, benefit better-off households most because they consume the most fuel, and encourage exactly the consumption a government elsewhere is trying to tax.",
+          "Everybody involved knows this. Subsidies survive anyway, because cheap fuel is one of the few economic policies whose effect a citizen sees weekly, and attempts to withdraw one have brought down governments. When a country announces a phased reduction in fuel subsidy, the phasing is not timidity. It is a rational response to what has happened to the last several governments that did it abruptly.",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "Why oil producers appear at both ends",
+        paragraphs: [
+          "This is the part that breaks people's intuition, so it is worth stating directly: **producing oil tells you nothing about a country's pump price**.",
+          "Norway is one of Europe's largest petroleum exporters and has some of the most expensive fuel on the continent, because it taxes it heavily and invests the proceeds. Several Gulf producers sell it at a fraction of the world price. The United States produces more crude than any other country and sits far below European prices, not because of its production but because its federal fuel tax has not risen in nominal terms since 1993 and its state taxes are modest.",
+          "Producing oil determines whether a country can afford a subsidy. It does not determine whether it chooses one.",
+        ],
+      },
+      {
+        kind: "list",
+        heading: "How to guess a fuel price in four steps",
+        intro:
+          "In rough order of how much each step moves the answer.",
+        items: [
+          "Start from the world cost of a litre of refined product, delivered. This is your floor, and it is nearly the same everywhere.",
+          "Ask whether the country is a net exporter of crude that subsidises domestic consumption. If yes, guess close to the floor or below it, and stop.",
+          "If not, ask whether it is in Europe. If yes, roughly double or triple the floor: duty plus VAT is doing the work.",
+          "Everywhere else, adjust modestly for the local tax rate and whether fuel is imported through a long, thin supply chain.",
+        ],
+      },
+      {
+        kind: "callout",
+        heading: "The trap in the middle",
+        paragraphs: [
+          "The countries hardest to guess are the ones that do neither. A middle-income importer with no subsidy and no European-scale duty pays close to the underlying cost of the fuel, which lands its pump price near the middle of the table regardless of how rich or poor it is. Fuel is the one item on this site where knowing a country's income tells you almost nothing.",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "What this changes about the rest of the table",
+        paragraphs: [
+          "Fuel is not just an item in the game. It is an input to every other one.",
+          "The truck that brought the milk runs on it. So does the boat that brought the coffee, the tractor that harvested the apples and the plant that pressed the cans. A country with a heavy fuel duty pays that duty again, indirectly, in the price of everything that moved.",
+          "Which is the strange, quiet consequence of a policy most people file under transport: fuel tax is one of the few levers a government can pull that raises every price in the economy at once, and it is chosen anyway, because there is no other lever that raises so much revenue with so little argument at the point of collection.",
+        ],
+      },
+      {
+        kind: "cta",
+        heading: "Test it on a fuel day",
+        paragraphs: [
+          "When the daily puzzle serves a litre of petrol, ignore what you know about the country's wages and ask a single question instead: does this government tax fuel or fund it? Almost everything else is noise.",
+        ],
+        buttonLabel: "Play today's puzzle",
+      },
+    ],
+    sources: [
+      {
+        label: "GlobalPetrolPrices — Petrol prices around the world",
+        url: "https://www.globalpetrolprices.com/gasoline_prices/",
+      },
+      {
+        label: "IMF — Energy subsidies",
+        url: "https://www.imf.org/en/Topics/climate-change/energy-subsidies",
+      },
+      {
+        label: "IEA — Fossil fuel subsidies",
+        url: "https://www.iea.org/topics/fossil-fuel-subsidies",
+      },
+      {
+        label: "US Energy Information Administration — Gasoline explained",
+        url: "https://www.eia.gov/energyexplained/gasoline/",
+      },
+    ],
+  },
+
+  // ---------------------------------------------------------------------------
+  {
+    slug: "why-poor-countries-are-cheap",
+    title: "Why poor countries are cheap, and why it is not what you think",
+    description:
+      "It is not lower profits or looser standards. It is a hundred-year-old piece of economics about haircuts, and it explains most of the price map.",
+    date: "2026-08-06",
+    status: "published",
+    readingMinutes: 8,
+    body: [
+      {
+        kind: "prose",
+        paragraphs: [
+          "Ask most people why things are cheaper in a poorer country and you will get one of two answers. Either businesses there accept smaller profits, or the standards are lower and you are buying a worse thing.",
+          "Both are wrong, and you can prove it without leaving the shop. The can of Coke is the same can. The Big Mac is made to the same specification. The margins on a McDonald's franchise are not charity anywhere.",
+          "The real answer was worked out independently by two economists in 1964, is named after both of them, and turns entirely on the fact that some jobs get more productive over time and others cannot.",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "The haircut problem",
+        paragraphs: [
+          "Start with a question that sounds trivial. How many haircuts an hour could a barber do in 1900? Call it two or three.",
+          "How many can a barber do today? Two or three.",
+          "Now ask the same question about a car worker, or a farmer, or a person assembling electronics. The answers have moved by factors of ten, a hundred, sometimes more. A modern factory worker produces an amount of output per hour that would have looked like witchcraft to their great-grandparent doing the same nominal job.",
+          "So here is the puzzle. If a barber is no more productive than a barber a century ago, why does a haircut in a rich country cost the equivalent of a substantial chunk of a day's minimum wage, rather than what it cost in 1900?",
+        ],
+      },
+      {
+        kind: "callout",
+        heading: "Because the barber could leave",
+        paragraphs: [
+          "A barber in a country with well-paid factory work has to be paid roughly what the factory would pay, or they go and work in the factory. The wage rises across the whole economy, dragged up by the productive part of it, whether or not the unproductive part got any better at its job. That is the mechanism, and it is called the **Balassa–Samuelson effect**.",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "Running it forwards",
+        paragraphs: [
+          "Follow the chain through and the price map falls out of it.",
+          "A country gets richer because its **tradable** sector, the part that makes things you can ship, becomes more productive. Higher productivity means those firms can pay more. To hire anyone at all, everyone else must pay more too, including the sectors that never got more productive: restaurants, haircuts, cleaning, childcare, hotels, the person behind the counter.",
+          "But those sectors did not get more efficient. They are paying more for the same amount of work. So their prices rise, and they rise permanently, relative to the price of the tradable goods that did get cheaper to make.",
+          "The end state is a country where a laptop costs about what it costs anywhere and a sandwich costs three times what it costs elsewhere. Which, if you have ever travelled from a middle-income country to a high-income one, is precisely the experience: the electronics feel normal and the lunch feels insane.",
+        ],
+      },
+      {
+        kind: "table",
+        heading: "What gets expensive as a country gets rich",
+        columns: ["Purchase", "Mostly labour?", "Price gap, rich vs poor"],
+        rows: [
+          ["Restaurant meal", "Yes", "Very large"],
+          ["Haircut", "Yes", "Very large"],
+          ["Café coffee", "Mostly", "Large"],
+          ["Bus fare", "Mostly", "Large"],
+          ["Litre of milk", "Partly", "Moderate"],
+          ["Smartphone", "No", "Small"],
+          ["Litre of fuel", "No", "Unrelated to income"],
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "The Penn effect, which is the same fact from the outside",
+        paragraphs: [
+          "Economists have a second name for what this looks like in the aggregate. Convert every country's price level into a common currency at market exchange rates, plot it against income per head, and you get a clean upward slope: **richer countries have higher price levels**. It is called the Penn effect, after the dataset that first made it obvious.",
+          "The slope is the reason exchange rates mislead so badly. If you convert a Vietnamese salary into dollars at the market rate and compare it with an American one, you are implicitly pricing that salary as though it were being spent on tradable goods in the United States. Most of a salary is not spent on tradables. It is spent on rent, food prepared by someone, transport and services, all of which cost what they cost locally.",
+          "This is why the World Bank and the OECD publish purchasing-power-parity conversions at all, and why every serious cross-country income comparison uses them. The market exchange rate answers a question about capital flows. It was never designed to answer a question about living standards.",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "What this predicts, and where it fails",
+        paragraphs: [
+          "The theory earns its keep by being falsifiable, and the places it fails are informative.",
+          "It predicts that a country which gets rich quickly should see its non-tradable prices rise quickly. Broadly, this happens; the rising cost of services in fast-growing economies is one of the most reliable patterns in development.",
+          "It predicts that a country's price level should track its income. Mostly it does, but resource exporters break the pattern in both directions. A state that earns a great deal from oil without a large productive tradable sector can end up with high incomes and a distorted price structure, which is the phenomenon usually filed under Dutch disease.",
+          "And it predicts nothing at all about goods whose price is set by policy rather than cost, which is why fuel sits outside this entire framework and needs its own explanation.",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "The uncomfortable half",
+        paragraphs: [
+          "There is a version of this that gets said cheerfully, as though it were purely good news: things are cheap there, wages are high here, everyone is fine.",
+          "The arithmetic does not cooperate. If prices rise with income, then a poor country's cheapness is not a discount its own residents enjoy. It is a description of their wages. The bus fare is low because the driver's hour is worth little, and the driver is buying the same bus fare.",
+          "What a low price level genuinely does provide is a large advantage to anyone earning in a foreign currency and spending locally, which is why remittances go so far, why foreign pensions stretch, and why the arrival of enough remote workers earning rich-country salaries can push local prices up faster than local wages follow. That last effect is the least discussed and the most keenly felt.",
+          "The reason this site shows work-time alongside dollar prices is that the dollar column and the hours column tell opposite stories, and only one of them is about the person actually standing at the till.",
+        ],
+      },
+      {
+        kind: "cta",
+        heading: "Guess in wages, not in dollars",
+        paragraphs: [
+          "Next time the puzzle serves a country you know little about, do not try to recall a price. Estimate what an hour of ordinary work is worth there, decide how much of the item is somebody's hour, and multiply. It is a better method than memory.",
+        ],
+        buttonLabel: "Play today's puzzle",
+      },
+    ],
+    sources: [
+      {
+        label: "World Bank — International Comparison Program",
+        url: "https://www.worldbank.org/en/programs/icp",
+      },
+      {
+        label: "OECD — Purchasing power parities (PPP)",
+        url: "https://www.oecd.org/en/data/indicators/purchasing-power-parities-ppp.html",
+      },
+      {
+        label: "IMF Finance & Development — Purchasing power parity explained",
+        url: "https://www.imf.org/external/pubs/ft/fandd/basics/ppp.htm",
+      },
+      {
+        label: "The Economist — The Big Mac index",
+        url: "https://www.economist.com/big-mac-index",
+      },
+    ],
+  },
+
+  // ---------------------------------------------------------------------------
+  {
+    slug: "purchasing-power-parity-explained",
+    title: "The salary comparison you keep seeing online is wrong",
+    description:
+      "Converting a wage at the market exchange rate answers a question nobody asked. Purchasing power parity answers the one you meant, and has its own traps.",
+    date: "2026-08-08",
+    status: "published",
+    readingMinutes: 8,
+    body: [
+      {
+        kind: "prose",
+        paragraphs: [
+          "You have seen the post. Average salary in country A, converted to dollars. Average salary in country B, converted to dollars. A ratio, and a conclusion about which country is doing better.",
+          "The arithmetic is fine. The comparison is close to meaningless, and understanding why is the single most useful thing on this page.",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "What an exchange rate actually prices",
+        paragraphs: [
+          "A market exchange rate is set by the people trading currencies. Importers, exporters, investors moving capital, central banks, speculators. What they are collectively pricing is the demand to hold one currency against another, which is dominated by things that cross borders: goods in containers, bonds, shares, direct investment.",
+          "Now think about what a salary is spent on. Rent, or a mortgage on a building that cannot be moved. Food, most of it prepared or retailed locally. Transport. Childcare. A haircut. Electricity. A phone contract. The great majority of ordinary spending goes on things that never cross a border and whose prices are therefore never touched by the mechanism that sets the exchange rate.",
+          "Converting a salary at the market rate implicitly asks: what would this money buy if it were spent on internationally traded goods? That is a real question. It is just not the question anyone means when they compare wages.",
+        ],
+      },
+      {
+        kind: "callout",
+        heading: "The question you meant",
+        paragraphs: [
+          "How much stuff can a person actually buy where they live? To answer that you need an exchange rate built from a basket of what people buy rather than from what traders trade. That is a **purchasing power parity**.",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "How a PPP is built",
+        paragraphs: [
+          "The serious version is the World Bank's International Comparison Program, which is one of the largest statistical exercises on earth and rather underappreciated for it.",
+          "Statistical agencies in participating economies price a common list of hundreds of tightly specified items: not \"a shirt\" but a shirt of a stated fibre composition, weight and construction, so that two countries are genuinely pricing the same thing. Those prices are aggregated into a conversion factor that says how many units of local currency buy what one dollar buys in the United States.",
+          "The result is the number behind every \"GDP at PPP\" figure you have ever read, and the difference between it and the market rate is frequently enormous. In lower-income economies, a PPP conversion routinely values local income at two to four times what the market rate implies, precisely because so much of the basket is non-tradable and therefore cheap.",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "The Big Mac index is a PPP with one item in the basket",
+        paragraphs: [
+          "The Economist's Big Mac index, published since 1986, is the joke that turned out to be useful. Take one product that is close to identical worldwide, compare its local price with its American price, and you get an implied exchange rate. Compare that with the actual exchange rate and you get a claim about whether a currency is over- or under-valued.",
+          "It works better than it has any right to because a Big Mac is a small, standardised bundle of exactly the ingredients that matter: beef and bread that trade globally, plus labour, rent, electricity and local tax that do not. It is a basket of one, but it is a well-chosen one.",
+          "It also fails in exactly the way the theory predicts, which is the interesting part. Burgers look systematically cheap in poor countries even after adjusting, because so much of the burger is local labour. The Economist publishes a second version adjusted for income per head for this reason, and the adjusted index is the one worth reading.",
+        ],
+      },
+      {
+        kind: "list",
+        heading: "Four traps in PPP figures",
+        intro:
+          "PPP is the right tool and it is still routinely misused. These are the failures worth knowing about.",
+        items: [
+          "**The basket is not your basket.** A PPP is built from a representative national basket. If your spending is unusual, heavy on imported goods, or concentrated in a capital city, the national PPP does not describe you.",
+          "**Quality is hard to hold constant.** Two countries can price a \"comparable\" item where one version is materially better. Statisticians work hard at this and it remains the largest source of argument in the field.",
+          "**Capital cities distort everything.** Most people in a country do not live in its most expensive city, but most price data, and nearly all the anecdotes on the internet, come from there.",
+          "**PPP is wrong for anything international.** If you are paying off a dollar debt, buying imported equipment, or planning to move abroad, the market rate is the correct one and PPP is the misleading one. The right conversion depends entirely on where the money is going to be spent.",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "A worked way of thinking about it",
+        paragraphs: [
+          "Suppose you are weighing a job in a high-cost country against one at home paying a third as much in dollar terms.",
+          "The market-rate comparison says the foreign job pays three times more. The PPP comparison might say it pays perhaps a third more once local prices are accounted for, because the higher salary is buying groceries and rent at higher prices.",
+          "Both numbers are correct and they answer different questions. Everything you spend locally should be judged at PPP. Everything you send home, save in a foreign currency, or spend on travel and imported goods should be judged at the market rate. Almost nobody is entirely in one category, which is why the honest answer to \"which job pays more\" is usually a split.",
+          "The reason this game shows both a dollar price and a work-time figure is the same reason. The dollar column is the market-rate view, useful for comparing countries. The hours column is the PPP-flavoured view, useful for understanding what a price means to the person paying it. They frequently rank countries in opposite orders, and that disagreement is the most informative thing on the page.",
+        ],
+      },
+      {
+        kind: "cta",
+        heading: "See the two rankings disagree",
+        paragraphs: [
+          "Every country page on this site lists the same basket in dollars and in local work-time. Play a round, then look at how far a country moves between the two columns.",
+        ],
+        buttonLabel: "Play today's puzzle",
+      },
+    ],
+    sources: [
+      {
+        label: "World Bank — International Comparison Program",
+        url: "https://www.worldbank.org/en/programs/icp",
+      },
+      {
+        label: "OECD — Purchasing power parities (PPP)",
+        url: "https://www.oecd.org/en/data/indicators/purchasing-power-parities-ppp.html",
+      },
+      {
+        label: "IMF Finance & Development — Purchasing power parity",
+        url: "https://www.imf.org/external/pubs/ft/fandd/basics/ppp.htm",
+      },
+      {
+        label: "The Economist — The Big Mac index",
+        url: "https://www.economist.com/big-mac-index",
+      },
+      {
+        label: "Eurostat — Purchasing power parities methodology",
+        url: "https://ec.europa.eu/eurostat/web/purchasing-power-parities",
+      },
+    ],
+  },
+
+  // ---------------------------------------------------------------------------
+  {
+    slug: "what-you-pay-for-in-a-cup-of-coffee",
+    title: "The coffee in your coffee costs less than the lid",
+    description:
+      "Green beans are a single-digit share of what a café charges. Here is where the rest goes, and why a record harvest barely moves the price of a flat white.",
+    date: "2026-08-10",
+    status: "published",
+    readingMinutes: 7,
+    body: [
+      {
+        kind: "prose",
+        paragraphs: [
+          "Every so often the coffee price makes the news. A drought in Brazil, a poor robusta harvest in Vietnam, and the futures price of green coffee jumps by half in a few months. Headlines follow about the cost of your morning cup.",
+          "Then you go to a café and the flat white costs almost exactly what it cost before.",
+          "This is not price gouging and it is not a delay in passing the increase on. It is the ordinary arithmetic of a business where the coffee is one of the smaller line items.",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "Where the money in a café cup goes",
+        paragraphs: [
+          "A single espresso shot uses somewhere between seven and eleven grams of roasted coffee. Roasting drives off moisture, so a kilo of roasted beans starts life as rather more than a kilo of green ones, but the direction of the arithmetic is unchanged: even at the elevated green-coffee prices of the last two years, the beans in a single café drink are a matter of cents.",
+          "Now list what else the café is paying for.",
+        ],
+      },
+      {
+        kind: "list",
+        intro: "In roughly descending order for a typical urban café:",
+        ordered: false,
+        items: [
+          "**Staff.** The barista's time, plus whoever else is on shift, plus the employer's share of taxes and contributions on that time.",
+          "**Rent.** A café is a business that sells floor space by the hour and settles the bill in drinks. In an expensive city this can rival the wage bill.",
+          "**Milk.** In a milk-based drink this is often larger than the coffee, because you are using two hundred millilitres of it and eight grams of beans.",
+          "**Everything else that runs.** Electricity for a machine that stays hot all day, water, refrigeration, a dishwasher, waste collection, card processing fees, insurance, accounting.",
+          "**Tax.** VAT or its local equivalent, at a rate that in several countries depends on whether you sit down.",
+          "**The cup, lid and sleeve,** on a takeaway drink, which really can approach the cost of the coffee inside them.",
+          "**Margin,** which on independent cafés is famously thin.",
+        ],
+      },
+      {
+        kind: "callout",
+        heading: "Which is why the price map looks the way it does",
+        paragraphs: [
+          "If the beans are a single-digit percentage of the price and the rest is local labour, local rent and local tax, then a cappuccino is not really a coffee product. It is a **local services product** with some coffee in it, and it will be priced like rent, not like a commodity.",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "The consequence for growers",
+        paragraphs: [
+          "Run the same arithmetic from the other end and it turns bleak.",
+          "If the green coffee in a café drink is a few cents, then the share reaching the person who grew it is smaller still, because between the farm gate and the roaster sit a cooperative or mill, an exporter, shipping, an importer and the roaster's own costs and margin.",
+          "This is the structural reason a boom in coffee prices does relatively little for smallholder incomes and a slump hurts them badly. The farm-gate price moves with the commodity market. The retail price barely notices the commodity market at all. The two ends of the chain are effectively in different industries, one of them a volatile global commodity business and the other a stable local hospitality business.",
+          "It is also why certification schemes exist, why they focus on the farm-gate price specifically, and why arguments about them are so heated: the leverage point is a small number at the very start of a long chain.",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "What actually moves a café price",
+        paragraphs: [
+          "Since coffee is not the driver, the things that do move the price of a cup are the things that move the cost of running a room with a person in it.",
+          "A minimum wage rise moves it. A rent review moves it. An energy price shock moves it, both directly through the machine and indirectly through the milk. A change in the VAT treatment of hospitality moves it immediately and visibly, which is why hospitality VAT cuts are such a popular emergency measure and why the prices rarely come all the way back down afterwards.",
+          "The green coffee price moves it late, partially, and mostly at the supermarket rather than the café, because a bag of beans on a shelf is a product where the coffee is most of what you are buying. This is the cleanest illustration of the tradable and non-tradable split you will find in a single aisle: the same commodity, sold two ways, one of which tracks the world price and one of which does not.",
+        ],
+      },
+      {
+        kind: "table",
+        heading: "Two ways to buy the same beans",
+        columns: ["", "Café cup", "Supermarket bag"],
+        rows: [
+          ["Coffee as a share of price", "Small", "Large"],
+          ["Tracks the world coffee price", "Weakly", "Closely"],
+          ["Tracks local wages and rent", "Closely", "Weakly"],
+          ["Gap between rich and poor countries", "Very large", "Modest"],
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "How to use this when guessing",
+        paragraphs: [
+          "For any prepared drink or prepared food, ignore the ingredient entirely. You are estimating the cost of a few minutes of somebody's labour and a few minutes of a room's rent in that country, and then adding tax.",
+          "For a packaged good on a shelf, do the opposite. Start from a world price, add freight, add the local tax, and adjust modestly for retail margin.",
+          "Getting these two the right way round is worth more than any amount of memorised price data, and it is the single most common mistake people make in the first week of playing.",
+        ],
+      },
+      {
+        kind: "cta",
+        heading: "A cappuccino day is a wage question",
+        paragraphs: [
+          "When the puzzle serves a cappuccino, do not think about coffee. Think about what twenty minutes of a barista's time and a table's worth of rent cost in that country.",
+        ],
+        buttonLabel: "Play today's puzzle",
+      },
+    ],
+    sources: [
+      {
+        label: "International Coffee Organization — Coffee market reports",
+        url: "https://icocoffee.org/coffee-market-reports/",
+      },
+      {
+        label: "Fairtrade Foundation — Coffee farmers",
+        url: "https://www.fairtrade.org.uk/farmers-and-workers/coffee/",
+      },
+      {
+        label: "USDA Foreign Agricultural Service — Coffee: world markets and trade",
+        url: "https://www.fas.usda.gov/data/coffee-world-markets-and-trade",
+      },
+      {
+        label: "OECD — Purchasing power parities (PPP)",
+        url: "https://www.oecd.org/en/data/indicators/purchasing-power-parities-ppp.html",
+      },
+    ],
+  },
+
+  // ---------------------------------------------------------------------------
+  {
+    slug: "vat-the-price-rise-nobody-argues-about",
+    title: "A fifth of what you paid was tax, and you never saw the line",
+    description:
+      "Consumption tax is the largest single wedge between two countries' prices for an identical product, and the one shoppers are least able to see.",
+    date: "2026-08-11",
+    status: "published",
+    readingMinutes: 7,
+    body: [
+      {
+        kind: "prose",
+        paragraphs: [
+          "Here is a difference between two shopping cultures that quietly explains a great deal of confusion.",
+          "In most of the world, the price on the shelf is the price you pay, and the consumption tax is already inside it. In the United States, the price on the shelf is the price before tax, and the till adds it at the end.",
+          "The second system makes the tax visible and annoying. The first makes it invisible and enormous. A European paying a fifth of every purchase in VAT sees no line for it anywhere, ever, unless they ask for a receipt and read the small print at the bottom.",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "How large is enormous",
+        paragraphs: [
+          "Standard rates across the countries in this game span roughly **5 percent to 27 percent**. Two otherwise identical economies at opposite ends of that range would show a price difference of about a fifth on the same physical product with no difference in cost, wage, margin or freight.",
+          "That is larger than the effect of most things people reach for first when explaining a price gap. It is larger than plausible differences in retail margin. It is usually larger than freight. On a packaged good shipped from the same factory, tax is frequently the biggest single term in the difference.",
+        ],
+      },
+      {
+        kind: "stats",
+        items: [
+          { value: "5%", label: "Lowest standard rate in the game" },
+          { value: "27%", label: "Highest standard rate in the EU" },
+          { value: "0%", label: "US federal consumption tax" },
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "The headline rate is the least interesting number",
+        paragraphs: [
+          "Where it gets genuinely strange is food, and food is most of what this game prices.",
+          "Almost every country that charges VAT recognises that a flat tax on groceries falls hardest on the people with the least money, since poorer households spend a larger share of income on food. Almost every country responds differently.",
+          "The United Kingdom and Ireland zero-rate most supermarket food outright: the tax is legally charged at nought percent, which is not the same as being exempt and matters a great deal to the retailer's paperwork. Mexico zero-rates food and medicine. Much of continental Europe applies a reduced band, commonly somewhere between 4 and 10 percent, with staples sometimes lower still. Several countries apply the full standard rate to groceries with no relief at all, on the argument that it is cleaner to tax everything and redistribute through the benefit system than to carve holes in the tax base.",
+          "The upshot is that two countries with near-identical headline rates can tax a basket of groceries completely differently, and the headline rate on its own will mislead you.",
+        ],
+      },
+      {
+        kind: "callout",
+        heading: "The reduced rate is where the lawyers live",
+        paragraphs: [
+          "Every country that taxes food at two rates has to define the boundary in statute, and every boundary drawn in statute eventually gets litigated. The famous British case turned on whether a particular snack was a cake or a biscuit, because the two were taxed differently, and it consumed genuine years of court time. There is a version of this argument in nearly every VAT jurisdiction on earth.",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "Where you stand changes the tax",
+        paragraphs: [
+          "The other boundary that catches people out is prepared food.",
+          "Japan's consumption tax charges a lower rate on food and non-alcoholic drink bought to take away than on the same items consumed on the premises. Several European countries make a similar distinction between restaurant service and food retail. The physical item is identical; the tax depends on a question the cashier has to ask you.",
+          "This is not bureaucratic whimsy. The logic is that restaurant meals are a service and groceries are a necessity, and taxing them alike would either subsidise dining out or penalise cooking at home. Drawing that line in a way that survives contact with a coffee shop is simply difficult.",
+          "It does mean that a cappuccino's tax rate can differ within a single country depending on where you drink it, which is worth remembering before assuming that a price you saw once is the price.",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "Why the US is the odd one out",
+        paragraphs: [
+          "The United States has no federal consumption tax at all. What it has instead is a patchwork of state and local sales taxes, layered on top of each other, differing between neighbouring municipalities, and applied at the till rather than on the shelf.",
+          "Most states exempt groceries, several tax them at a reduced rate, and a handful tax them fully. Which means there is no single American price for anything in this game, and any figure quoted as one is an average across a country whose tax treatment of food changes when you cross a county line.",
+          "It also explains the culture shock in both directions. Americans abroad find that the price on the label is the price, which feels like a discount and is not. Europeans in America find that the price on the label is a fiction, which feels like a trick and is merely a different accounting convention.",
+        ],
+      },
+      {
+        kind: "list",
+        heading: "Reading a price like a tax inspector",
+        intro: "Four questions that will get you closer than a guess.",
+        items: [
+          "Is this a country with a consumption tax at all, or does it collect at the till instead?",
+          "Is the item food? If so, the standard rate is probably irrelevant and the reduced or zero rate is what applies.",
+          "Is the item prepared and served, rather than sold packaged? That often moves it back to a higher rate.",
+          "Is the item one governments like to tax extra: fuel, alcohol, tobacco, sugary drinks? Excise duties sit on top of VAT, and they are frequently larger than it.",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "The reason this is worth knowing",
+        paragraphs: [
+          "Consumption tax is the most predictable component of a price. Wages you have to estimate. Rent you have to guess. Freight depends on a route you do not know.",
+          "The tax rate is a published number, it is the same for everyone in the country, and it moves a shelf price by up to a quarter. Of everything on this list, it is the one term you can look up and be right about, which makes it the cheapest accuracy available to anyone trying to reason about a foreign price.",
+          "That is why every country page on this site carries the country's rate and its treatment of food, sitting directly above the table it explains.",
+        ],
+      },
+      {
+        kind: "cta",
+        heading: "Check the rate before you guess",
+        paragraphs: [
+          "Every country page here shows the local consumption tax and how it treats groceries. Look it up, then play the day's puzzle with a number rather than a hunch.",
+        ],
+        buttonLabel: "Play today's puzzle",
+      },
+    ],
+    sources: [
+      {
+        label: "PwC — Worldwide Tax Summaries, VAT rates",
+        url: "https://taxsummaries.pwc.com/quick-charts/value-added-tax-vat-rates",
+      },
+      {
+        label: "Tax Foundation — VAT rates in Europe",
+        url: "https://taxfoundation.org/data/all/eu/value-added-tax-2025-vat-rates-europe/",
+      },
+      {
+        label: "European Commission — VAT rates",
+        url: "https://taxation-customs.ec.europa.eu/taxation/vat/vat-rates_en",
+      },
+      {
+        label: "OECD — Consumption Tax Trends",
+        url: "https://www.oecd.org/en/publications/consumption-tax-trends_19990979.html",
+      },
+    ],
+  },
+
+  // ---------------------------------------------------------------------------
+  {
+    slug: "the-exchange-rate-you-see-is-not-the-one-you-pay",
+    title: "The exchange rate you looked up is not the one you were charged",
+    description:
+      "Between the rate on your screen and the number on your statement sit three separate margins, one of which you are invited to accept by a card machine abroad.",
+    date: "2026-08-13",
+    status: "published",
+    readingMinutes: 7,
+    body: [
+      {
+        kind: "prose",
+        paragraphs: [
+          "Every price on this site is converted to dollars at a rate captured when the data was compiled. It is worth being honest about what that conversion does and does not tell you, because there is no such thing as *the* exchange rate.",
+          "There is a wholesale rate that almost nobody gets, and then there is a series of margins between it and you.",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "The rate on your screen",
+        paragraphs: [
+          "The number a search engine gives you is the **mid-market rate**: the midpoint between what buyers are bidding and what sellers are asking in the wholesale currency market. It is the fairest single description of what a currency is worth, and it is not a price anyone is offering you.",
+          "It is a midpoint, so by construction nobody trades at it. Institutions trading millions get close. You do not.",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "Three margins between there and your statement",
+        paragraphs: [
+          "Spend abroad on a card and up to three separate charges can land on the same transaction.",
+          "**The network's rate.** Visa and Mastercard each publish a daily conversion rate. It is close to mid-market but not identical, and it is set once for the day rather than moving with the market.",
+          "**The issuer's foreign transaction fee.** Your own bank may add a percentage on top, historically around three percent, though the fee-free travel cards of the last decade have made this far less universal than it was.",
+          "**Dynamic currency conversion.** This is the one worth being angry about. It is the moment a foreign card terminal, or a foreign website at checkout, offers to charge you in your home currency instead of the local one. The offer is framed as a convenience, presented as certainty about the amount, and always phrased so that accepting is the path of least resistance.",
+        ],
+      },
+      {
+        kind: "callout",
+        heading: "Always pay in the local currency",
+        paragraphs: [
+          "When the machine asks whether you want to be charged in your own currency, say no. Accepting hands the conversion to the merchant's payment processor, which sets its own rate and keeps the margin. Declining sends the transaction through in local currency and lets your card network convert it at a rate that is, for once, close to wholesale. The gap is routinely several percent, and it is entirely avoidable.",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "Why the tourist rate is the worst one",
+        paragraphs: [
+          "Airport bureaux de change advertise \"no commission\", and the claim is usually true and entirely beside the point. The margin is in the rate, not in a fee. Compare the buy and sell rates on the board: the spread between them is the business model, and at an airport it can be very wide indeed.",
+          "This is a general principle worth internalising. Whenever a currency service is free, the price is in the rate. Whenever it charges a visible fee, check whether the rate is closer to mid-market, because a transparent fee on a fair rate frequently beats a free service on a bad one.",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "What this means for every table on this site",
+        paragraphs: [
+          "Three things, and they are the reason the methodology page says what it says.",
+          "First, a dollar figure here is a **conversion, not a quote**. It says what the local price was worth at one moment at one rate. A traveller paying with a card would have paid a little more; a traveller changing cash at an airport, meaningfully more.",
+          "Second, the conversion date matters more for some currencies than others. Between two stable currencies, a rate captured months ago is still roughly right. For a currency that has moved sharply, any single conversion is contestable and the local-currency column is the more honest number.",
+          "Third, and most importantly, none of this affects the comparison that actually matters. The work-time column, which shows how long the average local wage takes to earn an item, never leaves the local currency: it is a local price divided by a local wage. The exchange rate cancels out entirely, which is precisely why that column is the one to trust when a currency is in motion.",
+        ],
+      },
+      {
+        kind: "list",
+        heading: "Practical rules",
+        ordered: false,
+        items: [
+          "Look up the mid-market rate to know what fair looks like, then expect to do slightly worse.",
+          "Decline dynamic currency conversion every time, at terminals and at online checkouts alike.",
+          "Compare a currency service's rate against mid-market rather than comparing advertised fees.",
+          "Treat any single-day conversion of a volatile currency as an estimate with a wide error bar.",
+          "When comparing two countries' living costs, prefer a measure where the exchange rate cancels out.",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "The honest caveat",
+        paragraphs: [
+          "This is the part of the site's data that is least stable, and pretending otherwise would be dishonest. Prices in local currency change slowly, at the speed of shop shelves. Exchange rates change continuously, and for a handful of currencies they can move by tens of percent inside a year.",
+          "So the local-currency figure ages gracefully and the dollar figure does not. Where the two disagree about whether a country has become more expensive, the local column is usually describing the country and the dollar column is usually describing the currency market. They are different subjects.",
+        ],
+      },
+      {
+        kind: "cta",
+        heading: "Guess in the currency that means something",
+        paragraphs: [
+          "The game accepts guesses in dollars or euros, and every reference page shows the local-currency price beside the converted one. When a country's currency is moving, read the local column first.",
+        ],
+        buttonLabel: "Play today's puzzle",
+      },
+    ],
+    sources: [
+      {
+        label: "Visa — Exchange rate calculator",
+        url: "https://usa.visa.com/support/consumer/travel-support/exchange-rate-calculator.html",
+      },
+      {
+        label: "Mastercard — Currency conversion tool",
+        url: "https://www.mastercard.us/en-us/personal/get-support/convert-currency.html",
+      },
+      {
+        label: "European Commission — Cross-border payments and currency conversion",
+        url: "https://finance.ec.europa.eu/consumer-finance-and-payments/payment-services/cross-border-payments-and-currency-conversions_en",
+      },
+      {
+        label: "Bank for International Settlements — Triennial FX survey",
+        url: "https://www.bis.org/statistics/rpfx22.htm",
+      },
+    ],
+  },
+
+  // ---------------------------------------------------------------------------
+  {
+    slug: "shrinkflation-the-price-rise-in-the-packaging",
+    title: "The price did not go up. The bag got smaller.",
+    description:
+      "Shrinkflation is a price rise disguised as a package redesign. Statisticians catch it, shoppers mostly do not, and there is a reason companies prefer it.",
+    date: "2026-08-14",
+    status: "published",
+    readingMinutes: 7,
+    body: [
+      {
+        kind: "prose",
+        paragraphs: [
+          "You know the feeling before you can name it. The bag looks the same. The price is the same. Something is wrong with the bag.",
+          "You are usually right. The chocolate bar lost a segment. The crisp packet holds more air. The tub of ice cream that was a litre is now nine hundred millilitres and has a subtly different base so it still fills the same space in the freezer.",
+          "This is shrinkflation, and it is worth understanding properly, because the interesting part is not that companies do it. It is *why they prefer it*, and what that preference reveals about how you actually shop.",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "The reason it beats a price rise",
+        paragraphs: [
+          "Consider a manufacturer facing higher input costs who needs an extra ten percent of revenue per unit. Two options.",
+          "Raise the price by ten percent. The number on the shelf label changes, which is the single most visible thing in the entire shop. Shoppers notice immediately, price-comparison engines notice, competitors' labels sit right beside yours, and a segment of customers switch on the spot.",
+          "Or cut the contents by ten percent and leave the price alone. Now the shelf label is unchanged. The only place the change appears is the net weight, printed small, in a unit most people are not converting in their heads while holding a basket.",
+          "Both achieve the same revenue. Only one of them is legible at a glance, and the research on this is consistent and unsurprising: people are markedly more sensitive to a change in price than to an equivalent change in quantity.",
+        ],
+      },
+      {
+        kind: "callout",
+        heading: "Which makes it a rational response to how we shop",
+        paragraphs: [
+          "Shrinkflation is not a trick that works because shoppers are careless. It works because a price is a single number you have memorised and a net weight is an arithmetic problem you have to do. Nobody does arithmetic in an aisle.",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "The inflation statistics do catch it",
+        paragraphs: [
+          "One belief worth correcting, because it circulates constantly: shrinkflation does not hide from the official inflation figures.",
+          "National statistical agencies collect prices *and* package sizes, and when a size changes they apply a quantity adjustment so that the index measures the price per unit rather than the price per pack. A bar that shrinks by a tenth at an unchanged price is recorded as a price rise of roughly a ninth. This is standard practice at every serious statistics office.",
+          "So if you feel that official inflation understates your experience, shrinkflation is not the mechanism. The likelier explanations are that your personal basket is weighted differently from the national one, that food and energy have risen faster than the all-items index while occupying more of your budget than the average, or that you are comparing a memory of a price against a receipt, and memories of prices are anchored years out of date.",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "Its quieter cousins",
+        paragraphs: [
+          "Shrinkflation has two relatives that behave the same way and get discussed less.",
+          "**Skimpflation** is the same manoeuvre applied to quality rather than quantity. The pack is the same size and the recipe is cheaper: less of the expensive ingredient, a cheaper oil, a substitution that survives most palates. Or, in services, the same price for a thinner version of the thing: fewer staff on the floor, a longer wait, a support line that has become a form.",
+          "**Fee unbundling** takes something that used to be included and charges for it separately. The headline price falls or holds while the total paid rises. Airlines industrialised this, and it has since spread to hotels, ticketing, food delivery and banking.",
+          "All three exist for the same reason. Each one moves cost from the number the customer compares to a number the customer does not.",
+        ],
+      },
+      {
+        kind: "list",
+        heading: "How to see it",
+        intro:
+          "The defence is unglamorous and it works.",
+        items: [
+          "**Read the unit price, not the price.** Most supermarkets are required to display price per kilo, per litre or per hundred grams on the shelf label. It is the small line under the big one, and it is the only number on the label that permits comparison.",
+          "**Compare by unit price across brands and pack sizes.** The larger pack is not reliably cheaper per unit; promotional pricing frequently reverses it.",
+          "**Watch for a redesign.** A new pack shape or a refreshed logo on a familiar product is often the moment the contents changed, because the redesign is what stops you noticing the old pack beside it.",
+          "**Check the net weight on things you buy weekly.** These are the products where a small change compounds across a year, and the ones whose old weight you have some chance of remembering.",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "Why this site prices in fixed units",
+        paragraphs: [
+          "Every item in this game is quoted in a unit that cannot shrink. A litre of milk. A dozen eggs. A kilo of apples. One litre of fuel. A cup of coffee. One burger to a fixed specification.",
+          "That is deliberate, and it is the only way a cross-country comparison survives contact with packaging. Countries do not agree on pack sizes: the standard bottle, carton and bag differ everywhere, and a price per pack would be comparing a Japanese carton against an American gallon and calling it a fact about milk.",
+          "Normalising to a fixed unit costs some realism, because nobody buys exactly one kilo of apples. It buys something worth more: a number that means the same thing in every row of the table, and that will still mean the same thing when the packaging changes again.",
+        ],
+      },
+      {
+        kind: "cta",
+        heading: "Guess in units that hold still",
+        paragraphs: [
+          "Every price in this game is quoted per litre, per dozen, per kilo or per serving, so the answer never depends on what a manufacturer decided a pack should be this year.",
+        ],
+        buttonLabel: "Play today's puzzle",
+      },
+    ],
+    sources: [
+      {
+        label: "US Bureau of Labor Statistics — How the CPI handles quality and size changes",
+        url: "https://www.bls.gov/cpi/quality-adjustment/",
+      },
+      {
+        label: "UK Office for National Statistics — Shrinkflation research",
+        url: "https://www.ons.gov.uk/economy/inflationandpriceindices",
+      },
+      {
+        label: "Eurostat — Harmonised Index of Consumer Prices methodology",
+        url: "https://ec.europa.eu/eurostat/web/hicp/methodology",
+      },
+      {
+        label: "European Commission — Unit pricing rules for consumers",
+        url: "https://commission.europa.eu/law/law-topic/consumer-protection-law_en",
+      },
+    ],
+  },
+
+  // ---------------------------------------------------------------------------
+  {
+    slug: "why-eggs-went-insane",
+    title: "Eggs are the most honest price in the shop",
+    description:
+      "No brand, no marketing, barely any processing. When the egg price moves, something real happened to the birds, and everyone finds out at once.",
+    date: "2026-08-15",
+    status: "published",
+    readingMinutes: 7,
+    body: [
+      {
+        kind: "prose",
+        paragraphs: [
+          "Most things in a supermarket are insulated from their own cost. A branded cereal is mostly marketing, packaging and distribution, so a swing in the wheat price barely reaches the shelf. A chocolate bar can absorb a great deal of movement in the cocoa market before anyone notices.",
+          "An egg has nowhere to hide. It is a commodity with almost no processing between the bird and the box, sold in a standard unit, largely undifferentiated by brand, and bought frequently enough that people remember what it used to cost.",
+          "Which is why, when the egg price moves, it moves visibly, fast, and into the news.",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "What actually sets it",
+        paragraphs: [
+          "Three things, in descending order of how much they move.",
+          "**Feed.** A laying hen eats a diet dominated by corn and soy, both of which trade on world commodity markets. When grain prices spike, whether from drought, from an export disruption, or from demand for biofuel, the cost of every egg produced anywhere rises within months. This is the slow, grinding driver.",
+          "**Disease.** Highly pathogenic avian influenza is the fast one. When it reaches a commercial flock, the standard response is to cull the entire flock, which can mean millions of birds from a single detection. Supply drops abruptly, and it cannot be restored quickly: a replacement pullet takes roughly four to five months to reach laying age, so the shortfall persists long after the outbreak is contained.",
+          "**Energy and labour.** Barns are heated, ventilated, lit and cleaned; eggs are graded, packed and refrigerated in transit. These move the price less dramatically but they never stop.",
+        ],
+      },
+      {
+        kind: "callout",
+        heading: "Why an outbreak takes so long to unwind",
+        paragraphs: [
+          "You cannot buy hens the way you buy stock. Between the decision to replace a flock and the first egg from it sit months of raising birds, and every producer affected is trying to do it at the same time. That biological delay is why egg prices spike sharply and come down slowly.",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "The recent history is a case study",
+        paragraphs: [
+          "The wave of highly pathogenic avian influenza that began in 2022 became the largest animal-health event in modern US poultry history, with tens of millions of birds culled across successive waves. Egg prices rose to levels with no recent precedent, fell back as flocks were rebuilt, then rose again on new detections.",
+          "By early 2025 the average US retail price for a dozen large Grade A eggs had passed **six dollars**, a figure that would have read as a typo a few years earlier, and individual cities saw considerably worse. Europe and Japan saw their own outbreaks and their own spikes on their own timetables.",
+          "Two details from that episode are worth keeping. The first is how completely local it was: the price of eggs in a country depends overwhelmingly on the health of that country's own flock, because eggs in shell are shipped internationally far less than most foods. The second is how quickly it became a political story, which is what happens to any staple that doubles in a year.",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "Why the price differs between countries even in a calm year",
+        paragraphs: [
+          "Set the outbreaks aside and there is still a wide spread, and most of it is regulation.",
+          "The European Union banned conventional battery cages from 2012, and several member states have gone further towards barn, free-range and organic systems. Cage-free systems require more space and more labour per bird, which raises the cost of production. That cost is real and it appears on the shelf.",
+          "The United States runs a mix, with cage-free mandates in some states and conventional production elsewhere, so a national average is a blend of two rather different cost structures. Elsewhere the standards, and therefore the costs, differ again.",
+          "There is also a genuine difference in what an egg *is*. Countries disagree about whether eggs are washed after laying, and the answer determines whether they are refrigerated in the shop, how long they keep, and what the cold chain costs. A refrigerated egg and an unrefrigerated one are not quite the same product, and comparing their prices carries that caveat.",
+        ],
+      },
+      {
+        kind: "table",
+        heading: "How fast each input reaches the shelf",
+        columns: ["Driver", "Speed", "Size of effect"],
+        rows: [
+          ["Avian influenza outbreak", "Weeks", "Very large, temporary"],
+          ["Feed grain prices", "Months", "Large, persistent"],
+          ["Energy costs", "Months", "Moderate"],
+          ["Housing regulation", "Years", "Moderate, permanent"],
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "What eggs teach about every other price",
+        paragraphs: [
+          "The lesson generalises, and it is the reason this item is in the game at all.",
+          "The less processing and branding sits between a raw input and a shelf, the more faithfully the shelf reports what happened to the input. Eggs, milk and fuel are the honest items: their prices are close to their costs and they move when their costs move. A prepared drink, a branded snack, a restaurant meal are the insulated ones, where the input is a minor term and the price mostly reports local wages and rent.",
+          "So when you see a price move sharply, the first question is not what happened to demand. It is how thin the layer is between the field and the label, because that thinness is what decides whether a shock arrives at the till or is absorbed on the way.",
+        ],
+      },
+      {
+        kind: "cta",
+        heading: "Guess the honest items differently",
+        paragraphs: [
+          "On an egg or milk day, think about that country's own farms, its own flock and its own regulations. On a coffee or burger day, think about its wages. They are different questions with different answers.",
+        ],
+        buttonLabel: "Play today's puzzle",
+      },
+    ],
+    sources: [
+      {
+        label: "USDA Economic Research Service — Poultry and eggs",
+        url: "https://www.ers.usda.gov/topics/animal-products/poultry-eggs",
+      },
+      {
+        label: "USDA APHIS — Avian influenza in commercial poultry",
+        url: "https://www.aphis.usda.gov/livestock-poultry-disease/avian",
+      },
+      {
+        label: "US Bureau of Labor Statistics — Consumer Price Index",
+        url: "https://www.bls.gov/cpi/",
+      },
+      {
+        label: "European Commission — Egg market situation",
+        url: "https://agriculture.ec.europa.eu/farming/animal-products/eggs_en",
+      },
+    ],
+  },
+
+  // ---------------------------------------------------------------------------
+  {
+    slug: "how-to-compare-cost-of-living",
+    title: "How to compare two countries without fooling yourself",
+    description:
+      "Cost-of-living comparisons go wrong in the same six ways every time. Here is a method that survives contact with a real decision.",
+    date: "2026-08-16",
+    status: "published",
+    readingMinutes: 8,
+    body: [
+      {
+        kind: "prose",
+        paragraphs: [
+          "At some point most people run this comparison seriously: a job offer abroad, a move, a retirement, a decision about where a remote salary goes furthest.",
+          "And most people run it badly, not through carelessness but because the obvious method is wrong in a way that is hard to see. This is the method that is not.",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "Start by throwing away the index",
+        paragraphs: [
+          "Cost-of-living indices are the natural starting point and the worst one. They compress a country into a single number, and the compression is done using weights that describe an average household which is almost certainly not you.",
+          "A typical index assigns a large share to housing, a large share to food, and smaller shares to transport, healthcare, education and everything else. If your circumstances differ from that profile in any significant way, and nearly everyone's do, the single number is describing a household you are not part of.",
+          "Someone with school-age children in a country with expensive private schooling is in a completely different economy from a single person in the same city. So is someone who owns their home outright compared with someone renting. A single index number cannot represent both, and it does not try to.",
+        ],
+      },
+      {
+        kind: "callout",
+        heading: "The only comparison that survives",
+        paragraphs: [
+          "Price **your** basket, not the average one. Write down what you actually spend money on in a month, then price that list in both places. It is more work than reading an index and it is the only method that produces an answer about you.",
+        ],
+      },
+      {
+        kind: "list",
+        heading: "The six mistakes",
+        intro:
+          "In rough order of how much damage each one does.",
+        items: [
+          "**Converting at the market exchange rate.** It prices your salary as though you were spending it on imported goods. Most spending is local. Use a purchasing-power comparison for anything spent locally and the market rate only for money that crosses a border.",
+          "**Comparing capital cities to countries.** Nearly all price anecdotes come from the most expensive city in each country, and national averages come from everywhere. Compare like with like or the answer is noise.",
+          "**Forgetting what a salary already includes.** In one country a wage is take-home after healthcare, pension and childcare have been handled through taxes. In another the same nominal wage has to buy all three privately. These are not comparable numbers and no exchange rate will make them so.",
+          "**Ignoring what you would stop buying.** A car is a large monthly cost that vanishes in a city with usable transport. Air conditioning is a large bill in one climate and nothing in another. Moves change the basket, not just its price.",
+          "**Pricing the visit rather than the life.** Tourist prices are a different economy: hotel districts, restaurant meals, taxis. Residents shop in a country that visitors mostly never see.",
+          "**Using one year's exchange rate as though it were permanent.** If your income and your costs are in different currencies, you have taken on currency risk, and a comparison run at today's rate is a snapshot of a number that moves.",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "A method that works",
+        paragraphs: [
+          "Five steps, in order. It takes an evening and it beats every index.",
+          "**One: write down your actual month.** Not a budget you aspire to. Pull three months of statements and list what left the account, by category, with the amounts. Most people are surprised twice: once by a category they thought was small, and once by a category they had forgotten entirely.",
+          "**Two: split the list into local and portable.** Rent, groceries, transport, services and utilities are local and will be repriced by the move. Subscriptions, debt payments, savings and anything denominated in a foreign currency are portable and will not.",
+          "**Three: price the local half in both places.** Use rental listings for the specific area you would live in, supermarket prices for the things you actually eat, and local transport fares. Reference tables like the ones on this site are useful for a sanity check on a handful of comparable items; they are not a substitute for pricing your own list.",
+          "**Four: compare net income, not gross.** Run both salaries through both tax systems, including social contributions, and account for what those contributions buy. A higher gross salary in a country where you must privately fund healthcare and retirement can be a lower real one.",
+          "**Five: add the things that are not money.** Commute length, holiday entitlement, sick leave, notice periods, healthcare access, how far you would be from people you care about, and what happens to your position if the job ends. These do not convert into currency and they routinely dominate the decision anyway.",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "What the work-time column is for",
+        paragraphs: [
+          "There is one comparison that is unusually robust, and it is the reason every country page here shows it.",
+          "Take a price in local currency and divide it by a local wage. The result is how long someone has to work to buy the thing, and it has a property no dollar figure has: **the exchange rate cancels out**. It cannot be distorted by a currency swing, a conversion date or a bad rate at an airport.",
+          "It is not a complete answer, because wage averages hide enormous dispersion and the average worker is a statistical construct. But as a way of asking whether a price is high *for the people who live there*, it beats every conversion, and it is frequently the column that reverses the ranking a dollar table gave you.",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "The honest limits of this site",
+        paragraphs: [
+          "Worth saying plainly, since this is a page about not fooling yourself.",
+          "The figures here are national averages of a small basket of everyday items, compiled from public sources and refreshed when those sources publish. They are good for building intuition, for noticing that a country you assumed was expensive is not, and for the specific question of how a handful of ordinary goods compare across borders.",
+          "They are not a relocation calculator. They contain no housing costs, which will be the largest line in almost anyone's budget, no healthcare, no schooling and no tax modelling. Anyone making a real decision needs all four, and needs them for the specific city and circumstances rather than for a country.",
+          "Use this to calibrate your intuition. Use your own statements, real rental listings and a tax calculator to make the decision.",
+        ],
+      },
+      {
+        kind: "cta",
+        heading: "Start by finding out how wrong you are",
+        paragraphs: [
+          "The daily puzzle is a fast, blunt test of how well calibrated your sense of foreign prices actually is. Most people discover it is worse than they assumed, which is the useful part.",
+        ],
+        buttonLabel: "Play today's puzzle",
+      },
+    ],
+    sources: [
+      {
+        label: "World Bank — International Comparison Program",
+        url: "https://www.worldbank.org/en/programs/icp",
+      },
+      {
+        label: "OECD — Purchasing power parities (PPP)",
+        url: "https://www.oecd.org/en/data/indicators/purchasing-power-parities-ppp.html",
+      },
+      {
+        label: "OECD — Taxing Wages",
+        url: "https://www.oecd.org/en/publications/taxing-wages_20725124.html",
+      },
+      {
+        label: "Eurostat — Household consumption expenditure",
+        url: "https://ec.europa.eu/eurostat/web/household-budget-surveys",
+      },
+    ],
+  },
 ];
 
 /** Only articles that are actually written. Everything else stays unlisted. */
@@ -1594,4 +2737,43 @@ export function getArticle(slug: string): Article | undefined {
 /** True when the article is finished and safe to index. */
 export function isPublished(a: Article | undefined): boolean {
   return !!a && a.status === "published" && !!a.body && a.body.length > 0;
+}
+
+/**
+ * Words in a rendered article, for the `wordCount` property of its schema.
+ *
+ * Counted from the blocks rather than typed in by hand, so it cannot drift away
+ * from the piece it describes. Only reader-facing strings count: headings and
+ * body copy yes, a table's column labels no, since those are chrome.
+ */
+export function countWords(blocks: ArticleBlock[]): number {
+  const text: string[] = [];
+
+  for (const b of blocks) {
+    if ("heading" in b && b.heading) text.push(b.heading);
+    switch (b.kind) {
+      case "prose":
+      case "callout":
+      case "cta":
+        text.push(...b.paragraphs);
+        break;
+      case "list":
+        if (b.intro) text.push(b.intro);
+        text.push(...b.items);
+        break;
+      case "table":
+        if (b.intro) text.push(b.intro);
+        if (b.caption) text.push(b.caption);
+        text.push(...b.rows.flat());
+        break;
+      case "quote":
+        text.push(b.text, b.attribution ?? "");
+        break;
+      case "stats":
+        text.push(...b.items.map((i) => `${i.value} ${i.label}`));
+        break;
+    }
+  }
+
+  return text.join(" ").split(/\s+/).filter(Boolean).length;
 }

@@ -1,5 +1,7 @@
 import Link from "next/link";
+import CookiePreferences from "./CookiePreferences";
 import { SITE_NAME } from "@/lib/seo";
+import { AUTHOR } from "@/lib/author";
 
 // Server-rendered footer, grouped so every section of the site is reachable in
 // one hop from any page. The per-country and per-item pages it links to hide
@@ -19,6 +21,7 @@ const GROUPS: { title: string; links: { href: string; label: string }[] }[] = [
     links: [
       { href: "/blog", label: "Guides" },
       { href: "/methodology", label: "Methodology" },
+      { href: "/editorial", label: "Editorial policy" },
       { href: "/about", label: "About" },
     ],
   },
@@ -27,6 +30,7 @@ const GROUPS: { title: string; links: { href: string; label: string }[] }[] = [
     links: [
       { href: "/contact", label: "Contact" },
       { href: "/privacy", label: "Privacy" },
+      { href: "/terms", label: "Terms of use" },
       { href: "/", label: "Play today's puzzle" },
     ],
   },
@@ -57,6 +61,13 @@ export default function SiteFooter() {
                   </Link>
                 </li>
               ))}
+              {/* Renders nothing unless a consent message actually exists for
+                  this reader. See components/CookiePreferences.tsx. */}
+              {g.title === "Site" && (
+                <li>
+                  <CookiePreferences />
+                </li>
+              )}
             </ul>
           </div>
         ))}
@@ -77,8 +88,19 @@ export default function SiteFooter() {
           </Link>{" "}
           for how each figure is produced.
         </p>
+        {/* The publisher, named, on every page. An ad reviewer sampling a
+            random reference page should not have to navigate to find out who
+            is behind the numbers on it. */}
         <p>
-          © {new Date().getFullYear()} {SITE_NAME}
+          © {new Date().getFullYear()} {SITE_NAME}. Compiled, written and
+          maintained by{" "}
+          <Link
+            href="/about#author"
+            className="underline decoration-rule underline-offset-2 transition-colors duration-fast ease-out hover:text-ink"
+          >
+            {AUTHOR.name}
+          </Link>
+          .
         </p>
       </div>
     </footer>

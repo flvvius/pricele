@@ -12,9 +12,13 @@ import {
   SITE_DESCRIPTION,
   TITLE_DEFAULT,
   TITLE_TEMPLATE,
+  absoluteUrl,
   gameJsonLd,
   websiteJsonLd,
+  organizationJsonLd,
+  personJsonLd,
 } from "@/lib/seo";
+import { AUTHOR } from "@/lib/author";
 
 // Self-hosted and subset at build time, so there is no third-party font request
 // and no layout shift. `display: swap` on the two text faces keeps first paint
@@ -61,8 +65,10 @@ export const metadata: Metadata = {
     "price of coca-cola by country",
     "daily puzzle",
   ],
-  authors: [{ name: SITE_NAME }],
-  creator: SITE_NAME,
+  // A real, named person, not the site's own name. This is the E-E-A-T signal
+  // that an anonymous compilation site cannot offer; see lib/author.ts.
+  authors: [{ name: AUTHOR.name, url: absoluteUrl("/about#author") }],
+  creator: AUTHOR.name,
   publisher: SITE_NAME,
   // No canonical here on purpose. Metadata is inherited, so a canonical set on
   // the layout is a canonical on every route that doesn't override it, and
@@ -156,7 +162,14 @@ export default function RootLayout({
             <script async src={ADSENSE_LOADER_SRC} crossOrigin="anonymous" />
           </>
         )}
-        <JsonLd data={[websiteJsonLd(), gameJsonLd()]} />
+        <JsonLd
+          data={[
+            websiteJsonLd(),
+            gameJsonLd(),
+            organizationJsonLd(),
+            personJsonLd(),
+          ]}
+        />
       </head>
       <body className="min-h-dvh bg-paper font-sans text-ink-body antialiased">
         {children}
