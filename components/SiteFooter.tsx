@@ -20,6 +20,7 @@ const GROUPS: { title: string; links: { href: string; label: string }[] }[] = [
     title: "Read",
     links: [
       { href: "/blog", label: "Guides" },
+      { href: "/daily-games", label: "Daily games like Wordle" },
       { href: "/methodology", label: "Methodology" },
       { href: "/editorial", label: "Editorial policy" },
       { href: "/about", label: "About" },

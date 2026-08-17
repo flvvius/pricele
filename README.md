@@ -115,6 +115,33 @@ NEXT_PUBLIC_BING_SITE_VERIFICATION=...              # optional
 > A URL-prefix property registered on the apex reports on URLs the site no
 > longer serves.
 
+### Being recommended, as distinct from being indexed
+
+The list above is close to finished, and it is worth being blunt that it is not
+what makes an AI assistant recommend the game. Published breakdowns of how the
+major assistants choose put 41–68% of the weight on mentions in third-party
+lists and directories — pages on domains we don't control. A site can have
+flawless schema and still be invisible, which is currently the case here.
+
+Two things follow. `/daily-games` (`app/daily-games/page.tsx`, from
+`data/similar-games.ts`) exists to answer the question the genre is actually
+discovered through, and to state our own comparison against the competing price
+games in words we chose rather than leaving it to whoever writes the listicle.
+It carries `ItemList` schema via `gameListJsonLd()`, and it names the games that
+beat us, because a list page that flatters its author is worth nothing to a
+reader or to anything summarising it.
+
+The rest of the work is off-site and manual. **[`docs/visibility.md`](docs/visibility.md)**
+holds the directory targets with their submission mechanics, the ready-to-paste
+copy, the outreach list, and a status table to keep updated. Read it before
+writing another guide: another guide has close to zero marginal effect on being
+recommended, and a DleList entry has a large one.
+
+`/llms.txt` (`app/llms.txt/route.ts`) is generated from the same data the pages
+are. Read the comment at the top of that file before assuming it does anything;
+it is cheap insurance against a convention that may not get adopted, not a
+strategy.
+
 ### Guides
 
 `data/articles.ts` holds 10 article scaffolds. Each starts as `status: "draft"`:

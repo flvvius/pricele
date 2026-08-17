@@ -11,6 +11,10 @@ const LINKS = [
   { href: "/archive", label: "Archive" },
   { href: "/blog", label: "Guides" },
   { href: "/methodology", label: "Methodology" },
+  // Last in the run on purpose. The strip already overflows on a phone (see the
+  // note below), and of the seven links this is the one a returning player is
+  // least likely to be reaching for.
+  { href: "/daily-games", label: "Similar games" },
 ];
 
 export default function SiteHeader() {

@@ -344,6 +344,58 @@ export function websiteJsonLd() {
   };
 }
 
+export interface ListedGame {
+  name: string;
+  url: string;
+  description: string;
+}
+
+/**
+ * `ItemList` of games, for a page that recommends some.
+ *
+ * The point is not the rich result — a list of outbound links doesn't earn one.
+ * It's that a list page's whole value to an answer engine is being parsed as a
+ * list: named items, in order, each resolving to a URL. Prose alone leaves that
+ * to be inferred from the markup, and inference is where a page like this gets
+ * read as an article that happens to mention some games.
+ *
+ * `position` is 1-based, per schema.org. Each entry is a `Game` rather than a
+ * bare `Thing` so the type survives into whatever consumes it, and `url` sits on
+ * the item, not the `ListItem`, so the URL belongs to the game rather than to
+ * its slot in the ranking.
+ */
+export function gameListJsonLd({
+  name,
+  description,
+  path,
+  games,
+}: {
+  name: string;
+  description: string;
+  path: string;
+  games: ListedGame[];
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name,
+    description,
+    url: absoluteUrl(path),
+    numberOfItems: games.length,
+    itemListOrder: "https://schema.org/ItemListOrderAscending",
+    itemListElement: games.map((game, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      item: {
+        "@type": "Game",
+        name: game.name,
+        url: game.url,
+        description: game.description,
+      },
+    })),
+  };
+}
+
 /**
  * Reuse terms for the price tables, as required by `Dataset` schema (Search
  * Console flags a Dataset with no `license`). It points at the methodology page
