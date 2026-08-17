@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "og": "node scripts/generate-og.mjs",
+    "icons": "node scripts/generate-icons.mjs",
     "test": "vitest run",
     "refresh-big-mac": "tsx scripts/refresh-big-mac.ts"
   },

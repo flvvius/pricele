@@ -70,6 +70,19 @@ export const metadata: Metadata = {
   authors: [{ name: AUTHOR.name, url: absoluteUrl("/about#author") }],
   creator: AUTHOR.name,
   publisher: SITE_NAME,
+  // Linked explicitly rather than left to the root-path convention. A crawler
+  // that wants a site icon asks for /apple-touch-icon.png whether or not
+  // anything points at it, and until the file existed that request 404'd. The
+  // file is the fix (scripts/generate-icons.mjs writes it); this link is what
+  // saves the crawler the guess.
+  //
+  // /favicon.ico is deliberately absent from this list. Next emits its own link
+  // for app/favicon.ico from the file convention, and naming it here as well
+  // emits the tag twice rather than replacing it.
+  icons: {
+    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
+    apple: "/apple-touch-icon.png",
+  },
   // No canonical here on purpose. Metadata is inherited, so a canonical set on
   // the layout is a canonical on every route that doesn't override it, and
   // including 404s and any page whose generateMetadata bails out, all of which
