@@ -85,6 +85,9 @@ describe("icon file formats", () => {
     const pre = readFileSync(
       join(root, "public/apple-touch-icon-precomposed.png")
     );
-    expect(pre.equals(plain)).toBe(true);
+    // Compared as a plain Uint8Array rather than Buffer-to-Buffer: recent
+    // @types/node parameterises Buffer over its backing ArrayBuffer, so
+    // Buffer.equals(Buffer) no longer typechecks even though it runs fine.
+    expect(pre.equals(new Uint8Array(plain))).toBe(true);
   });
 });
