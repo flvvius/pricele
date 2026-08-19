@@ -10,6 +10,7 @@ import {
   dateFromISO,
   findPrice,
   itemOrderForDay,
+  countryForDay,
   PRICES,
 } from "./puzzle";
 import { ROTATION } from "@/data/rotation";
@@ -46,20 +47,76 @@ describe("daily puzzle rotation", () => {
   });
 
   it("keeps the historical country schedule unchanged", () => {
-    // These days were already played under the single-item rotation; adding
-    // items must not have moved any of them to a different country.
+    // These days were already played; nothing added since may move them.
     expect(getDailyPuzzle(new Date(2026, 6, 25))?.price.countryCode).toBe("US");
     expect(getDailyPuzzle(new Date(2026, 6, 26))?.price.countryCode).toBe("TH");
-    const wrapped = getDailyPuzzle(new Date(2026, 6, 24 + 33));
-    expect(wrapped?.price.countryCode).toBe("IN");
   });
 
-  it("advances the item every day too", () => {
-    for (const day of [0, 1, 2, 40, 41, 42]) {
+  it("never rewrites the schedule the game launched with", () => {
+    // The two legacy lists are what past days were actually played on. They are
+    // frozen here as well as in data/rotation.ts, so a well-meaning tidy-up of
+    // either fails the build instead of silently rewriting the archive and
+    // every share card already posted.
+    expect(ROTATION.legacyCountryOrder).toEqual([
+      "IN", "US", "TH", "DE", "EG", "NO", "MX", "JP", "AR", "CH",
+      "VN", "GB", "ZA", "AU", "ID", "FR", "TR", "BR", "SA", "IE",
+      "CN", "KR", "NZ", "PL", "LB", "IT", "AE", "SE", "PT", "CA",
+      "ES", "NL", "SG",
+    ]);
+    expect(ROTATION.legacyItemOrder).toEqual([
+      "big-mac", "milk-1l", "cappuccino", "eggs-12",
+      "gasoline-1l", "coke-330ml", "apples-1kg",
+    ]);
+    expect(ROTATION.startDate).toBe("2026-07-24");
+    expect(ROTATION.epoch).toBe("2026-07-01");
+  });
+
+  it("keeps every day already played on its original country", () => {
+    for (let day = 0; day < ROTATION.countryOrderFrom; day++) {
+      const expected =
+        ROTATION.legacyCountryOrder[day % ROTATION.legacyCountryOrder.length];
+      expect(countryForDay(day), `day ${day}`).toBe(expected);
       const iso = addDaysISO(ROTATION.startDate, day);
-      const next = addDaysISO(ROTATION.startDate, day + 1);
-      expect(getPuzzleItemFor(iso), iso).not.toBe(getPuzzleItemFor(next));
+      expect(getPuzzleForISO(iso)?.price.countryCode, iso).toBe(expected);
     }
+  });
+
+  it("lists every country once, in both schedules", () => {
+    for (const list of [ROTATION.countryOrder, ROTATION.legacyCountryOrder]) {
+      expect(new Set(list).size).toBe(list.length);
+    }
+    // The live list is the whole roster; the legacy one is a subset of it.
+    expect([...ROTATION.countryOrder].sort()).toEqual(
+      [...COUNTRIES.map((c) => c.code)].sort()
+    );
+    for (const code of ROTATION.legacyCountryOrder) {
+      expect(ROTATION.countryOrder).toContain(code);
+    }
+  });
+
+  it("schedules a different item every day", () => {
+    // The scheduled item always advances. What a day actually resolves to can
+    // repeat, because a country that does not stock the scheduled item falls
+    // through to the next one it does have, and two thinly-stocked countries in
+    // a row can land on the same fallback. That is checked separately below.
+    for (const day of [0, 1, 2, 29, 30, 31, 40, 41, 42]) {
+      expect(itemOrderForDay(day)[0], `day ${day}`).not.toBe(
+        itemOrderForDay(day + 1)[0]
+      );
+    }
+  });
+
+  it("rarely shows the same item two days running", () => {
+    let repeats = 0;
+    const days = 833; // one full country x item cycle
+    for (let i = ROTATION.itemOrderFrom; i < ROTATION.itemOrderFrom + days; i++) {
+      const a = pairForDate(dateFromISO(addDaysISO(ROTATION.startDate, i)));
+      const b = pairForDate(dateFromISO(addDaysISO(ROTATION.startDate, i + 1)));
+      if (a && b && a.itemId === b.itemId) repeats++;
+    }
+    // Sparse countries make some repetition unavoidable; a table that had gone
+    // badly hollow would show up here as this number climbing.
+    expect(repeats / days).toBeLessThan(0.05);
   });
 
   it("keeps every day already played on the seven-item schedule", () => {
@@ -71,7 +128,7 @@ describe("daily puzzle rotation", () => {
     expect(itemOrderFrom).toBeGreaterThan(0);
     for (let day = 0; day < itemOrderFrom; day++) {
       const scheduled = legacyItemOrder[day % legacyItemOrder.length];
-      const country = ROTATION.countryOrder[day % ROTATION.countryOrder.length];
+      const country = countryForDay(day)!;
       // Only assert where the country actually stocks the scheduled item;
       // elsewhere the substitution rule picks, and it picks from the legacy
       // list either way.
@@ -82,10 +139,10 @@ describe("daily puzzle rotation", () => {
   });
 
   it("uses the full catalogue from the changeover day onwards", () => {
-    const { itemOrder, itemOrderFrom, countryOrder } = ROTATION;
+    const { itemOrder, itemOrderFrom } = ROTATION;
     for (let day = itemOrderFrom; day < itemOrderFrom + itemOrder.length; day++) {
       const scheduled = itemOrder[(day - itemOrderFrom) % itemOrder.length];
-      const country = countryOrder[day % countryOrder.length];
+      const country = countryForDay(day)!;
       if (!findPrice(scheduled, country)) continue;
       const iso = addDaysISO(ROTATION.startDate, day);
       expect(getPuzzleItemFor(iso), `day ${day} (${iso})`).toBe(scheduled);
@@ -95,7 +152,7 @@ describe("daily puzzle rotation", () => {
   it("only repeats an (item, country) pair after a full cycle", () => {
     const { itemOrderFrom, countryOrder, itemOrder } = ROTATION;
     const period = countryOrder.length * itemOrder.length;
-    expect(period).toBe(561); // 33 countries x 17 items
+    expect(period).toBe(833); // 49 countries x 17 items
 
     const seen = new Set<string>();
     for (let i = itemOrderFrom; i < itemOrderFrom + period; i++) {
@@ -139,7 +196,7 @@ describe("daily puzzle rotation", () => {
     // Lebanon has no milk row, so whichever day pairs LB with milk must fall
     // through to an item it does have, and do so identically every call.
     const lbDays: number[] = [];
-    for (let i = 0; i < 561; i++) {
+    for (let i = 0; i < 833; i++) {
       const pair = pairForDate(dateFromISO(addDaysISO(ROTATION.startDate, i)));
       if (pair?.countryCode === "LB") lbDays.push(i);
     }

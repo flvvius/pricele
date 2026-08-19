@@ -4,6 +4,7 @@ import RelatedGuides, { GUIDES_FOR_COUNTRY } from "@/components/RelatedGuides";
 import ContentPage, { Section, Prose } from "@/components/ContentPage";
 import { ITEMS } from "@/data/items";
 import { COUNTRIES } from "@/lib/catalog";
+import { COUNTRY_META } from "@/data/countries";
 import { pricesForItem } from "@/lib/catalog";
 import { SITE_EMAIL, pageMetadata } from "@/lib/seo";
 
@@ -15,6 +16,13 @@ export const metadata: Metadata = pageMetadata({
   description:
     "Where every price on Pricele comes from, how local currencies and work-time figures are calculated, and the specific ways these numbers can be wrong.",
 });
+
+// Split once, so the two lists and the two counts can never disagree.
+const WAGES = Object.entries(COUNTRY_META).sort(([, a], [, b]) =>
+  a.name.localeCompare(b.name)
+);
+const SOURCED = WAGES.filter(([, c]) => c.wageSource !== "estimate");
+const ESTIMATED = WAGES.filter(([, c]) => c.wageSource === "estimate");
 
 export default function MethodologyPage() {
   return (
@@ -299,18 +307,53 @@ export default function MethodologyPage() {
           </p>
           <p>
             <strong className="font-semibold text-neutral-300">
-              These wage estimates are the least rigorous numbers on the site.
+              Wage figures are the least rigorous numbers on the site, and they
+              do not all come from the same place.
             </strong>{" "}
-            They are our own approximations, not drawn from a single official
-            series, and they compress an enormous amount of variation: formal
-            versus informal employment, regional differences, and the gap between
-            mean and median earnings, which is very wide in some of these
-            countries. Treat work-time figures as illustrative of the general
-            shape of affordability, not as a measurement. We round them hard for
-            exactly that reason, and we would rather replace them with an
-            official series such as the ILO&apos;s than keep estimating.
+            The {ESTIMATED.length} countries the game launched with carry our own
+            approximations. The {SOURCED.length} added since carry the
+            International Labour Organization&apos;s published average hourly
+            earnings of employees, converted to dollars by the ILO itself. The
+            second kind is plainly better, and it exists because a new country
+            had no estimate to inherit and we would rather use an official series
+            than invent one. The mix is listed below rather than averaged over.
+          </p>
+          <p>
+            Replacing the remaining estimates would move every work-time figure
+            on the site at once, including on archive pages for puzzles already
+            played, so it is a decision on its own rather than a side effect of
+            adding countries. It also would not finish the job: the ILO publishes
+            no hourly figure for six of them, so some estimates survive whatever
+            happens.
+          </p>
+          <p>
+            Either way, an hourly wage compresses an enormous amount of
+            variation: formal versus informal employment, regional differences,
+            and the gap between mean and median earnings, which is very wide in
+            some of these countries. Treat work-time figures as illustrative of
+            the general shape of affordability, not as a measurement. We round
+            them hard for exactly that reason.
           </p>
         </Prose>
+        <div className="mt-4 flex flex-col gap-3">
+          <div>
+            <h3 className="text-sm font-bold text-neutral-100">
+              ILO average hourly earnings ({SOURCED.length} countries)
+            </h3>
+            <p className="mt-1 text-sm leading-relaxed text-neutral-400">
+              {SOURCED.map(([, c]) => c.name).join(", ")}. The survey year is
+              part of the figure and differs by country.
+            </p>
+          </div>
+          <div>
+            <h3 className="text-sm font-bold text-neutral-100">
+              Our own estimate ({ESTIMATED.length} countries)
+            </h3>
+            <p className="mt-1 text-sm leading-relaxed text-neutral-400">
+              {ESTIMATED.map(([, c]) => c.name).join(", ")}.
+            </p>
+          </div>
+        </div>
       </Section>
 
       <Section heading="Consumption tax" id="tax">

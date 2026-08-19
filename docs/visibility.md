@@ -128,7 +128,7 @@ angle, r/teachers for the classroom use case.
 
 Cal's 45,000-star repository was not a marketing asset, it was a **thing worth
 citing** that happened to carry the brand. The equivalent asset here is the
-price table: `data/prices.json`, 503 sourced rows across 33 countries and 17
+price table: `data/prices.json`, 641 sourced rows across 49 countries and 17
 items, with provenance on every one.
 
 Published as a standalone open-data repository — CSV plus JSON, sources named,
@@ -153,7 +153,7 @@ Reuse verbatim. Consistency is the point.
 
 **Short (≤200 chars):** A free daily game: guess the price of one everyday item in one country, in five tries, with hotter/colder feedback. Every figure is a published statistic with its source shown.
 
-**Long:** Pricele is a free daily browser game. Each day pairs an everyday item with a country — a Big Mac in Norway, a cappuccino in Japan, a litre of petrol in Egypt — and you guess the price in five tries, with hotter/colder feedback on a log scale. Prices come from The Economist's Big Mac Index, Numbeo's country price rankings, GlobalPetrolPrices, the WHO's tobacco and alcohol tax surveys and the World Bank, and every one shows its source. No account, no install, and the puzzle resets at your own midnight. Alongside the game there are price tables for 33 countries and long-form guides on purchasing power, exchange rates and why the same product costs different amounts in different places.
+**Long:** Pricele is a free daily browser game. Each day pairs an everyday item with a country — a Big Mac in Norway, a cappuccino in Japan, a litre of petrol in Egypt — and you guess the price in five tries, with hotter/colder feedback on a log scale. Prices come from The Economist's Big Mac Index, Numbeo's country price rankings, GlobalPetrolPrices, the WHO's tobacco and alcohol tax surveys and the World Bank, and every one shows its source. No account, no install, and the puzzle resets at your own midnight. Alongside the game there are price tables for 49 countries and long-form guides on purchasing power, exchange rates and why the same product costs different amounts in different places.
 
 **Categories:** Price · Geography · Trivia · Educational
 

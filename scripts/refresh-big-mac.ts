@@ -24,6 +24,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
+import { COUNTRY_META } from "../data/countries";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PRICES_PATH = join(__dirname, "..", "data", "prices.json");
@@ -52,14 +53,22 @@ interface PriceEntry {
   sourceDate: string;
 }
 
-/** ISO-2 country code -> the Economist's iso_a3. EUZ is the euro-area row. */
+/**
+ * ISO-2 country code -> the Economist's iso_a3. EUZ is the euro-area row.
+ *
+ * Only countries listed here get a Big Mac row. A country in the roster and not
+ * in this map simply has no burger in the index, which is true of several: the
+ * index covers 54 economies, and the game covers some the Economist does not.
+ */
 const ISO3: Record<string, string> = {
   AE: "ARE", AR: "ARG", AU: "AUS", BR: "BRA", CA: "CAN", CH: "CHE",
-  CN: "CHN", DE: "EUZ", EG: "EGY", ES: "EUZ", FR: "EUZ", GB: "GBR",
-  ID: "IDN", IE: "EUZ", IN: "IND", IT: "EUZ", JP: "JPN", KR: "KOR",
-  LB: "LBN", MX: "MEX", NL: "EUZ", NO: "NOR", NZ: "NZL", PL: "POL",
-  PT: "EUZ", SA: "SAU", SE: "SWE", SG: "SGP", TH: "THA", TR: "TUR",
-  US: "USA", VN: "VNM", ZA: "ZAF",
+  CL: "CHL", CN: "CHN", CO: "COL", CR: "CRI", CZ: "CZE", DE: "EUZ",
+  EG: "EGY", ES: "EUZ", FR: "EUZ", GB: "GBR", HU: "HUN", ID: "IDN",
+  IE: "EUZ", IL: "ISR", IN: "IND", IT: "EUZ", JP: "JPN", KR: "KOR",
+  LB: "LBN", MX: "MEX", MY: "MYS", NL: "EUZ", NO: "NOR", NZ: "NZL",
+  PE: "PER", PH: "PHL", PK: "PAK", PL: "POL", PT: "EUZ", RO: "ROU",
+  SA: "SAU", SE: "SWE", SG: "SGP", TH: "THA", TR: "TUR", US: "USA",
+  UY: "URY", VN: "VNM", ZA: "ZAF",
 };
 
 interface Row {
@@ -125,14 +134,22 @@ async function main() {
 
   const prices: PriceEntry[] = JSON.parse(readFileSync(PRICES_PATH, "utf8"));
 
+  // Driven by the roster rather than by the rows already in the file, so a
+  // newly added country picks up its first Big Mac row here instead of needing
+  // one hand-written before the script will touch it.
+  const byCode = new Map(
+    prices.filter((p) => p.itemId === ITEM_ID).map((p) => [p.countryCode, p])
+  );
+
   let changed = 0;
+  let added = 0;
   let missing = 0;
-  for (const entry of prices) {
-    if (entry.itemId !== ITEM_ID) continue;
-    const iso3 = ISO3[entry.countryCode];
+  const built: PriceEntry[] = [];
+  for (const [code, country] of Object.entries(COUNTRY_META)) {
+    const iso3 = ISO3[code];
     const row = iso3 ? rows.get(iso3) : undefined;
     if (!row) {
-      console.warn(`  no upstream row for ${entry.countryCode} (${iso3})`);
+      if (iso3) console.warn(`  no upstream row for ${code} (${iso3})`);
       missing++;
       continue;
     }
@@ -143,6 +160,24 @@ async function main() {
         ? `The Economist Big Mac Index (euro-area price), ${label}`
         : `The Economist Big Mac Index, ${label}`;
 
+    const entry = byCode.get(code);
+    if (!entry) {
+      added++;
+      built.push({
+        itemId: ITEM_ID,
+        countryCode: code,
+        countryName: country.name,
+        flag: country.flag,
+        priceUSD,
+        priceLocal,
+        localCurrency: country.localCurrency,
+        avgHourlyWageUSD: country.avgHourlyWageUSD,
+        source,
+        sourceDate: edition,
+      });
+      continue;
+    }
+    built.push(entry);
     if (
       entry.priceUSD !== priceUSD ||
       entry.priceLocal !== priceLocal ||
@@ -157,6 +192,12 @@ async function main() {
     }
   }
 
+  // Big Mac rows lead the file, sorted by country code, and the rest follow in
+  // the order they were already in.
+  built.sort((a, b) => a.countryCode.localeCompare(b.countryCode));
+  const next = [...built, ...prices.filter((p) => p.itemId !== ITEM_ID)];
+  changed += added;
+
   if (check) {
     if (changed > 0) {
       console.error(
@@ -169,10 +210,10 @@ async function main() {
   }
 
   if (changed > 0) {
-    writeFileSync(PRICES_PATH, JSON.stringify(prices, null, 1) + "\n");
+    writeFileSync(PRICES_PATH, JSON.stringify(next, null, 1) + "\n");
   }
   console.log(
-    `data/prices.json: ${changed} row(s) updated, ${missing} without an upstream match.`
+    `data/prices.json: ${changed - added} row(s) updated, ${added} added, ${missing} country(s) without an upstream match.`
   );
 }
 

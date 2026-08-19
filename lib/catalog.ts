@@ -9,6 +9,7 @@ import {
   addDaysISO,
   dateFromISO,
   itemOrderForDay,
+  countryForDay,
   type PriceEntry,
 } from "@/lib/puzzle";
 import { ITEMS, getItem, type Item } from "@/data/items";
@@ -131,11 +132,9 @@ export function suppressedPairs(now: Date = new Date()): Set<string> {
 export function pairForDate(
   date: Date
 ): { itemId: string; countryCode: string } | null {
-  const { countryOrder, startDate } = ROTATION;
-  if (countryOrder.length === 0) return null;
-  const dayIndex = daysSince(startDate, date);
-  const m = (n: number, k: number) => ((n % k) + k) % k;
-  const countryCode = countryOrder[m(dayIndex, countryOrder.length)];
+  const dayIndex = daysSince(ROTATION.startDate, date);
+  const countryCode = countryForDay(dayIndex);
+  if (!countryCode) return null;
   for (const itemId of itemOrderForDay(dayIndex)) {
     if (findPrice(itemId, countryCode) && getItem(itemId)) {
       return { itemId, countryCode };

@@ -52,6 +52,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
+import { COUNTRY_META } from "../data/countries";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PRICES_PATH = join(__dirname, "..", "data", "prices.json");
@@ -93,57 +94,84 @@ interface Harvested {
   sourceDate: string;
 }
 
-interface CountryMeta {
+interface SourceNames {
   /** GlobalPetrolPrices path segment, e.g. "South-Korea". */
   gpp: string;
   /** ISO 3166-1 alpha-3, for the WHO and World Bank APIs. */
   iso3: string;
-  /** Cable.co.uk's spelling, where it differs from `countryName`. */
+  /** Cable.co.uk's spelling, where it differs from the country's name. */
   cable?: string;
 }
 
 /**
- * Every country in the game, with the name each publisher happens to use.
- * Deliberately explicit: a fuzzy match here would silently attach Niger's
- * diesel price to Nigeria.
+ * What each publisher calls each country. Deliberately explicit: a fuzzy match
+ * here would silently attach Niger's diesel price to Nigeria.
+ *
+ * The countries themselves come from COUNTRY_META in data/countries.ts; this
+ * only holds the aliases, and a country missing from it is a hard error rather
+ * than a country that quietly gets no rows.
  */
-const COUNTRIES: Record<string, CountryMeta> = {
+const SOURCE_NAMES: Record<string, SourceNames> = {
   AE: { gpp: "United-Arab-Emirates", iso3: "ARE" },
   AR: { gpp: "Argentina", iso3: "ARG" },
   AU: { gpp: "Australia", iso3: "AUS" },
+  BD: { gpp: "Bangladesh", iso3: "BGD" },
   BR: { gpp: "Brazil", iso3: "BRA" },
   CA: { gpp: "Canada", iso3: "CAN" },
   CH: { gpp: "Switzerland", iso3: "CHE" },
+  CL: { gpp: "Chile", iso3: "CHL" },
   CN: { gpp: "China", iso3: "CHN" },
+  CO: { gpp: "Colombia", iso3: "COL" },
+  CR: { gpp: "Costa-Rica", iso3: "CRI" },
+  CZ: { gpp: "Czech-Republic", iso3: "CZE", cable: "Czech Republic" },
   DE: { gpp: "Germany", iso3: "DEU" },
   EG: { gpp: "Egypt", iso3: "EGY" },
   ES: { gpp: "Spain", iso3: "ESP" },
   FR: { gpp: "France", iso3: "FRA" },
   GB: { gpp: "United-Kingdom", iso3: "GBR" },
+  GH: { gpp: "Ghana", iso3: "GHA" },
+  HU: { gpp: "Hungary", iso3: "HUN" },
   ID: { gpp: "Indonesia", iso3: "IDN" },
   IE: { gpp: "Ireland", iso3: "IRL" },
+  IL: { gpp: "Israel", iso3: "ISR" },
   IN: { gpp: "India", iso3: "IND" },
   IT: { gpp: "Italy", iso3: "ITA" },
   JP: { gpp: "Japan", iso3: "JPN" },
   KR: { gpp: "South-Korea", iso3: "KOR" },
   LB: { gpp: "Lebanon", iso3: "LBN" },
   MX: { gpp: "Mexico", iso3: "MEX" },
+  MY: { gpp: "Malaysia", iso3: "MYS" },
+  NG: { gpp: "Nigeria", iso3: "NGA" },
   NL: { gpp: "Netherlands", iso3: "NLD", cable: "The Netherlands" },
   NO: { gpp: "Norway", iso3: "NOR" },
   NZ: { gpp: "New-Zealand", iso3: "NZL" },
+  PE: { gpp: "Peru", iso3: "PER" },
+  PH: { gpp: "Philippines", iso3: "PHL" },
+  PK: { gpp: "Pakistan", iso3: "PAK" },
   PL: { gpp: "Poland", iso3: "POL" },
   PT: { gpp: "Portugal", iso3: "PRT" },
+  RO: { gpp: "Romania", iso3: "ROU" },
   SA: { gpp: "Saudi-Arabia", iso3: "SAU" },
   SE: { gpp: "Sweden", iso3: "SWE" },
   SG: { gpp: "Singapore", iso3: "SGP" },
   TH: { gpp: "Thailand", iso3: "THA" },
   TR: { gpp: "Turkey", iso3: "TUR" },
+  TZ: { gpp: "Tanzania", iso3: "TZA" },
   US: { gpp: "USA", iso3: "USA" },
+  UY: { gpp: "Uruguay", iso3: "URY" },
   VN: { gpp: "Vietnam", iso3: "VNM" },
   ZA: { gpp: "South-Africa", iso3: "ZAF" },
 };
 
-const CODES = Object.keys(COUNTRIES);
+const CODES = Object.keys(COUNTRY_META);
+
+for (const code of CODES) {
+  if (!SOURCE_NAMES[code]) {
+    throw new Error(
+      `${code} is in COUNTRY_META but has no publisher aliases in SOURCE_NAMES`
+    );
+  }
+}
 
 // ---------------------------------------------------------------------------
 // Fetch helpers
@@ -290,7 +318,7 @@ async function harvestGlobalPetrolPrices(): Promise<Harvested[]> {
   for (const p of products) {
     let found = 0;
     for (const code of CODES) {
-      const url = `https://www.globalpetrolprices.com/${COUNTRIES[code].gpp}/${p.path}/`;
+      const url = `https://www.globalpetrolprices.com/${SOURCE_NAMES[code].gpp}/${p.path}/`;
       let body = "";
       try {
         body = await getText(url);
@@ -391,7 +419,7 @@ async function harvestWho(): Promise<Harvested[]> {
     const currency = pick("TOBACCO_INDICATOR_CURRENCY_LOCAL");
     let found = 0;
     for (const code of CODES) {
-      const iso3 = COUNTRIES[code].iso3;
+      const iso3 = SOURCE_NAMES[code].iso3;
       const u = usd.get(iso3)?.NumericValue;
       if (u == null || !(u > 0)) continue;
       found++;
@@ -428,7 +456,7 @@ async function harvestWho(): Promise<Harvested[]> {
     const local = pick("PRICE_PRICE_IN_CURRENCY");
     let found = 0;
     for (const code of CODES) {
-      const iso3 = COUNTRIES[code].iso3;
+      const iso3 = SOURCE_NAMES[code].iso3;
       const u = usd.get(iso3)?.NumericValue;
       if (u == null || !(u > 0)) continue;
       found++;
@@ -492,7 +520,7 @@ async function harvestMobileData(
 
   const out: Harvested[] = [];
   for (const code of CODES) {
-    const name = COUNTRIES[code].cable ?? countryNames.get(code) ?? "";
+    const name = SOURCE_NAMES[code].cable ?? countryNames.get(code) ?? "";
     const price = byName.get(name);
     if (price == null) continue;
     out.push({
@@ -558,7 +586,7 @@ async function harvestHealthyDiet(): Promise<Harvested[]> {
 
   const out: Harvested[] = [];
   for (const code of CODES) {
-    const iso3 = COUNTRIES[code].iso3;
+    const iso3 = SOURCE_NAMES[code].iso3;
     const cost = lcu.get(iso3);
     const rate = fx.get(iso3);
     if (!cost || !rate) continue;
@@ -599,16 +627,13 @@ async function main() {
 
   const prices: PriceEntry[] = JSON.parse(readFileSync(PRICES_PATH, "utf8"));
 
-  // Country name, flag, currency and wage are properties of the country, not of
-  // any one item, so they are read off the rows already in the table rather than
-  // re-listed here.
-  const meta = new Map<string, PriceEntry>();
-  for (const p of prices) if (!meta.has(p.countryCode)) meta.set(p.countryCode, p);
-  const names = new Map([...meta].map(([c, p]) => [c, p.countryName]));
-
-  for (const code of CODES) {
-    if (!meta.has(code)) throw new Error(`no existing rows for country ${code}`);
-  }
+  // Country name, flag, currency and wage are properties of the country rather
+  // than of any one item, so they come from the roster in data/countries.ts.
+  // Reading them off whatever rows happened to exist already would have meant a
+  // newly added country could never get its first row.
+  const names = new Map(
+    CODES.map((c) => [c, COUNTRY_META[c].name] as const)
+  );
 
   let harvested: Harvested[];
   if (offline) {
@@ -638,7 +663,7 @@ async function main() {
   const built: PriceEntry[] = [];
   const dropped: string[] = [];
   for (const h of harvested) {
-    const base = meta.get(h.countryCode);
+    const base = COUNTRY_META[h.countryCode];
     if (!base) continue;
     // A local figure is only kept when the publisher quoted it in the currency
     // this country is priced in everywhere else in the table. Anything else is
@@ -654,7 +679,7 @@ async function main() {
     built.push({
       itemId: h.itemId,
       countryCode: h.countryCode,
-      countryName: base.countryName,
+      countryName: base.name,
       flag: base.flag,
       priceUSD: h.priceUSD,
       ...(keepLocal ? { priceLocal: h.priceLocal } : {}),

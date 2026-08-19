@@ -147,26 +147,29 @@ export function priceRankLine(price: PriceEntry): string {
   const all = rowsFor(price.itemId);
   const total = all.length;
   if (total < 2) return "";
-  const sorted = [...all].sort((a, b) => b.priceUSD - a.priceUSD);
-  const rank = sorted.findIndex((p) => p.countryCode === price.countryCode) + 1;
-  if (rank <= 0) return "";
+
+  // Counted rather than read off a sorted position, because ties are common
+  // once a table gets wide: several countries share a diesel price to the cent,
+  // and a row's index in a sorted array puts an arbitrary one of them first.
+  // Ranking by position then told a country in the cheaper half that it was
+  // more expensive than half the game.
+  const dearer = all.filter((p) => p.priceUSD > price.priceUSD).length;
+  const cheaper = all.filter((p) => p.priceUSD < price.priceUSD).length;
+  if (dearer + cheaper === 0) return "";
 
   const noun = (getItem(price.itemId)?.shortName ?? "item").toLowerCase();
-  if (rank === 1) {
+  if (dearer === 0) {
     return `That makes it the most expensive ${noun} of all ${total} countries in the game.`;
   }
-  if (rank === total) {
+  if (cheaper === 0) {
     return `That makes it the cheapest ${noun} of all ${total} countries in the game.`;
   }
-  // Share of other countries that cost LESS than this one. A high number means
-  // this price is expensive, not cheap.
-  const cheaperCount = total - rank;
-  const pctCheaper = Math.round((cheaperCount / (total - 1)) * 100);
-  if (rank <= 3) {
-    return `That's the #${rank} priciest of the ${total} countries in the game.`;
+  if (dearer < 3 && cheaper > dearer) {
+    return `That's the #${dearer + 1} priciest of the ${total} countries in the game.`;
   }
-  if (pctCheaper >= 50) {
-    return `More expensive than ${pctCheaper}% of the ${total} countries in the game.`;
-  }
-  return `Cheaper than ${100 - pctCheaper}% of the ${total} countries in the game.`;
+  // Whichever side is bigger picks the framing, so the sentence can never
+  // contradict the numbers behind it.
+  return cheaper >= dearer
+    ? `More expensive than ${Math.round((cheaper / (total - 1)) * 100)}% of the ${total} countries in the game.`
+    : `Cheaper than ${Math.round((dearer / (total - 1)) * 100)}% of the ${total} countries in the game.`;
 }

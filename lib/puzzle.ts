@@ -106,6 +106,24 @@ function mod(n: number, m: number): number {
 }
 
 /**
+ * Which country a day belongs to.
+ *
+ * Same shape as itemOrderForDay below, and for the same reason: the roster grew
+ * from 33 countries to 49, which moves `dayIndex % length` for every day at
+ * once. Days before `countryOrderFrom` keep the country they were played with.
+ */
+export function countryForDay(dayIndex: number): string | null {
+  const { countryOrder, legacyCountryOrder, countryOrderFrom } = ROTATION;
+  const legacy = dayIndex < countryOrderFrom;
+  const list = legacy ? legacyCountryOrder : countryOrder;
+  if (list.length === 0) return null;
+  const i = legacy
+    ? mod(dayIndex, list.length)
+    : mod(dayIndex - countryOrderFrom, list.length);
+  return list[i];
+}
+
+/**
  * The item ids to try for a day, best candidate first.
  *
  * The catalogue grew from 7 items to 17, which changes `dayIndex % length` for
@@ -142,11 +160,9 @@ export function itemOrderForDay(dayIndex: number): string[] {
  * Returns null only if the rotation is empty or the country has no rows at all.
  */
 export function getDailyPuzzle(today: Date = new Date()): DailyPuzzle | null {
-  const { countryOrder, itemOrder, startDate } = ROTATION;
-  if (countryOrder.length === 0 || itemOrder.length === 0) return null;
-
-  const dayIndex = daysSince(startDate, today);
-  const countryCode = countryOrder[mod(dayIndex, countryOrder.length)];
+  const dayIndex = daysSince(ROTATION.startDate, today);
+  const countryCode = countryForDay(dayIndex);
+  if (!countryCode) return null;
 
   for (const itemId of itemOrderForDay(dayIndex)) {
     const price = findPrice(itemId, countryCode);

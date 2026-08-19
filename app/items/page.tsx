@@ -13,7 +13,7 @@ export const metadata: Metadata = pageMetadata({
   path: "/items",
   title: "Items",
   description:
-    "The 17 everyday items priced across 33 countries in Pricele — a Big Mac, a cappuccino, milk, eggs, apples, petrol, diesel, household electricity and gas, a pack of cigarettes, beer, spirits, a gigabyte of mobile data and more — with the price range for each.",
+    "The 17 everyday items priced across 49 countries in Pricele — a Big Mac, a cappuccino, milk, eggs, apples, petrol, diesel, household electricity and gas, a pack of cigarettes, beer, spirits, a gigabyte of mobile data and more — with the price range for each.",
 });
 
 export default function ItemsIndex() {

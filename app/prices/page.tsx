@@ -15,7 +15,7 @@ export const metadata: Metadata = pageMetadata({
   path: "/prices",
   title: "Prices by country",
   description:
-    "What everyday things cost in 33 countries: a Big Mac, a cappuccino, milk, eggs, apples, a litre of petrol or diesel, 100 kWh of electricity, a pack of cigarettes, a beer, a gigabyte of mobile data and more, in US dollars and local currency.",
+    "What everyday things cost in 49 countries: a Big Mac, a cappuccino, milk, eggs, apples, a litre of petrol or diesel, 100 kWh of electricity, a pack of cigarettes, a beer, a gigabyte of mobile data and more, in US dollars and local currency.",
 });
 
 export default function PricesIndex() {

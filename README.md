@@ -12,11 +12,13 @@ built with Next.js and statically generated, so it deploys to Vercel with no con
 
 ## Content model
 
-17 items × 33 countries, 503 price rows. The table is deliberately **sparse**:
+17 items × 49 countries, 641 price rows. The table is deliberately **sparse**:
 a pair exists only where there's a real sourced number, never padded with
-invented ones. LPG appears in 16 countries because that is where it is sold as a
-road fuel; natural gas in 25 because that is where households are on a gas grid.
-An absent row is usually a fact about the country, not a gap in the research.
+invented ones. LPG appears in 24 countries because that is where it is sold as a
+road fuel; natural gas in 31 because that is where households are on a gas grid.
+The Numbeo-sourced groceries stop at the 33 countries the game launched with,
+because they are collected by hand. An absent row is usually a fact about the
+country rather than a gap in the research, and the country pages say which.
 
 | Concern            | Where                                                        |
 | ------------------ | ------------------------------------------------------------ |
@@ -27,6 +29,7 @@ An absent row is usually a fact about the country, not a gap in the research.
 | Share card         | `lib/share.ts`                                               |
 | UI                 | `components/`                                                |
 | Price data         | `data/prices.json`, `data/items.ts`, `data/rotation.ts`       |
+| Country roster     | `COUNTRY_META` in `data/countries.ts`                         |
 | Editorial copy     | `data/countries.ts`, `data/articles.ts`                       |
 
 ### The daily rotation
@@ -34,29 +37,48 @@ An absent row is usually a fact about the country, not a gap in the research.
 `data/rotation.ts` holds the ordered lists and a start date. The day's puzzle is:
 
 ```
-country = countryOrder[daysSince(startDate) % 33]
-item    = itemOrder   [(daysSince(startDate) - itemOrderFrom) % 17]
+country = countryOrder[(daysSince(startDate) - countryOrderFrom) % 49]
+item    = itemOrder   [(daysSince(startDate) - itemOrderFrom)    % 17]
 ```
 
-The lengths are **coprime**, so a pair only recurs every 561 days. `countryOrder`
-is append-only: reordering or inserting silently rewrites which puzzle every past
-day had, breaking the archive and every share card already posted.
+The lengths are **coprime**, so a pair only recurs every 833 days.
 
-`itemOrder` could not stay append-only, because the catalogue grew from 7 items
-to 17 and *any* change of length moves `dayIndex % length` for every day at once.
-So the seven-item schedule the game launched with is frozen in `legacyItemOrder`,
-and the new list takes over at `itemOrderFrom`, a day index that was still in the
-future when it was set. Days already played keep the item they were played with;
-a test asserts it day by day. If the catalogue changes again, do the same thing
-rather than editing `itemOrder` in place.
+Neither list can be edited in place, and the reason is worth understanding before
+touching either. *Any* change of length moves `dayIndex % length` for every day
+at once, so growing the catalogue from 7 items to 17, or the roster from 33
+countries to 49, would have silently rewritten which puzzle every past day had —
+breaking the archive and every share card already posted.
+
+So each list has a frozen twin. `legacyCountryOrder` and `legacyItemOrder` hold
+the schedules the game was actually played on, and the live lists take over at
+`countryOrderFrom` / `itemOrderFrom`, day indices that were still in the future
+when they were set. Days already played keep the country and the item they were
+played with, and tests assert both, day by day, against the frozen lists.
+
+That is also what makes the live lists free to *reorder*, which append-only never
+was. Both are arranged against two things at once:
+
+- **Variety.** Consecutive days move between price tiers and between item
+  categories, rather than running three groceries or three rich countries
+  together.
+- **Fallback collisions.** When a country doesn't stock the scheduled item the
+  puzzle falls through to the next one it does have, so two thinly-stocked
+  countries in a row can land on the same fallback and show the same item twice
+  running. That is *entirely* a function of the two orderings: an unconsidered
+  arrangement put it at 17% of days, and the current pair holds it under 2.5%.
+  A test measures it, so a well-meant reshuffle cannot quietly undo it.
+
+`countryOrder` is a cycle, so it is also rotated to start clear of the countries
+that came up in the last week of the old schedule. Without that the seam at the
+changeover showed the UAE twice inside seven days.
+
+**Changing either list again** means pushing the current one onto the legacy
+chain and setting a new `...From` in the future — not editing a live list whose
+changeover day has passed.
 
 A test enforces the coprimality, another walks 400 days asserting every one
-resolves to a real price row, and a third walks a full 561-day cycle asserting
-that every one of the 503 rows is reachable.
-
-When a country lacks the scheduled item, `getDailyPuzzle` walks forward through
-`itemOrder` to the next item it does have. The substitution is a pure function of
-the day index, so it's identical on every device and every rebuild.
+resolves to a real price row, and a third walks a full 833-day cycle asserting
+that every one of the 641 rows is reachable.
 
 ### Where the prices come from
 
@@ -72,7 +94,7 @@ because the sources refresh at wildly different intervals.
 | A day's healthy diet | World Bank / FAO Food Prices for Nutrition | `pnpm refresh-open-prices` |
 | Cappuccino, milk, eggs, apples, gasoline | Numbeo country price rankings | by hand |
 | Coca-Cola | hand-curated table from the original dataset | by hand |
-| Wage figures | our own estimates, the weakest numbers here | by hand |
+| Wage figures | ILO average hourly earnings where published, in-house estimates otherwise | by hand |
 
 Notes worth knowing before editing any of it:
 
@@ -94,6 +116,15 @@ Notes worth knowing before editing any of it:
 - **`priceLocal` is optional.** Cable.co.uk publishes dollars and nothing else,
   so those rows carry no local price rather than a back-converted one, and the UI
   omits the line. `formatLocal()` returns `null` for them.
+- **Wages come in two kinds, and `COUNTRY_META` says which.** The 33 launch
+  countries carry in-house estimates; countries added since carry the ILO's
+  published average hourly earnings for the year named. Migrating the rest would
+  move every work-time figure on the site at once, including on already-played
+  archive pages, so it is a separate decision. The ILO publishes no hourly figure
+  for six of the originals, so some estimates survive any migration.
+- **Adding a country** means an entry in `COUNTRY_META`, `COUNTRY_TAX` and
+  `COUNTRY_NOTES`, the publisher aliases in both refresh scripts, and an append
+  to `countryOrder`. Then run both scripts. Tests fail if any of those is missed.
 - **Licensing is not uniform, and two sources are stricter than this site.**
   GlobalPetrolPrices is CC BY-NC-ND 3.0 and WHO data is CC BY-NC-SA 3.0 IGO; both
   carry a non-commercial condition, and the site runs AdSense. World Bank and FAO
@@ -214,7 +245,7 @@ off and the build is byte-for-byte ad-free.
 ```bash
 pnpm install
 pnpm dev                        # http://localhost:3000
-pnpm test                       # 100 unit tests
+pnpm test                       # 107 unit tests
 pnpm build                      # production build
 pnpm refresh-big-mac            # pull the latest Economist edition
 pnpm refresh-big-mac --check    # CI guard: fail if Big Mac rows are stale

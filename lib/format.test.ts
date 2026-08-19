@@ -2,6 +2,11 @@ import { describe, it, expect } from "vitest";
 import { priceRankLine, anchorPriceUSD, formatArchiveDate } from "./format";
 import { PRICES, type PriceEntry } from "./puzzle";
 import { ITEMS } from "@/data/items";
+import {
+  COUNTRY_META,
+  COUNTRY_NOTES,
+  COUNTRY_TAX,
+} from "@/data/countries";
 
 const rowsFor = (itemId: string) => PRICES.filter((p) => p.itemId === itemId);
 
@@ -154,6 +159,35 @@ describe("price data integrity", () => {
       rows.filter((p) => p.priceLocal === undefined).map((p) => p.itemId)
     );
     expect([...dollarsOnly]).toEqual(["mobile-data-1gb"]);
+  });
+
+  it("describes every country exactly as the roster does", () => {
+    // data/prices.json repeats the country facts on every row because that file
+    // is what the client reads. COUNTRY_META is where they are edited. If the
+    // two drift, a country is renamed on some pages and not others.
+    for (const p of rows) {
+      const meta = COUNTRY_META[p.countryCode];
+      expect(meta, `${p.countryCode} is not in COUNTRY_META`).toBeDefined();
+      expect(p.countryName, p.countryCode).toBe(meta.name);
+      expect(p.flag, p.countryCode).toBe(meta.flag);
+      expect(p.localCurrency, p.countryCode).toBe(meta.localCurrency);
+      expect(p.avgHourlyWageUSD, p.countryCode).toBe(meta.avgHourlyWageUSD);
+    }
+  });
+
+  it("gives every country in the roster a note and a tax entry", () => {
+    // Both are optional at the type level so a page still renders without them,
+    // but a country page with neither is 80% boilerplate, which is what got two
+    // of them left out of Google's index. See the header of data/countries.ts.
+    for (const code of Object.keys(COUNTRY_META)) {
+      expect(COUNTRY_NOTES[code], `${code} has no editorial note`).toBeTruthy();
+      expect(COUNTRY_TAX[code], `${code} has no tax entry`).toBeTruthy();
+    }
+  });
+
+  it("has price rows for every country in the roster, and no others", () => {
+    const priced = new Set(rows.map((p) => p.countryCode));
+    expect([...priced].sort()).toEqual(Object.keys(COUNTRY_META).sort());
   });
 
   it("describes each country consistently across every item", () => {
