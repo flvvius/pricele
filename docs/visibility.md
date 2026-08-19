@@ -120,12 +120,21 @@ directories" the weightings point at.
 
 | Directory | How to submit | Status |
 | --------- | ------------- | ------ |
-| [DleList](https://dlelist.com/) | Submission form on site | Not submitted |
-| [Listdle](https://listdle.com/) | "Suggest a Game" page, or `contact@listdle.com`. Has a **Price** category with ~12 games — a small pond to be visible in | Not submitted |
-| [The Dles](https://dles.aukspot.com/) | "Suggest a dle" form; also has a GitHub repo and a Discord | Not submitted |
-| [Wordle Today game list](https://wordle.today/games) | Contact via site | Not submitted |
-| [adoryvo/lists dailies](https://adoryvo.github.io/lists/dailies.html) | **GitHub issue**, or `business@adoryvo.com`. The one target that takes a pull request | Not submitted |
-| [AlternativeTo](https://alternativeto.net/) | Account required, must be 7 days old, then "Suggest new application". List Pricele as an alternative to Wordle and to Costcodle | Not submitted |
+| [DleList](https://dlelist.com/) | Submission form on site | Submitted 19 Aug 2026 — awaiting approval |
+| [Listdle](https://listdle.com/) | "Suggest a Game" page, or `contact@listdle.com`. Has a **Price** category with ~12 games — a small pond to be visible in | Submitted 19 Aug 2026 — awaiting approval |
+| [The Dles](https://dles.aukspot.com/) | "Suggest a dle" form; also has a GitHub repo and a Discord | Submitted 19 Aug 2026 — awaiting approval |
+| [Wordle Today game list](https://wordle.today/games) | Contact via site | Submitted 19 Aug 2026 — awaiting approval |
+| [adoryvo/lists dailies](https://adoryvo.github.io/lists/dailies.html) | **GitHub issue**, or `business@adoryvo.com`. The one target that takes a pull request | Submitted 19 Aug 2026 — awaiting approval |
+| [AlternativeTo](https://alternativeto.net/) | Account required, must be 7 days old, then "Suggest new application". List Pricele as an alternative to Wordle and to Costcodle | Submitted 19 Aug 2026 — awaiting approval |
+
+**All six went out on 19 August 2026 and are pending.** These are moderated
+queues rather than automated ones, so approval takes anywhere from a few days to
+a few weeks, and some will simply never reply — that is the normal shape of
+this, not a sign the submission failed. Update a row to "Listed &lt;date&gt;" as
+each one appears, and treat a row still pending after a month as declined rather
+than chasing it. Nothing else in this document depends on the outcome: the
+listings are a bet placed, and the next section is where the remaining effort
+should go regardless of how many land.
 
 Copy to submit with is in [Submission copy](#submission-copy) below. Use it
 verbatim so the description of the game is identical everywhere; consistency
