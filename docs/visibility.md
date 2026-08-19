@@ -64,6 +64,52 @@ deliberate. A page that names no alternative is the exact shape of copy that
 gets discounted, and the page has to be worth citing by someone who does not
 work here.
 
+### The August 2026 pass: what was actually missing
+
+The claim above that the on-site work was "essentially finished" was true of
+*search* SEO and not quite true of answer-engine visibility, which turns on a
+partly different set of things. Published 2026 analyses of what separates pages
+answer engines cite from pages they don't put the weight on three structural
+properties, and this site was short on all three despite being well marked up:
+
+| Finding | State before | Now |
+| ------- | ------------ | --- |
+| Pages carrying 3-4 complementary schema types are cited about twice as often as single-schema pages, and `Article` + `FAQPage` + `BreadcrumbList` is the combination that recurs. | Reference pages carried a lone `Dataset`. No page on the site had a breadcrumb. | Price and item pages carry `WebPage` + `BreadcrumbList` + `Dataset` + `FAQPage`. Breadcrumbs sitewide. |
+| `FAQPage` has by far the highest citation rate of any schema type, roughly 41% of marked-up pages against 15% without. | On the home page only. | Per-country and per-item FAQs, generated from the rows, asking the question in the words it is actually asked in. |
+| Around 55% of AI Overview citations come from the first 30% of the cited page; a 40-60 word direct answer at the top is the single most-cited structure. | Item pages opened with `item.blurb`, the best writing on the page, which buried the two figures anyone arriving from "which country has the cheapest X" came for. | The standfirst leads with the range and the endpoints. `data-answer` marks it, `speakable` points at it, and the blurb follows immediately. |
+
+The FAQ entries are the substantial part. This site publishes the answer to
+"how much does a Big Mac cost in Norway" in a table cell, and never once asked
+the question — the match had to be inferred from a column header. Each answer
+now repeats the country and the item rather than leaning on the surrounding
+page, because an extracted answer arrives without one.
+
+Two smaller things closed in the same pass:
+
+- **Publisher identity on the archive pages.** `lib/seo.ts` explains why every
+  schema on the site references the publisher and author by `@id`; the archive
+  day pages each minted a fresh `Organization` stub with nothing but a name, so
+  that signal stopped dead at several hundred URLs.
+- **`robots.ts` names the AI crawlers explicitly.** The wildcard already allowed
+  them. `Google-Extended` is not a crawler though — it is the opt-out token
+  governing whether Google may use already-fetched content for Gemini and for
+  grounding AI answers, and a site whose whole problem is not being cited by
+  assistants should not leave that to a default nobody has looked at.
+
+One thing deliberately *not* done: `dateModified` is derived from the
+`sourceDate` of the rows a page actually shows, never from the build. Wiring it
+to the deploy would let a CSS change assert that the prices were re-checked that
+morning, which is exactly the aggregator behaviour `/methodology` criticises.
+Source dates are month- or year-precision, so they are widened to the first day
+of the period — which understates freshness by up to a year and never overstates
+it.
+
+None of this changes the conclusion above. It is on-site work, and on-site work
+is not what decides recommendations. It is worth having done because it is the
+part that *can* be done from this repository. Expect the effect to show up over
+four to twelve weeks if at all, fastest on Perplexity, which retrieves at query
+time, and slowest on ChatGPT, which does not.
+
 ## The off-site work, in priority order
 
 ### 1. Genre directories

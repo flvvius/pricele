@@ -2,11 +2,17 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import RelatedGuides, { GUIDES_FOR_COUNTRY } from "@/components/RelatedGuides";
 import ContentPage, { Section, Prose } from "@/components/ContentPage";
+import JsonLd from "@/components/JsonLd";
 import { ITEMS } from "@/data/items";
 import { COUNTRIES } from "@/lib/catalog";
 import { COUNTRY_META } from "@/data/countries";
 import { pricesForItem } from "@/lib/catalog";
-import { SITE_EMAIL, pageMetadata } from "@/lib/seo";
+import {
+  breadcrumbJsonLd,
+  pageMetadata,
+  webPageJsonLd,
+  SITE_EMAIL,
+} from "@/lib/seo";
 
 export const dynamic = "force-static";
 
@@ -519,6 +525,20 @@ export default function MethodologyPage() {
         heading="Further reading"
       />
 
+      {/* This page carried no structured data at all, which is an odd gap on
+          the one page that states the sourcing rules. It is the page a rater or
+          a model checks to decide whether the rest of the site can be trusted,
+          so it should at minimum say who publishes it. */}
+      <JsonLd
+        data={[
+          breadcrumbJsonLd([{ name: "Methodology", path: "/methodology" }]),
+          webPageJsonLd({
+            name: "Pricele methodology",
+            description: metadata.description as string,
+            path: "/methodology",
+          }),
+        ]}
+      />
     </ContentPage>
   );
 }

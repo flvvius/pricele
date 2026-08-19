@@ -6,6 +6,7 @@ import {
   SITE_NAME,
   SITE_EMAIL,
   pageMetadata,
+  breadcrumbJsonLd,
   personJsonLd,
   organizationJsonLd,
 } from "@/lib/seo";
@@ -212,7 +213,13 @@ export default function AboutPage() {
         </Prose>
       </Section>
 
-      <JsonLd data={[organizationJsonLd(), personJsonLd()]} />
+      <JsonLd
+        data={[
+          breadcrumbJsonLd([{ name: "About", path: "/about" }]),
+          organizationJsonLd(),
+          personJsonLd(),
+        ]}
+      />
     </ContentPage>
   );
 }

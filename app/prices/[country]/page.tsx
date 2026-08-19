@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import ContentPage, { Section, Prose } from "@/components/ContentPage";
 import PriceTable, { type Row } from "@/components/PriceTable";
+import FaqSection from "@/components/FaqSection";
 import JsonLd from "@/components/JsonLd";
 import RelatedGuides, { GUIDES_FOR_COUNTRY } from "@/components/RelatedGuides";
 import {
@@ -18,7 +19,15 @@ import {
 import { ITEMS, getItem } from "@/data/items";
 import { COUNTRY_NOTES, COUNTRY_TAX } from "@/data/countries";
 import { formatUSD } from "@/lib/format";
-import { datasetJsonLd, pageMetadata } from "@/lib/seo";
+import {
+  breadcrumbJsonLd,
+  countryJsonLd,
+  datasetJsonLd,
+  faqJsonLd,
+  pageMetadata,
+  webPageJsonLd,
+} from "@/lib/seo";
+import { countryPriceFaq, newestSourceDate } from "@/lib/faq";
 
 export const revalidate = 3600;
 
@@ -71,6 +80,14 @@ export default function CountryPage({ params }: { params: { country: string } })
     (p) => !suppressed.has(`${p.itemId}:${p.countryCode}`)
   );
 
+  const faq = countryPriceFaq(country, visible);
+  // One description for the WebPage and the Dataset alike, so the two cannot
+  // describe the same page differently.
+  const pageDescription = `Prices for ${prices.length} everyday items in ${country.name}, in US dollars and ${country.localCurrency}, each from a named source.`;
+  // The two or three cheapest visible rows, for the standfirst. Cheapest first
+  // is arbitrary but stable, which matters more than which end it picks.
+  const lead = [...visible].sort((a, b) => a.priceUSD - b.priceUSD).slice(0, 3);
+
   const ranked = visible
     .map((p) => {
       const rank = rankForItem(p.itemId, country.code);
@@ -90,11 +107,40 @@ export default function CountryPage({ params }: { params: { country: string } })
       title={`Prices in ${country.name} ${country.flag}`}
       intro={
         <>
+          {/* Leads with prices rather than with a description of the page. It
+              used to open "What N of the M everyday items in the game cost in
+              X…", which tells a reader what they are about to be shown and
+              tells anything summarising the page nothing at all. Real figures
+              now sit in the first sentence. Built from `visible`, so a pair in
+              play cannot surface here. See `data-answer` in ContentPage. */}
           <p>
-            What {prices.length} of the {ITEMS.length} everyday items in the game
-            cost in {country.name}, shown in US dollars, in{" "}
-            {country.localCurrency}, and as roughly how long someone earning the
-            average local wage works to buy one.
+            {lead.length > 0 ? (
+              <>
+                In {country.name},{" "}
+                {lead.map((p, i) => (
+                  <span key={p.itemId}>
+                    {i > 0 && (i === lead.length - 1 ? " and " : ", ")}
+                    {ITEMS.find((it) => it.id === p.itemId)?.shortName.toLowerCase() ??
+                      p.itemId}{" "}
+                    costs{" "}
+                    <strong className="font-semibold text-ink">
+                      {formatUSD(p.priceUSD)}
+                    </strong>
+                  </span>
+                ))}
+                . That is {prices.length} of the {ITEMS.length} everyday items in
+                the game, priced in US dollars, in {country.localCurrency}, and
+                as roughly how long someone on the average local wage works to
+                buy one.
+              </>
+            ) : (
+              <>
+                What {prices.length} of the {ITEMS.length} everyday items in the
+                game cost in {country.name}, shown in US dollars, in{" "}
+                {country.localCurrency}, and as roughly how long someone earning
+                the average local wage works to buy one.
+              </>
+            )}
           </p>
           {note && <p>{note}</p>}
         </>
@@ -226,13 +272,43 @@ export default function CountryPage({ params }: { params: { country: string } })
         heading="Why a country's prices look the way they do"
       />
 
+      {/* The questions this page answers, asked in the words they get asked
+          in. Built from `visible`, so a pair in play is never quoted here.
+          See countryPriceFaq in lib/faq.ts. */}
+      {faq.length > 0 && (
+        <FaqSection
+          items={faq}
+          heading={`${country.name} prices: common questions`}
+        />
+      )}
+
       <JsonLd
-        data={datasetJsonLd({
-          name: `Everyday prices in ${country.name}`,
-          description: `Prices for ${prices.length} everyday items in ${country.name}, in US dollars and ${country.localCurrency}.`,
-          path: `/prices/${country.slug}`,
-          spatialCoverage: country.name,
-        })}
+        data={[
+          webPageJsonLd({
+            name: `Everyday prices in ${country.name}`,
+            description: pageDescription,
+            path: `/prices/${country.slug}`,
+            dateModified: newestSourceDate(visible),
+            about: countryJsonLd(country.name, country.code),
+          }),
+          breadcrumbJsonLd([
+            { name: "Prices", path: "/prices" },
+            { name: country.name, path: `/prices/${country.slug}` },
+          ]),
+          datasetJsonLd({
+            name: `Everyday prices in ${country.name}`,
+            description: pageDescription,
+            path: `/prices/${country.slug}`,
+            spatialCoverage: country.name,
+            countryCode: country.code,
+            // From the visible rows only. A suppressed pair contributes neither
+            // its price nor its source date to anything published here.
+            size: visible.length,
+            dateModified: newestSourceDate(visible),
+            citations: [...new Set(visible.map((p) => p.source).filter(Boolean))],
+          }),
+          ...(faq.length > 0 ? [faqJsonLd(faq)] : []),
+        ]}
       />
     </ContentPage>
   );

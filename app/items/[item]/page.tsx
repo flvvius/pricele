@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import ContentPage, { Section, Prose } from "@/components/ContentPage";
 import PriceTable, { type Row } from "@/components/PriceTable";
+import FaqSection from "@/components/FaqSection";
 import JsonLd from "@/components/JsonLd";
 import RelatedGuides, { GUIDES_BY_ITEM } from "@/components/RelatedGuides";
 import { ITEMS, getItemBySlug } from "@/data/items";
@@ -14,7 +15,14 @@ import {
   wageMinutes,
 } from "@/lib/catalog";
 import { formatUSD } from "@/lib/format";
-import { datasetJsonLd, pageMetadata } from "@/lib/seo";
+import {
+  breadcrumbJsonLd,
+  datasetJsonLd,
+  faqJsonLd,
+  pageMetadata,
+  webPageJsonLd,
+} from "@/lib/seo";
+import { itemPriceFaq, itemWithUnit, newestSourceDate } from "@/lib/faq";
 
 export const revalidate = 3600;
 
@@ -62,6 +70,10 @@ export default function ItemPage({ params }: { params: { item: string } }) {
   );
   const cheapest = visible[0];
   const dearest = visible[visible.length - 1];
+  const faq = itemPriceFaq(item, visible);
+  // One description, shared by the WebPage and the Dataset, so the two cannot
+  // describe the same page differently.
+  const pageDescription = `Price of ${itemWithUnit(item).toLowerCase()} across ${prices.length} countries in US dollars${hasLocal ? " and local currency" : ""}, each from a named source.`;
   const median = medianPriceUSD(item.id);
   const ratio =
     cheapest && dearest && cheapest.priceUSD > 0
@@ -78,13 +90,35 @@ export default function ItemPage({ params }: { params: { item: string } }) {
     <ContentPage
       title={`${item.name} prices by country`}
       intro={
+        /* The range comes first, then the essay. `item.blurb` is the better
+           piece of writing and it was burying the two figures anyone arriving
+           from "which country has the cheapest X" actually came for. Built from
+           `visible`, so a pair in play cannot surface here. See the
+           `data-answer` note in ContentPage. */
         <>
+          {cheapest && dearest && (
+            <p>
+              {itemWithUnit(item)} costs from{" "}
+              <strong className="font-semibold text-ink">
+                {formatUSD(cheapest.priceUSD)}
+              </strong>{" "}
+              in {cheapest.countryName} to{" "}
+              <strong className="font-semibold text-ink">
+                {formatUSD(dearest.priceUSD)}
+              </strong>{" "}
+              in {dearest.countryName}, across {prices.length} countries priced
+              in US dollars
+              {hasLocal ? " and in local currency" : ""}.
+            </p>
+          )}
           <p>{item.blurb}</p>
-          <p>
-            Below, {item.unit} priced in {prices.length} countries, cheapest
-            first, in US dollars
-            {hasLocal ? " and in local currency." : ". This source publishes dollars and nothing else, so there is no local-currency column to fill."}
-          </p>
+          {!cheapest && (
+            <p>
+              Below, {item.unit} priced in {prices.length} countries, cheapest
+              first, in US dollars
+              {hasLocal ? " and in local currency." : ". This source publishes dollars and nothing else, so there is no local-currency column to fill."}
+            </p>
+          )}
         </>
       }
     >
@@ -161,12 +195,36 @@ export default function ItemPage({ params }: { params: { item: string } }) {
           the same reading. See components/RelatedGuides.tsx. */}
       <RelatedGuides slugs={GUIDES_BY_ITEM[item.id] ?? []} />
 
+      {/* "Which country has the cheapest X" is the question this page exists
+          to answer and the one it never asked. See itemPriceFaq in lib/faq.ts. */}
+      {faq.length > 0 && (
+        <FaqSection items={faq} heading={`${item.name}: common questions`} />
+      )}
+
       <JsonLd
-        data={datasetJsonLd({
-          name: `${item.name} prices by country`,
-          description: `Price of ${item.name.toLowerCase()} across ${prices.length} countries in US dollars${hasLocal ? " and local currency" : ""}.`,
-          path: `/items/${item.slug}`,
-        })}
+        data={[
+          webPageJsonLd({
+            name: `${item.name} prices by country`,
+            description: pageDescription,
+            path: `/items/${item.slug}`,
+            dateModified: newestSourceDate(visible),
+          }),
+          breadcrumbJsonLd([
+            { name: "Items", path: "/items" },
+            { name: item.name, path: `/items/${item.slug}` },
+          ]),
+          datasetJsonLd({
+            name: `${item.name} prices by country`,
+            description: pageDescription,
+            path: `/items/${item.slug}`,
+            // Visible rows only: a pair in play contributes neither its price
+            // nor its source date to anything published here.
+            size: visible.length,
+            dateModified: newestSourceDate(visible),
+            citations: [...new Set(visible.map((p) => p.source).filter(Boolean))],
+          }),
+          ...(faq.length > 0 ? [faqJsonLd(faq)] : []),
+        ]}
       />
     </ContentPage>
   );

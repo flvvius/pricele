@@ -24,7 +24,14 @@ import {
   affordanceLine,
   priceRankLine,
 } from "@/lib/format";
-import { absoluteUrl, pageMetadata } from "@/lib/seo";
+import {
+  absoluteUrl,
+  breadcrumbJsonLd,
+  countryJsonLd,
+  pageMetadata,
+  ORG_ID,
+  PERSON_ID,
+} from "@/lib/seo";
 
 export const revalidate = 3600;
 
@@ -229,16 +236,30 @@ export default function ArchiveDatePage({
       </Section>
 
       <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@type": "Article",
-          headline: `Pricele #${puzzleNumber} — ${item.name} in ${price.countryName}`,
-          datePublished: params.date,
-          url: absoluteUrl(`/archive/${params.date}`),
-          isAccessibleForFree: true,
-          author: { "@type": "Organization", name: "Pricele" },
-          publisher: { "@type": "Organization", name: "Pricele" },
-        }}
+        data={[
+          breadcrumbJsonLd([
+            { name: "Archive", path: "/archive" },
+            {
+              name: `#${puzzleNumber} — ${item.shortName} in ${price.countryName}`,
+              path: `/archive/${params.date}`,
+            },
+          ]),
+          {
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: `Pricele #${puzzleNumber} — ${item.name} in ${price.countryName}`,
+            datePublished: params.date,
+            url: absoluteUrl(`/archive/${params.date}`),
+            isAccessibleForFree: true,
+            inLanguage: "en",
+            // By @id, not a fresh Organization stub. Minting a new publisher
+            // node per archive day scattered the publisher signal across
+            // hundreds of URLs instead of pointing them all at the one entity.
+            author: { "@id": PERSON_ID },
+            publisher: { "@id": ORG_ID },
+            about: countryJsonLd(price.countryName, price.countryCode),
+          },
+        ]}
       />
     </ContentPage>
   );

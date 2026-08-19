@@ -5,7 +5,7 @@ import JsonLd from "@/components/JsonLd";
 import { publishedArchiveDates } from "@/lib/catalog";
 import { getPuzzleForISO } from "@/lib/puzzle";
 import { formatUSD, formatArchiveDate } from "@/lib/format";
-import { absoluteUrl, pageMetadata } from "@/lib/seo";
+import { absoluteUrl, breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 
 export const revalidate = 3600;
 
@@ -87,18 +87,21 @@ export default function ArchiveIndex() {
       )}
 
       <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@type": "CollectionPage",
-          name: "Pricele puzzle archive",
-          url: absoluteUrl("/archive"),
-          description: metadata.description,
-          hasPart: entries.slice(0, 100).map(({ iso, puzzle }) => ({
-            "@type": "WebPage",
-            name: `Pricele #${puzzle.puzzleNumber} — ${puzzle.item.shortName} in ${puzzle.price.countryName}`,
-            url: absoluteUrl(`/archive/${iso}`),
-          })),
-        }}
+        data={[
+          breadcrumbJsonLd([{ name: "Archive", path: "/archive" }]),
+          {
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            name: "Pricele puzzle archive",
+            url: absoluteUrl("/archive"),
+            description: metadata.description,
+            hasPart: entries.slice(0, 100).map(({ iso, puzzle }) => ({
+              "@type": "WebPage",
+              name: `Pricele #${puzzle.puzzleNumber} — ${puzzle.item.shortName} in ${puzzle.price.countryName}`,
+              url: absoluteUrl(`/archive/${iso}`),
+            })),
+          },
+        ]}
       />
     </ContentPage>
   );

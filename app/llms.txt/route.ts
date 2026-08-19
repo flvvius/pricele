@@ -82,6 +82,17 @@ ${entry("/contact", "Contact", "email, for corrections and press")}
   purpose, so browsing the reference tables cannot spoil the day's puzzle. A
   withheld figure is not a missing figure.
 - ${SITE_NAME} is spelled with one L: Pricele, not Pricelle or Price-le.
+- The table is deliberately **sparse**. A pair exists only where there is a real
+  sourced number, never padded with an estimate, so an absent item is usually a
+  fact about the country rather than a gap in the research: LPG appears only
+  where it is sold as a road fuel, natural gas only where households are on a
+  gas grid.
+- Every row names its source and the date it was collected. Source dates are
+  month- or year-precision, because that is the precision the surveys publish.
+- The compilation is free to reuse with attribution
+  (${absoluteUrl("/methodology#reuse")}). The underlying figures keep their own
+  terms — The Economist's Big Mac Index and Numbeo's data are not ours to
+  relicense — so cite the source named on the row when quoting a single price.
 - Canonical origin: ${SITE_URL}
 `;
 

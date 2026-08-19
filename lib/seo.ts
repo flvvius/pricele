@@ -412,6 +412,14 @@ export interface DatasetInput {
   path: string;
   /** Country name, when the dataset covers exactly one. */
   spatialCoverage?: string;
+  /** ISO 3166-1 alpha-2, when the dataset covers exactly one country. */
+  countryCode?: string;
+  /** ISO date of the newest source behind these rows. */
+  dateModified?: string;
+  /** The sources the rows are drawn from, as free-text references. */
+  citations?: string[];
+  /** Number of rows the page publishes. */
+  size?: number;
 }
 
 /**
@@ -424,6 +432,10 @@ export function datasetJsonLd({
   description,
   path,
   spatialCoverage,
+  countryCode,
+  dateModified,
+  citations,
+  size,
 }: DatasetInput) {
   return {
     "@context": "https://schema.org",
@@ -438,9 +450,22 @@ export function datasetJsonLd({
     // assembled by hand from third-party sources this is the property that says
     // a person did the assembling.
     maintainer: { "@id": PERSON_ID },
+    inLanguage: "en",
+    variableMeasured: {
+      "@type": "PropertyValue",
+      name: "Retail price",
+      unitCode: "USD",
+      unitText: "US dollars",
+    },
     ...(spatialCoverage
-      ? { spatialCoverage: { "@type": "Country", name: spatialCoverage } }
+      ? { spatialCoverage: countryJsonLd(spatialCoverage, countryCode) }
       : {}),
+    // From the rows' own sourceDate, never from the build. A price table's
+    // freshness belongs to its sources; a build timestamp would let a CSS
+    // change assert that the prices were re-checked this morning.
+    ...(dateModified ? { dateModified } : {}),
+    ...(size ? { size: `${size} rows` } : {}),
+    ...(citations && citations.length > 0 ? { citation: citations } : {}),
   };
 }
 
@@ -476,3 +501,119 @@ export function itemSummary(max = 3): string {
 }
 
 export const ITEM_COUNT = ITEMS.length;
+
+/**
+ * `BreadcrumbList` for a nested page.
+ *
+ * Absent from this site until now, and it is the cheapest of the schema types
+ * that recur on pages answer engines cite. The value is not the breadcrumb
+ * strip Google draws in a result. It is that a price page read cold is a table
+ * with no indication of what publishes it; the trail says Pricele → Prices →
+ * Norway, which is what lets a figure be attributed to a publication rather
+ * than to a loose page.
+ *
+ * The home crumb is added here so no caller can forget it and so the trail
+ * always resolves to the canonical origin. Pass the rest in order, ending with
+ * the page itself.
+ */
+export interface Crumb {
+  name: string;
+  /** Site-relative path. The last crumb may omit it; it is the current page. */
+  path?: string;
+}
+
+export function breadcrumbJsonLd(trail: Crumb[]) {
+  const full: Crumb[] = [{ name: SITE_NAME, path: "/" }, ...trail];
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: full.map((crumb, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: crumb.name,
+      // `item` is omitted on the final crumb, per Google's guidance: the last
+      // entry is the current page and pointing it at itself adds nothing.
+      ...(crumb.path && i < full.length - 1
+        ? { item: crumb.path === "/" ? SITE_URL : absoluteUrl(crumb.path) }
+        : {}),
+    })),
+  };
+}
+
+/**
+ * A `Country` node with its ISO code attached, for the `about` of a page that
+ * is about one country.
+ *
+ * The bare `{ "@type": "Country", name }` is ambiguous in exactly the cases it
+ * matters — Georgia the country and Georgia the state resolve to one string —
+ * and anything deciding whether this page answers a question about a country
+ * has nothing but that string to go on. The alpha-2 code is already on every
+ * row, so this costs nothing and is not a guess.
+ */
+export function countryJsonLd(name: string, countryCode?: string) {
+  return {
+    "@type": "Country",
+    name,
+    ...(countryCode
+      ? {
+          identifier: {
+            "@type": "PropertyValue",
+            propertyID: "ISO 3166-1 alpha-2",
+            value: countryCode,
+          },
+        }
+      : {}),
+  };
+}
+
+/**
+ * `WebPage` for a reference page, carrying the two properties a reference page
+ * has and an `Article` does not comfortably claim: when its figures were last
+ * refreshed, and which part of it is the answer.
+ *
+ * `speakable` names the selectors holding the direct answer. It was specified
+ * for voice assistants and is read more widely than that now; either way the
+ * cost is one property, and the effect is to point at the lead rather than
+ * leaving the whole document to be ranked for extractability paragraph by
+ * paragraph. The selectors must exist on the page — see `data-answer` in
+ * components/ContentPage.tsx.
+ *
+ * `dateModified` is derived from the `sourceDate` of the rows the page actually
+ * shows, never from the build. A price table's freshness is a property of its
+ * sources, and a build timestamp would let a deploy that changed a stylesheet
+ * assert that the prices were re-checked that morning.
+ */
+export interface WebPageInput {
+  name: string;
+  description: string;
+  path: string;
+  /** ISO date, from the newest source behind the figures on this page. */
+  dateModified?: string;
+  /** The primary entity the page is about, if it is about one thing. */
+  about?: object;
+}
+
+export function webPageJsonLd({
+  name,
+  description,
+  path,
+  dateModified,
+  about,
+}: WebPageInput) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name,
+    description,
+    url: absoluteUrl(path),
+    inLanguage: "en",
+    isPartOf: { "@type": "WebSite", url: SITE_URL, name: SITE_NAME },
+    publisher: orgRef,
+    ...(dateModified ? { dateModified } : {}),
+    ...(about ? { about } : {}),
+    speakable: {
+      "@type": "SpeakableSpecification",
+      cssSelector: ["[data-answer]"],
+    },
+  };
+}

@@ -5,7 +5,7 @@ import JsonLd from "@/components/JsonLd";
 import { ITEMS } from "@/data/items";
 import { pricesForItem, medianPriceUSD, COUNTRIES } from "@/lib/catalog";
 import { formatUSD } from "@/lib/format";
-import { absoluteUrl, pageMetadata } from "@/lib/seo";
+import { absoluteUrl, breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 
 export const revalidate = 3600;
 
@@ -99,18 +99,21 @@ export default function ItemsIndex() {
       </Section>
 
       <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@type": "CollectionPage",
-          name: "Items",
-          url: absoluteUrl("/items"),
-          description: metadata.description,
-          hasPart: ITEMS.map((i) => ({
-            "@type": "WebPage",
-            name: i.name,
-            url: absoluteUrl(`/items/${i.slug}`),
-          })),
-        }}
+        data={[
+          breadcrumbJsonLd([{ name: "Items", path: "/items" }]),
+          {
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            name: "Items",
+            url: absoluteUrl("/items"),
+            description: metadata.description,
+            hasPart: ITEMS.map((i) => ({
+              "@type": "WebPage",
+              name: i.name,
+              url: absoluteUrl(`/items/${i.slug}`),
+            })),
+          },
+        ]}
       />
     </ContentPage>
   );

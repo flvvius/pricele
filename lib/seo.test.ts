@@ -1,5 +1,16 @@
 import { describe, it, expect } from "vitest";
-import { SITE_URL, canonicalOrigin, absoluteUrl, pageMetadata, titleFor } from "./seo";
+import {
+  SITE_URL,
+  canonicalOrigin,
+  absoluteUrl,
+  pageMetadata,
+  titleFor,
+  breadcrumbJsonLd,
+  countryJsonLd,
+  datasetJsonLd,
+  webPageJsonLd,
+  DATA_LICENSE_URL,
+} from "./seo";
 
 // These guard the canonical origin, which is the one piece of SEO config the
 // site cannot self-correct. A canonical URL that redirects is not a canonical
@@ -89,5 +100,103 @@ describe("titleFor", () => {
   it("applies the same template Next applies", () => {
     expect(titleFor("About")).toBe("About · Pricele");
     expect(titleFor()).toContain("Pricele");
+  });
+});
+
+// The structured-data builders added for answer-engine visibility. What is
+// worth testing about JSON-LD is not that a property exists — that is what the
+// builder is — but the few rules that break silently later: the last breadcrumb
+// must not link to itself, a Dataset must carry a licence, and freshness must
+// never be asserted from nothing.
+
+describe("breadcrumbJsonLd", () => {
+  it("puts the site at the root of every trail", () => {
+    const crumbs = breadcrumbJsonLd([{ name: "Prices", path: "/prices" }])
+      .itemListElement;
+    expect(crumbs).toHaveLength(2);
+    expect(crumbs[0]).toMatchObject({
+      position: 1,
+      name: "Pricele",
+      item: SITE_URL,
+    });
+  });
+
+  it("numbers positions from one, in order", () => {
+    const crumbs = breadcrumbJsonLd([
+      { name: "Prices", path: "/prices" },
+      { name: "Norway", path: "/prices/norway" },
+    ]).itemListElement;
+    expect(crumbs.map((c) => c.position)).toEqual([1, 2, 3]);
+    expect(crumbs.map((c) => c.name)).toEqual(["Pricele", "Prices", "Norway"]);
+  });
+
+  it("omits the item URL on the final crumb, which is the current page", () => {
+    const crumbs = breadcrumbJsonLd([
+      { name: "Prices", path: "/prices" },
+      { name: "Norway", path: "/prices/norway" },
+    ]).itemListElement;
+    expect(crumbs[1]).toHaveProperty("item", absoluteUrl("/prices"));
+    expect(crumbs[2]).not.toHaveProperty("item");
+  });
+});
+
+describe("datasetJsonLd", () => {
+  const base = { name: "Prices in Norway", description: "…", path: "/prices/norway" };
+
+  it("always carries a licence and a creator, the two Search flags as missing", () => {
+    const d = datasetJsonLd(base);
+    expect(d.license).toBe(DATA_LICENSE_URL);
+    expect(d.creator).toBeDefined();
+    expect(d.maintainer).toBeDefined();
+  });
+
+  it("points the licence at a real section, not a bare page", () => {
+    // /methodology#reuse has to exist; a licence URL landing on no section is
+    // a claim the site does not make.
+    expect(DATA_LICENSE_URL).toBe(absoluteUrl("/methodology#reuse"));
+  });
+
+  it("attaches the ISO country code as an entity anchor when given one", () => {
+    const d = datasetJsonLd({ ...base, spatialCoverage: "Norway", countryCode: "NO" });
+    expect(d.spatialCoverage).toMatchObject({
+      "@type": "Country",
+      name: "Norway",
+      identifier: { propertyID: "ISO 3166-1 alpha-2", value: "NO" },
+    });
+  });
+
+  it("never claims a modification date it was not given", () => {
+    // A price table's freshness belongs to its sources. If this ever defaults
+    // to the build date, every deploy asserts a price refresh that never
+    // happened, which is precisely the aggregator behaviour this site exists
+    // to be better than.
+    expect(datasetJsonLd(base)).not.toHaveProperty("dateModified");
+    expect(
+      datasetJsonLd({ ...base, dateModified: "2026-07-01" })
+    ).toHaveProperty("dateModified", "2026-07-01");
+  });
+});
+
+describe("countryJsonLd", () => {
+  it("disambiguates by ISO code, which a bare name cannot do", () => {
+    // "Georgia" is the case that motivates this: the name alone does not say
+    // whether the page is about the country or the US state.
+    expect(countryJsonLd("Georgia", "GE")).toMatchObject({
+      "@type": "Country",
+      identifier: { value: "GE" },
+    });
+  });
+
+  it("degrades to a bare name when no code is available", () => {
+    expect(countryJsonLd("Norway")).toEqual({ "@type": "Country", name: "Norway" });
+  });
+});
+
+describe("webPageJsonLd", () => {
+  it("names the speakable selector the pages actually render", () => {
+    // Paired with `data-answer` in components/ContentPage.tsx. Rename that
+    // attribute and this selector points at nothing.
+    const page = webPageJsonLd({ name: "n", description: "d", path: "/x" });
+    expect(page.speakable.cssSelector).toContain("[data-answer]");
   });
 });

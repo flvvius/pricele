@@ -13,7 +13,7 @@ import {
   PUBLISHED_ARTICLES,
 } from "@/data/articles";
 import { formatArchiveDate } from "@/lib/format";
-import { articleJsonLd, pageMetadata } from "@/lib/seo";
+import { articleJsonLd, breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 
 export const dynamic = "force-static";
 
@@ -120,15 +120,21 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
           )}
 
           <JsonLd
-            data={articleJsonLd({
-              slug: article.slug,
-              title: article.title,
-              description: article.description,
-              date: article.date,
-              updated: article.updated,
-              citations: article.sources?.map((s) => s.url),
-              wordCount: countWords(article.body!),
-            })}
+            data={[
+              breadcrumbJsonLd([
+                { name: "Guides", path: "/blog" },
+                { name: article.title, path: `/blog/${article.slug}` },
+              ]),
+              articleJsonLd({
+                slug: article.slug,
+                title: article.title,
+                description: article.description,
+                date: article.date,
+                updated: article.updated,
+                citations: article.sources?.map((s) => s.url),
+                wordCount: countWords(article.body!),
+              }),
+            ]}
           />
         </>
       ) : (

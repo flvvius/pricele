@@ -5,7 +5,12 @@ import JsonLd from "@/components/JsonLd";
 import { COUNTRIES, pricesForCountry, suppressedPairs } from "@/lib/catalog";
 import { ITEMS } from "@/data/items";
 import { formatUSD } from "@/lib/format";
-import { absoluteUrl, SITE_NAME, pageMetadata } from "@/lib/seo";
+import {
+  absoluteUrl,
+  breadcrumbJsonLd,
+  pageMetadata,
+  SITE_NAME,
+} from "@/lib/seo";
 
 // Regenerated hourly so the "in play right now" suppression window keeps moving
 // with the rotation instead of freezing at whatever the last deploy saw.
@@ -107,18 +112,21 @@ export default function PricesIndex() {
       </Section>
 
       <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@type": "CollectionPage",
-          name: "Prices by country",
-          url: absoluteUrl("/prices"),
-          description: metadata.description,
-          hasPart: COUNTRIES.map((c) => ({
-            "@type": "WebPage",
-            name: `Prices in ${c.name}`,
-            url: absoluteUrl(`/prices/${c.slug}`),
-          })),
-        }}
+        data={[
+          breadcrumbJsonLd([{ name: "Prices", path: "/prices" }]),
+          {
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            name: "Prices by country",
+            url: absoluteUrl("/prices"),
+            description: metadata.description,
+            hasPart: COUNTRIES.map((c) => ({
+              "@type": "WebPage",
+              name: `Prices in ${c.name}`,
+              url: absoluteUrl(`/prices/${c.slug}`),
+            })),
+          },
+        ]}
       />
     </ContentPage>
   );

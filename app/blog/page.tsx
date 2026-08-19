@@ -4,7 +4,7 @@ import ContentPage, { Section, Prose } from "@/components/ContentPage";
 import JsonLd from "@/components/JsonLd";
 import { PUBLISHED_ARTICLES } from "@/data/articles";
 import { formatArchiveDate } from "@/lib/format";
-import { absoluteUrl, pageMetadata } from "@/lib/seo";
+import { absoluteUrl, breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 
 export const dynamic = "force-static";
 
@@ -82,19 +82,22 @@ export default function BlogIndex() {
 
       {HAS_ARTICLES && (
         <JsonLd
-          data={{
-            "@context": "https://schema.org",
-            "@type": "Blog",
-            name: "Pricele Guides",
-            url: absoluteUrl("/blog"),
-            blogPost: PUBLISHED_ARTICLES.map((a) => ({
-              "@type": "BlogPosting",
-              headline: a.title,
-              description: a.description,
-              datePublished: a.date,
-              url: absoluteUrl(`/blog/${a.slug}`),
-            })),
-          }}
+          data={[
+            breadcrumbJsonLd([{ name: "Guides", path: "/blog" }]),
+            {
+              "@context": "https://schema.org",
+              "@type": "Blog",
+              name: "Pricele Guides",
+              url: absoluteUrl("/blog"),
+              blogPost: PUBLISHED_ARTICLES.map((a) => ({
+                "@type": "BlogPosting",
+                headline: a.title,
+                description: a.description,
+                datePublished: a.date,
+                url: absoluteUrl(`/blog/${a.slug}`),
+              })),
+            },
+          ]}
         />
       )}
     </ContentPage>

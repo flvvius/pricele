@@ -11,7 +11,7 @@ import {
   type GameCategory,
   type SimilarGame,
 } from "@/data/similar-games";
-import { gameListJsonLd, pageMetadata } from "@/lib/seo";
+import { breadcrumbJsonLd, gameListJsonLd, pageMetadata } from "@/lib/seo";
 
 export const dynamic = "force-static";
 
@@ -97,16 +97,19 @@ export default function DailyGamesPage() {
       }
     >
       <JsonLd
-        data={gameListJsonLd({
-          name: TITLE,
-          description: DESCRIPTION,
-          path: "/daily-games",
-          games: ALL_SIMILAR_GAMES.map((g) => ({
-            name: g.name,
-            url: g.url,
-            description: g.description,
-          })),
-        })}
+        data={[
+          breadcrumbJsonLd([{ name: "Daily games", path: "/daily-games" }]),
+          gameListJsonLd({
+            name: TITLE,
+            description: DESCRIPTION,
+            path: "/daily-games",
+            games: ALL_SIMILAR_GAMES.map((g) => ({
+              name: g.name,
+              url: g.url,
+              description: g.description,
+            })),
+          }),
+        ]}
       />
 
       <Section heading="Price-guessing games" id="price">

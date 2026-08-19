@@ -34,7 +34,16 @@ export default function ContentPage({
             {title}
           </h1>
           {intro && (
-            <div className="flex max-w-prose flex-col gap-3 text-[15px] leading-relaxed text-ink-muted lg:col-start-2">
+            // `data-answer` marks the standfirst as the page's direct answer.
+            // Two things read it: the `speakable` selector in the page's
+            // JSON-LD, and anything extracting a summary, which overwhelmingly
+            // takes it from the top of the document. That is the whole reason
+            // the standfirst on a reference page now leads with a price
+            // instead of describing what the page is about.
+            <div
+              data-answer
+              className="flex max-w-prose flex-col gap-3 text-[15px] leading-relaxed text-ink-muted lg:col-start-2"
+            >
               {intro}
             </div>
           )}
