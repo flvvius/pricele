@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Phone with signal bars">
+  <rect x="18" y="8" width="28" height="48" rx="5" fill="#2f3a44"/>
+  <rect x="21" y="14" width="22" height="34" rx="2" fill="#e8eef3"/>
+  <rect x="28" y="10" width="8" height="2" rx="1" fill="#6c7a86"/>
+  <rect x="25" y="38" width="4" height="6" rx="1" fill="#2f7fd1"/>
+  <rect x="30" y="33" width="4" height="11" rx="1" fill="#2f7fd1"/>
+  <rect x="35" y="28" width="4" height="16" rx="1" fill="#2f7fd1"/>
+  <path d="M26 24a9 9 0 0 1 12 0" stroke="#2f7fd1" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <circle cx="32" cy="28" r="2" fill="#2f7fd1"/>
+</svg>

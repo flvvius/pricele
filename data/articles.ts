@@ -1736,7 +1736,7 @@ export const ARTICLES: Article[] = [
       {
         kind: "prose",
         paragraphs: [
-          "Of the seven items in this game, six behave the way you would expect. Rich country, higher price; poor country, lower price; a spread of maybe five to one between the extremes.",
+          "Most items in this game behave the way you would expect. Rich country, higher price; poor country, lower price; a spread of maybe five to one between the extremes. Groceries do it, café drinks do it, a Big Mac does it.",
           "Fuel does something else entirely. The spread between the cheapest and most expensive countries in the world runs past **forty to one**. The ranking scrambles rich and poor countries together. Several major oil exporters sit at both ends of it.",
           "There is a reason fuel is the item people get most wrong, and it is that they are trying to reason about it as a commodity. Reasoning about it as a tax rate gets you much closer.",
         ],

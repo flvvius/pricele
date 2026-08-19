@@ -42,8 +42,10 @@ export function GET() {
 
 ${SITE_NAME} pairs one of ${ITEMS.length} everyday items (${itemNames}) with one of
 ${COUNTRIES.length} countries. Every price is a published figure with its source
-named on the page: Big Mac prices come from The Economist's Big Mac Index, and
-grocery, café and fuel prices from Numbeo's country price rankings. Wage-derived
+named on the page: The Economist's Big Mac Index, Numbeo's country price
+rankings, GlobalPetrolPrices.com for fuel and household energy, the WHO Global
+Health Observatory's tobacco and alcohol tax surveys, Cable.co.uk for mobile
+data, and the World Bank and FAO for the cost of a healthy diet. Wage-derived
 "hours of work" figures are the site's own estimates and are labelled as the
 weakest numbers on it.
 

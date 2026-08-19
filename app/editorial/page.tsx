@@ -77,7 +77,7 @@ export default function EditorialPage() {
             A figure has to clear four things before it goes into the table.
             Anything that fails one of them is left out rather than estimated,
             which is why the price grid has holes in it: several countries carry
-            only two or three of the seven items.
+            only a handful of the items in the catalogue.
           </p>
         </Prose>
         <ol className="flex max-w-prose list-decimal flex-col gap-2.5 pl-5 text-[15px] leading-[1.7] text-ink-body marker:text-ink-meta">

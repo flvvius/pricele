@@ -3,11 +3,14 @@ import {
   isoDate,
   daysSince,
   getDailyPuzzle,
+  getPuzzleForISO,
   puzzleNumber,
   addDaysISO,
   pastPuzzleDates,
   dateFromISO,
   findPrice,
+  itemOrderForDay,
+  PRICES,
 } from "./puzzle";
 import { ROTATION } from "@/data/rotation";
 import { ITEMS } from "@/data/items";
@@ -18,6 +21,8 @@ import {
   isPublishedArchiveDate,
   COUNTRIES,
 } from "./catalog";
+
+const getPuzzleItemFor = (iso: string) => getPuzzleForISO(iso)?.item.id;
 
 describe("date logic (local time)", () => {
   it("isoDate formats a local date as YYYY-MM-DD", () => {
@@ -50,32 +55,65 @@ describe("daily puzzle rotation", () => {
   });
 
   it("advances the item every day too", () => {
-    const a = getDailyPuzzle(new Date(2026, 6, 24));
-    const b = getDailyPuzzle(new Date(2026, 6, 25));
-    const c = getDailyPuzzle(new Date(2026, 6, 26));
-    expect(a?.item.id).toBe(ROTATION.itemOrder[0]);
-    expect(b?.item.id).toBe(ROTATION.itemOrder[1]);
-    expect(c?.item.id).toBe(ROTATION.itemOrder[2]);
+    for (const day of [0, 1, 2, 40, 41, 42]) {
+      const iso = addDaysISO(ROTATION.startDate, day);
+      const next = addDaysISO(ROTATION.startDate, day + 1);
+      expect(getPuzzleItemFor(iso), iso).not.toBe(getPuzzleItemFor(next));
+    }
   });
 
-  it("only repeats an (item, country) pair after a full 231-day cycle", () => {
-    const period = ROTATION.countryOrder.length * ROTATION.itemOrder.length;
-    expect(period).toBe(231);
+  it("keeps every day already played on the seven-item schedule", () => {
+    // The catalogue went from 7 items to 17, which moves `dayIndex % length`
+    // for every day at once. Days before ROTATION.itemOrderFrom have to keep
+    // the item they were actually played with, or the archive and every share
+    // card already posted start describing a different puzzle.
+    const { legacyItemOrder, itemOrderFrom } = ROTATION;
+    expect(itemOrderFrom).toBeGreaterThan(0);
+    for (let day = 0; day < itemOrderFrom; day++) {
+      const scheduled = legacyItemOrder[day % legacyItemOrder.length];
+      const country = ROTATION.countryOrder[day % ROTATION.countryOrder.length];
+      // Only assert where the country actually stocks the scheduled item;
+      // elsewhere the substitution rule picks, and it picks from the legacy
+      // list either way.
+      if (!findPrice(scheduled, country)) continue;
+      const iso = addDaysISO(ROTATION.startDate, day);
+      expect(getPuzzleItemFor(iso), `day ${day} (${iso})`).toBe(scheduled);
+    }
+  });
+
+  it("uses the full catalogue from the changeover day onwards", () => {
+    const { itemOrder, itemOrderFrom, countryOrder } = ROTATION;
+    for (let day = itemOrderFrom; day < itemOrderFrom + itemOrder.length; day++) {
+      const scheduled = itemOrder[(day - itemOrderFrom) % itemOrder.length];
+      const country = countryOrder[day % countryOrder.length];
+      if (!findPrice(scheduled, country)) continue;
+      const iso = addDaysISO(ROTATION.startDate, day);
+      expect(getPuzzleItemFor(iso), `day ${day} (${iso})`).toBe(scheduled);
+    }
+  });
+
+  it("only repeats an (item, country) pair after a full cycle", () => {
+    const { itemOrderFrom, countryOrder, itemOrder } = ROTATION;
+    const period = countryOrder.length * itemOrder.length;
+    expect(period).toBe(561); // 33 countries x 17 items
 
     const seen = new Set<string>();
-    for (let i = 0; i < period; i++) {
+    for (let i = itemOrderFrom; i < itemOrderFrom + period; i++) {
       const pair = pairForDate(dateFromISO(addDaysISO(ROTATION.startDate, i)));
       expect(pair).not.toBeNull();
       seen.add(`${pair!.itemId}:${pair!.countryCode}`);
     }
-    // Lebanon only stocks 2 of the 7 items, so its 7 scheduled slots collapse
-    // onto those 2, while every other country contributes 7 distinct pairs.
-    expect(seen.size).toBeGreaterThan(200);
+    // The table is sparse, so a country's 17 scheduled slots collapse onto
+    // however many items it actually stocks. There are 503 rows in all, and
+    // every one of them should be reachable.
+    expect(seen.size).toBe(PRICES.length);
 
-    // And the cycle really does close: day 231 matches day 0.
-    const first = pairForDate(dateFromISO(ROTATION.startDate));
+    // And the cycle really does close: one full period on, the pair repeats.
+    const first = pairForDate(
+      dateFromISO(addDaysISO(ROTATION.startDate, itemOrderFrom))
+    );
     const wrapped = pairForDate(
-      dateFromISO(addDaysISO(ROTATION.startDate, period))
+      dateFromISO(addDaysISO(ROTATION.startDate, itemOrderFrom + period))
     );
     expect(wrapped).toEqual(first);
   });
@@ -101,7 +139,7 @@ describe("daily puzzle rotation", () => {
     // Lebanon has no milk row, so whichever day pairs LB with milk must fall
     // through to an item it does have, and do so identically every call.
     const lbDays: number[] = [];
-    for (let i = 0; i < 231; i++) {
+    for (let i = 0; i < 561; i++) {
       const pair = pairForDate(dateFromISO(addDaysISO(ROTATION.startDate, i)));
       if (pair?.countryCode === "LB") lbDays.push(i);
     }
@@ -242,8 +280,33 @@ describe("catalog", () => {
 
   it("has a price row for every item the rotation can schedule", () => {
     const ids = new Set(ITEMS.map((i) => i.id));
-    for (const id of ROTATION.itemOrder) {
+    for (const id of [...ROTATION.itemOrder, ...ROTATION.legacyItemOrder]) {
       expect(ids.has(id), `rotation references unknown item ${id}`).toBe(true);
+      expect(
+        PRICES.some((p) => p.itemId === id),
+        `no price row anywhere for ${id}`
+      ).toBe(true);
+    }
+  });
+
+  it("schedules the whole catalog, with nothing listed twice", () => {
+    expect([...ROTATION.itemOrder].sort()).toEqual(
+      ITEMS.map((i) => i.id).sort()
+    );
+  });
+
+  it("offers every item as a fallback on every day", () => {
+    // getDailyPuzzle walks this list until it finds an item the country
+    // stocks, so a rotation of the list, not a slice of it, is what keeps a
+    // thinly-stocked country from falling off the end.
+    for (const day of [0, 5, 29, 30, 31, 400]) {
+      const order = itemOrderForDay(day);
+      const expected =
+        day < ROTATION.itemOrderFrom
+          ? ROTATION.legacyItemOrder
+          : ROTATION.itemOrder;
+      expect(order.length).toBe(expected.length);
+      expect([...order].sort()).toEqual([...expected].sort());
     }
   });
 });

@@ -36,7 +36,7 @@ export function generateMetadata({
   return pageMetadata({
     path: `/prices/${country.slug}`,
     title: `Prices in ${country.name}`,
-    description: `What everyday items cost in ${country.name}: a Big Mac, a cappuccino, milk, eggs, apples and petrol, priced in US dollars, in ${country.localCurrency}, and in how long the average local wage takes to earn them.`,
+    description: `What everyday items cost in ${country.name}: a Big Mac, a cappuccino, groceries, fuel, household energy, cigarettes, a beer and mobile data, priced in US dollars, in ${country.localCurrency}, and in how long the average local wage takes to earn them.`,
   });
 }
 
@@ -91,9 +91,10 @@ export default function CountryPage({ params }: { params: { country: string } })
       intro={
         <>
           <p>
-            What {ITEMS.length} everyday items cost in {country.name}, shown in US
-            dollars, in {country.localCurrency}, and as roughly how long someone
-            earning the average local wage works to buy one.
+            What {prices.length} of the {ITEMS.length} everyday items in the game
+            cost in {country.name}, shown in US dollars, in{" "}
+            {country.localCurrency}, and as roughly how long someone earning the
+            average local wage works to buy one.
           </p>
           {note && <p>{note}</p>}
         </>
@@ -102,11 +103,12 @@ export default function CountryPage({ params }: { params: { country: string } })
       <Section heading="What things cost">
         <PriceTable rows={rows} labelHeader="Item" />
         <p className="label">
-          Local-currency figures are converted from US dollars at recent exchange
-          rates, except the Big Mac, which is published in local currency by The
-          Economist and converted the other way. Work time divides the dollar
-          price by an estimated average hourly wage, the roughest number on this
-          page. See{" "}
+          Most local-currency figures are printed as the source published them.
+          The cappuccino, milk, egg, apple and petrol rows are converted from US
+          dollars at recent exchange rates; the healthy-diet row is converted the
+          other way. A dash means the source publishes dollars and nothing else.
+          Work time divides the dollar price by an estimated average hourly wage,
+          the roughest number on this page. See{" "}
           <Link href="/methodology" className="underline hover:text-neutral-300">
             methodology
           </Link>
@@ -227,7 +229,7 @@ export default function CountryPage({ params }: { params: { country: string } })
       <JsonLd
         data={datasetJsonLd({
           name: `Everyday prices in ${country.name}`,
-          description: `Prices for ${ITEMS.length} everyday items in ${country.name}, in US dollars and ${country.localCurrency}.`,
+          description: `Prices for ${prices.length} everyday items in ${country.name}, in US dollars and ${country.localCurrency}.`,
           path: `/prices/${country.slug}`,
           spatialCoverage: country.name,
         })}

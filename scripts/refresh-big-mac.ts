@@ -6,13 +6,15 @@
  *   pnpm refresh-big-mac --check    # exit non-zero if they're out of date
  *
  * WHY ONLY BIG MAC
- *   Of the seven items, only this one has a machine-readable upstream that is
- *   published for reuse. The Economist puts the raw index on GitHub under
- *   TheEconomist/big-mac-data. The Numbeo-sourced items (cappuccino, milk,
- *   eggs, apples, gasoline) are collected by hand from Numbeo's country price
- *   rankings, because bulk-scraping them is both rate-limited and against their
- *   terms. Coca-Cola rows are a hand-curated table. Those three groups are
- *   edited directly in data/prices.json; this script leaves them untouched.
+ *   The Economist puts the raw index on GitHub under TheEconomist/big-mac-data,
+ *   as a single CSV with a stable schema, which is why it gets a script of its
+ *   own. Ten more items have machine-readable upstreams of a messier kind and
+ *   are handled together by scripts/refresh-open-prices.ts. The Numbeo-sourced
+ *   items (cappuccino, milk, eggs, apples, gasoline) are collected by hand from
+ *   Numbeo's country price rankings, because bulk-scraping them is both
+ *   rate-limited and against their terms, and the Coca-Cola rows are a
+ *   hand-curated table. Those last two groups are edited directly in
+ *   data/prices.json; no script touches them.
  *
  * The euro area is published as one price rather than per member state, so
  * every eurozone country in the game receives that same figure, labelled as

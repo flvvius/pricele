@@ -29,11 +29,14 @@ export function generateMetadata({
 }): Metadata {
   const item = getItemBySlug(params.item);
   if (!item) return {};
-  const n = pricesForItem(item.id).length;
+  const rows = pricesForItem(item.id);
+  // Not every source publishes a local-currency figure, and promising one the
+  // table does not have is worse than not mentioning it.
+  const local = rows.some((p) => p.priceLocal != null) ? " and local currency," : "";
   return pageMetadata({
     path: `/items/${item.slug}`,
     title: `${item.name} prices by country`,
-    description: `What ${item.name.toLowerCase()} costs in ${n} countries, ranked cheapest to most expensive, in US dollars and local currency, plus how long the average local wage takes to earn one.`,
+    description: `What ${item.name.toLowerCase()} costs in ${rows.length} countries, ranked cheapest to most expensive, in US dollars${local} plus how long the average local wage takes to earn one.`,
   });
 }
 
@@ -43,6 +46,7 @@ export default function ItemPage({ params }: { params: { item: string } }) {
 
   const suppressed = suppressedPairs();
   const prices = pricesForItem(item.id); // cheapest first
+  const hasLocal = prices.some((p) => p.priceLocal != null);
 
   const rows: Row[] = prices.map((p) => ({
     key: p.countryCode,
@@ -78,13 +82,14 @@ export default function ItemPage({ params }: { params: { item: string } }) {
           <p>{item.blurb}</p>
           <p>
             Below, {item.unit} priced in {prices.length} countries, cheapest
-            first, in US dollars and in local currency.
+            first, in US dollars
+            {hasLocal ? " and in local currency." : ". This source publishes dollars and nothing else, so there is no local-currency column to fill."}
           </p>
         </>
       }
     >
       <Section heading="The numbers">
-        <PriceTable rows={rows} labelHeader="Country" />
+        <PriceTable rows={rows} labelHeader="Country" showLocal={hasLocal} />
         <p className="label">
           Source: {item.sourceNote}{" "}
           <Link href="/methodology" className="underline hover:text-neutral-300">
@@ -159,7 +164,7 @@ export default function ItemPage({ params }: { params: { item: string } }) {
       <JsonLd
         data={datasetJsonLd({
           name: `${item.name} prices by country`,
-          description: `Price of ${item.name.toLowerCase()} across ${prices.length} countries in US dollars and local currency.`,
+          description: `Price of ${item.name.toLowerCase()} across ${prices.length} countries in US dollars${hasLocal ? " and local currency" : ""}.`,
           path: `/items/${item.slug}`,
         })}
       />

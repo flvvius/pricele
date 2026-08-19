@@ -112,6 +112,126 @@ export const ITEMS: Item[] = [
     blurb:
       "Crude oil trades on a world market at one price, so the pump price is almost pure policy. Countries that tax fuel heavily land near the top of the table; oil producers that subsidise it land at the bottom, sometimes below what it costs to refine. The spread between the cheapest and most expensive country here is wider than for any other item in the game.",
   },
+  {
+    id: "diesel-1l",
+    name: "Diesel (1 litre)",
+    shortName: "Diesel",
+    slug: "diesel",
+    unit: "one litre at the pump",
+    imageUrl: "/items/diesel.svg",
+    sourceNote:
+      "GlobalPetrolPrices.com, which publishes a weekly retail diesel price for around 170 countries in both the local currency and US dollars.",
+    blurb:
+      "Diesel and petrol leave the same refinery, so the gap between them in any country is almost entirely tax. Much of Europe spent decades taxing diesel more lightly than petrol to favour freight and diesel cars, and has been closing that gap since 2015. Elsewhere the ordering flips: plenty of countries price diesel above petrol because it is the fuel of business rather than of voters.",
+  },
+  {
+    id: "lpg-1l",
+    name: "LPG (1 litre)",
+    shortName: "LPG",
+    slug: "lpg",
+    unit: "one litre of autogas at the pump",
+    imageUrl: "/items/lpg.svg",
+    sourceNote:
+      "GlobalPetrolPrices.com's weekly LPG (autogas) series. It covers far fewer countries than the diesel one, because a country only appears if LPG is sold as a road fuel at all.",
+    blurb:
+      "Liquefied petroleum gas is the cheap third fuel: a by-product of gas processing and oil refining that a car can burn after a conversion costing a few hundred dollars. It only becomes a mass-market fuel where a government decides to tax it lightly, which is why the LPG map looks nothing like the petrol map. Poland, Turkey and Italy run large autogas fleets; most of the English-speaking world barely sells it.",
+  },
+  {
+    id: "electricity-100kwh",
+    name: "Electricity (100 kWh)",
+    shortName: "Electricity",
+    slug: "electricity",
+    unit: "100 kilowatt-hours on a household tariff",
+    imageUrl: "/items/electricity.svg",
+    sourceNote:
+      "GlobalPetrolPrices.com's residential electricity series, which includes the cost of power, distribution and transmission plus all taxes and fees. Published per kWh and stored here per 100 kWh.",
+    blurb:
+      "A hundred kilowatt-hours is roughly what a small flat draws in a month, and what it costs ranges from under a dollar-fifty a week to the price of a restaurant meal. Almost none of that spread is the cost of generating the power. It is network charges, carbon and energy taxes, and in several countries a subsidy that holds the household tariff below what the grid actually spends.",
+  },
+  {
+    id: "natural-gas-100kwh",
+    name: "Natural gas (100 kWh)",
+    shortName: "Natural gas",
+    slug: "natural-gas",
+    unit: "100 kilowatt-hours on a household tariff",
+    imageUrl: "/items/natural-gas.svg",
+    sourceNote:
+      "GlobalPetrolPrices.com's residential natural gas series, quoted per kWh of gas delivered and stored here per 100 kWh. Only countries with a domestic gas grid appear.",
+    blurb:
+      "Gas is the one energy price that still depends on geography, because moving it needs either a pipeline or a liquefaction plant at one end and a regasification terminal at the other. A country at the end of a pipe pays something close to the wellhead price; a country buying cargoes on the spot market pays whatever Asia and Europe are bidding that week. The 2022 European price shock, and the year of bills that followed it, was that distinction becoming visible.",
+  },
+  {
+    id: "cigarettes-20",
+    name: "Cigarettes (20-pack)",
+    shortName: "Cigarettes",
+    slug: "cigarettes",
+    unit: "a pack of 20, most sold brand",
+    imageUrl: "/items/cigarettes.svg",
+    sourceNote:
+      "The WHO Global Health Observatory's 2024 tobacco tax survey, which records the retail price of the most sold brand in each country, in local currency and in US dollars at the official exchange rate.",
+    blurb:
+      "No other item in the game is this deliberately priced. Tobacco taxes are set to make cigarettes unaffordable, and the WHO tracks the result precisely because it is a policy instrument rather than a market outcome. Australia's pack costs more than thirty times Lebanon's, and the same manufacturers sell in both.",
+  },
+  {
+    id: "beer-330ml",
+    name: "Beer (330ml)",
+    shortName: "Beer",
+    slug: "beer",
+    unit: "a 330ml bottle or can of the most sold brand, from a shop",
+    imageUrl: "/items/beer.svg",
+    sourceNote:
+      "The WHO Global Health Observatory's 2024 alcohol tax survey. Prices are collected for the most sold brand in each country and standardised to 330ml, in local currency and in US dollars.",
+    blurb:
+      "Beer is heavy, mostly water, and brewed close to where it is drunk, so a shop-bought bottle is a fairly clean read on local costs plus local excise duty. It is also the item where the shop and the bar diverge most: the same bottle carries a markup of three or four times once someone hands it to you across a counter, which is why this figure is the retail one.",
+  },
+  {
+    id: "spirits-750ml",
+    name: "Spirits (750ml bottle)",
+    shortName: "Spirits",
+    slug: "spirits",
+    unit: "a 750ml bottle of the most sold type, from a shop",
+    imageUrl: "/items/spirits.svg",
+    sourceNote:
+      "The WHO Global Health Observatory's 2024 alcohol tax survey, standardised to a 750ml bottle of the most sold brand of the most sold type of spirit, which is not the same drink in every country.",
+    blurb:
+      "This is the widest spread of any drink here, and two different things cause it. One is excise duty, which is usually charged per litre of pure alcohol and can be most of the shelf price in the Nordics or Oceania. The other is that the most sold spirit is soju in Korea, vodka in Poland and whisky in India, and those are not comparable products at comparable prices.",
+  },
+  {
+    id: "eliquid-1ml",
+    name: "Vape e-liquid (1 ml)",
+    shortName: "Vape liquid",
+    slug: "vape-e-liquid",
+    unit: "one millilitre from the cheapest disposable device",
+    imageUrl: "/items/vape.svg",
+    sourceNote:
+      "The WHO Global Health Observatory's 2024 tobacco and nicotine survey, which prices the cheapest closed disposable vape available in each country and standardises it to 1ml of e-liquid.",
+    blurb:
+      "The sparsest item in the game, and for a reason worth knowing: a country is only listed if disposable vapes are legally on sale there. Several of the largest markets in this table ban or restrict them outright, so an empty row is a policy fact rather than a gap in the data.",
+  },
+  {
+    id: "mobile-data-1gb",
+    name: "Mobile data (1 GB)",
+    shortName: "Mobile data",
+    slug: "mobile-data",
+    unit: "one gigabyte, averaged across a country's plans",
+    imageUrl: "/items/mobile-data.svg",
+    sourceNote:
+      "Cable.co.uk's worldwide mobile data pricing league table, which averages over 5,600 prepaid and postpaid plans across 237 countries. Published in US dollars only, so these rows carry no local-currency figure, and it is the oldest edition in the game: read the year printed next to the price.",
+    blurb:
+      "The only price in the game that has collapsed rather than risen: the world average fell from $8.18 a gigabyte in 2019 to $2.61 four years later. Countries that built dense 4G networks early and then let operators fight over them are pennies a gigabyte; countries running data over satellite or through a single incumbent are still tens of dollars. Rich and cheap are almost unrelated here, which is what makes it hard to guess.",
+  },
+  {
+    id: "healthy-diet-day",
+    name: "A day's healthy diet",
+    shortName: "Healthy diet",
+    slug: "healthy-diet",
+    unit: "one person, one day",
+    imageUrl: "/items/healthy-diet.svg",
+    sourceNote:
+      "The World Bank and FAO's Food Prices for Nutrition database: the cost of the cheapest locally available basket that meets dietary guidelines, per person per day. Published in local currency, converted here at the World Bank's own official exchange rate for the same year.",
+    blurb:
+      "This is not a shopping basket anyone actually buys. It is the cheapest combination of foods on sale locally that would meet dietary guidelines, which makes it a floor rather than an average, and the number economists use to count how many people cannot reach it. Over two and a half billion people live in countries where a day of it costs more than they have to spend on food.",
+  },
 ];
 
 const BY_ID = new Map(ITEMS.map((i) => [i.id, i]));

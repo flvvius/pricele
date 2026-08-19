@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Spirits bottle">
+  <path d="M28 6h8v12c0 3 6 5 6 11v27a2 2 0 0 1-2 2H26a2 2 0 0 1-2-2V29c0-6 4-8 4-11z" fill="#3f6b4a"/>
+  <rect x="27" y="4" width="10" height="5" rx="1.5" fill="#2c4c35"/>
+  <rect x="25" y="32" width="14" height="13" rx="1.5" fill="#efe6d2"/>
+  <rect x="27.5" y="35" width="9" height="2.5" rx="1.25" fill="#3f6b4a"/>
+  <rect x="29" y="40" width="6" height="2" rx="1" fill="#3f6b4a" opacity="0.6"/>
+  <path d="M24 48h18v7H24z" fill="#2c4c35" opacity="0.35"/>
+</svg>

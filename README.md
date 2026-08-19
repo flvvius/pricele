@@ -12,9 +12,11 @@ built with Next.js and statically generated, so it deploys to Vercel with no con
 
 ## Content model
 
-7 items × 33 countries, 226 price rows. The table is deliberately **sparse**:
+17 items × 33 countries, 503 price rows. The table is deliberately **sparse**:
 a pair exists only where there's a real sourced number, never padded with
-invented ones. Lebanon, for example, has only 2 of the 7 items.
+invented ones. LPG appears in 16 countries because that is where it is sold as a
+road fuel; natural gas in 25 because that is where households are on a gas grid.
+An absent row is usually a fact about the country, not a gap in the research.
 
 | Concern            | Where                                                        |
 | ------------------ | ------------------------------------------------------------ |
@@ -29,18 +31,28 @@ invented ones. Lebanon, for example, has only 2 of the 7 items.
 
 ### The daily rotation
 
-`data/rotation.ts` holds two ordered lists and a start date. The day's puzzle is:
+`data/rotation.ts` holds the ordered lists and a start date. The day's puzzle is:
 
 ```
 country = countryOrder[daysSince(startDate) % 33]
-item    = itemOrder   [daysSince(startDate) % 7]
+item    = itemOrder   [(daysSince(startDate) - itemOrderFrom) % 17]
 ```
 
-The lengths are **coprime**, so a pair only recurs every 231 days. Both lists are
-append-only: reordering or inserting silently rewrites which puzzle every past
-day had, breaking the archive and every share card already posted. A test
-enforces the coprimality, and another walks 400 days asserting every one resolves
-to a real price row.
+The lengths are **coprime**, so a pair only recurs every 561 days. `countryOrder`
+is append-only: reordering or inserting silently rewrites which puzzle every past
+day had, breaking the archive and every share card already posted.
+
+`itemOrder` could not stay append-only, because the catalogue grew from 7 items
+to 17 and *any* change of length moves `dayIndex % length` for every day at once.
+So the seven-item schedule the game launched with is frozen in `legacyItemOrder`,
+and the new list takes over at `itemOrderFrom`, a day index that was still in the
+future when it was set. Days already played keep the item they were played with;
+a test asserts it day by day. If the catalogue changes again, do the same thing
+rather than editing `itemOrder` in place.
+
+A test enforces the coprimality, another walks 400 days asserting every one
+resolves to a real price row, and a third walks a full 561-day cycle asserting
+that every one of the 503 rows is reachable.
 
 When a country lacks the scheduled item, `getDailyPuzzle` walks forward through
 `itemOrder` to the next item it does have. The substitution is a pure function of
@@ -48,19 +60,44 @@ the day index, so it's identical on every device and every rebuild.
 
 ### Where the prices come from
 
-- **Big Mac.** The Economist's Big Mac Index, published openly at
-  [TheEconomist/big-mac-data](https://github.com/TheEconomist/big-mac-data).
-  Reproducible: `pnpm refresh-big-mac`. A snapshot of the upstream CSV is
-  committed at `data/sources/`. The euro area is published as a single price, so
-  all 7 eurozone countries share it, labelled as such.
-- **Cappuccino, milk, eggs, apples, gasoline.** Numbeo country price rankings,
-  retrieved by hand (they rate-limit, and bulk scraping is against their terms).
-  Edited directly in `data/prices.json`.
-- **Coca-Cola.** A hand-curated table carried over from the original dataset.
-- **Wage figures.** Our own estimates, and the weakest numbers here. `/methodology`
-  says so plainly rather than burying it.
+Every row carries its own `source` and `sourceDate`, both surfaced in the UI,
+because the sources refresh at wildly different intervals.
 
-Every row carries its own `source` and `sourceDate`, both surfaced in the UI.
+| Items | Source | Refresh |
+| --- | --- | --- |
+| Big Mac | The Economist's [Big Mac Index](https://github.com/TheEconomist/big-mac-data) | `pnpm refresh-big-mac` |
+| Diesel, LPG, electricity, natural gas | [GlobalPetrolPrices.com](https://www.globalpetrolprices.com/) | `pnpm refresh-open-prices` |
+| Cigarettes, vape e-liquid, beer, spirits | [WHO Global Health Observatory](https://www.who.int/data/gho) tax surveys, 2024 | `pnpm refresh-open-prices` |
+| Mobile data | [Cable.co.uk](https://www.cable.co.uk/mobiles/worldwide-data-pricing/) league table | `pnpm refresh-open-prices` |
+| A day's healthy diet | World Bank / FAO Food Prices for Nutrition | `pnpm refresh-open-prices` |
+| Cappuccino, milk, eggs, apples, gasoline | Numbeo country price rankings | by hand |
+| Coca-Cola | hand-curated table from the original dataset | by hand |
+| Wage figures | our own estimates, the weakest numbers here | by hand |
+
+Notes worth knowing before editing any of it:
+
+- **The Big Mac euro area** is published as a single price, so all 7 eurozone
+  countries share it, labelled as such. A snapshot of the upstream CSV is
+  committed at `data/sources/`.
+- **The Numbeo and Coca-Cola rows are edited directly in `data/prices.json`.**
+  No script touches them; Numbeo rate-limits, and bulk scraping is against their
+  terms.
+- **`pnpm refresh-open-prices` owns ten items wholesale** and rebuilds every row
+  for them. It fetches one page per country from GlobalPetrolPrices (their
+  robots.txt is `Allow: /`, and only the country pages carry the local-currency
+  price), so a full run takes a couple of minutes. A normalised snapshot lands in
+  `data/sources/open-prices.json`, and `--offline` rebuilds from it.
+- **Electricity and natural gas are the only rescaled figures on the site**,
+  stored per 100 kWh rather than the published per-kWh, because a price between
+  $0.02 and $0.40 rounds to nothing readable. Every other figure is stored as
+  published.
+- **`priceLocal` is optional.** Cable.co.uk publishes dollars and nothing else,
+  so those rows carry no local price rather than a back-converted one, and the UI
+  omits the line. `formatLocal()` returns `null` for them.
+- **Licensing is not uniform, and two sources are stricter than this site.**
+  GlobalPetrolPrices is CC BY-NC-ND 3.0 and WHO data is CC BY-NC-SA 3.0 IGO; both
+  carry a non-commercial condition, and the site runs AdSense. World Bank and FAO
+  data is CC BY 4.0. `/methodology#reuse` states all of this in public.
 
 ## Answer suppression
 
@@ -177,10 +214,12 @@ off and the build is byte-for-byte ad-free.
 ```bash
 pnpm install
 pnpm dev                        # http://localhost:3000
-pnpm test                       # 60 unit tests
+pnpm test                       # 100 unit tests
 pnpm build                      # production build
 pnpm refresh-big-mac            # pull the latest Economist edition
 pnpm refresh-big-mac --check    # CI guard: fail if Big Mac rows are stale
+pnpm refresh-open-prices        # re-pull the ten openly-sourced items
+pnpm refresh-open-prices --check   # CI guard: fail if any of them is stale
 ```
 
 Prices are national averages published for general interest, not shopping advice.

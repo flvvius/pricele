@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Gas burner flame">
+  <path d="M32 6c7 8 4 12 1 15-3-3-6-2-6 3 0 3 2 5 2 8 0 4-3 6-6 6-5 0-9-5-9-12 0-11 12-14 18-20z" fill="#2f7fd1" opacity="0.35"/>
+  <path d="M32 12c5 6 3 9 1 11-2-2-4-1-4 2 0 2 1 4 1 6 0 3-2 5-4 5-4 0-7-4-7-9 0-8 9-11 13-15z" fill="#2f7fd1"/>
+  <path d="M36 24c4 4 6 7 6 11 0 6-4 10-10 10-2 0-4-1-5-2 6-1 9-5 9-10 0-3-1-6-2-9z" fill="#7fb8ef"/>
+  <rect x="12" y="48" width="40" height="6" rx="3" fill="#4c5a66"/>
+</svg>

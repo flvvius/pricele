@@ -12,7 +12,14 @@ export interface PriceEntry {
   countryName: string;
   flag: string;
   priceUSD: number;
-  priceLocal: number;
+  /**
+   * The published price in the country's own currency. Absent when the source
+   * only publishes a dollar figure (Cable.co.uk's mobile data survey is the
+   * one such source today). Never back-converted from `priceUSD`: a local
+   * price nobody published would look exactly as authoritative as one that
+   * was, so the UI omits the line instead.
+   */
+  priceLocal?: number;
   localCurrency: string;
   avgHourlyWageUSD: number;
   source: string;
@@ -99,6 +106,29 @@ function mod(n: number, m: number): number {
 }
 
 /**
+ * The item ids to try for a day, best candidate first.
+ *
+ * The catalogue grew from 7 items to 17, which changes `dayIndex % length` for
+ * every day at once and would have silently rewritten which item every past
+ * puzzle used. So days before `itemOrderFrom` keep the seven-item schedule they
+ * were played with, and the full list takes over from that day on. See the
+ * stability note in data/rotation.ts.
+ *
+ * The list is rotated rather than sliced, so a caller can walk the whole
+ * catalogue from the scheduled item onwards when a country lacks it.
+ */
+export function itemOrderForDay(dayIndex: number): string[] {
+  const { itemOrder, legacyItemOrder, itemOrderFrom } = ROTATION;
+  const legacy = dayIndex < itemOrderFrom;
+  const list = legacy ? legacyItemOrder : itemOrder;
+  if (list.length === 0) return [];
+  const start = legacy
+    ? mod(dayIndex, list.length)
+    : mod(dayIndex - itemOrderFrom, list.length);
+  return list.map((_, i) => list[(start + i) % list.length]);
+}
+
+/**
  * Resolve the puzzle for a given day: which country and item are up, and the
  * matching price row.
  *
@@ -117,10 +147,8 @@ export function getDailyPuzzle(today: Date = new Date()): DailyPuzzle | null {
 
   const dayIndex = daysSince(startDate, today);
   const countryCode = countryOrder[mod(dayIndex, countryOrder.length)];
-  const itemIndex = mod(dayIndex, itemOrder.length);
 
-  for (let offset = 0; offset < itemOrder.length; offset++) {
-    const itemId = itemOrder[(itemIndex + offset) % itemOrder.length];
+  for (const itemId of itemOrderForDay(dayIndex)) {
     const price = findPrice(itemId, countryCode);
     const item = getItem(itemId);
     if (price && item) {

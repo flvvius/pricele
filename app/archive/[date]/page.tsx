@@ -112,7 +112,9 @@ export default function ArchiveDatePage({
           <p className="mt-1 text-4xl font-black tabular-nums text-ink">
             {formatUSD(price.priceUSD)}
           </p>
-          <p className="text-ink-muted">{formatLocal(price)}</p>
+          {formatLocal(price) && (
+            <p className="text-ink-muted">{formatLocal(price)}</p>
+          )}
           <p className="mt-3 border-t border-rule pt-3 text-sm text-ink-body">
             {affordanceLine(price)}
           </p>

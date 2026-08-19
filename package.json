@@ -10,7 +10,8 @@
     "og": "node scripts/generate-og.mjs",
     "icons": "node scripts/generate-icons.mjs",
     "test": "vitest run",
-    "refresh-big-mac": "tsx scripts/refresh-big-mac.ts"
+    "refresh-big-mac": "tsx scripts/refresh-big-mac.ts",
+    "refresh-open-prices": "tsx scripts/refresh-open-prices.ts"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",

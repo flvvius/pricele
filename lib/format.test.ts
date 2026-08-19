@@ -127,13 +127,33 @@ describe("price data integrity", () => {
   it("has positive, plausible prices and a source on every row", () => {
     for (const p of rows) {
       expect(p.priceUSD, `${p.itemId}/${p.countryCode}`).toBeGreaterThan(0);
-      expect(p.priceUSD, `${p.itemId}/${p.countryCode}`).toBeLessThan(50);
-      expect(p.priceLocal).toBeGreaterThan(0);
+      // A ceiling to catch an order-of-magnitude typo, not a real bound. The
+      // dearest row in the game is a 750ml bottle of spirits in New Zealand.
+      expect(p.priceUSD, `${p.itemId}/${p.countryCode}`).toBeLessThan(100);
+      // Optional: a source that publishes dollars and nothing else leaves it
+      // out rather than having the row invent one. When it is there it is a
+      // real figure, so it still has to be positive.
+      if (p.priceLocal !== undefined) {
+        expect(p.priceLocal, `${p.itemId}/${p.countryCode}`).toBeGreaterThan(0);
+      }
       expect(p.avgHourlyWageUSD).toBeGreaterThan(0);
       expect(p.source.length).toBeGreaterThan(3);
-      expect(p.sourceDate).toMatch(/^\d{4}-\d{2}$/);
+      // "2026-08" for a monthly edition, "2024" for an annual survey round.
+      expect(p.sourceDate, `${p.itemId}/${p.countryCode}`).toMatch(
+        /^\d{4}(-\d{2})?$/
+      );
       expect(p.localCurrency).toMatch(/^[A-Z]{3}$/);
     }
+  });
+
+  it("keeps a local-currency figure for every row whose source publishes one", () => {
+    // Only Cable.co.uk's mobile data survey is dollars-only. If a second item
+    // ever loses its local figures wholesale, that is a parsing bug upstream in
+    // refresh-open-prices, not a fact about the world.
+    const dollarsOnly = new Set(
+      rows.filter((p) => p.priceLocal === undefined).map((p) => p.itemId)
+    );
+    expect([...dollarsOnly]).toEqual(["mobile-data-1gb"]);
   });
 
   it("describes each country consistently across every item", () => {

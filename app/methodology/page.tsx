@@ -30,9 +30,17 @@ export default function MethodologyPage() {
           </p>
           <p>
             Short version: Big Mac prices are published by The Economist.
-            Grocery, café and fuel prices come from Numbeo&apos;s crowd-sourced
-            country rankings. Wage figures are our own estimates and are the
-            least reliable numbers on the site.
+            Grocery and café prices come from Numbeo&apos;s crowd-sourced country
+            rankings. Fuel and household energy come from GlobalPetrolPrices.com.
+            Tobacco, beer and spirits come from the World Health
+            Organization&apos;s tax surveys, mobile data from Cable.co.uk, and the
+            cost of a healthy diet from the World Bank and FAO. Wage figures are
+            our own estimates and are the least reliable numbers on the site.
+          </p>
+          <p>
+            Every price carries its source and its collection date on screen,
+            because the sources are refreshed at wildly different intervals: fuel
+            weekly, household energy quarterly, the tax surveys every two years.
           </p>
         </>
       }
@@ -126,24 +134,158 @@ export default function MethodologyPage() {
         </Prose>
       </Section>
 
+      <Section heading="Fuel and household energy">
+        <Prose>
+          <p>
+            Diesel, LPG, residential electricity and residential natural gas come
+            from{" "}
+            <a
+              href="https://www.globalpetrolprices.com/"
+              rel="noopener noreferrer nofollow"
+              target="_blank"
+              className="underline hover:text-neutral-300"
+            >
+              GlobalPetrolPrices.com
+            </a>
+            , which assembles them from government sources, regulators, fuel
+            retailers and national media. Road fuels update weekly; the two
+            household utilities are collected quarterly and include the cost of
+            the energy, the network and every tax and fee on the bill.
+          </p>
+          <p>
+            The two utilities are published per kilowatt-hour, which lands
+            between two and forty cents and rounds to something unguessable. They
+            are shown here per 100 kWh instead, which is the same figure
+            multiplied by a hundred and roughly a small flat&apos;s monthly draw.
+            Nothing else in the game is rescaled.
+          </p>
+          <p>
+            Coverage is uneven, and deliberately so. LPG appears only where it is
+            sold as a road fuel at all, and natural gas only where households are
+            on a gas grid. An absent row means the country does not have the
+            thing, not that we could not find a number for it.
+          </p>
+        </Prose>
+      </Section>
+
+      <Section heading="WHO tax surveys: tobacco, beer and spirits">
+        <Prose>
+          <p>
+            Cigarettes, vape e-liquid, beer and spirits come from the{" "}
+            <a
+              href="https://www.who.int/data/gho"
+              rel="noopener noreferrer nofollow"
+              target="_blank"
+              className="underline hover:text-neutral-300"
+            >
+              WHO Global Health Observatory
+            </a>
+            , specifically the 2024 rounds of its global tobacco and alcohol tax
+            surveys. These are the most rigorously comparable numbers on the
+            site: WHO collects the price of a named most-sold brand from
+            supermarkets in each capital, standardises it to a fixed container —
+            a pack of 20, 330ml of beer, a 750ml bottle of spirits, 1ml of
+            e-liquid — and publishes it in local currency and in dollars at the
+            official rate.
+          </p>
+          <p>
+            Two things to know when reading them. The surveys run every two
+            years, so a 2024 figure is the current one even in 2026, and in a
+            high-inflation country it will lag badly. And &ldquo;most sold
+            brand&rdquo; is not one product: the most sold spirit is soju in
+            South Korea, vodka in Poland and whisky in India, which is a large
+            part of why the spirits column has the widest spread in the game.
+          </p>
+        </Prose>
+      </Section>
+
+      <Section heading="Mobile data">
+        <Prose>
+          <p>
+            The price of 1GB comes from{" "}
+            <a
+              href="https://www.cable.co.uk/mobiles/worldwide-data-pricing/"
+              rel="noopener noreferrer nofollow"
+              target="_blank"
+              className="underline hover:text-neutral-300"
+            >
+              Cable.co.uk&apos;s worldwide mobile data pricing league table
+            </a>
+            , which averages more than 5,600 prepaid and postpaid plans across
+            237 countries.
+          </p>
+          <p>
+            This is the oldest data on the site. Cable&apos;s own dataset
+            download and historical series are both dated 2023, and although
+            plenty of other sites republish these exact figures under the current
+            year, nothing on the publisher&apos;s page supports that. So the rows
+            say 2023, and they are shown per the year they were collected in.
+            Mobile data has been getting cheaper by roughly a fifth a year, so
+            read these as a ceiling.
+          </p>
+          <p>
+            It is also the only item published in dollars and nothing else. Those
+            rows show no local-currency price rather than a converted one.
+          </p>
+        </Prose>
+      </Section>
+
+      <Section heading="The cost of a healthy diet">
+        <Prose>
+          <p>
+            The one item here that nobody actually buys. The{" "}
+            <a
+              href="https://www.worldbank.org/en/programs/icp/brief/foodpricesfornutrition"
+              rel="noopener noreferrer nofollow"
+              target="_blank"
+              className="underline hover:text-neutral-300"
+            >
+              Food Prices for Nutrition
+            </a>{" "}
+            database, published by the World Bank with the FAO, prices the
+            cheapest combination of locally available foods that would meet
+            national dietary guidelines, per person per day. It is a floor rather
+            than an average, and it is the figure used to count how many people
+            cannot afford to eat well.
+          </p>
+          <p>
+            It is published in local currency only, so the dollar figure here is
+            converted at the World Bank&apos;s own official exchange rate for the
+            same year. Both halves are published; the multiplication is ours.
+          </p>
+        </Prose>
+      </Section>
+
       <Section heading="Currency conversion">
         <Prose>
           <p>
-            Big Mac prices are published in local currency, and the US-dollar
-            figure is The Economist&apos;s own conversion at the exchange rate on
-            its collection date. Everything else works the other way: Numbeo
-            publishes in US dollars, and the local-currency figure shown here is
-            converted at the exchange rate on the day the data was collected.
+            Most sources publish both figures themselves, and where they do,
+            both are printed as published and neither is derived. That covers the
+            Big Mac, all four energy items and all four WHO items: the dollar
+            price is the publisher&apos;s own conversion at the rate on its
+            collection date.
           </p>
           <p>
-            This means local-currency prices for the five Numbeo items are
-            derived, not observed. For most currencies that distinction is
-            invisible. For fast-moving currencies like the Argentine peso, the
-            Turkish lira and the Egyptian pound, it matters, and a figure can drift
-            noticeably from what a shopper actually pays within weeks. Argentina
-            is the extreme case, because official and parallel exchange rates
-            have historically differed enough that any single conversion is
-            contestable.
+            Two groups work the other way. Numbeo publishes in US dollars, so the
+            local-currency figure for cappuccino, milk, eggs, apples and petrol is
+            converted at the rate on the collection day. The cost of a healthy
+            diet is published in local currency only, so its dollar figure is the
+            converted one.
+          </p>
+          <p>
+            Either way, a converted figure is not an observed one. For most
+            currencies that distinction is invisible. For fast-moving currencies
+            like the Argentine peso, the Turkish lira and the Egyptian pound, it
+            matters, and a figure can drift noticeably from what a shopper
+            actually pays within weeks. Argentina is the extreme case, because
+            official and parallel exchange rates have historically differed enough
+            that any single conversion is contestable.
+          </p>
+          <p>
+            Mobile data is published in dollars with no local figure at all.
+            Rather than invent one, those rows leave the local price blank. A
+            price nobody published would look exactly as authoritative on the page
+            as one that was.
           </p>
         </Prose>
       </Section>
@@ -196,7 +338,7 @@ export default function MethodologyPage() {
           </p>
           <p>
             The grocery treatment matters more here than the headline rate does,
-            because six of the {ITEMS.length} items are food or drink. A country
+            because nine of the {ITEMS.length} items are food or drink. A country
             can charge 23% on most things and nothing at all on bread, as Ireland
             does, so quoting only its standard rate would actively mislead you
             about its food prices.
@@ -271,6 +413,17 @@ export default function MethodologyPage() {
               Numbeo&apos;s terms of use
             </a>
             .
+          </p>
+          <p>
+            The rest carry their publishers&apos; own terms, and two of them are
+            more restrictive than this site: GlobalPetrolPrices.com states a
+            Creative Commons Attribution-NonCommercial-NoDerivs 3.0 licence at
+            the foot of every page, and WHO data is issued under
+            CC BY-NC-SA 3.0 IGO. Both carry a non-commercial condition, and this
+            site carries advertising. The energy and WHO figures are reproduced
+            here with attribution and a link to the source on every price, and we
+            will take either set down on request from the publisher. World Bank
+            and FAO data is CC BY 4.0, which has no such condition.
           </p>
           <p>
             What is ours is the compilation itself: the country and item

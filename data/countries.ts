@@ -26,8 +26,8 @@
  *
  * `standard` is quoted as the source states it, since some countries genuinely do
  * not have one number. `food` is the treatment of ordinary groceries, which
- * matters more here than the standard rate does, because six of the seven items
- * in the game are food or drink bought to take away.
+ * matters more here than the standard rate does, because nine of the seventeen
+ * items in the game are food or drink bought to take away.
  *
  * SOURCING RULE: standard rates come from PwC's Worldwide Tax Summaries VAT
  * quick chart, which is the single source used for all 33 so the figures are
@@ -117,7 +117,7 @@ export const COUNTRY_NOTES: Record<string, string> = {
 
   KR: "South Korea has notably expensive fruit. Tariffs and quarantine rules restrict imports of many fresh products, and domestic orchard land is limited, so apples cost several times what they do in producing countries. Prepared food and transport, by contrast, are cheap for a high-income country. VAT is a flat 10% with basic unprocessed foodstuffs exempt, so tax explains almost none of the fruit premium. It is border policy and land, not the till. Korea is the strongest case in the table for reading a single item's price as a story about trade rules rather than about the general cost of living.",
 
-  LB: "Lebanon's currency collapsed after 2019, and for several years official and market exchange rates diverged so far that dollar conversions were close to meaningless. Prices have since re-anchored around the US dollar in practice. Only two items are listed here, because the crowd-sourced surveys that cover the rest do not have reliable Lebanese samples. VAT is 11% on paper, but in an economy that dollarised informally after a banking collapse, the published rate tells you much less about a real transaction than it would anywhere else in this table. Lebanon is included for completeness and should be read as the least reliable column here.",
+  LB: "Lebanon's currency collapsed after 2019, and for several years official and market exchange rates diverged so far that dollar conversions were close to meaningless. Prices have since re-anchored around the US dollar in practice. Several items are missing here, because the crowd-sourced surveys that cover them do not have reliable Lebanese samples. VAT is 11% on paper, but in an economy that dollarised informally after a banking collapse, the published rate tells you much less about a real transaction than it would anywhere else in this table. Lebanon is included for completeness and should be read as the least reliable column here.",
 
   MX: "Mexico produces much of its own fresh food, keeping groceries cheap in dollar terms, but the peso has been comparatively strong in recent years, which lifts Mexican prices when converted. Fuel is taxed but has also been subject to periodic government caps. Food and medicines carry 0% IVA against a 16% standard rate, a true zero rate rather than an exemption, and one of the more far-reaching food carve-outs in the Americas. Between domestic production and a zero rate on groceries, the Mexican food column has very little in it beyond the cost of growing and moving the food itself.",
 

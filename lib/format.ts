@@ -12,8 +12,13 @@ import { PRICES } from "@/lib/puzzle";
 import { getItem } from "@/data/items";
 import { fromUSD, type Currency } from "@/lib/currency";
 
-/** "140 JPY", "45,000 LBP": the price in its local currency. */
-export function formatLocal(price: PriceEntry): string {
+/**
+ * "140 JPY", "45,000 LBP": the price in its local currency, or null when the
+ * source published a dollar figure and nothing else. Callers render the line
+ * only when there is one, rather than converting: see PriceEntry.priceLocal.
+ */
+export function formatLocal(price: PriceEntry): string | null {
+  if (price.priceLocal == null) return null;
   const n = price.priceLocal.toLocaleString("en-US", {
     maximumFractionDigits: 2,
   });

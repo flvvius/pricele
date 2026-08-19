@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Electricity meter">
+  <rect x="10" y="10" width="44" height="44" rx="8" fill="#2f3a44"/>
+  <circle cx="32" cy="27" r="11" fill="#e8eef3"/>
+  <path d="M33.5 20l-7 9h5l-1.5 7 7-9h-5z" fill="#f0a500"/>
+  <rect x="18" y="43" width="28" height="6" rx="2" fill="#4c5a66"/>
+  <rect x="21" y="45" width="4" height="2" rx="1" fill="#e8eef3"/>
+  <rect x="27" y="45" width="4" height="2" rx="1" fill="#e8eef3"/>
+  <rect x="33" y="45" width="4" height="2" rx="1" fill="#e8eef3"/>
+  <rect x="39" y="45" width="4" height="2" rx="1" fill="#f0a500"/>
+</svg>

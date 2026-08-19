@@ -96,7 +96,7 @@ export default function PriceTable({
                   </td>
                   {showLocal && (
                     <td className="py-2.5 pr-3 text-right font-mono text-[13px] tabular-nums text-ink-muted">
-                      {formatLocal(r.price)}
+                      {formatLocal(r.price) ?? "—"}
                     </td>
                   )}
                   <td className="py-2.5 text-right font-mono text-[13px] tabular-nums text-ink-muted">

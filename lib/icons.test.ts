@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
+import { ITEMS } from "@/data/items";
 
 // These guard the three icon files that crawlers fetch by convention rather
 // than by following a link. Shipping only app/icon.svg left /favicon.ico,
@@ -89,5 +90,31 @@ describe("icon file formats", () => {
     // @types/node parameterises Buffer over its backing ArrayBuffer, so
     // Buffer.equals(Buffer) no longer typechecks even though it runs fine.
     expect(pre.equals(new Uint8Array(plain))).toBe(true);
+  });
+});
+
+// Item artwork sits in public/items and is referenced by data/items.ts. A typo
+// in an imageUrl renders a broken image on the game screen and nowhere else,
+// which is easy to ship and easy to miss.
+describe("item artwork", () => {
+  it("has a file behind every item's imageUrl", () => {
+    for (const item of ITEMS) {
+      expect(item.imageUrl, item.id).toMatch(/^\/items\/[a-z0-9-]+\.svg$/);
+      const file = join(root, "public", item.imageUrl);
+      expect(existsSync(file), `${item.id} -> ${item.imageUrl}`).toBe(true);
+      expect(readFileSync(file, "utf8")).toContain("<svg");
+    }
+  });
+
+  it("gives each item its own artwork", () => {
+    const urls = ITEMS.map((i) => i.imageUrl);
+    expect(new Set(urls).size, urls.join(", ")).toBe(urls.length);
+  });
+
+  it("keeps ids, slugs and short names unique", () => {
+    for (const key of ["id", "slug", "shortName"] as const) {
+      const values = ITEMS.map((i) => i[key]);
+      expect(new Set(values).size, key).toBe(values.length);
+    }
   });
 });

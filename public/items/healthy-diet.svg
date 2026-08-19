@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Plate of food">
+  <circle cx="32" cy="34" r="24" fill="#e8eef3"/>
+  <circle cx="32" cy="34" r="18" fill="#fbfcfd"/>
+  <path d="M32 16a18 18 0 0 1 18 18H32z" fill="#8fbf50"/>
+  <path d="M32 34h18a18 18 0 0 1-18 18z" fill="#e9a13b"/>
+  <path d="M32 34v18a18 18 0 0 1-18-18z" fill="#d9534f" opacity="0.75"/>
+  <path d="M14 34a18 18 0 0 1 18-18v18z" fill="#e8c04a"/>
+  <circle cx="32" cy="34" r="4" fill="#fbfcfd"/>
+</svg>

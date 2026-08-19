@@ -76,7 +76,8 @@ export default function Home() {
           expensive.
         </p>
         {/* The index runs the full measure and sets in two columns on a desk,
-            seven one-line rows down a narrow column is a lot of empty page. */}
+            since seventeen one-line rows down a narrow column is a lot of
+            scrolling. */}
         <ul className="border-t border-rule lg:col-span-2 lg:grid lg:grid-cols-2 lg:gap-x-10">
           {ITEMS.map((item) => (
             <li key={item.id}>

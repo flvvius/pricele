@@ -89,9 +89,11 @@ export default function Reveal({
         <p className="display animate-print-in mt-3 text-figure text-ink">
           {formatPrice(price.priceUSD, currency)}
         </p>
-        <p className="mt-1.5 font-mono text-sm tabular-nums text-ink-muted">
-          {formatMoney(price.priceLocal, price.localCurrency)}
-        </p>
+        {price.priceLocal != null && (
+          <p className="mt-1.5 font-mono text-sm tabular-nums text-ink-muted">
+            {formatMoney(price.priceLocal, price.localCurrency)}
+          </p>
+        )}
 
         <div className="mt-4 flex flex-col gap-1.5 border-t border-rule pt-3.5 text-[13px] leading-relaxed text-ink-body">
           <p>{affordanceLine(price)}</p>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Pack of cigarettes">
+  <rect x="16" y="18" width="32" height="38" rx="3" fill="#c9433a"/>
+  <rect x="16" y="18" width="32" height="12" rx="3" fill="#e3574d"/>
+  <rect x="20" y="8" width="7" height="14" rx="1.5" fill="#f4efe6" stroke="#d8d2c6"/>
+  <rect x="20" y="8" width="7" height="4" rx="1.5" fill="#e6a94f"/>
+  <rect x="29" y="10" width="7" height="12" rx="1.5" fill="#f4efe6" stroke="#d8d2c6"/>
+  <rect x="29" y="10" width="7" height="4" rx="1.5" fill="#e6a94f"/>
+  <rect x="21" y="38" width="22" height="3" rx="1.5" fill="#fff" opacity="0.85"/>
+  <rect x="24" y="45" width="16" height="2.5" rx="1.25" fill="#fff" opacity="0.55"/>
+</svg>

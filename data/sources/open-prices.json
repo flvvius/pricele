@@ -1,0 +1,2374 @@
+{
+ "retrieved": "2026-08-19",
+ "rows": [
+  {
+   "itemId": "diesel-1l",
+   "countryCode": "AE",
+   "priceUSD": 1.04,
+   "priceLocal": 3.8,
+   "localCurrency": "AED",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "diesel-1l",
+   "countryCode": "AR",
+   "priceUSD": 1.55,
+   "priceLocal": 2321.26,
+   "localCurrency": "ARS",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "diesel-1l",
+   "countryCode": "AU",
+   "priceUSD": 1.64,
+   "priceLocal": 2.32,
+   "localCurrency": "AUD",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "diesel-1l",
+   "countryCode": "BR",
+   "priceUSD": 1.28,
+   "priceLocal": 6.51,
+   "localCurrency": "BRL",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "diesel-1l",
+   "countryCode": "CA",
+   "priceUSD": 1.67,
+   "priceLocal": 2.32,
+   "localCurrency": "CAD",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "diesel-1l",
+   "countryCode": "CH",
+   "priceUSD": 2.72,
+   "priceLocal": 2.21,
+   "localCurrency": "CHF",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "diesel-1l",
+   "countryCode": "CN",
+   "priceUSD": 1.1,
+   "priceLocal": 7.44,
+   "localCurrency": "CNY",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "diesel-1l",
+   "countryCode": "DE",
+   "priceUSD": 2.63,
+   "priceLocal": 2.27,
+   "localCurrency": "EUR",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "diesel-1l",
+   "countryCode": "EG",
+   "priceUSD": 0.41,
+   "priceLocal": 20.5,
+   "localCurrency": "EGP",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "diesel-1l",
+   "countryCode": "ES",
+   "priceUSD": 2.1,
+   "priceLocal": 1.81,
+   "localCurrency": "EUR",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "diesel-1l",
+   "countryCode": "FR",
+   "priceUSD": 2.55,
+   "priceLocal": 2.2,
+   "localCurrency": "EUR",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "diesel-1l",
+   "countryCode": "GB",
+   "priceUSD": 2.45,
+   "priceLocal": 1.81,
+   "localCurrency": "GBP",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "diesel-1l",
+   "countryCode": "ID",
+   "priceUSD": 1.23,
+   "priceLocal": 21910,
+   "localCurrency": "IDR",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "diesel-1l",
+   "countryCode": "IE",
+   "priceUSD": 2.2,
+   "priceLocal": 1.9,
+   "localCurrency": "EUR",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "diesel-1l",
+   "countryCode": "IN",
+   "priceUSD": 1.03,
+   "priceLocal": 98.33,
+   "localCurrency": "INR",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "diesel-1l",
+   "countryCode": "IT",
+   "priceUSD": 2.43,
+   "priceLocal": 2.1,
+   "localCurrency": "EUR",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "diesel-1l",
+   "countryCode": "JP",
+   "priceUSD": 1,
+   "priceLocal": 159.5,
+   "localCurrency": "JPY",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "diesel-1l",
+   "countryCode": "KR",
+   "priceUSD": 1.4,
+   "priceLocal": 1847.02,
+   "localCurrency": "KRW",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "diesel-1l",
+   "countryCode": "LB",
+   "priceUSD": 1.21,
+   "priceLocal": 118750,
+   "localCurrency": "LBP",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "diesel-1l",
+   "countryCode": "MX",
+   "priceUSD": 1.57,
+   "priceLocal": 26.86,
+   "localCurrency": "MXN",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "diesel-1l",
+   "countryCode": "NL",
+   "priceUSD": 2.7,
+   "priceLocal": 2.33,
+   "localCurrency": "EUR",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "diesel-1l",
+   "countryCode": "NO",
+   "priceUSD": 2.34,
+   "priceLocal": 21.99,
+   "localCurrency": "NOK",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "diesel-1l",
+   "countryCode": "NZ",
+   "priceUSD": 1.59,
+   "priceLocal": 2.71,
+   "localCurrency": "NZD",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "diesel-1l",
+   "countryCode": "PL",
+   "priceUSD": 2.14,
+   "priceLocal": 8.01,
+   "localCurrency": "PLN",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "diesel-1l",
+   "countryCode": "PT",
+   "priceUSD": 2.35,
+   "priceLocal": 2.03,
+   "localCurrency": "EUR",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "diesel-1l",
+   "countryCode": "SA",
+   "priceUSD": 0.48,
+   "priceLocal": 1.79,
+   "localCurrency": "SAR",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "diesel-1l",
+   "countryCode": "SE",
+   "priceUSD": 2.11,
+   "priceLocal": 20.14,
+   "localCurrency": "SEK",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "diesel-1l",
+   "countryCode": "SG",
+   "priceUSD": 2.75,
+   "priceLocal": 3.52,
+   "localCurrency": "SGD",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "diesel-1l",
+   "countryCode": "TH",
+   "priceUSD": 1.16,
+   "priceLocal": 38.39,
+   "localCurrency": "THB",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "diesel-1l",
+   "countryCode": "TR",
+   "priceUSD": 1.66,
+   "priceLocal": 79.68,
+   "localCurrency": "TRY",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "diesel-1l",
+   "countryCode": "US",
+   "priceUSD": 1.44,
+   "priceLocal": 1.44,
+   "localCurrency": "USD",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "diesel-1l",
+   "countryCode": "VN",
+   "priceUSD": 1.05,
+   "priceLocal": 27500,
+   "localCurrency": "VND",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "diesel-1l",
+   "countryCode": "ZA",
+   "priceUSD": 1.78,
+   "priceLocal": 28.89,
+   "localCurrency": "ZAR",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "lpg-1l",
+   "countryCode": "AU",
+   "priceUSD": 0.45,
+   "priceLocal": 0.63,
+   "localCurrency": "AUD",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "lpg-1l",
+   "countryCode": "CA",
+   "priceUSD": 0.91,
+   "priceLocal": 1.27,
+   "localCurrency": "CAD",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "lpg-1l",
+   "countryCode": "CH",
+   "priceUSD": 1.46,
+   "priceLocal": 1.19,
+   "localCurrency": "CHF",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "lpg-1l",
+   "countryCode": "DE",
+   "priceUSD": 1.29,
+   "priceLocal": 1.12,
+   "localCurrency": "EUR",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "lpg-1l",
+   "countryCode": "ES",
+   "priceUSD": 1.24,
+   "priceLocal": 1.07,
+   "localCurrency": "EUR",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "lpg-1l",
+   "countryCode": "FR",
+   "priceUSD": 1.18,
+   "priceLocal": 1.02,
+   "localCurrency": "EUR",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "lpg-1l",
+   "countryCode": "GB",
+   "priceUSD": 1.34,
+   "priceLocal": 0.99,
+   "localCurrency": "GBP",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "lpg-1l",
+   "countryCode": "IN",
+   "priceUSD": 0.68,
+   "priceLocal": 65.31,
+   "localCurrency": "INR",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "lpg-1l",
+   "countryCode": "IT",
+   "priceUSD": 0.87,
+   "priceLocal": 0.75,
+   "localCurrency": "EUR",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "lpg-1l",
+   "countryCode": "KR",
+   "priceUSD": 0.84,
+   "priceLocal": 1100.25,
+   "localCurrency": "KRW",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "lpg-1l",
+   "countryCode": "LB",
+   "priceUSD": 0.6,
+   "priceLocal": 58750,
+   "localCurrency": "LBP",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "lpg-1l",
+   "countryCode": "NL",
+   "priceUSD": 1.08,
+   "priceLocal": 0.93,
+   "localCurrency": "EUR",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "lpg-1l",
+   "countryCode": "PL",
+   "priceUSD": 0.81,
+   "priceLocal": 3.01,
+   "localCurrency": "PLN",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "lpg-1l",
+   "countryCode": "PT",
+   "priceUSD": 1.02,
+   "priceLocal": 0.88,
+   "localCurrency": "EUR",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "lpg-1l",
+   "countryCode": "SA",
+   "priceUSD": 0.29,
+   "priceLocal": 1.09,
+   "localCurrency": "SAR",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "lpg-1l",
+   "countryCode": "TR",
+   "priceUSD": 0.68,
+   "priceLocal": 32.77,
+   "localCurrency": "TRY",
+   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
+   "sourceDate": "2026-08"
+  },
+  {
+   "itemId": "electricity-100kwh",
+   "countryCode": "AE",
+   "priceUSD": 8,
+   "priceLocal": 29.3,
+   "localCurrency": "AED",
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "electricity-100kwh",
+   "countryCode": "AR",
+   "priceUSD": 10.3,
+   "priceLocal": 15415,
+   "localCurrency": "ARS",
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "electricity-100kwh",
+   "countryCode": "AU",
+   "priceUSD": 28.3,
+   "priceLocal": 40,
+   "localCurrency": "AUD",
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "electricity-100kwh",
+   "countryCode": "BR",
+   "priceUSD": 18.1,
+   "priceLocal": 92.1,
+   "localCurrency": "BRL",
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "electricity-100kwh",
+   "countryCode": "CA",
+   "priceUSD": 12.2,
+   "priceLocal": 16.9,
+   "localCurrency": "CAD",
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "electricity-100kwh",
+   "countryCode": "CH",
+   "priceUSD": 38.2,
+   "priceLocal": 31,
+   "localCurrency": "CHF",
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "electricity-100kwh",
+   "countryCode": "CN",
+   "priceUSD": 7.9,
+   "priceLocal": 53.2,
+   "localCurrency": "CNY",
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "electricity-100kwh",
+   "countryCode": "DE",
+   "priceUSD": 40,
+   "priceLocal": 34.6,
+   "localCurrency": "EUR",
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "electricity-100kwh",
+   "countryCode": "EG",
+   "priceUSD": 2.1,
+   "priceLocal": 107,
+   "localCurrency": "EGP",
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "electricity-100kwh",
+   "countryCode": "ES",
+   "priceUSD": 29.4,
+   "priceLocal": 25.4,
+   "localCurrency": "EUR",
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "electricity-100kwh",
+   "countryCode": "FR",
+   "priceUSD": 27.1,
+   "priceLocal": 23.4,
+   "localCurrency": "EUR",
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "electricity-100kwh",
+   "countryCode": "GB",
+   "priceUSD": 43,
+   "priceLocal": 31.8,
+   "localCurrency": "GBP",
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "electricity-100kwh",
+   "countryCode": "ID",
+   "priceUSD": 8.1,
+   "priceLocal": 144470,
+   "localCurrency": "IDR",
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "electricity-100kwh",
+   "countryCode": "IE",
+   "priceUSD": 45.5,
+   "priceLocal": 39.3,
+   "localCurrency": "EUR",
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "electricity-100kwh",
+   "countryCode": "IN",
+   "priceUSD": 7.1,
+   "priceLocal": 678,
+   "localCurrency": "INR",
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "electricity-100kwh",
+   "countryCode": "IT",
+   "priceUSD": 38.7,
+   "priceLocal": 33.4,
+   "localCurrency": "EUR",
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "electricity-100kwh",
+   "countryCode": "JP",
+   "priceUSD": 21.7,
+   "priceLocal": 3470.7,
+   "localCurrency": "JPY",
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "electricity-100kwh",
+   "countryCode": "KR",
+   "priceUSD": 13,
+   "priceLocal": 17084,
+   "localCurrency": "KRW",
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "electricity-100kwh",
+   "countryCode": "MX",
+   "priceUSD": 12.2,
+   "priceLocal": 208.9,
+   "localCurrency": "MXN",
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "electricity-100kwh",
+   "countryCode": "NL",
+   "priceUSD": 26.6,
+   "priceLocal": 23,
+   "localCurrency": "EUR",
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "electricity-100kwh",
+   "countryCode": "NO",
+   "priceUSD": 21,
+   "priceLocal": 197.3,
+   "localCurrency": "NOK",
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "electricity-100kwh",
+   "countryCode": "NZ",
+   "priceUSD": 22.3,
+   "priceLocal": 38,
+   "localCurrency": "NZD",
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "electricity-100kwh",
+   "countryCode": "PL",
+   "priceUSD": 24.5,
+   "priceLocal": 91.4,
+   "localCurrency": "PLN",
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "electricity-100kwh",
+   "countryCode": "PT",
+   "priceUSD": 25.2,
+   "priceLocal": 21.8,
+   "localCurrency": "EUR",
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "electricity-100kwh",
+   "countryCode": "SA",
+   "priceUSD": 5.3,
+   "priceLocal": 20,
+   "localCurrency": "SAR",
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "electricity-100kwh",
+   "countryCode": "SE",
+   "priceUSD": 26.3,
+   "priceLocal": 251,
+   "localCurrency": "SEK",
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "electricity-100kwh",
+   "countryCode": "SG",
+   "priceUSD": 23.5,
+   "priceLocal": 30,
+   "localCurrency": "SGD",
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "electricity-100kwh",
+   "countryCode": "TH",
+   "priceUSD": 12.2,
+   "priceLocal": 403.6,
+   "localCurrency": "THB",
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "electricity-100kwh",
+   "countryCode": "TR",
+   "priceUSD": 5.8,
+   "priceLocal": 280,
+   "localCurrency": "TRY",
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "electricity-100kwh",
+   "countryCode": "US",
+   "priceUSD": 20.3,
+   "priceLocal": 20.3,
+   "localCurrency": "USD",
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "electricity-100kwh",
+   "countryCode": "VN",
+   "priceUSD": 7.8,
+   "priceLocal": 205000,
+   "localCurrency": "VND",
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "electricity-100kwh",
+   "countryCode": "ZA",
+   "priceUSD": 27.8,
+   "priceLocal": 452.4,
+   "localCurrency": "ZAR",
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "natural-gas-100kwh",
+   "countryCode": "AR",
+   "priceUSD": 2.2,
+   "priceLocal": 3348.5,
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "natural-gas-100kwh",
+   "countryCode": "AU",
+   "priceUSD": 11,
+   "priceLocal": 15.5,
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "natural-gas-100kwh",
+   "countryCode": "BR",
+   "priceUSD": 20.7,
+   "priceLocal": 105.1,
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "natural-gas-100kwh",
+   "countryCode": "CA",
+   "priceUSD": 3.5,
+   "priceLocal": 4.8,
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "natural-gas-100kwh",
+   "countryCode": "CH",
+   "priceUSD": 18.1,
+   "priceLocal": 14.7,
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "natural-gas-100kwh",
+   "countryCode": "CN",
+   "priceUSD": 5.1,
+   "priceLocal": 34.7,
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "natural-gas-100kwh",
+   "countryCode": "DE",
+   "priceUSD": 11.5,
+   "priceLocal": 9.9,
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "natural-gas-100kwh",
+   "countryCode": "EG",
+   "priceUSD": 1.2,
+   "priceLocal": 58.4,
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "natural-gas-100kwh",
+   "countryCode": "ES",
+   "priceUSD": 10.1,
+   "priceLocal": 8.7,
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "natural-gas-100kwh",
+   "countryCode": "FR",
+   "priceUSD": 13.9,
+   "priceLocal": 12,
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "natural-gas-100kwh",
+   "countryCode": "GB",
+   "priceUSD": 8.9,
+   "priceLocal": 6.6,
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "natural-gas-100kwh",
+   "countryCode": "IE",
+   "priceUSD": 12.3,
+   "priceLocal": 10.6,
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "natural-gas-100kwh",
+   "countryCode": "IN",
+   "priceUSD": 4.8,
+   "priceLocal": 458,
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "natural-gas-100kwh",
+   "countryCode": "IT",
+   "priceUSD": 14.4,
+   "priceLocal": 12.4,
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "natural-gas-100kwh",
+   "countryCode": "JP",
+   "priceUSD": 7.7,
+   "priceLocal": 1226,
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "natural-gas-100kwh",
+   "countryCode": "KR",
+   "priceUSD": 7.3,
+   "priceLocal": 9568.7,
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "natural-gas-100kwh",
+   "countryCode": "MX",
+   "priceUSD": 3.6,
+   "priceLocal": 62.1,
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "natural-gas-100kwh",
+   "countryCode": "NL",
+   "priceUSD": 13.3,
+   "priceLocal": 11.5,
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "natural-gas-100kwh",
+   "countryCode": "NZ",
+   "priceUSD": 9.8,
+   "priceLocal": 16.7,
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "natural-gas-100kwh",
+   "countryCode": "PL",
+   "priceUSD": 12,
+   "priceLocal": 44.7,
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "natural-gas-100kwh",
+   "countryCode": "PT",
+   "priceUSD": 15.3,
+   "priceLocal": 13.2,
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "natural-gas-100kwh",
+   "countryCode": "SE",
+   "priceUSD": 22.4,
+   "priceLocal": 214,
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "natural-gas-100kwh",
+   "countryCode": "SG",
+   "priceUSD": 19.1,
+   "priceLocal": 24.4,
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "natural-gas-100kwh",
+   "countryCode": "TR",
+   "priceUSD": 2,
+   "priceLocal": 93.7,
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "natural-gas-100kwh",
+   "countryCode": "US",
+   "priceUSD": 4.8,
+   "priceLocal": 4.8,
+   "source": "GlobalPetrolPrices.com, December 2025",
+   "sourceDate": "2025-12"
+  },
+  {
+   "itemId": "cigarettes-20",
+   "countryCode": "AE",
+   "priceUSD": 5.99,
+   "priceLocal": 22,
+   "localCurrency": "AED",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "cigarettes-20",
+   "countryCode": "AR",
+   "priceUSD": 3.13,
+   "priceLocal": 2910,
+   "localCurrency": "ARS",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "cigarettes-20",
+   "countryCode": "AU",
+   "priceUSD": 24.38,
+   "priceLocal": 37.56,
+   "localCurrency": "AUD",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "cigarettes-20",
+   "countryCode": "BR",
+   "priceUSD": 1.5,
+   "priceLocal": 8.5,
+   "localCurrency": "BRL",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "cigarettes-20",
+   "countryCode": "CA",
+   "priceUSD": 9.95,
+   "priceLocal": 13.74,
+   "localCurrency": "CAD",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "cigarettes-20",
+   "countryCode": "CH",
+   "priceUSD": 10.44,
+   "priceLocal": 9.2,
+   "localCurrency": "CHF",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "cigarettes-20",
+   "countryCode": "CN",
+   "priceUSD": 2.49,
+   "priceLocal": 17.99,
+   "localCurrency": "CNY",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "cigarettes-20",
+   "countryCode": "DE",
+   "priceUSD": 9.42,
+   "priceLocal": 8.7,
+   "localCurrency": "EUR",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "cigarettes-20",
+   "countryCode": "EG",
+   "priceUSD": 0.82,
+   "priceLocal": 40,
+   "localCurrency": "EGP",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "cigarettes-20",
+   "countryCode": "ES",
+   "priceUSD": 6.06,
+   "priceLocal": 5.6,
+   "localCurrency": "EUR",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "cigarettes-20",
+   "countryCode": "FR",
+   "priceUSD": 13.54,
+   "priceLocal": 12.5,
+   "localCurrency": "EUR",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "cigarettes-20",
+   "countryCode": "GB",
+   "priceUSD": 17.21,
+   "priceLocal": 13.4,
+   "localCurrency": "GBP",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "cigarettes-20",
+   "countryCode": "ID",
+   "priceUSD": 2.45,
+   "priceLocal": 40000,
+   "localCurrency": "IDR",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "cigarettes-20",
+   "countryCode": "IE",
+   "priceUSD": 18.46,
+   "priceLocal": 17.05,
+   "localCurrency": "EUR",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "cigarettes-20",
+   "countryCode": "IN",
+   "priceUSD": 2.27,
+   "priceLocal": 190,
+   "localCurrency": "INR",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "cigarettes-20",
+   "countryCode": "IT",
+   "priceUSD": 6.71,
+   "priceLocal": 6.2,
+   "localCurrency": "EUR",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "cigarettes-20",
+   "countryCode": "JP",
+   "priceUSD": 3.94,
+   "priceLocal": 600,
+   "localCurrency": "JPY",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "cigarettes-20",
+   "countryCode": "KR",
+   "priceUSD": 3.25,
+   "priceLocal": 4500,
+   "localCurrency": "KRW",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "cigarettes-20",
+   "countryCode": "LB",
+   "priceUSD": 0.76,
+   "priceLocal": 68250,
+   "localCurrency": "LBP",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "cigarettes-20",
+   "countryCode": "MX",
+   "priceUSD": 4.28,
+   "priceLocal": 79.98,
+   "localCurrency": "MXN",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "cigarettes-20",
+   "countryCode": "NL",
+   "priceUSD": 13.54,
+   "priceLocal": 12.5,
+   "localCurrency": "EUR",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "cigarettes-20",
+   "countryCode": "NO",
+   "priceUSD": 15.31,
+   "priceLocal": 167,
+   "localCurrency": "NOK",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "cigarettes-20",
+   "countryCode": "NZ",
+   "priceUSD": 22.75,
+   "priceLocal": 38.5,
+   "localCurrency": "NZD",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "cigarettes-20",
+   "countryCode": "PL",
+   "priceUSD": 4.91,
+   "priceLocal": 19.5,
+   "localCurrency": "PLN",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "cigarettes-20",
+   "countryCode": "PT",
+   "priceUSD": 5.52,
+   "priceLocal": 5.1,
+   "localCurrency": "EUR",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "cigarettes-20",
+   "countryCode": "SA",
+   "priceUSD": 7.47,
+   "priceLocal": 28,
+   "localCurrency": "SAR",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "cigarettes-20",
+   "countryCode": "SE",
+   "priceUSD": 7.27,
+   "priceLocal": 78,
+   "localCurrency": "SEK",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "cigarettes-20",
+   "countryCode": "SG",
+   "priceUSD": 11.61,
+   "priceLocal": 15.6,
+   "localCurrency": "SGD",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "cigarettes-20",
+   "countryCode": "TH",
+   "priceUSD": 1.96,
+   "priceLocal": 70,
+   "localCurrency": "THB",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "cigarettes-20",
+   "countryCode": "TR",
+   "priceUSD": 2.21,
+   "priceLocal": 73,
+   "localCurrency": "TRY",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "cigarettes-20",
+   "countryCode": "US",
+   "priceUSD": 8.91,
+   "priceLocal": 8.91,
+   "localCurrency": "USD",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "cigarettes-20",
+   "countryCode": "VN",
+   "priceUSD": 0.87,
+   "priceLocal": 21115,
+   "localCurrency": "VND",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "cigarettes-20",
+   "countryCode": "ZA",
+   "priceUSD": 2.62,
+   "priceLocal": 47.7,
+   "localCurrency": "ZAR",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "eliquid-1ml",
+   "countryCode": "AE",
+   "priceUSD": 0.84,
+   "priceLocal": 3.08,
+   "localCurrency": "AED",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (cheapest disposable device)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "eliquid-1ml",
+   "countryCode": "CH",
+   "priceUSD": 2.38,
+   "priceLocal": 2.1,
+   "localCurrency": "CHF",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (cheapest disposable device)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "eliquid-1ml",
+   "countryCode": "DE",
+   "priceUSD": 3.78,
+   "priceLocal": 3.5,
+   "localCurrency": "EUR",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (cheapest disposable device)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "eliquid-1ml",
+   "countryCode": "EG",
+   "priceUSD": 4.71,
+   "priceLocal": 228.57,
+   "localCurrency": "EGP",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (cheapest disposable device)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "eliquid-1ml",
+   "countryCode": "ES",
+   "priceUSD": 3.79,
+   "priceLocal": 3.5,
+   "localCurrency": "EUR",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (cheapest disposable device)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "eliquid-1ml",
+   "countryCode": "FR",
+   "priceUSD": 2.57,
+   "priceLocal": 2.37,
+   "localCurrency": "EUR",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (cheapest disposable device)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "eliquid-1ml",
+   "countryCode": "IE",
+   "priceUSD": 3.36,
+   "priceLocal": 3.1,
+   "localCurrency": "EUR",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (cheapest disposable device)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "eliquid-1ml",
+   "countryCode": "IT",
+   "priceUSD": 2.65,
+   "priceLocal": 2.45,
+   "localCurrency": "EUR",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (cheapest disposable device)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "eliquid-1ml",
+   "countryCode": "LB",
+   "priceUSD": 1.21,
+   "priceLocal": 108280.8,
+   "localCurrency": "LBP",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (cheapest disposable device)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "eliquid-1ml",
+   "countryCode": "NL",
+   "priceUSD": 3.22,
+   "priceLocal": 2.98,
+   "localCurrency": "EUR",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (cheapest disposable device)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "eliquid-1ml",
+   "countryCode": "NZ",
+   "priceUSD": 12.66,
+   "priceLocal": 21.43,
+   "localCurrency": "NZD",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (cheapest disposable device)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "eliquid-1ml",
+   "countryCode": "PL",
+   "priceUSD": 3.39,
+   "priceLocal": 13.45,
+   "localCurrency": "PLN",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (cheapest disposable device)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "eliquid-1ml",
+   "countryCode": "PT",
+   "priceUSD": 3.11,
+   "priceLocal": 2.88,
+   "localCurrency": "EUR",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (cheapest disposable device)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "eliquid-1ml",
+   "countryCode": "SA",
+   "priceUSD": 1.02,
+   "priceLocal": 3.83,
+   "localCurrency": "SAR",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (cheapest disposable device)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "eliquid-1ml",
+   "countryCode": "SE",
+   "priceUSD": 3.22,
+   "priceLocal": 34.5,
+   "localCurrency": "SEK",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (cheapest disposable device)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "eliquid-1ml",
+   "countryCode": "ZA",
+   "priceUSD": 1.74,
+   "priceLocal": 31.66,
+   "localCurrency": "ZAR",
+   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (cheapest disposable device)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "beer-330ml",
+   "countryCode": "AR",
+   "priceUSD": 1.5,
+   "priceLocal": 1395.35,
+   "localCurrency": "ARS",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "beer-330ml",
+   "countryCode": "AU",
+   "priceUSD": 1.27,
+   "priceLocal": 1.96,
+   "localCurrency": "AUD",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "beer-330ml",
+   "countryCode": "BR",
+   "priceUSD": 0.49,
+   "priceLocal": 2.79,
+   "localCurrency": "BRL",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "beer-330ml",
+   "countryCode": "CA",
+   "priceUSD": 1.59,
+   "priceLocal": 2.19,
+   "localCurrency": "CAD",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "beer-330ml",
+   "countryCode": "CH",
+   "priceUSD": 1.44,
+   "priceLocal": 1.27,
+   "localCurrency": "CHF",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "beer-330ml",
+   "countryCode": "CN",
+   "priceUSD": 0.54,
+   "priceLocal": 3.89,
+   "localCurrency": "CNY",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "beer-330ml",
+   "countryCode": "DE",
+   "priceUSD": 1.62,
+   "priceLocal": 1.5,
+   "localCurrency": "EUR",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "beer-330ml",
+   "countryCode": "EG",
+   "priceUSD": 0.93,
+   "priceLocal": 45,
+   "localCurrency": "EGP",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "beer-330ml",
+   "countryCode": "ES",
+   "priceUSD": 0.63,
+   "priceLocal": 0.58,
+   "localCurrency": "EUR",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "beer-330ml",
+   "countryCode": "FR",
+   "priceUSD": 1.9,
+   "priceLocal": 1.76,
+   "localCurrency": "EUR",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "beer-330ml",
+   "countryCode": "GB",
+   "priceUSD": 1.17,
+   "priceLocal": 0.92,
+   "localCurrency": "GBP",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "beer-330ml",
+   "countryCode": "ID",
+   "priceUSD": 1.84,
+   "priceLocal": 30000,
+   "localCurrency": "IDR",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "beer-330ml",
+   "countryCode": "IE",
+   "priceUSD": 2.39,
+   "priceLocal": 2.21,
+   "localCurrency": "EUR",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "beer-330ml",
+   "countryCode": "IT",
+   "priceUSD": 1.31,
+   "priceLocal": 1.21,
+   "localCurrency": "EUR",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "beer-330ml",
+   "countryCode": "JP",
+   "priceUSD": 1.39,
+   "priceLocal": 211.2,
+   "localCurrency": "JPY",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "beer-330ml",
+   "countryCode": "KR",
+   "priceUSD": 1.33,
+   "priceLocal": 1848,
+   "localCurrency": "KRW",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "beer-330ml",
+   "countryCode": "LB",
+   "priceUSD": 1.09,
+   "priceLocal": 98000,
+   "localCurrency": "LBP",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "beer-330ml",
+   "countryCode": "MX",
+   "priceUSD": 1.01,
+   "priceLocal": 18.92,
+   "localCurrency": "MXN",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "beer-330ml",
+   "countryCode": "NL",
+   "priceUSD": 0.93,
+   "priceLocal": 0.86,
+   "localCurrency": "EUR",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "beer-330ml",
+   "countryCode": "NO",
+   "priceUSD": 1.81,
+   "priceLocal": 19.8,
+   "localCurrency": "NOK",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "beer-330ml",
+   "countryCode": "NZ",
+   "priceUSD": 1.16,
+   "priceLocal": 1.96,
+   "localCurrency": "NZD",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "beer-330ml",
+   "countryCode": "PL",
+   "priceUSD": 0.65,
+   "priceLocal": 2.56,
+   "localCurrency": "PLN",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "beer-330ml",
+   "countryCode": "PT",
+   "priceUSD": 0.86,
+   "priceLocal": 0.79,
+   "localCurrency": "EUR",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "beer-330ml",
+   "countryCode": "SE",
+   "priceUSD": 0.97,
+   "priceLocal": 10.36,
+   "localCurrency": "SEK",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "beer-330ml",
+   "countryCode": "TH",
+   "priceUSD": 1.53,
+   "priceLocal": 54.66,
+   "localCurrency": "THB",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "beer-330ml",
+   "countryCode": "TR",
+   "priceUSD": 2.36,
+   "priceLocal": 78,
+   "localCurrency": "TRY",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "beer-330ml",
+   "countryCode": "VN",
+   "priceUSD": 0.57,
+   "priceLocal": 13750,
+   "localCurrency": "VND",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "beer-330ml",
+   "countryCode": "ZA",
+   "priceUSD": 0.54,
+   "priceLocal": 9.9,
+   "localCurrency": "ZAR",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "spirits-750ml",
+   "countryCode": "AR",
+   "priceUSD": 17.2,
+   "priceLocal": 16000,
+   "localCurrency": "ARS",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "spirits-750ml",
+   "countryCode": "AU",
+   "priceUSD": 34.77,
+   "priceLocal": 53.57,
+   "localCurrency": "AUD",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "spirits-750ml",
+   "countryCode": "BR",
+   "priceUSD": 3.43,
+   "priceLocal": 19.43,
+   "localCurrency": "BRL",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "spirits-750ml",
+   "countryCode": "CA",
+   "priceUSD": 23.5,
+   "priceLocal": 32.45,
+   "localCurrency": "CAD",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "spirits-750ml",
+   "countryCode": "CH",
+   "priceUSD": 24.2,
+   "priceLocal": 21.32,
+   "localCurrency": "CHF",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "spirits-750ml",
+   "countryCode": "CN",
+   "priceUSD": 3.32,
+   "priceLocal": 24,
+   "localCurrency": "CNY",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "spirits-750ml",
+   "countryCode": "DE",
+   "priceUSD": 11.6,
+   "priceLocal": 10.71,
+   "localCurrency": "EUR",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "spirits-750ml",
+   "countryCode": "EG",
+   "priceUSD": 4.53,
+   "priceLocal": 220,
+   "localCurrency": "EGP",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "spirits-750ml",
+   "countryCode": "ES",
+   "priceUSD": 9.62,
+   "priceLocal": 8.89,
+   "localCurrency": "EUR",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "spirits-750ml",
+   "countryCode": "FR",
+   "priceUSD": 29.39,
+   "priceLocal": 27.14,
+   "localCurrency": "EUR",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "spirits-750ml",
+   "countryCode": "GB",
+   "priceUSD": 24.77,
+   "priceLocal": 19.29,
+   "localCurrency": "GBP",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "spirits-750ml",
+   "countryCode": "ID",
+   "priceUSD": 13.13,
+   "priceLocal": 214285.71,
+   "localCurrency": "IDR",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "spirits-750ml",
+   "countryCode": "IE",
+   "priceUSD": 27.83,
+   "priceLocal": 25.7,
+   "localCurrency": "EUR",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "spirits-750ml",
+   "countryCode": "IT",
+   "priceUSD": 11.15,
+   "priceLocal": 10.3,
+   "localCurrency": "EUR",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "spirits-750ml",
+   "countryCode": "JP",
+   "priceUSD": 12.88,
+   "priceLocal": 1962.86,
+   "localCurrency": "JPY",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "spirits-750ml",
+   "countryCode": "KR",
+   "priceUSD": 2.12,
+   "priceLocal": 2937.5,
+   "localCurrency": "KRW",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "spirits-750ml",
+   "countryCode": "LB",
+   "priceUSD": 16.91,
+   "priceLocal": 1513000,
+   "localCurrency": "LBP",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "spirits-750ml",
+   "countryCode": "MX",
+   "priceUSD": 4.09,
+   "priceLocal": 76.33,
+   "localCurrency": "MXN",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "spirits-750ml",
+   "countryCode": "NL",
+   "priceUSD": 22.03,
+   "priceLocal": 20.35,
+   "localCurrency": "EUR",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "spirits-750ml",
+   "countryCode": "NO",
+   "priceUSD": 34.72,
+   "priceLocal": 378.75,
+   "localCurrency": "NOK",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "spirits-750ml",
+   "countryCode": "NZ",
+   "priceUSD": 69.64,
+   "priceLocal": 117.85,
+   "localCurrency": "NZD",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "spirits-750ml",
+   "countryCode": "PL",
+   "priceUSD": 13.02,
+   "priceLocal": 51.66,
+   "localCurrency": "PLN",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "spirits-750ml",
+   "countryCode": "PT",
+   "priceUSD": 18.26,
+   "priceLocal": 16.87,
+   "localCurrency": "EUR",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "spirits-750ml",
+   "countryCode": "SE",
+   "priceUSD": 21.38,
+   "priceLocal": 229.29,
+   "localCurrency": "SEK",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "spirits-750ml",
+   "countryCode": "TH",
+   "priceUSD": 3.83,
+   "priceLocal": 136.8,
+   "localCurrency": "THB",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "spirits-750ml",
+   "countryCode": "TR",
+   "priceUSD": 31.76,
+   "priceLocal": 1050,
+   "localCurrency": "TRY",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "spirits-750ml",
+   "countryCode": "VN",
+   "priceUSD": 14.43,
+   "priceLocal": 350000,
+   "localCurrency": "VND",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "spirits-750ml",
+   "countryCode": "ZA",
+   "priceUSD": 9.32,
+   "priceLocal": 170,
+   "localCurrency": "ZAR",
+   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+   "sourceDate": "2024"
+  },
+  {
+   "itemId": "mobile-data-1gb",
+   "countryCode": "AE",
+   "priceUSD": 4.61,
+   "source": "Cable.co.uk worldwide mobile data pricing, 2023",
+   "sourceDate": "2023"
+  },
+  {
+   "itemId": "mobile-data-1gb",
+   "countryCode": "AR",
+   "priceUSD": 1.11,
+   "source": "Cable.co.uk worldwide mobile data pricing, 2023",
+   "sourceDate": "2023"
+  },
+  {
+   "itemId": "mobile-data-1gb",
+   "countryCode": "AU",
+   "priceUSD": 0.44,
+   "source": "Cable.co.uk worldwide mobile data pricing, 2023",
+   "sourceDate": "2023"
+  },
+  {
+   "itemId": "mobile-data-1gb",
+   "countryCode": "BR",
+   "priceUSD": 0.4,
+   "source": "Cable.co.uk worldwide mobile data pricing, 2023",
+   "sourceDate": "2023"
+  },
+  {
+   "itemId": "mobile-data-1gb",
+   "countryCode": "CA",
+   "priceUSD": 5.37,
+   "source": "Cable.co.uk worldwide mobile data pricing, 2023",
+   "sourceDate": "2023"
+  },
+  {
+   "itemId": "mobile-data-1gb",
+   "countryCode": "CH",
+   "priceUSD": 7.29,
+   "source": "Cable.co.uk worldwide mobile data pricing, 2023",
+   "sourceDate": "2023"
+  },
+  {
+   "itemId": "mobile-data-1gb",
+   "countryCode": "CN",
+   "priceUSD": 0.38,
+   "source": "Cable.co.uk worldwide mobile data pricing, 2023",
+   "sourceDate": "2023"
+  },
+  {
+   "itemId": "mobile-data-1gb",
+   "countryCode": "DE",
+   "priceUSD": 2.14,
+   "source": "Cable.co.uk worldwide mobile data pricing, 2023",
+   "sourceDate": "2023"
+  },
+  {
+   "itemId": "mobile-data-1gb",
+   "countryCode": "EG",
+   "priceUSD": 0.65,
+   "source": "Cable.co.uk worldwide mobile data pricing, 2023",
+   "sourceDate": "2023"
+  },
+  {
+   "itemId": "mobile-data-1gb",
+   "countryCode": "ES",
+   "priceUSD": 0.48,
+   "source": "Cable.co.uk worldwide mobile data pricing, 2023",
+   "sourceDate": "2023"
+  },
+  {
+   "itemId": "mobile-data-1gb",
+   "countryCode": "FR",
+   "priceUSD": 0.2,
+   "source": "Cable.co.uk worldwide mobile data pricing, 2023",
+   "sourceDate": "2023"
+  },
+  {
+   "itemId": "mobile-data-1gb",
+   "countryCode": "GB",
+   "priceUSD": 0.62,
+   "source": "Cable.co.uk worldwide mobile data pricing, 2023",
+   "sourceDate": "2023"
+  },
+  {
+   "itemId": "mobile-data-1gb",
+   "countryCode": "ID",
+   "priceUSD": 0.28,
+   "source": "Cable.co.uk worldwide mobile data pricing, 2023",
+   "sourceDate": "2023"
+  },
+  {
+   "itemId": "mobile-data-1gb",
+   "countryCode": "IE",
+   "priceUSD": 1.5,
+   "source": "Cable.co.uk worldwide mobile data pricing, 2023",
+   "sourceDate": "2023"
+  },
+  {
+   "itemId": "mobile-data-1gb",
+   "countryCode": "IN",
+   "priceUSD": 0.16,
+   "source": "Cable.co.uk worldwide mobile data pricing, 2023",
+   "sourceDate": "2023"
+  },
+  {
+   "itemId": "mobile-data-1gb",
+   "countryCode": "IT",
+   "priceUSD": 0.09,
+   "source": "Cable.co.uk worldwide mobile data pricing, 2023",
+   "sourceDate": "2023"
+  },
+  {
+   "itemId": "mobile-data-1gb",
+   "countryCode": "JP",
+   "priceUSD": 3.48,
+   "source": "Cable.co.uk worldwide mobile data pricing, 2023",
+   "sourceDate": "2023"
+  },
+  {
+   "itemId": "mobile-data-1gb",
+   "countryCode": "KR",
+   "priceUSD": 5.01,
+   "source": "Cable.co.uk worldwide mobile data pricing, 2023",
+   "sourceDate": "2023"
+  },
+  {
+   "itemId": "mobile-data-1gb",
+   "countryCode": "LB",
+   "priceUSD": 1.91,
+   "source": "Cable.co.uk worldwide mobile data pricing, 2023",
+   "sourceDate": "2023"
+  },
+  {
+   "itemId": "mobile-data-1gb",
+   "countryCode": "MX",
+   "priceUSD": 2.03,
+   "source": "Cable.co.uk worldwide mobile data pricing, 2023",
+   "sourceDate": "2023"
+  },
+  {
+   "itemId": "mobile-data-1gb",
+   "countryCode": "NL",
+   "priceUSD": 1.61,
+   "source": "Cable.co.uk worldwide mobile data pricing, 2023",
+   "sourceDate": "2023"
+  },
+  {
+   "itemId": "mobile-data-1gb",
+   "countryCode": "NO",
+   "priceUSD": 4.07,
+   "source": "Cable.co.uk worldwide mobile data pricing, 2023",
+   "sourceDate": "2023"
+  },
+  {
+   "itemId": "mobile-data-1gb",
+   "countryCode": "NZ",
+   "priceUSD": 5.89,
+   "source": "Cable.co.uk worldwide mobile data pricing, 2023",
+   "sourceDate": "2023"
+  },
+  {
+   "itemId": "mobile-data-1gb",
+   "countryCode": "PL",
+   "priceUSD": 0.37,
+   "source": "Cable.co.uk worldwide mobile data pricing, 2023",
+   "sourceDate": "2023"
+  },
+  {
+   "itemId": "mobile-data-1gb",
+   "countryCode": "PT",
+   "priceUSD": 1.79,
+   "source": "Cable.co.uk worldwide mobile data pricing, 2023",
+   "sourceDate": "2023"
+  },
+  {
+   "itemId": "mobile-data-1gb",
+   "countryCode": "SA",
+   "priceUSD": 1.49,
+   "source": "Cable.co.uk worldwide mobile data pricing, 2023",
+   "sourceDate": "2023"
+  },
+  {
+   "itemId": "mobile-data-1gb",
+   "countryCode": "SE",
+   "priceUSD": 2.33,
+   "source": "Cable.co.uk worldwide mobile data pricing, 2023",
+   "sourceDate": "2023"
+  },
+  {
+   "itemId": "mobile-data-1gb",
+   "countryCode": "SG",
+   "priceUSD": 0.63,
+   "source": "Cable.co.uk worldwide mobile data pricing, 2023",
+   "sourceDate": "2023"
+  },
+  {
+   "itemId": "mobile-data-1gb",
+   "countryCode": "TH",
+   "priceUSD": 0.41,
+   "source": "Cable.co.uk worldwide mobile data pricing, 2023",
+   "sourceDate": "2023"
+  },
+  {
+   "itemId": "mobile-data-1gb",
+   "countryCode": "TR",
+   "priceUSD": 0.44,
+   "source": "Cable.co.uk worldwide mobile data pricing, 2023",
+   "sourceDate": "2023"
+  },
+  {
+   "itemId": "mobile-data-1gb",
+   "countryCode": "US",
+   "priceUSD": 6,
+   "source": "Cable.co.uk worldwide mobile data pricing, 2023",
+   "sourceDate": "2023"
+  },
+  {
+   "itemId": "mobile-data-1gb",
+   "countryCode": "VN",
+   "priceUSD": 0.29,
+   "source": "Cable.co.uk worldwide mobile data pricing, 2023",
+   "sourceDate": "2023"
+  },
+  {
+   "itemId": "mobile-data-1gb",
+   "countryCode": "ZA",
+   "priceUSD": 1.81,
+   "source": "Cable.co.uk worldwide mobile data pricing, 2023",
+   "sourceDate": "2023"
+  },
+  {
+   "itemId": "healthy-diet-day",
+   "countryCode": "AE",
+   "priceUSD": 2.23,
+   "priceLocal": 8.18,
+   "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
+   "sourceDate": "2025"
+  },
+  {
+   "itemId": "healthy-diet-day",
+   "countryCode": "AR",
+   "priceUSD": 2.48,
+   "priceLocal": 3079.92,
+   "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
+   "sourceDate": "2025"
+  },
+  {
+   "itemId": "healthy-diet-day",
+   "countryCode": "AU",
+   "priceUSD": 3.07,
+   "priceLocal": 4.76,
+   "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
+   "sourceDate": "2025"
+  },
+  {
+   "itemId": "healthy-diet-day",
+   "countryCode": "BR",
+   "priceUSD": 2.26,
+   "priceLocal": 12.61,
+   "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
+   "sourceDate": "2025"
+  },
+  {
+   "itemId": "healthy-diet-day",
+   "countryCode": "CA",
+   "priceUSD": 3.93,
+   "priceLocal": 5.5,
+   "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
+   "sourceDate": "2025"
+  },
+  {
+   "itemId": "healthy-diet-day",
+   "countryCode": "CH",
+   "priceUSD": 4.19,
+   "priceLocal": 3.48,
+   "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
+   "sourceDate": "2025"
+  },
+  {
+   "itemId": "healthy-diet-day",
+   "countryCode": "CN",
+   "priceUSD": 1.75,
+   "priceLocal": 12.6,
+   "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
+   "sourceDate": "2025"
+  },
+  {
+   "itemId": "healthy-diet-day",
+   "countryCode": "DE",
+   "priceUSD": 3.44,
+   "priceLocal": 3.04,
+   "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
+   "sourceDate": "2025"
+  },
+  {
+   "itemId": "healthy-diet-day",
+   "countryCode": "EG",
+   "priceUSD": 0.95,
+   "priceLocal": 46.77,
+   "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
+   "sourceDate": "2025"
+  },
+  {
+   "itemId": "healthy-diet-day",
+   "countryCode": "ES",
+   "priceUSD": 2.88,
+   "priceLocal": 2.55,
+   "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
+   "sourceDate": "2025"
+  },
+  {
+   "itemId": "healthy-diet-day",
+   "countryCode": "FR",
+   "priceUSD": 3.28,
+   "priceLocal": 2.9,
+   "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
+   "sourceDate": "2025"
+  },
+  {
+   "itemId": "healthy-diet-day",
+   "countryCode": "GB",
+   "priceUSD": 2.5,
+   "priceLocal": 1.9,
+   "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
+   "sourceDate": "2025"
+  },
+  {
+   "itemId": "healthy-diet-day",
+   "countryCode": "ID",
+   "priceUSD": 1.57,
+   "priceLocal": 25800.17,
+   "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
+   "sourceDate": "2025"
+  },
+  {
+   "itemId": "healthy-diet-day",
+   "countryCode": "IE",
+   "priceUSD": 3.11,
+   "priceLocal": 2.75,
+   "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
+   "sourceDate": "2025"
+  },
+  {
+   "itemId": "healthy-diet-day",
+   "countryCode": "IN",
+   "priceUSD": 0.93,
+   "priceLocal": 81.4,
+   "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
+   "sourceDate": "2025"
+  },
+  {
+   "itemId": "healthy-diet-day",
+   "countryCode": "IT",
+   "priceUSD": 3.18,
+   "priceLocal": 2.81,
+   "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
+   "sourceDate": "2025"
+  },
+  {
+   "itemId": "healthy-diet-day",
+   "countryCode": "JP",
+   "priceUSD": 5.52,
+   "priceLocal": 825.63,
+   "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
+   "sourceDate": "2025"
+  },
+  {
+   "itemId": "healthy-diet-day",
+   "countryCode": "KR",
+   "priceUSD": 4.49,
+   "priceLocal": 6389.97,
+   "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
+   "sourceDate": "2025"
+  },
+  {
+   "itemId": "healthy-diet-day",
+   "countryCode": "LB",
+   "priceUSD": 4.55,
+   "priceLocal": 407250.16,
+   "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
+   "sourceDate": "2025"
+  },
+  {
+   "itemId": "healthy-diet-day",
+   "countryCode": "MX",
+   "priceUSD": 2.57,
+   "priceLocal": 49.51,
+   "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
+   "sourceDate": "2025"
+  },
+  {
+   "itemId": "healthy-diet-day",
+   "countryCode": "NL",
+   "priceUSD": 3.01,
+   "priceLocal": 2.66,
+   "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
+   "sourceDate": "2025"
+  },
+  {
+   "itemId": "healthy-diet-day",
+   "countryCode": "NO",
+   "priceUSD": 4.52,
+   "priceLocal": 47.04,
+   "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
+   "sourceDate": "2025"
+  },
+  {
+   "itemId": "healthy-diet-day",
+   "countryCode": "NZ",
+   "priceUSD": 3.24,
+   "priceLocal": 5.58,
+   "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
+   "sourceDate": "2025"
+  },
+  {
+   "itemId": "healthy-diet-day",
+   "countryCode": "PL",
+   "priceUSD": 2.45,
+   "priceLocal": 9.23,
+   "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
+   "sourceDate": "2025"
+  },
+  {
+   "itemId": "healthy-diet-day",
+   "countryCode": "PT",
+   "priceUSD": 2.71,
+   "priceLocal": 2.4,
+   "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
+   "sourceDate": "2025"
+  },
+  {
+   "itemId": "healthy-diet-day",
+   "countryCode": "SA",
+   "priceUSD": 1.53,
+   "priceLocal": 5.75,
+   "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
+   "sourceDate": "2025"
+  },
+  {
+   "itemId": "healthy-diet-day",
+   "countryCode": "SE",
+   "priceUSD": 3.72,
+   "priceLocal": 36.55,
+   "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
+   "sourceDate": "2025"
+  },
+  {
+   "itemId": "healthy-diet-day",
+   "countryCode": "SG",
+   "priceUSD": 2.83,
+   "priceLocal": 3.7,
+   "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
+   "sourceDate": "2025"
+  },
+  {
+   "itemId": "healthy-diet-day",
+   "countryCode": "TH",
+   "priceUSD": 1.88,
+   "priceLocal": 61.75,
+   "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
+   "sourceDate": "2025"
+  },
+  {
+   "itemId": "healthy-diet-day",
+   "countryCode": "TR",
+   "priceUSD": 1.91,
+   "priceLocal": 75.44,
+   "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
+   "sourceDate": "2025"
+  },
+  {
+   "itemId": "healthy-diet-day",
+   "countryCode": "US",
+   "priceUSD": 2.86,
+   "priceLocal": 2.86,
+   "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
+   "sourceDate": "2025"
+  },
+  {
+   "itemId": "healthy-diet-day",
+   "countryCode": "VN",
+   "priceUSD": 1.37,
+   "priceLocal": 33090.91,
+   "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
+   "sourceDate": "2025"
+  },
+  {
+   "itemId": "healthy-diet-day",
+   "countryCode": "ZA",
+   "priceUSD": 1.74,
+   "priceLocal": 31.14,
+   "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
+   "sourceDate": "2025"
+  }
+ ]
+}

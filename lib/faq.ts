@@ -26,7 +26,7 @@ export const HOME_FAQ: FaqItem[] = [
   {
     question: "Where do the prices come from?",
     answer:
-      "Big Mac prices come from The Economist's Big Mac Index, which has tracked burger prices across dozens of economies since 1986. Grocery, café and fuel prices come from Numbeo's crowd-sourced country price rankings. Every price on the site shows its own source, and the methodology page explains how each number is produced and where it is weakest.",
+      "From published sources, one per item. Big Mac prices come from The Economist's Big Mac Index. Grocery and café prices come from Numbeo's crowd-sourced country price rankings. Fuel and household energy come from GlobalPetrolPrices.com, cigarettes, beer and spirits from the World Health Organization's tax surveys, mobile data from Cable.co.uk, and the cost of a healthy diet from the World Bank and FAO. Every price on the site shows its own source and collection date, and the methodology page explains how each number is produced and where it is weakest.",
   },
   {
     question: "Is Pricele free to play?",
