@@ -130,6 +130,40 @@ Notes worth knowing before editing any of it:
   carry a non-commercial condition, and the site runs AdSense. World Bank and FAO
   data is CC BY 4.0. `/methodology#reuse` states all of this in public.
 
+## Site structure
+
+Every route the site serves. Counts are deliberately absent: the sitemap is
+generated from `data/`, so the number of country, item, archive and guide pages
+moves whenever the data does, and a number written here would be wrong within a
+week. `app/sitemap.ts` is the authority, and it lists exactly the indexable set —
+drafts carry `noindex` and are excluded from it.
+
+| Route                  | What it is                                                        |
+| ---------------------- | ----------------------------------------------------------------- |
+| `/`                    | The game. One item in one country, five guesses, FAQ and copy below |
+| `/prices`              | Every country priced, with the full basket                         |
+| `/prices/[country]`    | One country: what each item costs, in USD, local currency and work time |
+| `/items`               | Every item in the catalogue, with its price range                  |
+| `/items/[item]`        | One item priced across every country, cheapest first               |
+| `/archive`             | Past puzzles, published two days in arrears                        |
+| `/archive/[date]`      | One past puzzle with its answer                                    |
+| `/blog`, `/blog/*`     | Long reads on what everyday prices measure (`data/articles.ts`)    |
+| `/vs`, `/vs/[slug]`    | Head-to-head pages against the closest daily games                 |
+| `/daily-games`         | The genre list page, for the query the whole category is found by  |
+| `/methodology`         | Where every price comes from, and the ways it can be wrong         |
+| `/editorial`           | Who writes this and to what standards                              |
+| `/about`, `/contact`   | What the site is, and how to reach it                              |
+| `/privacy`, `/terms`   | Policies, including the AdSense and EEA consent disclosures        |
+| `/not-found`           | 404. Deliberately `noindex` and deliberately without a canonical   |
+
+Generated at build time rather than written: `/sitemap.xml`, `/robots.txt`,
+`/llms.txt`, `/ads.txt`, `/manifest.webmanifest`, `/icon.svg`, and `/og.jpg`
+(from `scripts/generate-og.mjs`, committed rather than rendered per request).
+
+`components/ContentPage.tsx` is the shell for everything that is not the game
+(`SiteHeader` + title block + `SiteFooter`), so a reader arriving from search
+lands on the same paper the game is set in.
+
 ## Answer suppression
 
 The reference pages would otherwise be an answer key. Two rules keep them honest,
