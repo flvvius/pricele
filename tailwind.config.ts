@@ -14,7 +14,16 @@ import type { Config } from "tailwindcss";
 const ink = (v: string) => `rgb(var(${v}) / <alpha-value>)`;
 
 const config: Config = {
-  content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}"],
+  // `lib` is in here because helpers there return class strings — the headline
+  // sizing in lib/format.ts, the rich-text renderer in lib/richtext.tsx. Left
+  // out, Tailwind never sees those strings and silently generates no rule for
+  // them, so the class lands in the HTML and does nothing. That is a failure
+  // with no error attached to it: the page renders, just at the wrong size.
+  content: [
+    "./app/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./lib/**/*.{ts,tsx}",
+  ],
   theme: {
     extend: {
       // Small phones (iPhone SE and friends) sit below this. The board sheds its

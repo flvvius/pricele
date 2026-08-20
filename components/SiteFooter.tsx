@@ -21,6 +21,10 @@ const GROUPS: { title: string; links: { href: string; label: string }[] }[] = [
     links: [
       { href: "/blog", label: "Guides" },
       { href: "/daily-games", label: "Daily games like Wordle" },
+      // Not in the header strip: that run already overflows on a phone at
+      // seven items, and this is a page readers arrive on from search rather
+      // than reach for mid-session.
+      { href: "/vs", label: "Compared with other price games" },
       { href: "/methodology", label: "Methodology" },
       { href: "/editorial", label: "Editorial policy" },
       { href: "/about", label: "About" },

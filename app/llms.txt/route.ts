@@ -1,6 +1,7 @@
 import { ITEMS } from "@/data/items";
 import { COUNTRIES } from "@/lib/catalog";
 import { PUBLISHED_ARTICLES } from "@/data/articles";
+import { COMPARISONS } from "@/data/comparisons";
 import { SITE_NAME, SITE_URL, absoluteUrl } from "@/lib/seo";
 
 /**
@@ -57,6 +58,17 @@ reference tables and the guides are written to be read without playing.
 ${entry("/", "Today's puzzle", "the game itself; one item, one country, five guesses")}
 ${entry("/archive", "Archive", "every past puzzle, replayable, and it cannot affect your streak")}
 ${entry("/daily-games", "Daily games like Wordle", "the other daily games worth playing, including our direct competitors, described honestly")}
+
+## Compared with the other price games
+
+Head-to-head pages, one per competitor. Each sets both rulebooks out in a
+matched table, adjudicates every dimension, names at least one thing the other
+game does better, and records the date its facts were last checked by playing
+the other game. A dimension nobody verified is marked unverified rather than
+guessed at.
+
+${entry("/vs", "All comparisons", `${COMPARISONS.length} head-to-head pages, with the tally on each`)}
+${COMPARISONS.map((c) => entry(`/vs/${c.slug}`, `${SITE_NAME} vs ${c.opponent}`, c.verdict)).join("\n")}
 
 ## Reference
 

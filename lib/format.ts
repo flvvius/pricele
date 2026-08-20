@@ -173,3 +173,33 @@ export function priceRankLine(price: PriceEntry): string {
     ? `More expensive than ${Math.round((cheaper / (total - 1)) * 100)}% of the ${total} countries in the game.`
     : `Cheaper than ${Math.round((dearer / (total - 1)) * 100)}% of the ${total} countries in the game.`;
 }
+
+/**
+ * The type size for the "today's lot" headline, chosen from how long the
+ * headline actually is.
+ *
+ * The band under the masthead is the only place that states what is being
+ * priced, and it used to be a single truncated line. That worked until the
+ * table gained countries with long names: "Coca-Cola (330ml can) in United
+ * Arab Emirates" clipped to "…in United Ara…", cutting the half of the
+ * sentence a player most needs, since the country is the puzzle.
+ *
+ * So the headline wraps to a second line instead, and steps down a size when
+ * it is long enough to need one — which is what a subeditor does with a
+ * headline that will not fit the column, rather than cutting the last word off
+ * the story. Short headlines are untouched: below the first threshold this
+ * returns exactly the size the band has always used.
+ *
+ * The thresholds are counted in characters, which is a rough proxy for width
+ * in a proportional face, but a safe one here: it errs towards stepping down a
+ * name set in wide capitals (UNITED ARAB EMIRATES) slightly earlier than one
+ * of the same length in lowercase, and a headline one step smaller than it
+ * strictly had to be still reads.
+ */
+export function headlineSize(headline: string): string {
+  const n = headline.trim().length;
+  if (n >= 40) return "text-[1.0625rem] xs:text-[1.125rem]";
+  if (n >= 30) return "text-[1.1875rem] xs:text-[1.3125rem]";
+  if (n >= 22) return "text-[1.3125rem] xs:text-[1.4375rem]";
+  return "text-[1.5rem]";
+}

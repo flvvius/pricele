@@ -11,6 +11,7 @@ import {
   type GameCategory,
   type SimilarGame,
 } from "@/data/similar-games";
+import { COMPARISONS } from "@/data/comparisons";
 import { breadcrumbJsonLd, gameListJsonLd, pageMetadata } from "@/lib/seo";
 
 export const dynamic = "force-static";
@@ -47,6 +48,11 @@ function byCategory(games: SimilarGame[]): Map<GameCategory, SimilarGame[]> {
  * makes is not a recommendation, it's a hedge. Nothing here is paid.
  */
 function GameEntry({ game }: { game: SimilarGame }) {
+  // The games we have written a full head-to-head for get a link to it. Matched
+  // on URL rather than on name, since the URL is the thing that identifies a
+  // game and two of these have very similar names.
+  const comparison = COMPARISONS.find((c) => c.opponentUrl === game.url);
+
   return (
     <li className="border-b border-rule-soft px-1 py-3.5">
       <h3 className="text-base font-bold leading-snug text-ink sm:text-lg">
@@ -65,6 +71,16 @@ function GameEntry({ game }: { game: SimilarGame }) {
       {game.contrast && (
         <p className="mt-1.5 text-sm leading-relaxed text-ink-muted">
           <span className="label">vs. Pricele</span> {game.contrast}
+        </p>
+      )}
+      {comparison && (
+        <p className="mt-2">
+          <Link
+            href={`/vs/${comparison.slug}`}
+            className="font-mono text-[10px] uppercase tracking-[0.14em] text-accent underline underline-offset-[3px]"
+          >
+            Full comparison &rarr;
+          </Link>
         </p>
       )}
     </li>
@@ -130,6 +146,17 @@ export default function DailyGamesPage() {
           ))}
         </ul>
         <Prose>
+          <p>
+            Each of these has a{" "}
+            <Link
+              href="/vs"
+              className="underline decoration-rule underline-offset-2 transition-colors duration-fast ease-out hover:text-ink"
+            >
+              full head-to-head comparison
+            </Link>{" "}
+            with Pricele: the two rulebooks side by side, a verdict on every
+            dimension, and a section on what the other game does better.
+          </p>
           <p>
             If you want the country angle specifically, the{" "}
             <Link

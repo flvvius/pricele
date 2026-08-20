@@ -97,8 +97,9 @@ export const PRICE_GAMES: SimilarGame[] = [
     url: "https://guesstheprice.net/",
     category: "price",
     description:
-      "Three attempts at the price of a popular product, with a new one each day.",
-    contrast: "Shorter, and product-led rather than country-led.",
+      "Fifteen products a run, one guess each, and it shows you what everyone else guessed before revealing the real price.",
+    contrast:
+      "Not a daily game at all: there is no edition and no streak, you simply play again. The items lean towards the extravagant rather than the everyday, and anyone can submit one.",
   },
 ];
 

@@ -14,7 +14,7 @@ import {
   type Stats,
 } from "@/lib/storage";
 import { MAX_GUESSES } from "@/lib/share";
-import { anchorPriceUSD, formatPrice } from "@/lib/format";
+import { anchorPriceUSD, formatPrice, headlineSize } from "@/lib/format";
 import { loadCurrency, saveCurrency, type Currency } from "@/lib/currency";
 import { initPwa } from "@/lib/pwa";
 import { useKeyboardViewport } from "./useKeyboardViewport";
@@ -196,25 +196,47 @@ export default function Game() {
       )}
 
       {/* Both the item and the country change daily, so this band is the only
-          place that states what the player is actually pricing today. */}
-      <div className="flex shrink-0 items-center gap-3.5 border-y border-rule py-2.5">
+          place that states what the player is actually pricing today.
+
+          The headline wraps to a second line and steps down a size rather than
+          truncating: an item and a country together run past a phone's measure
+          often enough ("Coca-Cola (330ml can) in United Arab Emirates") that
+          cutting the line lost the country, which is the half of the sentence
+          the puzzle turns on. Two lines is the ceiling; nothing in the table
+          reaches it at the smallest step, and the clamp is there so a future
+          long name cannot push the input off a short screen. */}
+      <div className="flex shrink-0 items-start gap-3.5 border-y border-rule py-2.5">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={puzzle?.item.imageUrl ?? "/items/placeholder.svg"}
           alt=""
           width={44}
           height={44}
-          className="h-11 w-11 shrink-0 border border-rule bg-paper-raised object-contain p-1.5"
+          className="mt-0.5 h-11 w-11 shrink-0 border border-rule bg-paper-raised object-contain p-1.5"
         />
-        <div className="min-w-0">
+        <div className="min-w-0 flex-1">
           <p className="label">Today&apos;s lot</p>
-          <h2 className="display mt-1 truncate text-[1.5rem] text-ink">
+          <h2
+            // No `text-balance` here: line-clamp renders the box as a
+            // -webkit-box, which ignores text-wrap, so the class would sit in
+            // the markup doing nothing. The clamp is worth more than the
+            // prettier break — it is what stops a future long name pushing the
+            // guess box off a short screen.
+            className={`display mt-1 line-clamp-2 leading-[1.15] text-ink ${headlineSize(
+              puzzle ? `${puzzle.item.name} in ${puzzle.price.countryName}` : ""
+            )}`}
+          >
             {puzzle ? (
               <>
                 {puzzle.item.name}{" "}
                 <span className="text-ink-muted">in</span>{" "}
-                {puzzle.price.countryName}{" "}
-                <span aria-hidden className="text-[1.1rem]">
+                {puzzle.price.countryName}
+                {/* A non-breaking space, so the flag stays on the last word of
+                    the country rather than orphaning onto a line of its own.
+                    Only that pair is held together: making the whole country
+                    name unbreakable would just move the overflow. */}
+                {"\u00a0"}
+                <span aria-hidden className="text-[0.75em]">
                   {puzzle.price.flag}
                 </span>
               </>

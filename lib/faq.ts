@@ -69,6 +69,11 @@ export const HOME_FAQ: FaqItem[] = [
       "Most price games ask what a product costs: Costcodle uses Costco items, Spendle uses consumer products, PriceGame runs five rounds a day. Pricele pairs an everyday item with a country, so the question is what a Big Mac or a litre of petrol costs in Norway versus Egypt. That makes it as much a geography and economics game as a price game, and every figure is a published statistic with its source shown, rather than a retail listing.",
   },
   {
+    question: "Is Pricele or Costcodle better?",
+    answer:
+      "They answer different questions. Costcodle gives you a Costco product and six guesses at its US shelf price, from a catalogue of over three thousand. Pricele gives you an everyday item and a different one of 49 countries each day, five guesses, and a published source for every figure. Costcodle is the better game for American retail prices; Pricele is the better one if the spread between countries is the interesting part. Pricele publishes a full head-to-head at /vs/costcodle, including what Costcodle does better.",
+  },
+  {
     question: "Is Pricele suitable for classrooms?",
     answer:
       "Yes, and teachers are a large share of who plays it. The daily puzzle takes two minutes, needs no account or install, and the reveal screen names the source for the figure, so it works as a starter for lessons on purchasing power, exchange rates, inflation or comparative economics. The price tables and the guides are readable on their own without playing.",

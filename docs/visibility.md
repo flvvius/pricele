@@ -55,9 +55,27 @@ the directories, and that is the entire difference between them and us.
 | Asset | Where | Why |
 | ----- | ----- | --- |
 | `/daily-games` | `app/daily-games/page.tsx`, `data/similar-games.ts` | The list page for the query the whole genre is discovered through. Ours won't outrank a third-party listicle, but it captures the query, states our own comparison in words we chose, and gives directories something substantive to link to. |
+| `/vs/<game>` | `app/vs/[slug]/page.tsx`, `data/comparisons.ts` | One head-to-head page per competitor. `/daily-games` answers "what else is there"; these answer "which of these two should I play", which is a different query and the one people put to an assistant rather than to a search box. Comparison pages are also the most quotable page shape there is — a stated question, a matched table, a verdict — which is why they get cited out of proportion to their traffic. |
 | `ItemList` schema | `gameListJsonLd` in `lib/seo.ts` | Makes `/daily-games` parse as a list of named games with URLs rather than an article that mentions some. |
 | Recommendation FAQs | `lib/faq.ts` | Three entries phrased as chatbot questions ("what should I play instead of Wordle", "how is Pricele different from other price games"). Renders as visible copy and as `FAQPage` JSON-LD. |
 | `/llms.txt` | `app/llms.txt/route.ts` | Cheap insurance, honestly of marginal value — see the header comment in that file before putting any faith in it. |
+
+### Why the comparison pages concede rows
+
+`data/comparisons.ts` enforces four editorial rules in its type signature and in
+`lib/comparisons.test.ts`: every fact about a competitor is checked by playing
+their game, a dimension nobody verified is marked unverified rather than
+guessed at, `edge` is adjudicated per row and may say "them", and
+`theirStrengths` is a non-empty tuple so no page can ship without conceding
+something real.
+
+The tally under each table is computed from the rows rather than written down,
+so it cannot drift from the table above it, and it is allowed to come out
+against us. That is not modesty, it is the mechanism. A comparison page that
+wins every row is read as an advert by people and discounted as one by anything
+summarising it, which makes it worth less than no page at all. The pages that
+get cited are the ones that name the competitor's advantages in the
+competitor's favour, and then say what makes ours different anyway.
 
 The `/daily-games` page names competitors and says where they beat us. That is
 deliberate. A page that names no alternative is the exact shape of copy that

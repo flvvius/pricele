@@ -1,5 +1,10 @@
 import { describe, it, expect } from "vitest";
-import { priceRankLine, anchorPriceUSD, formatArchiveDate } from "./format";
+import {
+  priceRankLine,
+  anchorPriceUSD,
+  formatArchiveDate,
+  headlineSize,
+} from "./format";
 import { PRICES, type PriceEntry } from "./puzzle";
 import { ITEMS } from "@/data/items";
 import {
@@ -202,5 +207,67 @@ describe("price data integrity", () => {
         byCode.set(p.countryCode, p);
       }
     }
+  });
+});
+
+describe("headlineSize", () => {
+  // Rough advance width of the display serif, as a multiple of the font size.
+  // Measured off the rendered headline rather than guessed: a mixed-case
+  // string in this face averages a little over half its em. Deliberately
+  // pessimistic, so a headline the model says fits really does.
+  const EM_PER_CHAR = 0.56;
+
+  // The tightest column the band ever has: a 320px viewport, less the page's
+  // px-4 gutters, the 44px thumbnail and the 14px gap beside it.
+  const COLUMN_PX = 320 - 32 - 44 - 14;
+
+  /** The px size the smallest step of a returned class pair resolves to. */
+  function smallestRem(classes: string): number {
+    const sizes = [...classes.matchAll(/text-\[([\d.]+)rem\]/g)].map((m) =>
+      Number(m[1])
+    );
+    return Math.min(...sizes) * 16;
+  }
+
+  function linesNeeded(headline: string): number {
+    const px = smallestRem(headlineSize(headline));
+    // The flag rides along on the end of the country, so it is part of what
+    // has to fit; it sets at 0.75em and is about two characters wide.
+    const width = (headline.length + 1.5) * px * EM_PER_CHAR;
+    return Math.ceil(width / COLUMN_PX);
+  }
+
+  it("leaves a short headline at the size the band has always used", () => {
+    expect(headlineSize("Milk (1 litre) in Peru")).not.toBe("text-[1.5rem]");
+    expect(headlineSize("Bread in Peru")).toBe("text-[1.5rem]");
+  });
+
+  it("steps down monotonically as the headline grows", () => {
+    let previous = Infinity;
+    for (let n = 1; n <= 60; n++) {
+      const px = smallestRem(headlineSize("x".repeat(n)));
+      expect(px).toBeLessThanOrEqual(previous);
+      previous = px;
+    }
+  });
+
+  it("keeps every headline the game can actually deal to two lines", () => {
+    // The regression this exists for: "Coca-Cola (330ml can) in United Arab
+    // Emirates" used to be cut to "...in United Ara...", losing the country.
+    // Every item can be dealt against every country, so the guard is the full
+    // cross product rather than the pairs that happen to be scheduled.
+    const countries = [...new Set(PRICES.map((p) => p.countryName))];
+    const worst: string[] = [];
+    for (const item of ITEMS) {
+      for (const country of countries) {
+        const headline = `${item.name} in ${country}`;
+        if (linesNeeded(headline) > 2) worst.push(headline);
+      }
+    }
+    expect(worst).toEqual([]);
+  });
+
+  it("survives the empty headline of the pre-hydration state", () => {
+    expect(headlineSize("")).toBe("text-[1.5rem]");
   });
 });

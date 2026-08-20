@@ -3,6 +3,7 @@ import { SITE_URL } from "@/lib/seo";
 import { COUNTRIES, publishedArchiveDates } from "@/lib/catalog";
 import { ITEMS } from "@/data/items";
 import { PUBLISHED_ARTICLES } from "@/data/articles";
+import { COMPARISONS } from "@/data/comparisons";
 import { dateFromISO } from "@/lib/puzzle";
 
 // Regenerated hourly so newly-archived days enter the sitemap without a deploy.
@@ -32,6 +33,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         changeFrequency: "monthly",
         priority: 0.7,
       },
+      { url: `${SITE_URL}/vs`, changeFrequency: "monthly", priority: 0.7 },
       { url: `${SITE_URL}/editorial`, changeFrequency: "monthly", priority: 0.6 },
       { url: `${SITE_URL}/about`, changeFrequency: "monthly", priority: 0.5 },
       { url: `${SITE_URL}/contact`, changeFrequency: "yearly", priority: 0.3 },
@@ -39,6 +41,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
       { url: `${SITE_URL}/terms`, changeFrequency: "yearly", priority: 0.3 },
     ] satisfies MetadataRoute.Sitemap
   ).map((p) => ({ ...p, lastModified: now }));
+
+  // Each comparison's lastModified is the date its facts were checked against
+  // the live game, not the build date. Same rule as the price pages: a deploy
+  // must never be able to assert that a competitor was re-checked that morning.
+  const comparisonPages: MetadataRoute.Sitemap = COMPARISONS.map((c) => ({
+    url: `${SITE_URL}/vs/${c.slug}`,
+    lastModified: dateFromISO(c.checked),
+    changeFrequency: "monthly",
+    priority: 0.7,
+  }));
 
   const countryPages: MetadataRoute.Sitemap = COUNTRIES.map((c) => ({
     url: `${SITE_URL}/prices/${c.slug}`,
@@ -86,6 +98,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     ...staticPages,
     ...blogIndex,
+    ...comparisonPages,
     ...itemPages,
     ...countryPages,
     ...articlePages,
