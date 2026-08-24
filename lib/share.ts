@@ -76,3 +76,49 @@ export async function copyToClipboard(text: string): Promise<boolean> {
     return false;
   }
 }
+
+/** What the native-share decision needs to know about the current browser. */
+export interface ShareEnv {
+  /** Whether navigator.share exists at all. */
+  hasNativeShare: boolean;
+  /** navigator.userAgentData.mobile, where the browser reports it. */
+  uaMobile?: boolean;
+  /** Whether the primary pointer is coarse — a finger rather than a mouse. */
+  coarsePointer: boolean;
+}
+
+/**
+ * Whether to hand the result to the OS share sheet instead of the clipboard.
+ *
+ * Desktop share sheets (the Windows flyout, macOS) keep the `url` of a share
+ * payload and drop the `text` sitting beside it, so a player on a laptop got
+ * the bare link and none of their grid. Phone share targets paste both, which
+ * is the only place the sheet earns its keep — everywhere else copies the full
+ * text, link included.
+ */
+export function prefersNativeShare({
+  hasNativeShare,
+  uaMobile,
+  coarsePointer,
+}: ShareEnv): boolean {
+  if (!hasNativeShare) return false;
+  // Chromium answers this directly, and it is right about touchscreen laptops
+  // where the pointer test is not.
+  if (typeof uaMobile === "boolean") return uaMobile;
+  return coarsePointer;
+}
+
+/** Read the native-share decision off the browser this is running in. */
+export function shouldUseNativeShare(): boolean {
+  if (typeof navigator === "undefined" || typeof window === "undefined") {
+    return false;
+  }
+  const uaData = (
+    navigator as Navigator & { userAgentData?: { mobile?: boolean } }
+  ).userAgentData;
+  return prefersNativeShare({
+    hasNativeShare: typeof navigator.share === "function",
+    uaMobile: typeof uaData?.mobile === "boolean" ? uaData.mobile : undefined,
+    coarsePointer: window.matchMedia?.("(pointer: coarse)").matches ?? false,
+  });
+}

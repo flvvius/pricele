@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   buildShareText,
   buildShareTextWithUrl,
   copyToClipboard,
+  shouldUseNativeShare,
   SHARE_URL,
   type ShareInput,
 } from "@/lib/share";
@@ -12,17 +13,25 @@ import { IconCheck, IconShare } from "./Icons";
 
 export default function ShareCard(props: ShareInput) {
   const [copied, setCopied] = useState(false);
+  // Assume the clipboard until the browser says otherwise: the server cannot
+  // know, and copying is the right answer everywhere the share sheet is not.
+  const [nativeShare, setNativeShare] = useState(false);
   const text = buildShareTextWithUrl(props);
 
+  useEffect(() => setNativeShare(shouldUseNativeShare()), []);
+
   async function onShare() {
-    // Prefer the native share sheet on mobile; pass the link as a dedicated URL
-    // so it shares as a real link. Fall back to copying the full text.
-    if (typeof navigator !== "undefined" && navigator.share) {
+    // The share sheet is a phone thing. On a laptop it keeps the url and throws
+    // the grid away, so there the whole card goes to the clipboard instead.
+    if (nativeShare) {
       try {
         await navigator.share({ text: buildShareText(props), url: SHARE_URL });
         return;
-      } catch {
-        /* user dismissed or unsupported, so fall through to copy */
+      } catch (err) {
+        // Dismissing the sheet is a decision, not a failure: don't go and copy
+        // behind the player's back.
+        if (err instanceof DOMException && err.name === "AbortError") return;
+        /* anything else, fall through to copy */
       }
     }
     const ok = await copyToClipboard(text);
@@ -44,7 +53,7 @@ export default function ShareCard(props: ShareInput) {
         className="flex items-center justify-center gap-2.5 bg-ink px-5 py-3.5 font-mono text-[11px] uppercase tracking-[0.18em] text-paper-raised transition-transform duration-press ease-out active:scale-[0.98]"
       >
         {copied ? <IconCheck size={14} /> : <IconShare size={14} />}
-        {copied ? "Copied" : "Share result"}
+        {copied ? "Copied" : nativeShare ? "Share result" : "Copy result"}
       </button>
     </div>
   );
