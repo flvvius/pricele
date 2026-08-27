@@ -75,6 +75,7 @@ ${COMPARISONS.map((c) => entry(`/vs/${c.slug}`, `${SITE_NAME} vs ${c.opponent}`,
 ${entry("/prices", "Prices by country", `every price on the site, grouped by country (${COUNTRIES.length} of them)`)}
 ${entry("/items", "Items", `what drives the price spread for each of the ${ITEMS.length} items`)}
 ${entry("/methodology", "Methodology", "where each number comes from, how it is converted, and the specific ways it can be wrong")}
+${entry("/data", "The data", "every price source, its licence, and where to get it properly")}
 
 ## Writing
 

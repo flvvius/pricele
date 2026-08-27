@@ -154,6 +154,9 @@ drafts carry `noindex` and are excluded from it.
 | `/editorial`           | Who writes this and to what standards                              |
 | `/about`, `/contact`   | What the site is, and how to reach it                              |
 | `/privacy`, `/terms`   | Policies, including the AdSense and EEA consent disclosures        |
+| `/data`                | Every price source, its licence, and why there is no bulk download |
+| `/support`             | How the site is funded, and reader support if configured           |
+| `/sponsor`             | The sponsorship offer, and what is refused outright                |
 | `/not-found`           | 404. Deliberately `noindex` and deliberately without a canonical   |
 
 Generated at build time rather than written: `/sitemap.xml`, `/robots.txt`,
