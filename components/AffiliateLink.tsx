@@ -47,7 +47,7 @@ export default function AffiliateLink({
       >
         {children}
       </a>
-      <span className="ml-1 whitespace-nowrap font-mono text-[10px] uppercase tracking-[0.14em] text-ink-faint">
+      <span className="ml-1 whitespace-nowrap font-mono text-[11px] uppercase tracking-[0.14em] text-ink-faint">
         ({disclosure})
       </span>
     </>

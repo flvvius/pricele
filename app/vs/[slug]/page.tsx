@@ -71,7 +71,7 @@ function Case({ heading, points }: { heading: string; points: readonly string[] 
         {points.map((point) => (
           <li
             key={point}
-            className="border-b border-rule-soft px-1 py-2.5 text-[14px] leading-relaxed text-ink-body"
+            className="border-b border-rule-soft px-1 py-2.5 text-[15px] leading-relaxed text-ink-body"
           >
             {point}
           </li>
@@ -226,7 +226,7 @@ export default function ComparisonPage({
                 href={`/vs/${c.slug}`}
                 className="flex items-baseline justify-between gap-3 px-1 py-2.5 transition-[background-color] duration-fast ease-out hover:bg-paper-raised"
               >
-                <span className="text-[14px] text-ink-body">{title(c)}</span>
+                <span className="text-[15px] text-ink-body">{title(c)}</span>
                 <span className="label shrink-0">Compare</span>
               </Link>
             </li>

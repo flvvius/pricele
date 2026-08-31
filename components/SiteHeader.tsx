@@ -45,7 +45,7 @@ export default function SiteHeader() {
           <li>
             <Link
               href="/"
-              className="inline-block bg-ink px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-paper-raised transition-transform duration-press ease-out active:scale-[0.97]"
+              className="inline-block bg-ink px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.16em] text-paper-raised transition-transform duration-press ease-out active:scale-[0.97]"
             >
               Play
             </Link>
@@ -54,7 +54,7 @@ export default function SiteHeader() {
             <li key={l.href}>
               <Link
                 href={l.href}
-                className="font-mono text-[10px] uppercase tracking-[0.14em] text-ink-muted transition-colors duration-fast ease-out hover:text-ink"
+                className="font-mono text-[11px] uppercase tracking-[0.14em] text-ink-muted transition-colors duration-fast ease-out hover:text-ink"
               >
                 {l.label}
               </Link>

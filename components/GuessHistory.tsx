@@ -51,11 +51,11 @@ function Row({
     >
       <span className="wash absolute inset-0" aria-hidden />
 
-      <span className="relative font-mono text-[10px] tabular-nums text-ink-faint">
+      <span className="relative font-mono text-[11px] tabular-nums text-ink-faint">
         {String(index + 1).padStart(2, "0")}
       </span>
 
-      <span className="relative shrink-0 font-mono text-base font-medium tabular-nums text-ink">
+      <span className="relative shrink-0 font-mono text-lg font-medium tabular-nums text-ink">
         {formatPrice(guess.value, currency)}
       </span>
 
@@ -70,11 +70,11 @@ function Row({
             only by the aria-hidden gauge and the background wash, so `hidden`
             left a screen reader on a small phone with no way to know how close
             the guess was. */}
-        <span className="sr-only font-mono text-[10px] uppercase tracking-[0.14em] text-ink-body xs:not-sr-only xs:inline">
+        <span className="sr-only font-mono text-[11px] uppercase tracking-[0.14em] text-ink-body xs:not-sr-only xs:inline">
           {tier.label}
         </span>
         <span
-          className="flex shrink-0 items-center gap-1 text-[11px] font-medium text-ink-muted"
+          className="flex shrink-0 items-center gap-1 text-[12px] font-medium text-ink-muted"
           style={
             guess.direction === "exact" ? { color: "rgb(var(--win))" } : undefined
           }
@@ -132,7 +132,7 @@ export default function GuessHistory({
           key={`empty-${i}`}
           className="flex min-h-[2.75rem] flex-1 items-center gap-3 border-b border-rule-soft px-3"
         >
-          <span className="font-mono text-[10px] tabular-nums text-ink-faint/60">
+          <span className="font-mono text-[11px] tabular-nums text-ink-faint/60">
             {String(guesses.length + i + 1).padStart(2, "0")}
           </span>
         </li>

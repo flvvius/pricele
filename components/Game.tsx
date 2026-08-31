@@ -188,7 +188,7 @@ export default function Game() {
           <span className="label !text-accent">Back number</span>
           <button
             onClick={() => selectDate(today)}
-            className="font-mono text-[10px] uppercase tracking-[0.14em] text-accent underline underline-offset-[3px] transition-transform duration-press ease-out active:scale-[0.97]"
+            className="font-mono text-[11px] uppercase tracking-[0.14em] text-accent underline underline-offset-[3px] transition-transform duration-press ease-out active:scale-[0.97]"
           >
             Today&apos;s edition
           </button>
@@ -267,7 +267,7 @@ export default function Game() {
         ) : (
           <>
             {atRisk && (
-              <p className="animate-set-in shrink-0 border-l-2 border-streak bg-streak/[0.08] py-1.5 pl-2.5 font-mono text-[10px] uppercase tracking-[0.14em] text-streak">
+              <p className="animate-set-in shrink-0 border-l-2 border-streak bg-streak/[0.08] py-1.5 pl-2.5 font-mono text-[11px] uppercase tracking-[0.14em] text-streak">
                 {stats.currentStreak}-day streak on the line
               </p>
             )}
@@ -276,7 +276,7 @@ export default function Game() {
 
             <div className="shrink-0">
               {state.guesses.length === 0 && (
-                <p className="mb-2.5 text-center text-[11px] leading-relaxed text-ink-meta">
+                <p className="mb-2.5 text-center text-[12px] leading-relaxed text-ink-meta">
                   For scale, the median{" "}
                   {puzzle.item.shortName.toLowerCase()} across all countries is{" "}
                   <span className="font-mono tabular-nums text-ink-body">

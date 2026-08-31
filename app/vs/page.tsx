@@ -93,7 +93,7 @@ export default function ComparisonsIndexPage() {
                   className="flex flex-col gap-1.5 px-1 py-3.5 transition-[background-color] duration-fast ease-out hover:bg-paper-raised"
                 >
                   <span className="flex items-baseline justify-between gap-3">
-                    <span className="text-base font-bold leading-snug text-ink sm:text-lg">
+                    <span className="text-lg font-bold leading-snug text-ink sm:text-xl">
                       {SITE_NAME} vs {c.opponent}
                     </span>
                     {/* The tally, so the index is honest about the shape of
@@ -102,7 +102,7 @@ export default function ComparisonsIndexPage() {
                       {counts.ours}&ndash;{counts.theirs}&ndash;{counts.even}
                     </span>
                   </span>
-                  <span className="text-sm leading-relaxed text-ink-body">
+                  <span className="text-base leading-relaxed text-ink-body">
                     {c.verdict}
                   </span>
                 </Link>

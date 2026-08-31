@@ -182,7 +182,7 @@ export default function ItemPage({ params }: { params: { item: string } }) {
             <li key={i.id}>
               <Link
                 href={`/items/${i.slug}`}
-                className="inline-block border border-rule px-2 py-1 font-mono text-[10px] uppercase tracking-[0.1em] text-ink-muted transition-[border-color,color] duration-fast ease-out hover:border-ink hover:text-ink"
+                className="inline-block border border-rule px-2 py-1 font-mono text-[11px] uppercase tracking-[0.1em] text-ink-muted transition-[border-color,color] duration-fast ease-out hover:border-ink hover:text-ink"
               >
                 {i.name}
               </Link>

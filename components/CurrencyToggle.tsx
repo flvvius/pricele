@@ -38,7 +38,7 @@ export default function CurrencyToggle({
             onClick={() => onChange(c)}
             aria-pressed={active}
             aria-label={c === "EUR" ? "Guess in euros" : "Guess in US dollars"}
-            className={`px-1.5 py-1 font-mono text-[13px] leading-none transition-colors duration-fast ease-out disabled:opacity-40 ${
+            className={`px-1.5 py-1 font-mono text-[14px] leading-none transition-colors duration-fast ease-out disabled:opacity-40 ${
               active
                 ? "bg-ink text-paper-raised"
                 : "text-ink-faint hover:text-ink-body"

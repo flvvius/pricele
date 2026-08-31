@@ -30,7 +30,7 @@ export default function ContentPage({
         <div className="flex flex-col gap-4 lg:grid lg:grid-cols-[13rem_minmax(0,1fr)] lg:gap-x-12">
           {/* Set at broadsheet scale with the display face. A page title is the
               one place on a reference page that gets to be loud. */}
-          <h1 className="display text-[2.5rem] text-ink sm:text-[3.25rem] lg:col-span-2">
+          <h1 className="display text-[2.75rem] text-ink sm:text-[3.5rem] lg:col-span-2">
             {title}
           </h1>
           {intro && (
@@ -42,7 +42,7 @@ export default function ContentPage({
             // instead of describing what the page is about.
             <div
               data-answer
-              className="flex max-w-prose flex-col gap-3 text-[15px] leading-relaxed text-ink-muted lg:col-start-2"
+              className="flex max-w-prose flex-col gap-3 text-[16px] leading-relaxed text-ink-muted lg:col-start-2"
             >
               {intro}
             </div>
@@ -76,7 +76,7 @@ export function Section({
     >
       <h2
         id={id ? `${id}-heading` : undefined}
-        className="display text-[1.75rem] text-ink"
+        className="display text-[2rem] text-ink"
       >
         {heading}
       </h2>
@@ -91,7 +91,7 @@ export function Section({
 /** Body copy. Used everywhere so paragraph rhythm matches across pages. */
 export function Prose({ children }: { children: ReactNode }) {
   return (
-    <div className="flex max-w-prose flex-col gap-3.5 text-[15px] leading-[1.7] text-ink-body">
+    <div className="flex max-w-prose flex-col gap-3.5 text-[16px] leading-[1.7] text-ink-body">
       {children}
     </div>
   );

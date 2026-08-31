@@ -18,7 +18,7 @@ export default function HowToPlay({
 }) {
   return (
     <Modal open={open} onClose={onClose} title="How to play">
-      <div className="flex flex-col gap-6 text-[13px] leading-relaxed text-ink-body">
+      <div className="flex flex-col gap-6 text-[14px] leading-relaxed text-ink-body">
         <p>
           Guess what today&apos;s item costs in the featured country. You get{" "}
           <strong className="font-semibold text-ink">five tries</strong>, and you
@@ -66,7 +66,7 @@ export default function HowToPlay({
                   style={{ backgroundColor: `rgb(var(--warm-${t.level}))` }}
                   aria-hidden
                 />
-                <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-ink-muted">
+                <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-ink-muted">
                   {t.label}
                 </span>
               </li>

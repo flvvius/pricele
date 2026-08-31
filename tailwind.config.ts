@@ -93,8 +93,8 @@ const config: Config = {
       fontSize: {
         // Two display steps that scale with the viewport, so the reveal figure
         // is a headline on a phone and a headline on a laptop.
-        figure: ["clamp(3.25rem, 17vw, 5rem)", { lineHeight: "0.88", letterSpacing: "-0.03em" }],
-        masthead: ["clamp(1.5rem, 7vw, 1.875rem)", { lineHeight: "0.9", letterSpacing: "-0.02em" }],
+        figure: ["clamp(3.5rem, 18vw, 5.5rem)", { lineHeight: "0.88", letterSpacing: "-0.03em" }],
+        masthead: ["clamp(1.625rem, 7.5vw, 2.0625rem)", { lineHeight: "0.9", letterSpacing: "-0.02em" }],
       },
 
       borderRadius: {

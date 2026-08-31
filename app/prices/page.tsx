@@ -70,18 +70,18 @@ export default function PricesIndex() {
                 className="flex items-center justify-between gap-3 border-b border-rule-soft px-1 py-2.5 transition-[background-color,color] duration-fast ease-out hover:bg-paper-raised"
               >
                 <span className="flex min-w-0 items-center gap-2">
-                  <span aria-hidden className="text-lg">
+                  <span aria-hidden className="text-xl">
                     {country.flag}
                   </span>
-                  <span className="truncate text-sm font-medium text-ink-strong">
+                  <span className="truncate text-base font-medium text-ink-strong">
                     {country.name}
                   </span>
                 </span>
                 <span className="shrink-0 text-right">
-                  <span className="block text-sm tabular-nums text-ink-body">
+                  <span className="block text-base tabular-nums text-ink-body">
                     {visible > 0 ? formatUSD(basket) : "—"}
                   </span>
-                  <span className="block text-[10px] text-ink-meta">
+                  <span className="block text-[11px] text-ink-meta">
                     {count} item{count === 1 ? "" : "s"}
                   </span>
                 </span>

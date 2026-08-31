@@ -20,12 +20,12 @@ export default function ArchiveModal({ open, onClose, today, onPlay }: Props) {
 
   return (
     <Modal open={open} onClose={onClose} title="Back numbers">
-      <p className="mb-4 text-[13px] leading-relaxed text-ink-muted">
+      <p className="mb-4 text-[14px] leading-relaxed text-ink-muted">
         Replay a past edition. These are practice and never touch your streak.
       </p>
 
       {dates.length === 0 ? (
-        <p className="border-y border-rule py-8 text-center font-mono text-[10px] uppercase tracking-[0.14em] text-ink-meta">
+        <p className="border-y border-rule py-8 text-center font-mono text-[11px] uppercase tracking-[0.14em] text-ink-meta">
           No back numbers yet
         </p>
       ) : (
@@ -46,12 +46,12 @@ export default function ArchiveModal({ open, onClose, today, onPlay }: Props) {
                   }}
                   className="flex w-full items-center gap-3 border-b border-rule-soft px-1 py-2.5 text-left transition-[background-color] duration-fast ease-out hover:bg-paper-sunk"
                 >
-                  <span className="font-mono text-[10px] tabular-nums text-ink-faint">
+                  <span className="font-mono text-[11px] tabular-nums text-ink-faint">
                     {String(puzzle.puzzleNumber).padStart(3, "0")}
                   </span>
                   {/* The item changes daily too, so the country alone no longer
                       identifies a past puzzle. */}
-                  <span className="min-w-0 flex-1 truncate text-[13px] text-ink-body">
+                  <span className="min-w-0 flex-1 truncate text-[14px] text-ink-body">
                     <span aria-hidden className="mr-1.5">
                       {puzzle.price.flag}
                     </span>
@@ -59,7 +59,7 @@ export default function ArchiveModal({ open, onClose, today, onPlay }: Props) {
                   </span>
                   {played ? (
                     <span
-                      className="flex shrink-0 items-center gap-1 font-mono text-[11px] tabular-nums"
+                      className="flex shrink-0 items-center gap-1 font-mono text-[12px] tabular-nums"
                       style={{
                         color: st.won
                           ? "rgb(var(--win))"
@@ -70,7 +70,7 @@ export default function ArchiveModal({ open, onClose, today, onPlay }: Props) {
                       {st.won ? `${st.guesses.length}/${MAX_GUESSES}` : "—"}
                     </span>
                   ) : (
-                    <span className="shrink-0 font-mono text-[10px] uppercase tracking-[0.14em] text-ink-muted">
+                    <span className="shrink-0 font-mono text-[11px] uppercase tracking-[0.14em] text-ink-muted">
                       Play
                     </span>
                   )}

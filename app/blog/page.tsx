@@ -25,7 +25,7 @@ export default function BlogIndex() {
     <ContentPage
       title="Guides"
       intro={
-        <p className="text-base leading-7 text-ink-body sm:text-lg sm:leading-8">
+        <p className="text-lg leading-7 text-ink-body sm:text-xl sm:leading-8">
           Longer pieces on what prices actually measure: why a receipt from 1997
           says something the official inflation figure doesn&apos;t, what the same
           phone costs in days of work around the world, and why almost everyone
@@ -42,10 +42,10 @@ export default function BlogIndex() {
                   href={`/blog/${a.slug}`}
                   className="flex flex-col gap-1 border-b border-rule-soft px-1 py-3.5 transition-[background-color,color] duration-fast ease-out hover:bg-paper-raised"
                 >
-                  <h3 className="text-base font-bold leading-snug text-ink sm:text-lg">
+                  <h3 className="text-lg font-bold leading-snug text-ink sm:text-xl">
                     {a.title}
                   </h3>
-                  <p className="text-sm leading-relaxed text-ink-body">
+                  <p className="text-base leading-relaxed text-ink-body">
                     {a.description}
                   </p>
                   <p className="label">

@@ -41,8 +41,8 @@ export default function RelatedGuides({
               href={`/blog/${a.slug}`}
               className="flex flex-col gap-1 border-b border-rule-soft px-1 py-3.5 transition-[background-color,color] duration-fast ease-out hover:bg-paper-raised"
             >
-              <span className="text-sm font-bold text-ink-strong">{a.title}</span>
-              <span className="text-[15px] leading-[1.7] text-ink-body">
+              <span className="text-base font-bold text-ink-strong">{a.title}</span>
+              <span className="text-[16px] leading-[1.7] text-ink-body">
                 {a.description}
               </span>
             </Link>

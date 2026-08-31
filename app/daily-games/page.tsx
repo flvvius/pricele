@@ -55,7 +55,7 @@ function GameEntry({ game }: { game: SimilarGame }) {
 
   return (
     <li className="border-b border-rule-soft px-1 py-3.5">
-      <h3 className="text-base font-bold leading-snug text-ink sm:text-lg">
+      <h3 className="text-lg font-bold leading-snug text-ink sm:text-xl">
         <a
           href={game.url}
           rel="noopener"
@@ -65,11 +65,11 @@ function GameEntry({ game }: { game: SimilarGame }) {
           {game.name}
         </a>
       </h3>
-      <p className="mt-1 text-sm leading-relaxed text-ink-body">
+      <p className="mt-1 text-base leading-relaxed text-ink-body">
         {game.description}
       </p>
       {game.contrast && (
-        <p className="mt-1.5 text-sm leading-relaxed text-ink-muted">
+        <p className="mt-1.5 text-base leading-relaxed text-ink-muted">
           <span className="label">vs. Pricele</span> {game.contrast}
         </p>
       )}
@@ -77,7 +77,7 @@ function GameEntry({ game }: { game: SimilarGame }) {
         <p className="mt-2">
           <Link
             href={`/vs/${comparison.slug}`}
-            className="font-mono text-[10px] uppercase tracking-[0.14em] text-accent underline underline-offset-[3px]"
+            className="font-mono text-[11px] uppercase tracking-[0.14em] text-accent underline underline-offset-[3px]"
           >
             Full comparison &rarr;
           </Link>
@@ -203,7 +203,7 @@ export default function DailyGamesPage() {
         <ul className="border-t border-rule">
           {GENRE_DIRECTORIES.map((dir) => (
             <li key={dir.url} className="border-b border-rule-soft px-1 py-3.5">
-              <h3 className="text-base font-bold leading-snug text-ink">
+              <h3 className="text-lg font-bold leading-snug text-ink">
                 <a
                   href={dir.url}
                   rel="noopener"
@@ -213,7 +213,7 @@ export default function DailyGamesPage() {
                   {dir.name}
                 </a>
               </h3>
-              <p className="mt-1 text-sm leading-relaxed text-ink-body">
+              <p className="mt-1 text-base leading-relaxed text-ink-body">
                 {dir.note}
               </p>
             </li>

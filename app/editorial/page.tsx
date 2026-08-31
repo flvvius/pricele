@@ -46,7 +46,7 @@ export default function EditorialPage() {
             out who decides what gets published, the test a figure has to pass,
             and what happens when one fails after the fact.
           </p>
-          <p className="text-xs font-medium uppercase tracking-wide text-ink-meta">
+          <p className="text-sm font-medium uppercase tracking-wide text-ink-meta">
             Last updated: {LAST_UPDATED}
           </p>
         </>
@@ -81,7 +81,7 @@ export default function EditorialPage() {
             only a handful of the items in the catalogue.
           </p>
         </Prose>
-        <ol className="flex max-w-prose list-decimal flex-col gap-2.5 pl-5 text-[15px] leading-[1.7] text-ink-body marker:text-ink-meta">
+        <ol className="flex max-w-prose list-decimal flex-col gap-2.5 pl-5 text-[16px] leading-[1.7] text-ink-body marker:text-ink-meta">
           <li>
             <strong className="font-semibold text-ink">
               It has a named public source.
@@ -136,7 +136,7 @@ export default function EditorialPage() {
             reason the site is smaller than it could be.
           </p>
         </Prose>
-        <ul className="flex max-w-prose list-disc flex-col gap-2.5 pl-5 text-[15px] leading-[1.7] text-ink-body marker:text-ink-meta">
+        <ul className="flex max-w-prose list-disc flex-col gap-2.5 pl-5 text-[16px] leading-[1.7] text-ink-body marker:text-ink-meta">
           <li>
             <strong className="font-semibold text-ink">
               No invented rows.
@@ -186,7 +186,7 @@ export default function EditorialPage() {
           </p>
           <p>What happens then:</p>
         </Prose>
-        <ol className="flex max-w-prose list-decimal flex-col gap-2.5 pl-5 text-[15px] leading-[1.7] text-ink-body marker:text-ink-meta">
+        <ol className="flex max-w-prose list-decimal flex-col gap-2.5 pl-5 text-[16px] leading-[1.7] text-ink-body marker:text-ink-meta">
           <li>
             Every report gets read by the person who compiled the data. Not a
             support queue.

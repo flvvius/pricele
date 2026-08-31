@@ -113,20 +113,20 @@ export default function ArchiveDatePage({
     >
       <Section heading="The answer">
         <div className="border border-rule border-t-2 border-t-ink bg-paper-raised p-5 text-center">
-          <p className="text-xs uppercase tracking-wide text-ink-muted">
+          <p className="text-sm uppercase tracking-wide text-ink-muted">
             {item.name} · {price.countryName}
           </p>
-          <p className="mt-1 text-4xl font-black tabular-nums text-ink">
+          <p className="mt-1 text-5xl font-black tabular-nums text-ink">
             {formatUSD(price.priceUSD)}
           </p>
           {formatLocal(price) && (
             <p className="text-ink-muted">{formatLocal(price)}</p>
           )}
-          <p className="mt-3 border-t border-rule pt-3 text-sm text-ink-body">
+          <p className="mt-3 border-t border-rule pt-3 text-base text-ink-body">
             {affordanceLine(price)}
           </p>
           {priceRankLine(price) && (
-            <p className="mt-2 text-sm text-ink-muted">{priceRankLine(price)}</p>
+            <p className="mt-2 text-base text-ink-muted">{priceRankLine(price)}</p>
           )}
         </div>
         <p className="label">Source: {price.source}.</p>
@@ -203,11 +203,11 @@ export default function ArchiveDatePage({
       </Section>
 
       <Section heading="More puzzles">
-        <div className="flex flex-wrap items-center gap-2 text-sm">
+        <div className="flex flex-wrap items-center gap-2 text-base">
           {older && (
             <Link
               href={`/archive/${older}`}
-              className="border border-rule px-3 py-2 font-mono text-[10px] uppercase tracking-[0.14em] text-ink-body transition-[border-color,background-color,transform] duration-press ease-out hover:border-ink hover:bg-paper-raised active:scale-[0.97]"
+              className="border border-rule px-3 py-2 font-mono text-[11px] uppercase tracking-[0.14em] text-ink-body transition-[border-color,background-color,transform] duration-press ease-out hover:border-ink hover:bg-paper-raised active:scale-[0.97]"
             >
               ← Previous puzzle
             </Link>
@@ -215,20 +215,20 @@ export default function ArchiveDatePage({
           {newer && (
             <Link
               href={`/archive/${newer}`}
-              className="border border-rule px-3 py-2 font-mono text-[10px] uppercase tracking-[0.14em] text-ink-body transition-[border-color,background-color,transform] duration-press ease-out hover:border-ink hover:bg-paper-raised active:scale-[0.97]"
+              className="border border-rule px-3 py-2 font-mono text-[11px] uppercase tracking-[0.14em] text-ink-body transition-[border-color,background-color,transform] duration-press ease-out hover:border-ink hover:bg-paper-raised active:scale-[0.97]"
             >
               Next puzzle →
             </Link>
           )}
           <Link
             href="/archive"
-            className="border border-rule px-3 py-2 font-mono text-[10px] uppercase tracking-[0.14em] text-ink-body transition-[border-color,background-color,transform] duration-press ease-out hover:border-ink hover:bg-paper-raised active:scale-[0.97]"
+            className="border border-rule px-3 py-2 font-mono text-[11px] uppercase tracking-[0.14em] text-ink-body transition-[border-color,background-color,transform] duration-press ease-out hover:border-ink hover:bg-paper-raised active:scale-[0.97]"
           >
             All puzzles
           </Link>
           <Link
             href="/"
-            className="bg-ink px-4 py-2.5 font-mono text-[10px] uppercase tracking-[0.16em] text-paper-raised transition-transform duration-press ease-out active:scale-[0.97]"
+            className="bg-ink px-4 py-2.5 font-mono text-[11px] uppercase tracking-[0.16em] text-paper-raised transition-transform duration-press ease-out active:scale-[0.97]"
           >
             Play today&apos;s
           </Link>

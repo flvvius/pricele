@@ -114,7 +114,7 @@ export default function Modal({ open, onClose, title, children }: Props) {
         }`}
       >
         <div className="mb-5 flex items-start justify-between gap-4">
-          <h2 className="display text-2xl text-ink">{title}</h2>
+          <h2 className="display text-3xl text-ink">{title}</h2>
           <button
             onClick={onClose}
             aria-label="Close"

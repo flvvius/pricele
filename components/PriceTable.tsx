@@ -44,11 +44,11 @@ export default function PriceTable({
 }) {
   return (
     <div className="-mx-4 overflow-x-auto px-4">
-      <table className="w-full min-w-[30rem] border-collapse text-sm">
+      <table className="w-full min-w-[30rem] border-collapse text-base">
         <thead>
           {/* Column heads in the meta face, same as every other standing head
               in the paper, over the same heavy rule the masthead uses. */}
-          <tr className="border-b-2 border-ink text-left font-mono text-[10px] uppercase tracking-[0.14em] text-ink-meta">
+          <tr className="border-b-2 border-ink text-left font-mono text-[11px] uppercase tracking-[0.14em] text-ink-meta">
             <th scope="col" className="py-2 pr-3 font-semibold">
               {labelHeader}
             </th>
@@ -85,7 +85,7 @@ export default function PriceTable({
               {r.hidden || !r.price ? (
                 <td
                   colSpan={showLocal ? 3 : 2}
-                  className="py-2.5 text-right font-mono text-[11px] text-ink-faint"
+                  className="py-2.5 text-right font-mono text-[12px] text-ink-faint"
                 >
                   {r.hidden ? "hidden, in play right now" : "no data"}
                 </td>
@@ -95,11 +95,11 @@ export default function PriceTable({
                     {formatUSD(r.price.priceUSD)}
                   </td>
                   {showLocal && (
-                    <td className="py-2.5 pr-3 text-right font-mono text-[13px] tabular-nums text-ink-muted">
+                    <td className="py-2.5 pr-3 text-right font-mono text-[14px] tabular-nums text-ink-muted">
                       {formatLocal(r.price) ?? "—"}
                     </td>
                   )}
-                  <td className="py-2.5 text-right font-mono text-[13px] tabular-nums text-ink-muted">
+                  <td className="py-2.5 text-right font-mono text-[14px] tabular-nums text-ink-muted">
                     {wageLabel(r.price)}
                   </td>
                 </>

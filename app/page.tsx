@@ -36,7 +36,7 @@ export default function Home() {
       >
         <h2
           id="about-heading"
-          className="display text-[1.75rem] text-ink"
+          className="display text-[2rem] text-ink"
         >
           A new price puzzle every day
         </h2>
@@ -44,7 +44,7 @@ export default function Home() {
             cell, and the copy has to stay one. Below lg it inherits the same
             gap-3 the section had, so the phone stack is unchanged. */}
         <div className="flex flex-col gap-3">
-          <p className="text-[15px] leading-[1.7] text-ink-body">
+          <p className="text-[16px] leading-[1.7] text-ink-body">
             Pricele is a free daily game about what things cost around the world.
             Every day you get one country and one everyday item: a Big Mac in
             Norway, a cappuccino in Japan, a litre of petrol in Egypt. You try
@@ -53,7 +53,7 @@ export default function Home() {
             of the real price. Both the item and the country change at midnight
             your time, so there&apos;s always a fresh one waiting when you wake up.
           </p>
-          <p className="text-[15px] leading-[1.7] text-ink-body">
+          <p className="text-[16px] leading-[1.7] text-ink-body">
             If you play Wordle or Globle, it&apos;s the same kind of thing: a quick
             puzzle you do once a day, plus a streak you&apos;ll want to keep going.
             The difference is that the answer is a real number, since every price comes
@@ -67,10 +67,10 @@ export default function Home() {
         aria-labelledby="items-heading"
         className="flex flex-col gap-3 lg:grid lg:grid-cols-[13rem_minmax(0,1fr)] lg:gap-x-12"
       >
-        <h2 id="items-heading" className="display text-[1.75rem] text-ink">
+        <h2 id="items-heading" className="display text-[2rem] text-ink">
           What&apos;s in the game
         </h2>
-        <p className="text-[15px] leading-[1.7] text-ink-body">
+        <p className="text-[16px] leading-[1.7] text-ink-body">
           {ITEMS.length} items, priced across {COUNTRIES.length} countries. Each
           item has its own page ranking every country from cheapest to most
           expensive.
@@ -94,11 +94,11 @@ export default function Home() {
                     height={28}
                     className="h-7 w-7 shrink-0 border border-rule bg-paper-raised object-contain p-0.5"
                   />
-                  <span className="truncate text-[14px] text-ink-body">
+                  <span className="truncate text-[15px] text-ink-body">
                     {item.name}
                   </span>
                 </span>
-                <span className="shrink-0 font-mono text-[11px] tabular-nums text-ink-meta">
+                <span className="shrink-0 font-mono text-[12px] tabular-nums text-ink-meta">
                   median {formatUSD(medianPriceUSD(item.id))}
                   <span className="ml-1.5 text-ink-faint">
                     · {pricesForItem(item.id).length}
@@ -110,7 +110,7 @@ export default function Home() {
         </ul>
         {/* Auto-flow would drop this back into the rail column after the
             full-width index above; keep it under the copy where it belongs. */}
-        <p className="text-[15px] leading-[1.7] text-ink-body lg:col-start-2">
+        <p className="text-[16px] leading-[1.7] text-ink-body lg:col-start-2">
           Or browse{" "}
           <Link href="/prices" className="underline decoration-rule underline-offset-2 transition-colors duration-fast ease-out hover:text-ink">
             prices by country

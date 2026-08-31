@@ -15,7 +15,7 @@ import {
 /** Secondary control: outlined, never filled. Only one thing on the reveal is
     allowed to be a solid block of ink, and it is the share button. */
 const BUTTON =
-  "border border-rule px-3 py-2 font-mono text-[10px] uppercase tracking-[0.14em] text-ink-body transition-[border-color,background-color,transform] duration-press ease-out hover:border-ink hover:bg-paper-raised active:scale-[0.97] disabled:opacity-50";
+  "border border-rule px-3 py-2 font-mono text-[11px] uppercase tracking-[0.14em] text-ink-body transition-[border-color,background-color,transform] duration-press ease-out hover:border-ink hover:bg-paper-raised active:scale-[0.97] disabled:opacity-50";
 
 /**
  * Retention CTAs surfaced after a game: install the PWA (a home-screen icon is

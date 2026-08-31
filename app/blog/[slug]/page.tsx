@@ -58,7 +58,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
       // rather than the small grey intro the reference pages use.
       intro={
         <>
-          <p className="text-base leading-7 text-ink-body sm:text-lg sm:leading-8">
+          <p className="text-lg leading-7 text-ink-body sm:text-xl sm:leading-8">
             {article.description}
           </p>
           {live && (
@@ -82,7 +82,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
             <Section heading="Sources">
               <ul className="border-t border-rule">
                 {article.sources.map((s) => (
-                  <li key={s.url} className="text-sm leading-relaxed">
+                  <li key={s.url} className="text-base leading-relaxed">
                     <a
                       href={s.url}
                       target="_blank"
@@ -106,10 +106,10 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
                       href={`/blog/${a.slug}`}
                       className="flex flex-col gap-1 border-b border-rule-soft px-1 py-3.5 transition-[background-color,color] duration-fast ease-out hover:bg-paper-raised"
                     >
-                      <span className="text-sm font-bold text-ink-strong">
+                      <span className="text-base font-bold text-ink-strong">
                         {a.title}
                       </span>
-                      <span className="text-[15px] leading-[1.7] text-ink-body">
+                      <span className="text-[16px] leading-[1.7] text-ink-body">
                         {a.description}
                       </span>
                     </Link>

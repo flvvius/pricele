@@ -65,18 +65,18 @@ export default function ArchiveIndex() {
                   href={`/archive/${iso}`}
                   className="flex items-center gap-3 border-b border-rule-soft px-1 py-2.5 transition-[background-color,color] duration-fast ease-out hover:bg-paper-raised"
                 >
-                  <span aria-hidden className="text-lg">
+                  <span aria-hidden className="text-xl">
                     {puzzle.price.flag}
                   </span>
                   <span className="min-w-0 flex-1">
-                    <span className="block truncate text-sm font-medium text-ink-strong">
+                    <span className="block truncate text-base font-medium text-ink-strong">
                       {puzzle.item.shortName} in {puzzle.price.countryName}
                     </span>
-                    <span className="block text-xs text-ink-meta">
+                    <span className="block text-sm text-ink-meta">
                       #{puzzle.puzzleNumber} · {formatArchiveDate(iso)}
                     </span>
                   </span>
-                  <span className="shrink-0 text-sm tabular-nums text-ink-body">
+                  <span className="shrink-0 text-base tabular-nums text-ink-body">
                     {formatUSD(puzzle.price.priceUSD)}
                   </span>
                 </Link>

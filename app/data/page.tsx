@@ -156,16 +156,16 @@ export default function DataPage() {
 
       <Section heading="Every source, and what you may do with it">
         <div className="overflow-x-auto">
-          <table className="w-full border-collapse text-left text-sm">
+          <table className="w-full border-collapse text-left text-base">
             <thead>
               <tr className="border-b-2 border-ink">
-                <th className="py-2 pr-4 font-mono text-[11px] uppercase tracking-wide text-ink-muted">
+                <th className="py-2 pr-4 font-mono text-[12px] uppercase tracking-wide text-ink-muted">
                   Items
                 </th>
-                <th className="py-2 pr-4 font-mono text-[11px] uppercase tracking-wide text-ink-muted">
+                <th className="py-2 pr-4 font-mono text-[12px] uppercase tracking-wide text-ink-muted">
                   Source
                 </th>
-                <th className="py-2 font-mono text-[11px] uppercase tracking-wide text-ink-muted">
+                <th className="py-2 font-mono text-[12px] uppercase tracking-wide text-ink-muted">
                   Licence and reuse
                 </th>
               </tr>
@@ -187,7 +187,7 @@ export default function DataPage() {
                     </a>
                   </td>
                   <td className="py-3 leading-relaxed text-ink-body">
-                    <span className="font-mono text-[12px] text-ink">
+                    <span className="font-mono text-[13px] text-ink">
                       {s.licence}
                     </span>
                     <br />

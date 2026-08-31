@@ -257,7 +257,7 @@ export default function CountryPage({ params }: { params: { country: string } })
             <li key={c.code}>
               <Link
                 href={`/prices/${c.slug}`}
-                className="inline-flex items-center gap-1.5 border border-rule px-2 py-1 font-mono text-[10px] uppercase tracking-[0.1em] text-ink-muted transition-[border-color,color] duration-fast ease-out hover:border-ink hover:text-ink"
+                className="inline-flex items-center gap-1.5 border border-rule px-2 py-1 font-mono text-[11px] uppercase tracking-[0.1em] text-ink-muted transition-[border-color,color] duration-fast ease-out hover:border-ink hover:text-ink"
               >
                 <span aria-hidden>{c.flag}</span>
                 {c.name}

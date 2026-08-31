@@ -13,16 +13,16 @@ export default function AuthorCard() {
   return (
     <aside className="flex max-w-prose flex-col gap-3 border-t border-rule pt-5">
       <p className="label">About the author</p>
-      <p className="text-[15px] leading-[1.7] text-ink-body">
+      <p className="text-[16px] leading-[1.7] text-ink-body">
         <strong className="font-semibold text-ink-strong">{AUTHOR.name}</strong>{" "}
         <span className="text-ink-meta">— {AUTHOR.role}</span>
       </p>
       {AUTHOR.bio.map((line) => (
-        <p key={line.slice(0, 32)} className="text-[15px] leading-[1.7] text-ink-body">
+        <p key={line.slice(0, 32)} className="text-[16px] leading-[1.7] text-ink-body">
           {line}
         </p>
       ))}
-      <p className="text-sm text-ink-meta">
+      <p className="text-base text-ink-meta">
         <a
           href={`mailto:${AUTHOR.email}`}
           className="underline decoration-rule underline-offset-2 transition-colors duration-fast ease-out hover:text-ink"
@@ -74,7 +74,7 @@ export function Byline({
   format: (iso: string) => string;
 }) {
   return (
-    <p className="text-xs font-medium uppercase tracking-wide text-ink-meta">
+    <p className="text-sm font-medium uppercase tracking-wide text-ink-meta">
       By{" "}
       <Link
         href="/about#author"

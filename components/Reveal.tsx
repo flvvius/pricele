@@ -65,12 +65,12 @@ export default function Reveal({
             figure itself, so it is set, not labelled. How close you got is the
             footnote to it, not the other way round. */}
         <p
-          className="display text-[1.75rem]"
+          className="display text-[2rem]"
           style={{ color: won ? "rgb(var(--win))" : "rgb(var(--ink))" }}
         >
           {won ? `Solved in ${guesses.length} of ${MAX_GUESSES}` : "Out of guesses"}
         </p>
-        <p className="mt-1.5 text-[13px] text-ink-muted">
+        <p className="mt-1.5 text-[14px] text-ink-muted">
           {accuracyLine(bestOff, won)}
         </p>
       </div>
@@ -90,19 +90,19 @@ export default function Reveal({
           {formatPrice(price.priceUSD, currency)}
         </p>
         {price.priceLocal != null && (
-          <p className="mt-1.5 font-mono text-sm tabular-nums text-ink-muted">
+          <p className="mt-1.5 font-mono text-base tabular-nums text-ink-muted">
             {formatMoney(price.priceLocal, price.localCurrency)}
           </p>
         )}
 
-        <div className="mt-4 flex flex-col gap-1.5 border-t border-rule pt-3.5 text-[13px] leading-relaxed text-ink-body">
+        <div className="mt-4 flex flex-col gap-1.5 border-t border-rule pt-3.5 text-[14px] leading-relaxed text-ink-body">
           <p>{affordanceLine(price)}</p>
           {priceRankLine(price) && (
             <p className="text-ink-muted">{priceRankLine(price)}</p>
           )}
         </div>
 
-        <p className="mt-3.5 border-t border-rule-soft pt-3 text-[11px] leading-relaxed text-ink-meta">
+        <p className="mt-3.5 border-t border-rule-soft pt-3 text-[12px] leading-relaxed text-ink-meta">
           Source: {price.source}.{" "}
           {/* Said plainly rather than hidden: the euro headline is arithmetic on
               a dollar figure, not a price anyone was charged, and on eurozone
@@ -127,13 +127,13 @@ export default function Reveal({
       <div className="grid grid-cols-2 gap-px border-y border-rule bg-rule">
         <Link
           href={`/items/${item.slug}`}
-          className="bg-paper px-3 py-3 text-center text-[13px] font-medium text-ink-body transition-[background-color,color] duration-fast ease-out hover:bg-paper-raised hover:text-ink"
+          className="bg-paper px-3 py-3 text-center text-[14px] font-medium text-ink-body transition-[background-color,color] duration-fast ease-out hover:bg-paper-raised hover:text-ink"
         >
           {item.shortName} everywhere
         </Link>
         <Link
           href={`/prices/${countrySlug(price.countryName)}`}
-          className="bg-paper px-3 py-3 text-center text-[13px] font-medium text-ink-body transition-[background-color,color] duration-fast ease-out hover:bg-paper-raised hover:text-ink"
+          className="bg-paper px-3 py-3 text-center text-[14px] font-medium text-ink-body transition-[background-color,color] duration-fast ease-out hover:bg-paper-raised hover:text-ink"
         >
           Prices in {price.countryName}
         </Link>
@@ -141,15 +141,15 @@ export default function Reveal({
 
       {!isArchive && won && milestone && (
         <div className="border-l-2 border-streak bg-streak/[0.08] py-3 pl-4 pr-3">
-          <p className="display text-xl text-streak">{milestone}-day streak</p>
-          <p className="mt-1 text-[13px] text-ink-muted">
+          <p className="display text-2xl text-streak">{milestone}-day streak</p>
+          <p className="mt-1 text-[14px] text-ink-muted">
             {milestone >= 30 ? "That's a serious habit." : "Nice run. Keep it going."}
           </p>
         </div>
       )}
 
       {!isArchive && won && !milestone && stats.currentStreak > 1 && (
-        <p className="text-center font-mono text-[11px] uppercase tracking-[0.14em] text-streak">
+        <p className="text-center font-mono text-[12px] uppercase tracking-[0.14em] text-streak">
           {stats.currentStreak}-day streak
           {upcoming ? ` · ${upcoming - stats.currentStreak} to ${upcoming}` : ""}
         </p>
@@ -185,7 +185,7 @@ export default function Reveal({
           </div>
           <button
             onClick={onShowStats}
-            className="border border-rule px-4 py-2.5 font-mono text-[10px] uppercase tracking-[0.16em] text-ink-body transition-[background-color,border-color,transform] duration-press ease-out hover:border-ink hover:bg-paper-raised active:scale-[0.97]"
+            className="border border-rule px-4 py-2.5 font-mono text-[11px] uppercase tracking-[0.16em] text-ink-body transition-[background-color,border-color,transform] duration-press ease-out hover:border-ink hover:bg-paper-raised active:scale-[0.97]"
           >
             Statistics
           </button>

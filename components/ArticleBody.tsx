@@ -27,12 +27,12 @@ export default function ArticleBody({ blocks }: { blocks: ArticleBlock[] }) {
  * rhythm, so the setting is defined once and only once here.
  */
 const PROSE_P =
-  "text-[15px] leading-[1.75] text-ink-body sm:text-base sm:leading-8";
+  "text-[16px] leading-[1.75] text-ink-body sm:text-lg sm:leading-8";
 
 /** Section heading. Sized well above body copy so scanning the page works. */
 function Heading({ children }: { children: string }) {
   return (
-    <h2 className="display text-[1.75rem] text-ink sm:text-[2rem]">
+    <h2 className="display text-[2rem] text-ink sm:text-[2.25rem]">
       {children}
     </h2>
   );
@@ -75,7 +75,7 @@ function Block({ block }: { block: ArticleBlock }) {
                 <dt className="label order-2 !normal-case !tracking-normal !text-[11px]">
                   {s.label}
                 </dt>
-                <dd className="display order-1 text-[2rem] tabular-nums text-ink sm:text-[2.5rem]">
+                <dd className="display order-1 text-[2.25rem] tabular-nums text-ink sm:text-[2.75rem]">
                   {s.value}
                 </dd>
               </div>
@@ -93,11 +93,11 @@ function Block({ block }: { block: ArticleBlock }) {
             {block.items.map((item, i) => (
               <li
                 key={i}
-                className="flex gap-3 text-[15px] leading-[1.75] text-ink-body sm:text-base"
+                className="flex gap-3 text-[16px] leading-[1.75] text-ink-body sm:text-lg"
               >
                 <span
                   aria-hidden
-                  className="mt-1 w-5 shrink-0 text-right font-mono text-[11px] tabular-nums text-ink-faint"
+                  className="mt-1 w-5 shrink-0 text-right font-mono text-[12px] tabular-nums text-ink-faint"
                 >
                   {block.ordered === false ? "—" : `${i + 1}.`}
                 </span>
@@ -115,9 +115,9 @@ function Block({ block }: { block: ArticleBlock }) {
           {block.intro && <p className={PROSE_P}>{renderInline(block.intro)}</p>}
           {/* Scrolls inside its own box so the page body never moves sideways. */}
           <div className="-mx-4 overflow-x-auto px-4">
-            <table className="w-full min-w-[26rem] border-collapse text-sm sm:text-[15px]">
+            <table className="w-full min-w-[26rem] border-collapse text-base sm:text-[16px]">
               <thead>
-                <tr className="border-b-2 border-ink text-left font-mono text-[10px] uppercase tracking-[0.14em] text-ink-meta">
+                <tr className="border-b-2 border-ink text-left font-mono text-[11px] uppercase tracking-[0.14em] text-ink-meta">
                   {block.columns.map((c, i) => (
                     <th
                       key={i}
@@ -158,7 +158,7 @@ function Block({ block }: { block: ArticleBlock }) {
             </table>
           </div>
           {block.caption && (
-            <p className="text-[11px] leading-relaxed text-ink-meta">
+            <p className="text-[12px] leading-relaxed text-ink-meta">
               {renderInline(block.caption)}
             </p>
           )}
@@ -168,7 +168,7 @@ function Block({ block }: { block: ArticleBlock }) {
     case "quote":
       return (
         <figure className="border-l-2 border-accent pl-5">
-          <blockquote className="display text-[1.5rem] leading-[1.25] text-ink sm:text-[1.75rem]">
+          <blockquote className="display text-[1.75rem] leading-[1.25] text-ink sm:text-[2rem]">
             {renderInline(block.text)}
           </blockquote>
           {block.attribution && (
@@ -185,7 +185,7 @@ function Block({ block }: { block: ArticleBlock }) {
       return (
         <aside className="flex flex-col gap-3 border border-rule border-t-2 border-t-ink bg-paper-raised p-5 sm:p-6">
           {block.heading && (
-            <h3 className="display text-[1.375rem] text-ink">
+            <h3 className="display text-[1.5rem] text-ink">
               {block.heading}
             </h3>
           )}
@@ -215,17 +215,17 @@ function ArticleCta({
 }) {
   return (
     <aside className="flex flex-col gap-4 bg-ink p-6 text-paper sm:p-7">
-      <h2 className="display text-[2rem] sm:text-[2.5rem]">
+      <h2 className="display text-[2.25rem] sm:text-[2.75rem]">
         {block.heading}
       </h2>
       {block.paragraphs.map((p, i) => (
-        <p key={i} className="text-[15px] leading-[1.7] text-paper/70 sm:text-base">
+        <p key={i} className="text-[16px] leading-[1.7] text-paper/70 sm:text-lg">
           {p}
         </p>
       ))}
       <Link
         href="/"
-        className="inline-flex w-fit items-center gap-2.5 bg-paper px-5 py-3 font-mono text-[11px] uppercase tracking-[0.16em] text-ink transition-transform duration-press ease-out active:scale-[0.97]"
+        className="inline-flex w-fit items-center gap-2.5 bg-paper px-5 py-3 font-mono text-[12px] uppercase tracking-[0.16em] text-ink transition-transform duration-press ease-out active:scale-[0.97]"
       >
         {block.buttonLabel}
         <span aria-hidden>→</span>

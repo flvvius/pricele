@@ -88,7 +88,7 @@ export default function GuessInput({
             currency === "EUR" ? "Your guess in euros" : "Your guess in US dollars"
           }
           aria-invalid={error ? true : undefined}
-          className="w-full min-w-0 bg-transparent py-3.5 pl-2 pr-3 font-mono text-lg tabular-nums text-ink outline-none placeholder:text-ink-faint disabled:opacity-50"
+          className="w-full min-w-0 bg-transparent py-3.5 pl-2 pr-3 font-mono text-xl tabular-nums text-ink outline-none placeholder:text-ink-faint disabled:opacity-50"
         />
         <button
           type="submit"
@@ -96,7 +96,7 @@ export default function GuessInput({
           // Submitting is the most repeated action in the game, so it gets
           // press feedback and nothing else: no hover lift, no glow. The
           // scale is on transform only, which never touches layout.
-          className="shrink-0 border-l border-rule bg-ink px-5 font-mono text-xs font-semibold uppercase tracking-[0.16em] text-paper-raised transition-transform duration-press ease-out active:scale-[0.97] disabled:opacity-40"
+          className="shrink-0 border-l border-rule bg-ink px-5 font-mono text-sm font-semibold uppercase tracking-[0.16em] text-paper-raised transition-transform duration-press ease-out active:scale-[0.97] disabled:opacity-40"
         >
           Guess
         </button>
@@ -105,7 +105,7 @@ export default function GuessInput({
       {/* One compact status line: the error replaces the hint when present, so
           the input block never changes height and the board doesn't jump. */}
       <p
-        className={`text-center font-mono text-[10px] uppercase tracking-[0.14em] ${
+        className={`text-center font-mono text-[11px] uppercase tracking-[0.14em] ${
           error ? "text-accent" : "text-ink-meta"
         }`}
         role={error ? "alert" : undefined}

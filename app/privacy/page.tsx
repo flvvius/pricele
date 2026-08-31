@@ -33,7 +33,7 @@ function Clause({
   return (
     <section className="flex flex-col gap-2 lg:grid lg:grid-cols-[13rem_minmax(0,1fr)] lg:gap-x-12">
       {heading ? (
-        <h2 className="display text-[1.5rem] text-ink">{heading}</h2>
+        <h2 className="display text-[1.75rem] text-ink">{heading}</h2>
       ) : (
         <div aria-hidden className="hidden lg:block" />
       )}
@@ -52,13 +52,13 @@ export default function PrivacyPage() {
     <main className="mx-auto flex min-h-dvh max-w-2xl flex-col gap-6 px-4 py-6 lg:max-w-5xl">
       <SiteHeader />
       <header className="flex flex-col gap-2 lg:grid lg:grid-cols-[13rem_minmax(0,1fr)] lg:gap-x-12">
-        <h1 className="display text-[2.5rem] text-ink lg:col-span-2">
+        <h1 className="display text-[2.75rem] text-ink lg:col-span-2">
           Privacy Policy
         </h1>
         <p className="label lg:col-start-2">Last updated: {LAST_UPDATED}</p>
       </header>
 
-      <div className="flex flex-col gap-6 text-sm leading-relaxed text-neutral-400">
+      <div className="flex flex-col gap-6 text-base leading-relaxed text-neutral-400">
         <Clause>
           <p>
             This Privacy Policy explains how {SITE_NAME} (&ldquo;we&rdquo;,
@@ -95,7 +95,7 @@ export default function PrivacyPage() {
             To make the game work, your progress (your guesses for the day, your
             win/loss result, your streak, and a couple of interface preferences)
             is saved locally in your own browser using{" "}
-            <code className="font-mono text-[13px] text-ink">localStorage</code>. This data
+            <code className="font-mono text-[14px] text-ink">localStorage</code>. This data
             stays on your device, is not transmitted to us, and you can clear it
             at any time through your browser settings.
           </p>

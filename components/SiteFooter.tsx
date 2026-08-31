@@ -46,7 +46,7 @@ const GROUPS: { title: string; links: { href: string; label: string }[] }[] = [
 
 export default function SiteFooter() {
   return (
-    <footer className="mt-auto flex flex-col gap-7 pt-10 text-[12px] leading-relaxed text-ink-meta">
+    <footer className="mt-auto flex flex-col gap-7 pt-10 text-[13px] leading-relaxed text-ink-meta">
       {/* The colophon rule: heavy over hair, the masthead's double rule turned
           upside down to close the page the way it opened. */}
       <div>

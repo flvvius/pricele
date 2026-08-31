@@ -39,13 +39,13 @@ export default function ComparisonTable({
   return (
     <div className="flex flex-col gap-3">
       <div className="-mx-4 overflow-x-auto px-4">
-        <table className="w-full min-w-[38rem] border-collapse text-sm">
+        <table className="w-full min-w-[38rem] border-collapse text-base">
           <caption className="sr-only">
             {SITE_NAME} compared with {comparison.opponent}, dimension by
             dimension.
           </caption>
           <thead>
-            <tr className="border-b-2 border-ink text-left font-mono text-[10px] uppercase tracking-[0.14em] text-ink-meta">
+            <tr className="border-b-2 border-ink text-left font-mono text-[11px] uppercase tracking-[0.14em] text-ink-meta">
               <th scope="col" className="w-[9rem] py-2 pr-3 font-semibold">
                 Dimension
               </th>
@@ -76,19 +76,19 @@ export default function ComparisonTable({
                   <th
                     scope="row"
                     rowSpan={fact.note ? 2 : 1}
-                    className="py-3 pr-3 text-left text-[13px] font-semibold text-ink-strong"
+                    className="py-3 pr-3 text-left text-[14px] font-semibold text-ink-strong"
                   >
                     {fact.dimension}
                   </th>
-                  <td className="py-3 pr-3 text-[13px] leading-relaxed text-ink-body">
+                  <td className="py-3 pr-3 text-[14px] leading-relaxed text-ink-body">
                     {fact.ours}
                   </td>
-                  <td className="py-3 pr-3 text-[13px] leading-relaxed text-ink-body">
+                  <td className="py-3 pr-3 text-[14px] leading-relaxed text-ink-body">
                     {fact.theirs ?? (
                       <span className="text-ink-faint">Not stated</span>
                     )}
                   </td>
-                  <td className="py-3 font-mono text-[10px] uppercase tracking-[0.14em]">
+                  <td className="py-3 font-mono text-[11px] uppercase tracking-[0.14em]">
                     {fact.theirs === null ? (
                       <span className="text-ink-faint">&mdash;</span>
                     ) : (
@@ -108,7 +108,7 @@ export default function ComparisonTable({
                   <tr>
                     <td
                       colSpan={3}
-                      className="pb-3 pr-3 text-[12px] leading-relaxed text-ink-meta"
+                      className="pb-3 pr-3 text-[13px] leading-relaxed text-ink-meta"
                     >
                       {fact.note}
                     </td>
@@ -121,7 +121,7 @@ export default function ComparisonTable({
 
       {/* The tally is computed from the rows, so it cannot drift away from the
           table above it the way a written-in score would. */}
-      <p className="text-[12px] leading-relaxed text-ink-meta">
+      <p className="text-[13px] leading-relaxed text-ink-meta">
         Of {counts.ours + counts.theirs + counts.even} verified dimensions,{" "}
         {counts.ours} favour {SITE_NAME}, {counts.theirs} favour{" "}
         {comparison.opponent}, and {counts.even} are level. Checked against the

@@ -13,7 +13,7 @@ export default function Countdown() {
   }, []);
 
   return (
-    <span className="font-mono text-base tabular-nums text-ink">
+    <span className="font-mono text-lg tabular-nums text-ink">
       {formatCountdown(ms)}
     </span>
   );

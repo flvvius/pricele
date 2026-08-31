@@ -33,7 +33,7 @@ export default function TermsPage() {
             to be read rather than skipped, so they are shorter than the genre
             usually allows.
           </p>
-          <p className="text-xs font-medium uppercase tracking-wide text-ink-meta">
+          <p className="text-sm font-medium uppercase tracking-wide text-ink-meta">
             Last updated: {LAST_UPDATED}
           </p>
         </>

@@ -66,7 +66,7 @@ export default function MethodologyPage() {
               key={item.id}
               className="rounded-lg border border-neutral-800 bg-neutral-900/50 p-4"
             >
-              <h3 className="text-sm font-bold text-neutral-100">
+              <h3 className="text-base font-bold text-neutral-100">
                 <Link
                   href={`/items/${item.slug}`}
                   className="underline-offset-2 hover:underline"
@@ -74,11 +74,11 @@ export default function MethodologyPage() {
                   {item.name}
                 </Link>
               </h3>
-              <p className="mt-1 text-xs text-neutral-500">
+              <p className="mt-1 text-sm text-neutral-500">
                 {pricesForItem(item.id).length} countries · quoted per{" "}
                 {item.unit}
               </p>
-              <p className="mt-2 text-sm leading-relaxed text-neutral-400">
+              <p className="mt-2 text-base leading-relaxed text-neutral-400">
                 {item.sourceNote}
               </p>
             </div>
@@ -343,19 +343,19 @@ export default function MethodologyPage() {
         </Prose>
         <div className="mt-4 flex flex-col gap-3">
           <div>
-            <h3 className="text-sm font-bold text-neutral-100">
+            <h3 className="text-base font-bold text-neutral-100">
               ILO average hourly earnings ({SOURCED.length} countries)
             </h3>
-            <p className="mt-1 text-sm leading-relaxed text-neutral-400">
+            <p className="mt-1 text-base leading-relaxed text-neutral-400">
               {SOURCED.map(([, c]) => c.name).join(", ")}. The survey year is
               part of the figure and differs by country.
             </p>
           </div>
           <div>
-            <h3 className="text-sm font-bold text-neutral-100">
+            <h3 className="text-base font-bold text-neutral-100">
               Our own estimate ({ESTIMATED.length} countries)
             </h3>
-            <p className="mt-1 text-sm leading-relaxed text-neutral-400">
+            <p className="mt-1 text-base leading-relaxed text-neutral-400">
               {ESTIMATED.map(([, c]) => c.name).join(", ")}.
             </p>
           </div>

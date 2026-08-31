@@ -13,8 +13,8 @@ interface Props {
 function Stat({ value, label }: { value: string | number; label: string }) {
   return (
     <div className="flex flex-col items-center gap-1.5 px-1">
-      <span className="display text-3xl tabular-nums text-ink">{value}</span>
-      <span className="text-center font-mono text-[9px] uppercase leading-tight tracking-[0.12em] text-ink-meta">
+      <span className="display text-4xl tabular-nums text-ink">{value}</span>
+      <span className="text-center font-mono text-[10px] uppercase leading-tight tracking-[0.12em] text-ink-meta">
         {label}
       </span>
     </div>
@@ -47,7 +47,7 @@ export default function StatsPanel({
         <div>
           <h3 className="label rule-label mb-3">Guess distribution</h3>
           {stats.wins === 0 ? (
-            <p className="text-[13px] text-ink-meta">
+            <p className="text-[14px] text-ink-meta">
               Win a round to start your distribution.
             </p>
           ) : (
@@ -57,7 +57,7 @@ export default function StatsPanel({
                 const pct = count === 0 ? 0 : (count / maxCount) * 100;
                 return (
                   <div key={i} className="flex items-center gap-2.5">
-                    <span className="w-3 font-mono text-[11px] tabular-nums text-ink-meta">
+                    <span className="w-3 font-mono text-[12px] tabular-nums text-ink-meta">
                       {i + 1}
                     </span>
                     {/* The track is always full width so the bars share a
@@ -74,7 +74,7 @@ export default function StatsPanel({
                       />
                     </div>
                     <span
-                      className="w-5 text-right font-mono text-[11px] tabular-nums"
+                      className="w-5 text-right font-mono text-[12px] tabular-nums"
                       style={{
                         color: isHighlight
                           ? "rgb(var(--win))"

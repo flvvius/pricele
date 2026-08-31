@@ -45,12 +45,12 @@ export default function ShareCard(props: ShareInput) {
     <div className="flex flex-col">
       {/* The emoji grid stays. It is the artefact that actually gets pasted
           into a group chat, and it has to survive as plain text. */}
-      <pre className="whitespace-pre-wrap border border-rule bg-paper-raised p-4 text-center font-mono text-[13px] leading-relaxed text-ink-body">
+      <pre className="whitespace-pre-wrap border border-rule bg-paper-raised p-4 text-center font-mono text-[14px] leading-relaxed text-ink-body">
         {text}
       </pre>
       <button
         onClick={onShare}
-        className="flex items-center justify-center gap-2.5 bg-ink px-5 py-3.5 font-mono text-[11px] uppercase tracking-[0.18em] text-paper-raised transition-transform duration-press ease-out active:scale-[0.98]"
+        className="flex items-center justify-center gap-2.5 bg-ink px-5 py-3.5 font-mono text-[12px] uppercase tracking-[0.18em] text-paper-raised transition-transform duration-press ease-out active:scale-[0.98]"
       >
         {copied ? <IconCheck size={14} /> : <IconShare size={14} />}
         {copied ? "Copied" : nativeShare ? "Share result" : "Copy result"}

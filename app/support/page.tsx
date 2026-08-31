@@ -88,7 +88,7 @@ export default function SupportPage() {
                 >
                   {l.label}
                 </a>
-                <p className="mt-1 text-sm leading-relaxed text-ink-muted">
+                <p className="mt-1 text-base leading-relaxed text-ink-muted">
                   {l.note}
                 </p>
               </li>
