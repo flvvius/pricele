@@ -160,7 +160,8 @@ drafts carry `noindex` and are excluded from it.
 | `/not-found`           | 404. Deliberately `noindex` and deliberately without a canonical   |
 
 Generated at build time rather than written: `/sitemap.xml`, `/robots.txt`,
-`/llms.txt`, `/ads.txt`, `/manifest.webmanifest`, `/icon.svg`, and `/og.jpg`
+`/llms.txt`, `/feed.xml`, `/ads.txt`, `/manifest.webmanifest`, `/icon.svg`, and
+`/og.jpg`
 (from `scripts/generate-og.mjs`, committed rather than rendered per request).
 
 `components/ContentPage.tsx` is the shell for everything that is not the game
@@ -197,7 +198,8 @@ Everything is statically rendered for search engines and AI answer engines:
   page ships copy and an FAQ below the (client-side) game, so crawlers get real
   text, not an empty shell.
 - **Technical SEO**: dynamic `sitemap.xml` (which excludes anything noindexed),
-  `robots.txt`, PWA `manifest`, canonical URLs, Open Graph / Twitter cards.
+  `robots.txt`, an RSS `feed.xml` of the guides, PWA `manifest`, canonical URLs,
+  Open Graph / Twitter cards.
 - **One canonical origin** (`CANONICAL_HOST` in `lib/seo.ts`): `www.pricele.online`,
   because that is the primary domain on Vercel and the apex 308s to it. Every
   canonical tag, `og:url`, sitemap `<loc>` and JSON-LD `url` derives from it, so

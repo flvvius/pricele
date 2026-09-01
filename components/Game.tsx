@@ -157,7 +157,31 @@ export default function Game() {
             <ThemeToggle />
           </div>
 
-          <h1 className="display text-masthead text-ink">Pricele</h1>
+          {/* The masthead is the h1, and for a long time the h1 was the single
+              word "Pricele". That is the strongest on-page signal a document
+              has, and spending all of it on the brand name is why this site
+              ranked first for "pricele" and nowhere at all for "guess the price
+              game": the home page never once said, in a heading, what it is.
+              Every other page on the site has a descriptive h1 through
+              ContentPage; only the page that most needs one went without.
+
+              The masthead stays a masthead — this screen is sized to fit
+              exactly one viewport and a visible subtitle would push the input
+              off a short phone. So the heading continues past the brand word in
+              text that is available to screen readers and to anything parsing
+              the document, and is not painted. The continuation is the same
+              claim the prose below the fold and the meta description already
+              make, worded the way a person searching for this kind of game
+              would put it. It is description, not a keyword list; keep it that
+              way if it is ever edited. */}
+          <h1 className="display text-masthead text-ink">
+            Pricele
+            <span className="sr-only">
+              {" "}
+              — guess the price of everyday things around the world. A free
+              daily price guessing game.
+            </span>
+          </h1>
 
           <div className="flex items-center">
             <IconButton label="Archive" onClick={() => setShowArchive(true)}>

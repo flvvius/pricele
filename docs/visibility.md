@@ -128,6 +128,47 @@ part that *can* be done from this repository. Expect the effect to show up over
 four to twelve weeks if at all, fastest on Perplexity, which retrieves at query
 time, and slowest on ChatGPT, which does not.
 
+### The September 2026 pass: the heading nobody had read
+
+The August pass called the on-site work finished. It was not, and what it
+missed was the largest single on-page signal there is.
+
+**The home page `h1` was the word "Pricele".** Nothing else. Every other page
+on the site gets a descriptive `h1` through `components/ContentPage.tsx`; the
+one page that has to rank for the genre — the page that *is* the game — spent
+its entire heading budget on the brand name. That is a precise, mechanical
+explanation for the symptom this whole document was written about: the site
+ranks first for "pricele" and nowhere for "guess the price game", because the
+home page had never once said the second thing in a heading.
+
+The masthead is still a masthead. This screen is sized to fit exactly one
+viewport and a visible subtitle would push the guess input off a short phone, so
+the heading continues past the brand word in text that is read by screen readers
+and by anything parsing the document, and is not painted. It says what the
+prose below the fold and the meta description already say. If it is ever edited,
+keep it a description — the moment it becomes a list of keywords it is the kind
+of hidden text that is worth a penalty rather than a ranking.
+
+Closed in the same pass, all of them small and none of them a substitute for the
+section below:
+
+| Gap | Why it mattered | Now |
+| --- | --------------- | --- |
+| No `HowTo` anywhere. | "How do you play X" is asked of assistants far more than of a search box. The answer was on the site twice — the How to play dialog and an FAQ entry — and neither was typed as a procedure, so the steps had to be inferred from prose. | `howToPlayJsonLd()` in `lib/seo.ts`, on the home page. A test asserts it still states the five guesses and the 5% band, so it cannot drift from `lib/scoring.ts`. |
+| `Organization.logo` was a bare SVG URL. | Logo guidance is written around rasters, and a bare string leaves the format and the dimensions to be discovered by fetching the file. | An `ImageObject` pointing at the 180×180 PNG that already existed for the touch icon, dimensions stated. |
+| The publisher had no `sameAs`, no `alternateName`, no stated location. | The `Person` node was doing all the entity-resolution work alone. An organisation with no external reference is hard to resolve to a real operator. | All three, built from `lib/author.ts`. Only links that actually resolve go in `sameAs` — an unverifiable one is worse than none, and a test enforces it. |
+| The game was typed `VideoGame` only. | `SoftwareApplication` is the type a consumer reaches for on "is there a free browser app that does X", which is the shape of the recommendation queries this site wants to be an answer to. | Multi-typed `["VideoGame", "SoftwareApplication"]`, which is valid schema.org and true of the same object. Still no `aggregateRating`, because there is no rating to report and inventing one is exactly the unearned signal the rest of `lib/seo.ts` refuses to emit. |
+| No feed. | A feed is the one machine-readable way a site says it publishes on an ongoing basis rather than having been written once and abandoned. Several of the directories in the table below ask for a feed URL on the submission form. | `/feed.xml`, RSS 2.0, published guides only, regenerated hourly like the sitemap. Linked from every page — it has to be re-declared in `pageMetadata()` because Next.js replaces `alternates` rather than merging it, which would otherwise have stripped it from every page on the site. |
+| `robots.ts` named the assistants but not all of their fetchers. | `Applebot` (Siri and Spotlight), `meta-externalfetcher` and `Google-CloudVertexBot` are retrieval agents that were missing, and the link-preview bots were unnamed entirely. | Both lists extended, preview fetchers named separately with a comment saying why they are not crawlers. |
+
+A thing considered and **not** done: per-item-per-country pages, one for each of
+the 641 sourced rows. It looks like 641 long-tail pages answering "how much does
+a Big Mac cost in Norway" and it is really 641 pages that each restate one cell
+of a table. The country pages already carry a generated FAQ asking exactly that
+question in exactly those words, so the combination pages would compete with the
+pages that already answer the query, and thin programmatic pages are a known way
+to lose the pages you already have. Not worth it.
+
 ## The off-site work, in priority order
 
 ### 1. Genre directories

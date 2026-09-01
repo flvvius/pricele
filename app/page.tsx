@@ -5,7 +5,7 @@ import FaqSection from "@/components/FaqSection";
 import SiteFooter from "@/components/SiteFooter";
 import JsonLd from "@/components/JsonLd";
 import { HOME_FAQ } from "@/lib/faq";
-import { faqJsonLd, pageMetadata } from "@/lib/seo";
+import { faqJsonLd, howToPlayJsonLd, pageMetadata } from "@/lib/seo";
 import { ITEMS } from "@/data/items";
 import { COUNTRIES, pricesForItem, medianPriceUSD } from "@/lib/catalog";
 import { formatUSD } from "@/lib/format";
@@ -131,7 +131,10 @@ export default function Home() {
 
       <SiteFooter />
 
-      <JsonLd data={faqJsonLd(HOME_FAQ)} />
+      {/* The rules as a procedure, alongside the FAQ. "How do you play
+          Pricele" was answerable from this page in prose and in an FAQ answer,
+          but never as typed steps; HowTo is what makes it extractable as one. */}
+      <JsonLd data={[faqJsonLd(HOME_FAQ), howToPlayJsonLd()]} />
     </main>
   );
 }
