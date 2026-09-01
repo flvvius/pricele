@@ -9,6 +9,9 @@ import {
   countryJsonLd,
   datasetJsonLd,
   webPageJsonLd,
+  howToPlayJsonLd,
+  organizationJsonLd,
+  gameJsonLd,
   DATA_LICENSE_URL,
 } from "./seo";
 
@@ -198,5 +201,77 @@ describe("webPageJsonLd", () => {
     // attribute and this selector points at nothing.
     const page = webPageJsonLd({ name: "n", description: "d", path: "/x" });
     expect(page.speakable.cssSelector).toContain("[data-answer]");
+  });
+});
+
+describe("howToPlayJsonLd", () => {
+  const howTo = howToPlayJsonLd() as {
+    "@type": string;
+    step: { "@type": string; position: number; name: string; text: string }[];
+  };
+
+  it("is a HowTo with ordered steps", () => {
+    expect(howTo["@type"]).toBe("HowTo");
+    expect(howTo.step.length).toBeGreaterThan(0);
+    expect(howTo.step.map((s) => s.position)).toEqual(
+      howTo.step.map((_, i) => i + 1)
+    );
+    for (const step of howTo.step) expect(step["@type"]).toBe("HowToStep");
+  });
+
+  it("states the two rules the game is actually scored on", () => {
+    // If the win band or the guess count ever changes in lib/scoring.ts, this
+    // fails — which is the point. A HowTo that disagrees with the game is worse
+    // than no HowTo, because it is confidently wrong in a machine-readable way.
+    const text = howTo.step.map((s) => s.text).join(" ");
+    expect(text).toContain("five guesses");
+    expect(text).toContain("5%");
+  });
+});
+
+describe("organizationJsonLd", () => {
+  const org = organizationJsonLd() as {
+    logo: { "@type": string; url: string; width: number; height: number };
+    sameAs: string[];
+  };
+
+  it("gives the logo as a raster with its dimensions stated", () => {
+    // A bare SVG URL leaves both the format and the size to be discovered by
+    // fetching the file. Every logo validator wants neither.
+    expect(org.logo["@type"]).toBe("ImageObject");
+    expect(org.logo.url).toMatch(/\.png$/);
+    expect(org.logo.width).toBeGreaterThan(112);
+    expect(org.logo.height).toBeGreaterThan(112);
+  });
+
+  it("only claims profiles that resolve", () => {
+    // Guards the rule in lib/author.ts: an unverifiable sameAs is worse than an
+    // absent one, so every entry must be a real absolute URL.
+    for (const url of org.sameAs) expect(() => new URL(url)).not.toThrow();
+  });
+});
+
+describe("gameJsonLd", () => {
+  it("is typed as software as well as a game", () => {
+    const game = gameJsonLd() as { "@type": string[] };
+    expect(game["@type"]).toContain("VideoGame");
+    expect(game["@type"]).toContain("SoftwareApplication");
+  });
+
+  it("claims no rating, because there is none to claim", () => {
+    expect(gameJsonLd()).not.toHaveProperty("aggregateRating");
+  });
+});
+
+describe("pageMetadata feed link", () => {
+  it("re-declares the feed on every page", () => {
+    // Next.js replaces `alternates` wholesale rather than merging it, so the
+    // layout's copy is stripped from any page that sets a canonical — which is
+    // every page. Without this the feed link would ship on none of them.
+    const meta = pageMetadata({ path: "/prices" });
+    expect(meta.alternates?.types).toEqual({
+      "application/rss+xml": absoluteUrl("/feed.xml"),
+    });
+    expect(meta.alternates?.canonical).toBe("/prices");
   });
 });

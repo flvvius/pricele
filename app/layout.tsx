@@ -83,12 +83,22 @@ export const metadata: Metadata = {
     icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
     apple: "/apple-touch-icon.png",
   },
-  // No canonical here on purpose. Metadata is inherited, so a canonical set on
-  // the layout is a canonical on every route that doesn't override it, and
+  // `alternates` carries the feed link and deliberately no canonical.
+  //
+  // No canonical here on purpose: metadata is inherited, so a canonical set on
+  // the layout is a canonical on every route that doesn't override it,
   // including 404s and any page whose generateMetadata bails out, all of which
   // would then declare themselves to be the home page. Each page sets its own
   // through pageMetadata(); a route that forgets now emits none, which is a far
   // better failure than a wrong one.
+  //
+  // The feed link is safe to inherit — it is the same URL on every page — and
+  // this copy only ever reaches the routes that never run through
+  // pageMetadata(), since a page-level `alternates` replaces this object rather
+  // than merging into it. pageMetadata() re-declares the feed for that reason.
+  alternates: {
+    types: { "application/rss+xml": absoluteUrl("/feed.xml") },
+  },
   robots: {
     index: true,
     follow: true,

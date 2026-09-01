@@ -149,7 +149,15 @@ export function pageMetadata({
   return {
     ...(title ? { title } : {}),
     ...(description ? { description } : {}),
-    alternates: { canonical: path },
+    // The feed link rides along with the canonical rather than being declared
+    // on the layout. Next.js replaces `alternates` wholesale when a page sets
+    // one, and every page here sets a canonical through this function — so a
+    // feed link declared on the layout would be stripped from all of them. The
+    // same trap `openGraph` sets, noted above.
+    alternates: {
+      canonical: path,
+      types: { "application/rss+xml": absoluteUrl("/feed.xml") },
+    },
     ...(index ? {} : { robots: { index: false, follow: true } }),
     openGraph: {
       type,
@@ -226,7 +234,44 @@ export function organizationJsonLd() {
     "@id": ORG_ID,
     name: SITE_NAME,
     url: SITE_URL,
-    logo: absoluteUrl("/icon.svg"),
+    // A raster ImageObject with its dimensions stated, not the bare SVG URL
+    // this used to be. Two reasons. Google's logo guidance is written around
+    // rasters and every validator wants width and height it does not have to
+    // fetch the file to learn, and a bare string leaves both to be discovered.
+    // The PNG already exists for the touch icon (scripts/generate-icons.mjs),
+    // so this costs nothing. `image` repeats it because some consumers read one
+    // property and not the other.
+    logo: {
+      "@type": "ImageObject",
+      url: absoluteUrl("/apple-touch-icon.png"),
+      width: 180,
+      height: 180,
+      caption: `${SITE_NAME} logo`,
+    },
+    image: absoluteUrl("/og.jpg"),
+    // What this publication is referred to as, and nothing more. It is
+    // tempting to pack misspellings in here — Pricle, Price-le, Pricelle — and
+    // that is keyword stuffing wearing a schema property's clothes. The
+    // spelling note lives in /llms.txt as prose, where it belongs.
+    alternateName: `${SITE_NAME} — the daily price guessing game`,
+    slogan: SITE_TAGLINE,
+    // Entity resolution: the profiles that independently confirm this
+    // publisher is a real, findable operator rather than a name on a page.
+    // Only links that actually resolve to this operator go here — an
+    // unverifiable sameAs is worse than an absent one, for the same reason
+    // lib/author.ts refuses to invent a credential. Add profiles here as they
+    // come to exist; do not add the sibling site, which is a separate
+    // publication with a separate audience.
+    sameAs: AUTHOR.links.map((l) => l.url),
+    foundingLocation: {
+      "@type": "Place",
+      name: PUBLISHER.location,
+    },
+    knowsAbout: [
+      "Consumer prices",
+      "Cost of living comparisons",
+      "Purchasing power parity",
+    ],
     email: `mailto:${SITE_EMAIL}`,
     foundingDate: String(PUBLISHER.foundedYear),
     founder: { "@id": PERSON_ID },
@@ -305,7 +350,12 @@ export function articleJsonLd({
 export function gameJsonLd() {
   return {
     "@context": "https://schema.org",
-    "@type": "VideoGame",
+    // Two types, not one. `VideoGame` says what it is; `SoftwareApplication`
+    // is the type consumers reach for when the question is "is there a free
+    // browser app that does X", which is the shape of the recommendation
+    // queries this site is trying to be an answer to. Multi-typing is valid
+    // schema.org and both sets of properties below are true of the same thing.
+    "@type": ["VideoGame", "SoftwareApplication"],
     name: SITE_NAME,
     alternateName: "Pricele: guess the price",
     url: SITE_URL,
@@ -318,6 +368,10 @@ export function gameJsonLd() {
     operatingSystem: "Any (web browser)",
     playMode: "SinglePlayer",
     isAccessibleForFree: true,
+    browserRequirements: "Requires JavaScript. Runs in any modern browser.",
+    // No `aggregateRating`. There is no rating to report, and inventing one is
+    // both a structured-data violation and the exact kind of unearned signal
+    // the rest of this file refuses to emit.
     keywords:
       "price guessing game, daily game, wordle-like, cost of living game, guess the price",
     publisher: orgRef,
@@ -331,12 +385,77 @@ export function gameJsonLd() {
   };
 }
 
+/**
+ * `HowTo` for the rules of the game.
+ *
+ * "How do you play <game>" is one of the highest-volume questions asked of a
+ * game, and it is asked of assistants far more than of a search box. The answer
+ * already existed on this site twice — as the visible How to play dialog and as
+ * an FAQ entry — and neither was typed as a procedure, so the steps had to be
+ * inferred from prose.
+ *
+ * The steps here are the actual rules, and they must stay that way: five
+ * guesses, a 5% win band, direction plus temperature after each guess. If the
+ * game's rules change, this changes with them — `lib/scoring.ts` is the source
+ * of truth, and a HowTo that disagrees with the game is worse than none.
+ */
+export function howToPlayJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: `How to play ${SITE_NAME}`,
+    description: `${SITE_NAME} gives you one everyday item and one country each day. Guess what the item costs there, in five tries.`,
+    totalTime: "PT2M",
+    isAccessibleForFree: true,
+    inLanguage: "en",
+    publisher: orgRef,
+    step: [
+      {
+        "@type": "HowToStep",
+        position: 1,
+        name: "Read today's pairing",
+        text: "Each day pairs one everyday item with one country — a Big Mac in Norway, a cappuccino in Japan. Both change at midnight in your own timezone.",
+        url: `${SITE_URL}/#step1`,
+      },
+      {
+        "@type": "HowToStep",
+        position: 2,
+        name: "Guess the price",
+        text: "Type what you think the item costs in that country. You can guess in US dollars or euros; the toggle sits inside the guess box and you can switch mid-round.",
+        url: `${SITE_URL}/#step2`,
+      },
+      {
+        "@type": "HowToStep",
+        position: 3,
+        name: "Read the two clues",
+        text: "After each guess you are told whether the real price is higher or lower, and how warm the guess was, from freezing to scorching. The temperature never states the exact gap.",
+        url: `${SITE_URL}/#step3`,
+      },
+      {
+        "@type": "HowToStep",
+        position: 4,
+        name: "Land within 5%",
+        text: "You have five guesses. You win by landing within 5% of the real price. Because the win band is a percentage, the currency you play in does not change how close a guess has to be.",
+        url: `${SITE_URL}/#step4`,
+      },
+      {
+        "@type": "HowToStep",
+        position: 5,
+        name: "See the source",
+        text: "The reveal names the published source for the figure and shows where that country sits against the rest. Your streak is saved in your browser; no account is needed.",
+        url: `${SITE_URL}/#step5`,
+      },
+    ],
+  };
+}
+
 /** WebSite schema, ties the domain to the brand entity. */
 export function websiteJsonLd() {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: SITE_NAME,
+    alternateName: `${SITE_NAME} — the daily price guessing game`,
     url: SITE_URL,
     description: SITE_DESCRIPTION,
     inLanguage: "en",

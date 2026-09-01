@@ -43,6 +43,49 @@ const AI_AGENTS = [
   "Amazonbot",
   "DuckAssistBot",
   "MistralAI-User",
+  // Added in the second pass. The first list was built around the assistants
+  // people name; these are the ones that actually fetch on their behalf and
+  // were missing.
+  "Applebot", // the search crawler behind Siri and Spotlight, distinct from
+  // Applebot-Extended above, which only governs training use
+  "meta-externalfetcher", // Meta AI following a link, as distinct from the
+  // meta-externalagent crawler already listed
+  "Google-CloudVertexBot", // Vertex AI grounding fetches
+  "YouBot",
+  "Diffbot",
+  "Ai2Bot-Dolma",
+  "Kangaroo Bot",
+  "SemrushBot-OCOB",
+  "Webzio-Extended",
+  "TikTokSpider",
+  "Timpibot",
+  "omgili", // Webz.io, which several answer engines license
+];
+
+/**
+ * Link-preview fetchers.
+ *
+ * These are not crawlers and they do not index anything. They fetch a URL once,
+ * when a person pastes it into a chat, to build the card that appears in the
+ * message. The wildcard already allows them, and they are named here for the
+ * same reason the list above is: a share that renders as a bare grey link is
+ * one nobody clicks, and when that happens the first question is whether
+ * something in robots.txt refused the fetch. This list answers it.
+ *
+ * Sharing is the distribution channel this site actually has — the result grid
+ * is built to be pasted — so these are worth being explicit about.
+ */
+const PREVIEW_AGENTS = [
+  "Twitterbot",
+  "facebookexternalhit",
+  "LinkedInBot",
+  "Slackbot-LinkExpanding",
+  "Discordbot",
+  "TelegramBot",
+  "WhatsApp",
+  "redditbot",
+  "Pinterestbot",
+  "Applebot-Preview",
 ];
 
 export default function robots(): MetadataRoute.Robots {
@@ -50,6 +93,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       { userAgent: "*", allow: "/" },
       ...AI_AGENTS.map((userAgent) => ({ userAgent, allow: "/" })),
+      ...PREVIEW_AGENTS.map((userAgent) => ({ userAgent, allow: "/" })),
     ],
     sitemap: absoluteUrl("/sitemap.xml"),
     host: SITE_URL,
