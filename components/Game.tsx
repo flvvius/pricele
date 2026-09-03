@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getDailyPuzzle, isoDate, dateFromISO } from "@/lib/puzzle";
-import { evaluate } from "@/lib/scoring";
+import { evaluate, roundScore } from "@/lib/scoring";
 import {
   loadDayState,
   saveDayState,
@@ -10,11 +10,26 @@ import {
   recordCompletion,
   streakAtRisk,
   EMPTY_STATS,
+  GRACE_NAME,
   type DayState,
   type Stats,
 } from "@/lib/storage";
+import { recordPlay } from "@/lib/history";
+import { submitRound, fetchCrowd } from "@/lib/crowd";
+import type { CrowdStats } from "@/lib/db";
+import { loadHome, submittableHome } from "@/lib/home";
+import { loadRoomCode, loadRoomName } from "@/lib/room";
+import { hintFor } from "@/lib/hints";
+import { beatTheBot } from "@/lib/bot";
+import { personaFor } from "@/lib/verdict";
+import { itemCategory } from "@/data/items";
 import { MAX_GUESSES } from "@/lib/share";
-import { anchorPriceUSD, formatPrice, headlineSize } from "@/lib/format";
+import {
+  anchorPriceUSD,
+  bestPctOff,
+  formatPrice,
+  headlineSize,
+} from "@/lib/format";
 import { loadCurrency, saveCurrency, type Currency } from "@/lib/currency";
 import { initPwa } from "@/lib/pwa";
 import { useKeyboardViewport } from "./useKeyboardViewport";
@@ -67,9 +82,17 @@ export default function Game() {
   // sniff both need `window`, so they can only be read after mount, starting on
   // USD keeps the first paint identical to the server's.
   const [currency, setCurrency] = useState<Currency>("USD");
+  const [crowd, setCrowd] = useState<CrowdStats | null>(null);
+  const [roomCode, setRoomCode] = useState("");
   const [showHowTo, setShowHowTo] = useState(false);
   const [showStats, setShowStats] = useState(false);
   const [showArchive, setShowArchive] = useState(false);
+
+  // True only for a round that ended in this session, which is the only time the
+  // reveal is staged. See the comment on Reveal's `staged` prop.
+  const [justFinished, setJustFinished] = useState(false);
+  // One submission per day per mount, whatever React decides to do with effects.
+  const submitted = useRef("");
 
   useKeyboardViewport();
 
@@ -80,6 +103,7 @@ export default function Game() {
     setState(loadDayState(day));
     setStats(loadStats());
     setCurrency(loadCurrency());
+    setRoomCode(loadRoomCode());
     setMounted(true);
     initPwa();
 
@@ -93,9 +117,49 @@ export default function Game() {
   const isArchive = mounted && activeDate !== today;
   const puzzle = mounted ? getDailyPuzzle(dateFromISO(activeDate)) : null;
 
+  // The round score, recomputed rather than stored on the day state: it is a
+  // pure function of the guesses and the price, and a stored copy would go stale
+  // the moment the curve in lib/scoring is retuned.
+  const score = puzzle ? roundScore(state.guesses, puzzle.price.priceUSD) : 0;
+
+  // A finished day that was already finished when the page loaded still wants
+  // its crowd numbers, so this covers both the fresh completion and the reload.
+  useEffect(() => {
+    if (!mounted || isArchive || !puzzle || !state.done) return;
+    const key = `${activeDate}:${puzzle.item.id}:${puzzle.price.countryCode}`;
+    if (submitted.current === key) return;
+    submitted.current = key;
+
+    const first = state.guesses[0];
+    if (!first) return;
+    const best = bestPctOff(state.guesses, puzzle.price.priceUSD);
+
+    // A round finished in this session contributes; a reload only reads.
+    // Without that split, refreshing the page would be a way to inflate the day.
+    const request = justFinished
+      ? submitRound({
+          date: activeDate,
+          itemId: puzzle.item.id,
+          country: puzzle.price.countryCode,
+          playerCountry: submittableHome(loadHome()),
+          won: state.won,
+          firstGuessUSD: first.value,
+          bestPctOff: best,
+          roomCode: loadRoomCode(),
+          roomName: loadRoomName(),
+          numGuesses: state.guesses.length,
+          score: roundScore(state.guesses, puzzle.price.priceUSD),
+        })
+      : fetchCrowd(activeDate, puzzle.item.id, puzzle.price.countryCode, best);
+
+    request.then(setCrowd);
+  }, [mounted, isArchive, puzzle, state, activeDate, justFinished]);
+
   function selectDate(date: string) {
     setActiveDate(date);
     setState(loadDayState(date));
+    setJustFinished(false);
+    setCrowd(null);
   }
 
   function changeCurrency(next: Currency) {
@@ -125,15 +189,56 @@ export default function Game() {
     saveDayState(next);
     vibrate(won ? [30, 40, 90] : 20);
 
-    // Archive replays are practice: they save your result but never touch the streak.
-    if (done && !isArchive) {
-      setStats(recordCompletion(today, won, guesses.length));
-    }
+    if (!done) return;
+    setJustFinished(true);
+
+    // Archive replays are practice: they save your result but never touch the
+    // streak, the lifetime record or the crowd counters.
+    if (isArchive) return;
+
+    const actual = puzzle.price.priceUSD;
+    const roundPoints = roundScore(guesses, actual);
+    const best = guesses.reduce((a, g) =>
+      Math.abs(Math.log(g.value / actual)) < Math.abs(Math.log(a.value / actual))
+        ? g
+        : a
+    );
+
+    setStats(
+      recordCompletion(today, {
+        date: today,
+        won,
+        numGuesses: guesses.length,
+        openingLogError: Math.log(guesses[0].value / actual),
+        category: itemCategory(puzzle.item.id),
+        score: roundPoints,
+        beatBot: beatTheBot(best.value, puzzle.price)?.playerWon,
+      })
+    );
+
+    recordPlay({
+      date: today,
+      itemId: puzzle.item.id,
+      itemName: puzzle.item.shortName,
+      countryCode: puzzle.price.countryCode,
+      countryName: puzzle.price.countryName,
+      flag: puzzle.price.flag,
+      won,
+      numGuesses: guesses.length,
+      firstGuessUSD: guesses[0].value,
+      bestPctOff: bestPctOff(guesses, actual),
+      actualUSD: actual,
+      score: roundPoints,
+      persona: personaFor(guesses, actual, won).title,
+    });
   }
 
   const highlightGuess =
     state.won && !isArchive ? state.guesses.length : undefined;
   const atRisk = mounted && !isArchive && !state.done && streakAtRisk(stats, today);
+  const hint = puzzle
+    ? hintFor(puzzle.price, state.guesses.length, puzzle.puzzleNumber)
+    : null;
 
   return (
     // One self-contained screen: the masthead and lot bar are fixed height, the
@@ -286,6 +391,11 @@ export default function Game() {
               onShowStats={() => setShowStats(true)}
               currency={currency}
               isArchive={isArchive}
+              score={score}
+              crowd={crowd}
+              staged={justFinished}
+              today={today}
+              roomCode={roomCode}
             />
           </div>
         ) : (
@@ -293,12 +403,23 @@ export default function Game() {
             {atRisk && (
               <p className="animate-set-in shrink-0 border-l-2 border-streak bg-streak/[0.08] py-1.5 pl-2.5 font-mono text-[11px] uppercase tracking-[0.14em] text-streak">
                 {stats.currentStreak}-day streak on the line
+                {stats.graceDays > 0 &&
+                  ` · ${stats.graceDays} ${GRACE_NAME}${stats.graceDays > 1 ? "s" : ""} banked`}
               </p>
             )}
 
             <GuessHistory guesses={state.guesses} currency={currency} />
 
             <div className="shrink-0">
+              {/* The clue before the last bid. About the study and the policy
+                  behind the price, never the figure. See lib/hints.ts. */}
+              {hint && (
+                <p className="animate-set-in mb-2.5 border-l-2 border-accent bg-accent/[0.06] py-1.5 pl-2.5 pr-2 text-[12px] leading-relaxed text-ink-body">
+                  <span className="label !text-accent">Clue</span>{" "}
+                  <span className="ml-1">{hint}</span>
+                </p>
+              )}
+
               {state.guesses.length === 0 && (
                 <p className="mb-2.5 text-center text-[12px] leading-relaxed text-ink-meta">
                   For scale, the median{" "}
@@ -327,6 +448,7 @@ export default function Game() {
 
       <HowToPlay open={showHowTo} onClose={() => setShowHowTo(false)} />
       <StatsPanel
+        currency={currency}
         open={showStats}
         onClose={() => setShowStats(false)}
         stats={stats}

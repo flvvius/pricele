@@ -244,3 +244,67 @@ export function getItem(id: string): Item | undefined {
 export function getItemBySlug(slug: string): Item | undefined {
   return BY_SLUG.get(slug);
 }
+
+// ---------------------------------------------------------------------------
+// Categories
+// ---------------------------------------------------------------------------
+
+/**
+ * What kind of price this is, for the calibration profile.
+ *
+ * Kept as a lookup beside the catalogue rather than a field inside it,
+ * deliberately. Every object in ITEMS is load-bearing for the daily schedule and
+ * the archive, and a mechanical edit across all seventeen of them to add a field
+ * is a bigger risk than a map that cannot touch them.
+ *
+ * The split is by what actually moves the price, which is why beer sits with
+ * cigarettes rather than with milk. A litre of milk is priced by local farming
+ * and subsidy; a beer is priced by excise duty. A player who reads one well
+ * tends to read the other well, and that is the whole point of grouping them: it
+ * is what makes "you overestimate energy by 15%" a fact about the player rather
+ * than an accident of which items came up.
+ */
+export type ItemCategory = "food" | "energy" | "vice" | "connectivity";
+
+export const CATEGORY_LABEL: Record<ItemCategory, string> = {
+  food: "Food and drink",
+  energy: "Energy and fuel",
+  vice: "Taxed vices",
+  connectivity: "Connectivity",
+};
+
+const CATEGORY_BY_ID: Record<string, ItemCategory> = {
+  "big-mac": "food",
+  "coke-330ml": "food",
+  cappuccino: "food",
+  "milk-1l": "food",
+  "eggs-12": "food",
+  "apples-1kg": "food",
+  "healthy-diet-day": "food",
+
+  "gasoline-1l": "energy",
+  "diesel-1l": "energy",
+  "lpg-1l": "energy",
+  "electricity-100kwh": "energy",
+  "natural-gas-100kwh": "energy",
+
+  "cigarettes-20": "vice",
+  "beer-330ml": "vice",
+  "spirits-750ml": "vice",
+  "eliquid-1ml": "vice",
+
+  "mobile-data-1gb": "connectivity",
+};
+
+/** The category for an item id. Food is the fallback for an unmapped id. */
+export function itemCategory(id: string): ItemCategory {
+  return CATEGORY_BY_ID[id] ?? "food";
+}
+
+/** Every category that has at least one item, in a fixed display order. */
+export const CATEGORIES: ItemCategory[] = [
+  "food",
+  "energy",
+  "vice",
+  "connectivity",
+];

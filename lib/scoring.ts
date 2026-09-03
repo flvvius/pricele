@@ -83,3 +83,57 @@ export function tierFromCloseness(closeness: number): WarmthTier {
 }
 
 export const WARMTH_LEVELS = 5;
+
+// ---------------------------------------------------------------------------
+// Points
+// ---------------------------------------------------------------------------
+
+/** A perfect round. Round numbers because this is a score, not a measurement. */
+export const MAX_POINTS = 1000;
+
+/**
+ * How fast points fall away. At k = 0.18 a guess 5% out still scores about 760,
+ * 20% out scores 330, and 50% out scores 63.
+ *
+ * The shape matters more than the constant. GeoGuessr scores distance as
+ * 5000·e^(−d/k) precisely so that the curve is steep where players are good and
+ * flat where they are guessing: closing from 40% to 30% is worth almost nothing,
+ * closing from 10% to 5% is worth a lot. That is what stops a leaderboard being
+ * decided by who had the least absurd wild stab, and it is why a pass/fail at 5%
+ * cannot rank the regulars against each other at all.
+ */
+const DECAY = 0.18;
+
+/**
+ * Points for one guess, from how many times off it was.
+ *
+ * Scored on the log ratio for the same reason the bands are: being out by a
+ * factor of two has to mean the same thing on a $0.30 litre of petrol and an
+ * $8 Big Mac. Feeding a raw percentage in would make every cheap item
+ * effectively unscoreable.
+ */
+export function pointsFor(guess: number, actual: number): number {
+  if (!(guess > 0) || !(actual > 0)) return 0;
+  const absLogDiff = Math.abs(Math.log(guess / actual));
+  return Math.round(MAX_POINTS * Math.exp(-absLogDiff / DECAY));
+}
+
+/**
+ * The score for a finished round: the player's best guess, less a fixed toll for
+ * every guess after the first.
+ *
+ * The toll is what makes solving in two worth more than solving in five, which
+ * the raw curve does not capture: without it a player who brute-forces their way
+ * in on the last guess scores the same as one who called it immediately. It is
+ * subtracted rather than scaled so it cannot push a good round below a bad one.
+ */
+export const GUESS_TOLL = 40;
+
+export function roundScore(
+  guesses: { value: number }[],
+  actual: number
+): number {
+  if (guesses.length === 0) return 0;
+  const best = Math.max(...guesses.map((g) => pointsFor(g.value, actual)));
+  return Math.max(0, best - GUESS_TOLL * (guesses.length - 1));
+}

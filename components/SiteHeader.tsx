@@ -9,6 +9,12 @@ const LINKS = [
   { href: "/prices", label: "Prices" },
   { href: "/items", label: "Items" },
   { href: "/archive", label: "Archive" },
+  // The two unlimited modes and the classroom. High in the run because they
+  // are the only links here a reader might follow to keep playing or to bring
+  // thirty other people, rather than to read.
+  { href: "/higher-or-lower", label: "Higher or lower" },
+  { href: "/where-in-the-world", label: "Where in the world" },
+  { href: "/classroom", label: "Classroom" },
   { href: "/blog", label: "Guides" },
   { href: "/methodology", label: "Methodology" },
   // Last in the run on purpose. The strip already overflows on a phone (see the

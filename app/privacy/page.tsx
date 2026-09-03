@@ -71,8 +71,10 @@ export default function PrivacyPage() {
         <Clause heading="Information we collect">
           <p>
             {SITE_NAME} does not require an account and we do not ask you for
-            personal information such as your name, email address, or payment
-            details. There is no sign-in, no profile, and no user database.
+            personal information such as your email address or payment
+            details. There is no sign-in and no profile. Two features ask for
+            something and both are optional: the classroom asks for a display
+            name, and the reveal can ask which country you live in.
           </p>
           <p>
             We do use{" "}
@@ -96,8 +98,35 @@ export default function PrivacyPage() {
             win/loss result, your streak, and a couple of interface preferences)
             is saved locally in your own browser using{" "}
             <code className="font-mono text-[14px] text-ink">localStorage</code>. This data
-            stays on your device, is not transmitted to us, and you can clear it
-            at any time through your browser settings.
+            stays on your device and you can clear it at any time through your
+            browser settings.
+          </p>
+          <p>
+            When you finish a puzzle, five numbers are sent to us so the reveal
+            can tell you how the rest of the field did: the date, the item, the
+            country, your opening bid, and how close your best bid landed. They
+            are added to that day&apos;s running totals rather than stored as a
+            row about you. If you have told us which country you live in, that
+            two-letter code is added as well, which is what makes the
+            &ldquo;players in your country misjudge their own prices by X&rdquo;
+            figure possible. Telling us is optional, it is asked once, and
+            declining is a complete answer.
+          </p>
+          <p>
+            One further thing is sent: a random string your browser makes up
+            about itself the first time you play. Its only job is to stop the
+            same browser being counted twice in a day, and to know whether you
+            have bid in a classroom yet. It is not derived from anything about
+            you or your device, it is never attached to your bids in the daily
+            totals, and clearing your site data replaces it.
+          </p>
+          <p>
+            <strong className="font-semibold text-ink">Classrooms</strong> work
+            differently, and have to. A room board shows who bid what, so it
+            cannot be aggregate. Joining one stores the display name you typed
+            and that day&apos;s bids against a room code, visible to everyone
+            else in that room. Rooms are deleted on a timer. Do not put anything
+            in the name field you would not read out to the class.
           </p>
         </Clause>
 
@@ -188,15 +217,24 @@ export default function PrivacyPage() {
             <strong className="font-semibold text-ink">
               legitimate interest
             </strong>{" "}
-            in running a working website. The game data in your browser is not
-            processed by us at all, because it never leaves your device.
+            in running a working website. The end-of-round figures folded into
+            the daily totals rest on the same legitimate interest, and they are
+            aggregated on arrival rather than stored and summed later. Joining a
+            classroom rests on your acting to join one: you type a code and a
+            name, and nothing is posted to a board you have not entered. Your
+            saved progress, your streak and your history are processed by us not
+            at all, because those never leave your device.
           </p>
         </Clause>
 
         <Clause heading="Retention and transfers">
           <p>
-            We hold no database, so there is nothing on our side to retain.
-            Game progress stays in your browser until you clear it. Email you
+            What we hold is counters. There is no per-person record on our side
+            to export or correct, because there is no record of you as an
+            individual to find: no IP addresses, no user agents, no accounts, no
+            bid history. Classroom rooms are the one exception and they are
+            swept on a timer. Game progress stays in your browser until you
+            clear it. Email you
             send us is kept in the mailbox it arrived in for as long as it takes
             to answer, and correspondence about a correction is kept as a record
             of the change.
