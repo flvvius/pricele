@@ -184,6 +184,29 @@ export default function Reveal({
         </div>
       </figure>
 
+      {/* Sharing is available from the first frame, ahead of everything the
+          reveal is still holding back.
+
+          It used to sit near the bottom of the last card, which meant a player
+          who had just won had to tap Continue three times before the button they
+          came for appeared. That is the wrong way round: the receipt is the whole
+          point of the screen and the staged cards are the flourish around it, so
+          the flourish does not get to gate it. Until the last card it renders as
+          the button alone, because the slip quotes the verdict. */}
+      <ShareCard
+        puzzleNumber={puzzleNumber}
+        itemName={item.shortName}
+        countryName={price.countryName}
+        flag={price.flag}
+        guesses={guesses}
+        won={won}
+        streak={isArchive ? undefined : stats.currentStreak}
+        bestPctOff={bestOff}
+        score={score}
+        actualUSD={price.priceUSD}
+        compact={stage < STAGES}
+      />
+
       {stage < STAGES && (
         <button
           onClick={() => setStage((s) => Math.min(STAGES, s + 1))}
@@ -343,19 +366,6 @@ export default function Reveal({
               Perfect record · {stats.wins} of {stats.played}
             </p>
           )}
-
-          <ShareCard
-            puzzleNumber={puzzleNumber}
-            itemName={item.shortName}
-            countryName={price.countryName}
-            flag={price.flag}
-            guesses={guesses}
-            won={won}
-            streak={isArchive ? undefined : stats.currentStreak}
-            bestPctOff={bestOff}
-            score={score}
-            actualUSD={price.priceUSD}
-          />
 
           {!isArchive && isSunday && <WeekCard today={today} />}
 
