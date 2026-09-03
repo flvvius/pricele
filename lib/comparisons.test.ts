@@ -15,8 +15,13 @@ describe("comparison data", () => {
     // /daily-games names our direct competitors. Naming one there and having
     // no comparison for it is the gap this catches: the list page sends a
     // reader looking for the head-to-head that does not exist.
+    // Siblings are exempt. The rule is about competitors — a reader sent
+    // looking for a head-to-head that does not exist — and the game published
+    // by the same person is not one. A "which of my own two games wins" page
+    // would adjudicate nothing; the list entry says outright that they share
+    // an author and a rule, which is the honest version of that comparison.
     const missing = PRICE_GAMES.filter(
-      (game) => !COMPARISONS.some((c) => c.opponentUrl === game.url)
+      (game) => !game.sibling && !COMPARISONS.some((c) => c.opponentUrl === game.url)
     ).map((g) => g.name);
     expect(missing).toEqual([]);
   });

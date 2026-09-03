@@ -68,6 +68,17 @@ function GameEntry({ game }: { game: SimilarGame }) {
       <p className="mt-1 text-base leading-relaxed text-ink-body">
         {game.description}
       </p>
+      {game.sibling && (
+        /* Disclosed, not buried. A recommendation for a site with the same
+           author behind it is worth less to a reader who finds that out later
+           than to one who is told up front, and the argument for playing it
+           does not depend on hiding it. */
+        <p className="mt-1.5 text-base leading-relaxed text-ink-muted">
+          <span className="label">Same maker</span> Built and maintained by the
+          same person as Pricele, to the same rule: every figure names the source it
+          came from.
+        </p>
+      )}
       {game.contrast && (
         <p className="mt-1.5 text-base leading-relaxed text-ink-muted">
           <span className="label">vs. Pricele</span> {game.contrast}

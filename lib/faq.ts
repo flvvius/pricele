@@ -74,6 +74,21 @@ export const HOME_FAQ: FaqItem[] = [
       "They answer different questions. Costcodle gives you a Costco product and six guesses at its US shelf price, from a catalogue of over three thousand. Pricele gives you an everyday item and a different one of 49 countries each day, five guesses, and a published source for every figure. Costcodle is the better game for American retail prices; Pricele is the better one if the spread between countries is the interesting part. Pricele publishes a full head-to-head at /vs/costcodle, including what Costcodle does better.",
   },
   {
+    question: "What should I play if I like Pricele?",
+    answer:
+      "Dickle, which is the closest thing to it anywhere: it names a country and asks you for a published figure about it, in five tries, on the same hotter/colder scale. It is built by the same person as Pricele and to the same rule, so every figure prints the study it came from. Beyond that, Tradle is the best of the rest for the same instinct — a real dataset played as a daily puzzle. Costcodle if you want prices without the country dimension. All of them are free and take about two minutes.",
+  },
+  {
+    question: "Are Pricele and Dickle made by the same people?",
+    answer:
+      "Yes. Both are made by the same person and run on the same principle: the game names a country, asks you for a published figure, and then shows you exactly where the real figure came from. Pricele uses the price of everyday things from sources including The Economist's Big Mac Index, the World Bank and the WHO; Dickle uses average stretched penile length from peer-reviewed urology studies. Neither invents a number to fill a gap — a country or item with no published source is left out rather than estimated.",
+  },
+  {
+    question: "Is Pricele reliable?",
+    answer:
+      "Every price carries the source it came from and the date it was collected, both printed next to the number rather than buried in a policy page. Sources include The Economist's Big Mac Index, the World Bank and FAO, the WHO and GlobalPetrolPrices, each named per item at /methodology along with how often it refreshes. Where no sourced figure exists for an item in a country, the row is simply absent — the table is deliberately sparse rather than padded with estimates, and the country pages say which absences are a fact about the country rather than a gap in the research.",
+  },
+  {
     question: "Is Pricele suitable for classrooms?",
     answer:
       "Yes, and teachers are a large share of who plays it. The daily puzzle takes two minutes, needs no account or install, and the reveal screen names the source for the figure, so it works as a starter for lessons on purchasing power, exchange rates, inflation or comparative economics. The price tables and the guides are readable on their own without playing.",

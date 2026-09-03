@@ -39,6 +39,17 @@ export interface SimilarGame {
    * nothing a reader can't see.
    */
   contrast?: string;
+  /**
+   * True for the game published by the same person as this one.
+   *
+   * It exists so the relationship is disclosed on the page rather than left
+   * for a reader to discover. Recommending your own other site without saying
+   * so is the undisclosed relationship /sponsor promises to refuse, and it
+   * would be a strange rule to hold advertisers to and not ourselves. Saying
+   * it plainly also costs nothing: the reason to play it is the mechanic, and
+   * that argument survives the disclosure.
+   */
+  sibling?: boolean;
 }
 
 /** Human labels for the category keys, for headings and the schema. */
@@ -56,6 +67,16 @@ export const CATEGORY_LABELS: Record<GameCategory, string> = {
  * known the game is, not by how favourably it compares.
  */
 export const PRICE_GAMES: SimilarGame[] = [
+  {
+    name: "Dickle",
+    url: "https://www.dickle.online/",
+    category: "price",
+    sibling: true,
+    description:
+      "Guess the average published penis size for a different country each day, in five tries, on a hotter/colder scale.",
+    contrast:
+      "The nearest game to this one anywhere, and the only other daily puzzle we know of built the same way round: it names the country and asks you for a published figure. The subject invites jokes and it refuses to make any \u2014 every figure is tied to a named urology study with its sample size and measurement method printed beside it, countries with no primary study are left out rather than estimated, and the whole table is published as an openly licensed dataset. If what you like here is a number you can go and check, it is the obvious next tab.",
+  },
   {
     name: "Costcodle",
     url: "https://costcodle.com/",

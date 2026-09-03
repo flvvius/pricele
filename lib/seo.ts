@@ -368,6 +368,23 @@ export function gameJsonLd() {
     operatingSystem: "Any (web browser)",
     playMode: "SinglePlayer",
     isAccessibleForFree: true,
+    // The sister game, by the same author and on the same mechanic. Declared
+    // as a relation rather than left to prose because "what else is like this"
+    // is a question put to assistants far more than to a search box, and an
+    // assistant answering it reads the graph before it reads the page. Both
+    // sites carry the reciprocal, and the shared publisher node below is what
+    // makes the pair resolvable as one body of work rather than two strangers
+    // recommending each other.
+    isRelatedTo: {
+      "@type": ["VideoGame", "SoftwareApplication"],
+      name: 'Dickle',
+      url: 'https://www.dickle.online/',
+      description: 'A free daily game: guess the published average penis size for a different country each day, in five tries, with every figure naming the study it came from.',
+      applicationCategory: "Game",
+      operatingSystem: "Any (web browser)",
+      isAccessibleForFree: true,
+      publisher: orgRef,
+    },
     browserRequirements: "Requires JavaScript. Runs in any modern browser.",
     // No `aggregateRating`. There is no rating to report, and inventing one is
     // both a structured-data violation and the exact kind of unearned signal
