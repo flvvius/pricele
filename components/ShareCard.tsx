@@ -11,7 +11,19 @@ import {
 } from "@/lib/share";
 import { IconCheck, IconShare } from "./Icons";
 
-export default function ShareCard(props: ShareInput) {
+/**
+ * `compact` drops the receipt preview and leaves only the button.
+ *
+ * The reveal shows this from its first frame, before the verdict card has been
+ * turned over, and the slip quotes the verdict. Printing it at the top would
+ * give away the one beat the staged reveal exists to hold back, so early on the
+ * player gets the action without the spoiler and the receipt itself appears once
+ * there is nothing left to spoil.
+ */
+export default function ShareCard({
+  compact = false,
+  ...props
+}: ShareInput & { compact?: boolean }) {
   const [copied, setCopied] = useState(false);
   // Assume the clipboard until the browser says otherwise: the server cannot
   // know, and copying is the right answer everywhere the share sheet is not.
@@ -43,11 +55,13 @@ export default function ShareCard(props: ShareInput) {
     // Slip and button are one object: the button is the bottom edge of the
     // frame, not a second element floating under it.
     <div className="flex flex-col">
-      {/* The emoji grid stays. It is the artefact that actually gets pasted
-          into a group chat, and it has to survive as plain text. */}
-      <pre className="whitespace-pre-wrap border border-rule bg-paper-raised p-4 text-center font-mono text-[14px] leading-relaxed text-ink-body">
-        {text}
-      </pre>
+      {/* The receipt stays plain text. It is the artefact that actually gets
+          pasted into a group chat, and it has to survive being one. */}
+      {!compact && (
+        <pre className="whitespace-pre-wrap border border-rule bg-paper-raised p-4 text-center font-mono text-[14px] leading-relaxed text-ink-body">
+          {text}
+        </pre>
+      )}
       <button
         onClick={onShare}
         className="flex items-center justify-center gap-2.5 bg-ink px-5 py-3.5 font-mono text-[12px] uppercase tracking-[0.18em] text-paper-raised transition-transform duration-press ease-out active:scale-[0.98]"
