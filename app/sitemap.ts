@@ -34,6 +34,25 @@ export default function sitemap(): MetadataRoute.Sitemap {
         priority: 0.7,
       },
       { url: `${SITE_URL}/vs`, changeFrequency: "monthly", priority: 0.7 },
+      // The side modes and the classroom. Listed because each answers a search
+      // the daily puzzle does not: "higher or lower game", "guess the country
+      // game", and the one that matters most commercially, a teacher looking
+      // for something to run a lesson on.
+      {
+        url: `${SITE_URL}/higher-or-lower`,
+        changeFrequency: "daily",
+        priority: 0.6,
+      },
+      {
+        url: `${SITE_URL}/where-in-the-world`,
+        changeFrequency: "daily",
+        priority: 0.6,
+      },
+      {
+        url: `${SITE_URL}/classroom`,
+        changeFrequency: "monthly",
+        priority: 0.7,
+      },
       { url: `${SITE_URL}/editorial`, changeFrequency: "monthly", priority: 0.6 },
       { url: `${SITE_URL}/data`, changeFrequency: "monthly", priority: 0.6 },
       { url: `${SITE_URL}/support`, changeFrequency: "monthly", priority: 0.4 },
