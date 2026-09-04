@@ -402,7 +402,7 @@ export default function Reveal({
               <div className="flex items-center gap-2">
                 <Link
                   href="/higher-or-lower"
-                  className="border border-rule px-4 py-2.5 font-mono text-[11px] uppercase tracking-[0.16em] text-ink-body transition-[background-color,border-color,transform] duration-press ease-out hover:border-ink hover:bg-paper-raised active:scale-[0.97]"
+                  className="border border-ink bg-paper-raised px-4 py-2.5 font-mono text-[11px] uppercase tracking-[0.16em] text-ink transition-[background-color,border-color,transform] duration-press ease-out hover:bg-paper-sunk active:scale-[0.97]"
                 >
                   One more
                 </Link>
