@@ -16,7 +16,7 @@ import {
   suppressedPairs,
   wageMinutes,
 } from "@/lib/catalog";
-import { ITEMS, getItem } from "@/data/items";
+import { ITEMS, getItem, itemLabel, lowerName } from "@/data/items";
 import { COUNTRY_NOTES, COUNTRY_TAX } from "@/data/countries";
 import { formatUSD } from "@/lib/format";
 import {
@@ -47,6 +47,15 @@ export function generateMetadata({
     title: `Prices in ${country.name}`,
     description: `What everyday items cost in ${country.name}: a Big Mac, a cappuccino, groceries, fuel, household energy, cigarettes, a beer and mobile data, priced in US dollars, in ${country.localCurrency}, and in how long the average local wage takes to earn them.`,
   });
+}
+
+/**
+ * An item id as it reads mid-sentence: "electricity (100 kWh)", "a big mac".
+ * Falls back to the raw id, which is already slug-shaped and legible.
+ */
+function itemLabelFor(itemId: string): string {
+  const item = getItem(itemId);
+  return item ? lowerName(itemLabel(item)) : itemId;
 }
 
 /** Ordinal suffix for a rank: 1st, 2nd, 3rd, 4th. */
@@ -120,8 +129,7 @@ export default function CountryPage({ params }: { params: { country: string } })
                 {lead.map((p, i) => (
                   <span key={p.itemId}>
                     {i > 0 && (i === lead.length - 1 ? " and " : ", ")}
-                    {ITEMS.find((it) => it.id === p.itemId)?.shortName.toLowerCase() ??
-                      p.itemId}{" "}
+                    {itemLabelFor(p.itemId)}{" "}
                     costs{" "}
                     <strong className="font-semibold text-ink">
                       {formatUSD(p.priceUSD)}
@@ -170,7 +178,7 @@ export default function CountryPage({ params }: { params: { country: string } })
                 Relative to the rest of the game, {country.name} is most
                 expensive for{" "}
                 <strong className="font-semibold text-neutral-200">
-                  {getItem(priciest.price.itemId)?.shortName.toLowerCase()}
+                  {itemLabelFor(priciest.price.itemId)}
                 </strong>
                 , where it ranks {ordinal(priciest.rank)} out of{" "}
                 {priciest.total} countries at{" "}
@@ -182,7 +190,7 @@ export default function CountryPage({ params }: { params: { country: string } })
               <p>
                 It is relatively cheapest for{" "}
                 <strong className="font-semibold text-neutral-200">
-                  {getItem(cheapest.price.itemId)?.shortName.toLowerCase()}
+                  {itemLabelFor(cheapest.price.itemId)}
                 </strong>{" "}
                 at {formatUSD(cheapest.price.priceUSD)}, which is{" "}
                 {ordinal(cheapest.rank)} of {cheapest.total}, only{" "}
@@ -194,7 +202,7 @@ export default function CountryPage({ params }: { params: { country: string } })
               <p>
                 Measured against local earnings rather than dollars, the item
                 that takes the longest to afford here is{" "}
-                {getItem(hardest.itemId)?.shortName.toLowerCase()}, at roughly{" "}
+                {itemLabelFor(hardest.itemId)}, at roughly{" "}
                 {wageMinutes(hardest) < 90
                   ? `${Math.round(wageMinutes(hardest))} minutes`
                   : `${(wageMinutes(hardest) / 60).toFixed(1)} hours`}{" "}

@@ -18,10 +18,10 @@ classroom disappear, and the daily game is byte-for-byte what it was before. See
 
 ## Content model
 
-17 items × 49 countries, 641 price rows. The table is deliberately **sparse**:
+16 items × 49 countries, 617 price rows. The table is deliberately **sparse**:
 a pair exists only where there's a real sourced number, never padded with
-invented ones. LPG appears in 24 countries because that is where it is sold as a
-road fuel; natural gas in 31 because that is where households are on a gas grid.
+invented ones. Natural gas appears in 31 countries because that is where
+households are on a gas grid.
 The Numbeo-sourced groceries stop at the 33 countries the game launched with,
 because they are collected by hand. An absent row is usually a fact about the
 country rather than a gap in the research, and the country pages say which.
@@ -45,29 +45,31 @@ country rather than a gap in the research, and the country pages say which.
 
 ### The daily rotation
 
-`data/rotation.ts` holds the ordered lists and a start date. The day's puzzle is:
+`data/rotation.ts` holds a chain of schedule *eras* and a start date. Each era
+carries the list in force and the day index it took over on. The day's puzzle is:
 
 ```
-country = countryOrder[(daysSince(startDate) - countryOrderFrom) % 49]
-item    = itemOrder   [(daysSince(startDate) - itemOrderFrom)    % 17]
+country = countryEra.order[(daysSince(startDate) - countryEra.from) % 49]
+item    = itemEra.order   [(daysSince(startDate) - itemEra.from)    % 16]
 ```
 
-The lengths are **coprime**, so a pair only recurs every 833 days.
+The lengths are **coprime**, so a pair only recurs every 784 days.
 
-Neither list can be edited in place, and the reason is worth understanding before
-touching either. *Any* change of length moves `dayIndex % length` for every day
-at once, so growing the catalogue from 7 items to 17, or the roster from 33
-countries to 49, would have silently rewritten which puzzle every past day had —
+No era can be edited in place once its `from` has passed, and the reason is worth
+understanding before touching one. *Any* change of length moves
+`dayIndex % length` for every day at once, so growing the catalogue from 7 items
+to 17, or the roster from 33 countries to 49, would have silently rewritten which
+puzzle every past day had —
 breaking the archive and every share card already posted.
 
-So each list has a frozen twin. `legacyCountryOrder` and `legacyItemOrder` hold
-the schedules the game was actually played on, and the live lists take over at
-`countryOrderFrom` / `itemOrderFrom`, day indices that were still in the future
-when they were set. Days already played keep the country and the item they were
-played with, and tests assert both, day by day, against the frozen lists.
+So each schedule is a chain. `countryEras` and `itemEras` hold every list the
+game has been played on, oldest first, each with the day index it took over on —
+a day still in the future when it was set. Days already played keep the country
+and the item they were played with, and tests assert both, day by day, against
+the frozen eras.
 
-That is also what makes the live lists free to *reorder*, which append-only never
-was. Both are arranged against two things at once:
+That is also what makes the live list free to *reorder*, and free to *shrink*,
+which append-only never was. Both are arranged against two things at once:
 
 - **Variety.** Consecutive days move between price tiers and between item
   categories, rather than running three groceries or three rich countries
@@ -79,17 +81,22 @@ was. Both are arranged against two things at once:
   arrangement put it at 17% of days, and the current pair holds it under 2.5%.
   A test measures it, so a well-meant reshuffle cannot quietly undo it.
 
-`countryOrder` is a cycle, so it is also rotated to start clear of the countries
-that came up in the last week of the old schedule. Without that the seam at the
-changeover showed the UAE twice inside seven days.
+The country list is a cycle, so it is also rotated to start clear of the
+countries that came up in the last week of the old schedule. Without that the
+seam at the changeover showed the UAE twice inside seven days.
 
-**Changing either list again** means pushing the current one onto the legacy
-chain and setting a new `...From` in the future — not editing a live list whose
-changeover day has passed.
+**Changing either schedule again** means appending an era with a `from` a few
+days out — not editing an era whose `from` has passed.
+
+An item dropped from the catalogue does *not* leave the eras it was scheduled in.
+Its id stays behind as a tombstone so the list keeps its length, and the resolver
+walks past an id it can no longer price the same way it walks past an item a
+country doesn't stock. That is how LPG was removed without moving day 41 off
+natural gas.
 
 A test enforces the coprimality, another walks 400 days asserting every one
-resolves to a real price row, and a third walks a full 833-day cycle asserting
-that every one of the 641 rows is reachable.
+resolves to a real price row, and a third walks a full 784-day cycle asserting
+that every one of the 617 rows is reachable.
 
 ### Where the prices come from
 
@@ -99,7 +106,7 @@ because the sources refresh at wildly different intervals.
 | Items | Source | Refresh |
 | --- | --- | --- |
 | Big Mac | The Economist's [Big Mac Index](https://github.com/TheEconomist/big-mac-data) | `pnpm refresh-big-mac` |
-| Diesel, LPG, electricity, natural gas | [GlobalPetrolPrices.com](https://www.globalpetrolprices.com/) | `pnpm refresh-open-prices` |
+| Diesel, electricity, natural gas | [GlobalPetrolPrices.com](https://www.globalpetrolprices.com/) | `pnpm refresh-open-prices` |
 | Cigarettes, vape e-liquid, beer, spirits | [WHO Global Health Observatory](https://www.who.int/data/gho) tax surveys, 2024 | `pnpm refresh-open-prices` |
 | Mobile data | [Cable.co.uk](https://www.cable.co.uk/mobiles/worldwide-data-pricing/) league table | `pnpm refresh-open-prices` |
 | A day's healthy diet | World Bank / FAO Food Prices for Nutrition | `pnpm refresh-open-prices` |
@@ -135,7 +142,8 @@ Notes worth knowing before editing any of it:
   for six of the originals, so some estimates survive any migration.
 - **Adding a country** means an entry in `COUNTRY_META`, `COUNTRY_TAX` and
   `COUNTRY_NOTES`, the publisher aliases in both refresh scripts, and an append
-  to `countryOrder`. Then run both scripts. Tests fail if any of those is missed.
+  to the live country era. Then run both scripts. Tests fail if any of those is
+  missed.
 - **Licensing is not uniform, and two sources are stricter than this site.**
   GlobalPetrolPrices is CC BY-NC-ND 3.0 and WHO data is CC BY-NC-SA 3.0 IGO; both
   carry a non-commercial condition, and the site runs AdSense. World Bank and FAO
@@ -364,7 +372,7 @@ Everything that wants to keep playing gets sent elsewhere.
   1.05x and 3x, which transfers directly from Seekdle here (unlike on the sister
   site, where the figures span 1.54x end to end and a ratio gate would admit
   everything or nothing). Drawn by rejection sampling rather than by enumerating:
-  the full cross product of 641 rows is over 200,000 pairs.
+  the full cross product of 617 rows is over 190,000 pairs.
 - **Where in the World** (`/where-in-the-world`). The inverse mode: here is the
   item and the price, name the country, five guesses, a clue after each miss.
   This is the mode that decides what kind of game Pricele is. Guessing a number
@@ -396,7 +404,7 @@ Everything that wants to keep playing gets sent elsewhere.
   space, so someone twice too high half the time and half too low the rest reads
   as unbiased rather than 25% high.
 - **The passport.** One page per country, one stamp per item bought there. 49 by
-  17, and a pair only recurs every 833 days, so the collection has a real long
+  16, and a pair only recurs every 784 days, so the collection has a real long
   tail that a streak cannot have.
 - **Weekly wrapped**, on Sundays, with a share link that puts the week in a URL
   fragment. The fragment carries the player's *errors* and never a price or a

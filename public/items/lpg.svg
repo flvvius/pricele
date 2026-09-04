@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Gas cylinder">
-  <rect x="20" y="18" width="24" height="38" rx="7" fill="#d94f3d"/>
-  <rect x="20" y="18" width="24" height="8" rx="4" fill="#b93a2a"/>
-  <rect x="28" y="8" width="8" height="11" rx="2" fill="#8a939b"/>
-  <rect x="24" y="6" width="16" height="4" rx="2" fill="#b0b8bf"/>
-  <rect x="25" y="34" width="14" height="3" rx="1.5" fill="#fff" opacity="0.85"/>
-  <rect x="27" y="41" width="10" height="2.5" rx="1.25" fill="#fff" opacity="0.6"/>
-</svg>

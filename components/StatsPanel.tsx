@@ -13,7 +13,13 @@ import {
   type Stats,
 } from "@/lib/storage";
 import { loadHistory, passport, type Stamp } from "@/lib/history";
-import { CATEGORY_LABEL, getItem } from "@/data/items";
+import { CATEGORY_LABEL, getItem, itemLabel } from "@/data/items";
+
+/** An item id as a reader-facing label, falling back to the raw id. */
+function label(id: string): string {
+  const item = getItem(id);
+  return item ? itemLabel(item) : id;
+}
 import { PRICES } from "@/lib/puzzle";
 import type { Currency } from "@/lib/currency";
 
@@ -45,8 +51,8 @@ function Stat({ value, label }: { value: string | number; label: string }) {
 /**
  * The passport: one page per country, one visa stamp per item bought there.
  *
- * The retention object a streak cannot be. The table is 49 countries by 17
- * items and a pair only recurs every 833 days, so the collection has a real long
+ * The retention object a streak cannot be. The table is 49 countries by 16
+ * items and a pair only recurs every 784 days, so the collection has a real long
  * tail: a player two years in still has stamps they have never seen. A streak is
  * one number that stops being interesting the moment it is large.
  */
@@ -79,7 +85,7 @@ function Passport({ stamps }: { stamps: Stamp[] }) {
                 return (
                   <span
                     key={id}
-                    title={`${getItem(id)?.shortName ?? id}${won ? " · solved" : ""}`}
+                    title={`${label(id)}${won ? " · solved" : ""}`}
                     className="h-2.5 w-2.5 border"
                     style={{
                       borderColor: won

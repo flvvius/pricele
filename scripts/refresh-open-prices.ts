@@ -20,7 +20,7 @@
  *   data/prices.json. This script never touches those rows.
  *
  * SOURCES
- *   GlobalPetrolPrices.com   diesel, LPG, electricity, natural gas.
+ *   GlobalPetrolPrices.com   diesel, electricity, natural gas.
  *                            Weekly for fuels, quarterly for the two utilities.
  *                            Their robots.txt is `Allow: /`, and each country
  *                            page publishes the local-currency price next to
@@ -254,23 +254,6 @@ async function harvestGlobalPetrolPrices(): Promise<Harvested[]> {
           )
         );
         const d = t.match(/latest update from (\d{2}-[A-Za-z]{3}-\d{4})/);
-        if (!m || !d) return null;
-        return m[1]
-          ? [m[1], num(m[2]), num(m[3]), d[1]]
-          : ["USD", num(m[3]), num(m[3]), d[1]];
-      },
-    },
-    {
-      itemId: "lpg-1l",
-      path: "lpg_prices",
-      scale: 1,
-      read: (t) => {
-        const m = t.match(
-          new RegExp(
-            `current LPG price in .+? is (?:([A-Z]{3}) ${N} per liter or )?USD ${N} per liter`
-          )
-        );
-        const d = t.match(/update was made on (\d{2}-[A-Za-z]{3}-\d{4})/);
         if (!m || !d) return null;
         return m[1]
           ? [m[1], num(m[2]), num(m[3]), d[1]]
@@ -610,7 +593,6 @@ async function harvestHealthyDiet(): Promise<Harvested[]> {
 /** Every item id this script owns. Rows for these are rebuilt wholesale. */
 const MANAGED = [
   "diesel-1l",
-  "lpg-1l",
   "electricity-100kwh",
   "natural-gas-100kwh",
   "cigarettes-20",

@@ -3,7 +3,7 @@
 // actually search ("is pricele free", "how do you play pricele").
 
 import type { FaqItem } from "@/lib/seo";
-import { ITEMS, type Item } from "@/data/items";
+import { ITEMS, itemLabel, lowerName, type Item } from "@/data/items";
 import { COUNTRIES, type Country } from "@/lib/catalog";
 import type { PriceEntry } from "@/lib/puzzle";
 import { formatUSD } from "@/lib/format";
@@ -210,7 +210,7 @@ export function itemPriceFaq(item: Item, rows: PriceEntry[]): FaqItem[] {
   const sorted = [...rows].sort((a, b) => a.priceUSD - b.priceUSD);
   const cheapest = sorted[0];
   const dearest = sorted[sorted.length - 1];
-  const name = item.name.toLowerCase();
+  const name = lowerName(item.name);
 
   return [
     {
@@ -225,7 +225,7 @@ export function itemPriceFaq(item: Item, rows: PriceEntry[]): FaqItem[] {
     },
     {
       question: `How much does ${name} cost around the world?`,
-      answer: `Prices for ${itemWithUnit(item).toLowerCase()} run from ${formatUSD(
+      answer: `Prices for ${lowerName(itemWithUnit(item))} run from ${formatUSD(
         cheapest.priceUSD,
       )} in ${cheapest.countryName} to ${formatUSD(dearest.priceUSD)} in ${
         dearest.countryName
@@ -259,11 +259,14 @@ export function itemWithUnit(item: Item): string {
     : `${item.name} (${item.unit})`;
 }
 
-/** The item's own short name, e.g. "Big Mac", rather than its slug-shaped id. */
+/**
+ * The item's own label, e.g. "Big Mac", rather than its slug-shaped id. Carries
+ * the quantity where the name needs it, because every caller here prints it
+ * next to a price.
+ */
 function itemName(itemId: string): string {
-  return (
-    ITEMS.find((i) => i.id === itemId)?.shortName ?? itemId.replace(/-/g, " ")
-  );
+  const item = ITEMS.find((i) => i.id === itemId);
+  return item ? itemLabel(item) : itemId.replace(/-/g, " ");
 }
 
 /** "They come from the Big Mac Index and Numbeo." — the sources behind a set of rows. */

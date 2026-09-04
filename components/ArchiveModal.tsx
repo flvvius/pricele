@@ -5,6 +5,7 @@ import { getDailyPuzzle, dateFromISO, pastPuzzleDates } from "@/lib/puzzle";
 import { loadDayState } from "@/lib/storage";
 import { MAX_GUESSES } from "@/lib/share";
 import { IconCheck, IconClose } from "./Icons";
+import { itemLabel } from "@/data/items";
 
 interface Props {
   open: boolean;
@@ -55,7 +56,7 @@ export default function ArchiveModal({ open, onClose, today, onPlay }: Props) {
                     <span aria-hidden className="mr-1.5">
                       {puzzle.price.flag}
                     </span>
-                    {puzzle.item.shortName} in {puzzle.price.countryName}
+                    {itemLabel(puzzle.item)} in {puzzle.price.countryName}
                   </span>
                   {played ? (
                     <span

@@ -6,7 +6,7 @@ import PriceTable, { type Row } from "@/components/PriceTable";
 import FaqSection from "@/components/FaqSection";
 import JsonLd from "@/components/JsonLd";
 import RelatedGuides, { GUIDES_BY_ITEM } from "@/components/RelatedGuides";
-import { ITEMS, getItemBySlug } from "@/data/items";
+import { ITEMS, getItemBySlug, itemLabel, lowerName } from "@/data/items";
 import {
   pricesForItem,
   medianPriceUSD,
@@ -44,7 +44,7 @@ export function generateMetadata({
   return pageMetadata({
     path: `/items/${item.slug}`,
     title: `${item.name} prices by country`,
-    description: `What ${item.name.toLowerCase()} costs in ${rows.length} countries, ranked cheapest to most expensive, in US dollars${local} plus how long the average local wage takes to earn one.`,
+    description: `What ${lowerName(item.name)} costs in ${rows.length} countries, ranked cheapest to most expensive, in US dollars${local} plus how long the average local wage takes to earn one.`,
   });
 }
 
@@ -137,7 +137,7 @@ export default function ItemPage({ params }: { params: { item: string } }) {
         <Section heading="What the spread shows">
           <Prose>
             <p>
-              The cheapest {item.shortName.toLowerCase()} in the game is in{" "}
+              The cheapest {lowerName(itemLabel(item))} in the game is in{" "}
               <Link
                 href={`/prices/${countrySlug(cheapest.countryName)}`}
                 className="underline hover:text-neutral-300"

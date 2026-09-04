@@ -118,7 +118,7 @@ const OURS = {
     "Every past puzzle is replayable and cannot touch your streak",
   provenance:
     "Every price is a published figure with its source named on the page: the Economist's Big Mac Index, Numbeo, GlobalPetrolPrices.com, the WHO Global Health Observatory, Cable.co.uk, the World Bank and the FAO",
-  catalogue: "17 everyday items across 49 countries, 641 sourced rows",
+  catalogue: "16 everyday items across 49 countries, 617 sourced rows",
   offline:
     "Fully static. The puzzle data ships with the page, so it plays with a dropped connection",
 } as const;
@@ -205,7 +205,7 @@ export const COMPARISONS: Comparison[] = [
       },
     ],
     theirStrengths: [
-      "A far bigger catalogue — over three thousand products against our 641 rows — so it will not repeat on you for years.",
+      "A far bigger catalogue — over three thousand products against our 617 rows — so it will not repeat on you for years.",
       "Six guesses instead of five, on a price range that is genuinely harder to bracket.",
       "If you actually shop at Costco, every answer teaches you something you can use on Saturday. Nothing in Pricele will ever save you money.",
       "It is the older and better-known game, and it got the genre's rules right first.",

@@ -25,6 +25,11 @@ import {
 
 const getPuzzleItemFor = (iso: string) => getPuzzleForISO(iso)?.item.id;
 
+/** The schedule lists in force, newest era last. */
+const countryOrder = ROTATION.countryEras.at(-1)!.order;
+const itemOrder = ROTATION.itemEras.at(-1)!.order;
+const itemOrderFrom = ROTATION.itemEras.at(-1)!.from;
+
 describe("date logic (local time)", () => {
   it("isoDate formats a local date as YYYY-MM-DD", () => {
     expect(isoDate(new Date(2026, 6, 5))).toBe("2026-07-05");
@@ -52,45 +57,73 @@ describe("daily puzzle rotation", () => {
     expect(getDailyPuzzle(new Date(2026, 6, 26))?.price.countryCode).toBe("TH");
   });
 
-  it("never rewrites the schedule the game launched with", () => {
-    // The two legacy lists are what past days were actually played on. They are
-    // frozen here as well as in data/rotation.ts, so a well-meaning tidy-up of
-    // either fails the build instead of silently rewriting the archive and
-    // every share card already posted.
-    expect(ROTATION.legacyCountryOrder).toEqual([
-      "IN", "US", "TH", "DE", "EG", "NO", "MX", "JP", "AR", "CH",
-      "VN", "GB", "ZA", "AU", "ID", "FR", "TR", "BR", "SA", "IE",
-      "CN", "KR", "NZ", "PL", "LB", "IT", "AE", "SE", "PT", "CA",
-      "ES", "NL", "SG",
-    ]);
-    expect(ROTATION.legacyItemOrder).toEqual([
-      "big-mac", "milk-1l", "cappuccino", "eggs-12",
-      "gasoline-1l", "coke-330ml", "apples-1kg",
-    ]);
+  it("never rewrites a schedule that is already in force", () => {
+    // Each era is what some stretch of days was actually played on. The oldest
+    // two are frozen here as well as in data/rotation.ts, so a well-meaning
+    // tidy-up of either fails the build instead of silently rewriting the
+    // archive and every share card already posted.
+    expect(ROTATION.countryEras[0]).toEqual({
+      from: 0,
+      order: [
+        "IN", "US", "TH", "DE", "EG", "NO", "MX", "JP", "AR", "CH",
+        "VN", "GB", "ZA", "AU", "ID", "FR", "TR", "BR", "SA", "IE",
+        "CN", "KR", "NZ", "PL", "LB", "IT", "AE", "SE", "PT", "CA",
+        "ES", "NL", "SG",
+      ],
+    });
+    expect(ROTATION.itemEras[0]).toEqual({
+      from: 0,
+      order: [
+        "big-mac", "milk-1l", "cappuccino", "eggs-12",
+        "gasoline-1l", "coke-330ml", "apples-1kg",
+      ],
+    });
+    // The 17-item era. "lpg-1l" is a tombstone: the item is gone from the
+    // catalogue, but dropping the id would shorten this list and move every day
+    // in the era onto a different puzzle.
+    expect(ROTATION.itemEras[1]).toEqual({
+      from: 30,
+      order: [
+        "mobile-data-1gb", "healthy-diet-day", "diesel-1l", "spirits-750ml",
+        "milk-1l", "gasoline-1l", "apples-1kg", "cappuccino",
+        "eggs-12", "eliquid-1ml", "lpg-1l", "natural-gas-100kwh",
+        "coke-330ml", "big-mac", "beer-330ml", "electricity-100kwh",
+        "cigarettes-20",
+      ],
+    });
     expect(ROTATION.startDate).toBe("2026-07-24");
     expect(ROTATION.epoch).toBe("2026-07-01");
   });
 
+  it("starts each chain at day 0 and moves forward from there", () => {
+    for (const eras of [ROTATION.countryEras, ROTATION.itemEras]) {
+      expect(eras[0].from).toBe(0);
+      for (let i = 1; i < eras.length; i++) {
+        expect(eras[i].from).toBeGreaterThan(eras[i - 1].from);
+      }
+    }
+  });
+
   it("keeps every day already played on its original country", () => {
-    for (let day = 0; day < ROTATION.countryOrderFrom; day++) {
-      const expected =
-        ROTATION.legacyCountryOrder[day % ROTATION.legacyCountryOrder.length];
+    const [launch, full] = ROTATION.countryEras;
+    for (let day = 0; day < full.from; day++) {
+      const expected = launch.order[day % launch.order.length];
       expect(countryForDay(day), `day ${day}`).toBe(expected);
       const iso = addDaysISO(ROTATION.startDate, day);
       expect(getPuzzleForISO(iso)?.price.countryCode, iso).toBe(expected);
     }
   });
 
-  it("lists every country once, in both schedules", () => {
-    for (const list of [ROTATION.countryOrder, ROTATION.legacyCountryOrder]) {
-      expect(new Set(list).size).toBe(list.length);
+  it("lists every country once, in every era", () => {
+    for (const era of ROTATION.countryEras) {
+      expect(new Set(era.order).size).toBe(era.order.length);
     }
-    // The live list is the whole roster; the legacy one is a subset of it.
-    expect([...ROTATION.countryOrder].sort()).toEqual(
+    // The live list is the whole roster; the older ones are subsets of it.
+    expect([...countryOrder].sort()).toEqual(
       [...COUNTRIES.map((c) => c.code)].sort()
     );
-    for (const code of ROTATION.legacyCountryOrder) {
-      expect(ROTATION.countryOrder).toContain(code);
+    for (const era of ROTATION.countryEras) {
+      for (const code of era.order) expect(countryOrder).toContain(code);
     }
   });
 
@@ -108,8 +141,8 @@ describe("daily puzzle rotation", () => {
 
   it("rarely shows the same item two days running", () => {
     let repeats = 0;
-    const days = 833; // one full country x item cycle
-    for (let i = ROTATION.itemOrderFrom; i < ROTATION.itemOrderFrom + days; i++) {
+    const days = 784; // one full country x item cycle
+    for (let i = itemOrderFrom; i < itemOrderFrom + days; i++) {
       const a = pairForDate(dateFromISO(addDaysISO(ROTATION.startDate, i)));
       const b = pairForDate(dateFromISO(addDaysISO(ROTATION.startDate, i + 1)));
       if (a && b && a.itemId === b.itemId) repeats++;
@@ -119,27 +152,51 @@ describe("daily puzzle rotation", () => {
     expect(repeats / days).toBeLessThan(0.05);
   });
 
-  it("keeps every day already played on the seven-item schedule", () => {
-    // The catalogue went from 7 items to 17, which moves `dayIndex % length`
-    // for every day at once. Days before ROTATION.itemOrderFrom have to keep
-    // the item they were actually played with, or the archive and every share
-    // card already posted start describing a different puzzle.
-    const { legacyItemOrder, itemOrderFrom } = ROTATION;
-    expect(itemOrderFrom).toBeGreaterThan(0);
-    for (let day = 0; day < itemOrderFrom; day++) {
-      const scheduled = legacyItemOrder[day % legacyItemOrder.length];
-      const country = countryForDay(day)!;
-      // Only assert where the country actually stocks the scheduled item;
-      // elsewhere the substitution rule picks, and it picks from the legacy
-      // list either way.
-      if (!findPrice(scheduled, country)) continue;
-      const iso = addDaysISO(ROTATION.startDate, day);
-      expect(getPuzzleItemFor(iso), `day ${day} (${iso})`).toBe(scheduled);
+  it("keeps every day already played on the schedule it was played on", () => {
+    // Every era change moves `dayIndex % length` for the days that follow it.
+    // Days inside an era that has already run have to keep the item they were
+    // actually played with, or the archive and every share card already posted
+    // start describing a different puzzle.
+    for (let e = 0; e < ROTATION.itemEras.length; e++) {
+      const era = ROTATION.itemEras[e];
+      const until = ROTATION.itemEras[e + 1]?.from ?? era.from + era.order.length;
+      for (let day = era.from; day < until; day++) {
+        const scheduled = era.order[(day - era.from) % era.order.length];
+        const country = countryForDay(day)!;
+        // Only assert where the country actually stocks the scheduled item;
+        // elsewhere the substitution rule picks, and it picks from this era's
+        // list either way.
+        if (!findPrice(scheduled, country)) continue;
+        const iso = addDaysISO(ROTATION.startDate, day);
+        expect(getPuzzleItemFor(iso), `day ${day} (${iso})`).toBe(scheduled);
+      }
     }
   });
 
-  it("uses the full catalogue from the changeover day onwards", () => {
-    const { itemOrder, itemOrderFrom } = ROTATION;
+  it("leaves the days already played untouched by the LPG removal", () => {
+    // The exact puzzles days 30..45 resolved to under the 17-item era, recorded
+    // before LPG was dropped. Appending an era rather than editing one is what
+    // keeps these fixed; shortening the live list in place moved day 41 off
+    // natural gas and day 43 off the Big Mac.
+    const played: [number, string, string][] = [
+      [30, "HU", "mobile-data-1gb"], [31, "UY", "healthy-diet-day"],
+      [32, "NG", "diesel-1l"], [33, "MY", "natural-gas-100kwh"],
+      [34, "VN", "milk-1l"], [35, "RO", "eliquid-1ml"],
+      [36, "JP", "apples-1kg"], [37, "ZA", "cappuccino"],
+      [38, "CO", "natural-gas-100kwh"], [39, "CR", "big-mac"],
+      [40, "TZ", "beer-330ml"], [41, "US", "natural-gas-100kwh"],
+      [42, "PK", "big-mac"], [43, "CN", "big-mac"],
+      [44, "PE", "beer-330ml"], [45, "AU", "electricity-100kwh"],
+    ];
+    for (const [day, code, itemId] of played) {
+      const iso = addDaysISO(ROTATION.startDate, day);
+      const puzzle = getPuzzleForISO(iso);
+      expect(puzzle?.price.countryCode, `day ${day} (${iso})`).toBe(code);
+      expect(puzzle?.item.id, `day ${day} (${iso})`).toBe(itemId);
+    }
+  });
+
+  it("uses the live catalogue from the latest changeover onwards", () => {
     for (let day = itemOrderFrom; day < itemOrderFrom + itemOrder.length; day++) {
       const scheduled = itemOrder[(day - itemOrderFrom) % itemOrder.length];
       const country = countryForDay(day)!;
@@ -150,9 +207,8 @@ describe("daily puzzle rotation", () => {
   });
 
   it("only repeats an (item, country) pair after a full cycle", () => {
-    const { itemOrderFrom, countryOrder, itemOrder } = ROTATION;
     const period = countryOrder.length * itemOrder.length;
-    expect(period).toBe(833); // 49 countries x 17 items
+    expect(period).toBe(784); // 49 countries x 16 items
 
     const seen = new Set<string>();
     for (let i = itemOrderFrom; i < itemOrderFrom + period; i++) {
@@ -160,9 +216,9 @@ describe("daily puzzle rotation", () => {
       expect(pair).not.toBeNull();
       seen.add(`${pair!.itemId}:${pair!.countryCode}`);
     }
-    // The table is sparse, so a country's 17 scheduled slots collapse onto
-    // however many items it actually stocks. There are 503 rows in all, and
-    // every one of them should be reachable.
+    // The table is sparse, so a country's 16 scheduled slots collapse onto
+    // however many items it actually stocks. Every row in the table should be
+    // reachable.
     expect(seen.size).toBe(PRICES.length);
 
     // And the cycle really does close: one full period on, the pair repeats.
@@ -177,7 +233,7 @@ describe("daily puzzle rotation", () => {
 
   it("item and country list lengths stay coprime", () => {
     const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b));
-    expect(gcd(ROTATION.countryOrder.length, ROTATION.itemOrder.length)).toBe(1);
+    expect(gcd(countryOrder.length, itemOrder.length)).toBe(1);
   });
 
   it("always resolves to a puzzle whose price row actually exists", () => {
@@ -196,7 +252,7 @@ describe("daily puzzle rotation", () => {
     // Lebanon has no milk row, so whichever day pairs LB with milk must fall
     // through to an item it does have, and do so identically every call.
     const lbDays: number[] = [];
-    for (let i = 0; i < 833; i++) {
+    for (let i = 0; i < 784; i++) {
       const pair = pairForDate(dateFromISO(addDaysISO(ROTATION.startDate, i)));
       if (pair?.countryCode === "LB") lbDays.push(i);
     }
@@ -321,23 +377,29 @@ describe("published archive window", () => {
 
 describe("catalog", () => {
   it("derives one entry per country with a unique slug", () => {
-    expect(COUNTRIES.length).toBe(ROTATION.countryOrder.length);
+    expect(COUNTRIES.length).toBe(countryOrder.length);
     const slugs = new Set(COUNTRIES.map((c) => c.slug));
     expect(slugs.size).toBe(COUNTRIES.length);
   });
 
   it("covers every country the rotation can schedule", () => {
     const codes = new Set(COUNTRIES.map((c) => c.code));
-    for (const code of ROTATION.countryOrder) {
-      expect(codes.has(code), `rotation references unknown country ${code}`).toBe(
-        true
-      );
+    for (const era of ROTATION.countryEras) {
+      for (const code of era.order) {
+        expect(
+          codes.has(code),
+          `rotation references unknown country ${code}`
+        ).toBe(true);
+      }
     }
   });
 
-  it("has a price row for every item the rotation can schedule", () => {
+  it("has a price row for every item the live rotation can schedule", () => {
+    // Only the live era. An era that has already run may name an item that has
+    // since left the catalogue -- the id stays behind as a tombstone so the
+    // list keeps its length, and getDailyPuzzle walks past it.
     const ids = new Set(ITEMS.map((i) => i.id));
-    for (const id of [...ROTATION.itemOrder, ...ROTATION.legacyItemOrder]) {
+    for (const id of itemOrder) {
       expect(ids.has(id), `rotation references unknown item ${id}`).toBe(true);
       expect(
         PRICES.some((p) => p.itemId === id),
@@ -347,23 +409,27 @@ describe("catalog", () => {
   });
 
   it("schedules the whole catalog, with nothing listed twice", () => {
-    expect([...ROTATION.itemOrder].sort()).toEqual(
-      ITEMS.map((i) => i.id).sort()
-    );
+    expect([...itemOrder].sort()).toEqual(ITEMS.map((i) => i.id).sort());
+  });
+
+  it("resolves a puzzle on every day of a retired era, tombstones and all", () => {
+    // A tombstoned id has no item and no price row, so the walk has to skip it
+    // rather than give up on the day.
+    for (let day = 0; day < itemOrderFrom; day++) {
+      const iso = addDaysISO(ROTATION.startDate, day);
+      expect(getPuzzleForISO(iso), `day ${day} (${iso})`).not.toBeNull();
+    }
   });
 
   it("offers every item as a fallback on every day", () => {
     // getDailyPuzzle walks this list until it finds an item the country
     // stocks, so a rotation of the list, not a slice of it, is what keeps a
     // thinly-stocked country from falling off the end.
-    for (const day of [0, 5, 29, 30, 31, 400]) {
+    for (const day of [0, 5, 29, 30, 31, 45, 46, 400]) {
       const order = itemOrderForDay(day);
-      const expected =
-        day < ROTATION.itemOrderFrom
-          ? ROTATION.legacyItemOrder
-          : ROTATION.itemOrder;
-      expect(order.length).toBe(expected.length);
-      expect([...order].sort()).toEqual([...expected].sort());
+      const era = [...ROTATION.itemEras].reverse().find((e) => day >= e.from)!;
+      expect(order.length).toBe(era.order.length);
+      expect([...order].sort()).toEqual([...era.order].sort());
     }
   });
 });

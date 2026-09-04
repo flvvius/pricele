@@ -4,7 +4,7 @@
 // player's *errors* and nothing else: which item, which country, how far off
 // they were, what the verdict said. It never carries a price and never carries a
 // bid, because either one plus the other gives up an answer, and a pair recurs
-// every 833 days. Someone opening a friend's week learns how badly the friend
+// every 784 days. Someone opening a friend's week learns how badly the friend
 // did and learns nothing that would spoil their own game.
 //
 // The payload rides in the fragment, after the #, which browsers do not send to

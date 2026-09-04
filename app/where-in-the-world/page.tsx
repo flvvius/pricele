@@ -23,7 +23,7 @@ const ROUND_COUNT = 24;
  * Pick the rounds on the server.
  *
  * Spread across items rather than drawn at random, because a random sample of
- * 641 rows is nearly half petrol and diesel, and a mode that asks the same
+ * 617 rows is nearly half petrol and diesel, and a mode that asks the same
  * question twenty times is a mode nobody plays twice. Stepping through the deck
  * at a stride coprime with its length gives a spread with no bookkeeping.
  */

@@ -48,7 +48,7 @@ const SOURCES: {
     reuse: "Take it from the upstream repository, which is the authoritative copy and is updated twice a year.",
   },
   {
-    items: "Diesel, LPG, electricity, natural gas",
+    items: "Diesel, electricity, natural gas",
     source: "GlobalPetrolPrices.com",
     url: "https://www.globalpetrolprices.com/",
     licence: "CC BY-NC-ND 3.0",

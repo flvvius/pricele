@@ -52,7 +52,7 @@ export function toCard(price: PriceEntry, itemName: string): Card {
 /**
  * Every pair inside the ratio window.
  *
- * The table is 641 rows, so the full cross product is over 200,000 pairs and
+ * The table is 617 rows, so the full cross product is over 190,000 pairs and
  * building it eagerly on every render would be the slowest thing on the site.
  * Callers pass a pre-filtered deck, and `samplePairs` below never materialises
  * the whole set.

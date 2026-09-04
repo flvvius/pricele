@@ -4,6 +4,7 @@ import ContentPage, { Section, Prose } from "@/components/ContentPage";
 import JsonLd from "@/components/JsonLd";
 import { publishedArchiveDates } from "@/lib/catalog";
 import { getPuzzleForISO } from "@/lib/puzzle";
+import { itemLabel } from "@/data/items";
 import { formatUSD, formatArchiveDate } from "@/lib/format";
 import { absoluteUrl, breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 
@@ -70,7 +71,7 @@ export default function ArchiveIndex() {
                   </span>
                   <span className="min-w-0 flex-1">
                     <span className="block truncate text-base font-medium text-ink-strong">
-                      {puzzle.item.shortName} in {puzzle.price.countryName}
+                      {itemLabel(puzzle.item)} in {puzzle.price.countryName}
                     </span>
                     <span className="block text-sm text-ink-meta">
                       #{puzzle.puzzleNumber} · {formatArchiveDate(iso)}
@@ -97,7 +98,7 @@ export default function ArchiveIndex() {
             description: metadata.description,
             hasPart: entries.slice(0, 100).map(({ iso, puzzle }) => ({
               "@type": "WebPage",
-              name: `Pricele #${puzzle.puzzleNumber} — ${puzzle.item.shortName} in ${puzzle.price.countryName}`,
+              name: `Pricele #${puzzle.puzzleNumber} — ${itemLabel(puzzle.item)} in ${puzzle.price.countryName}`,
               url: absoluteUrl(`/archive/${iso}`),
             })),
           },

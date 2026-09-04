@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { PRICES } from "@/lib/puzzle";
-import { getItem } from "@/data/items";
+import { getItem, itemLabel } from "@/data/items";
 import { decodeWeek, roastWeek, type SharedWeek } from "@/lib/weekshare";
 
 /** Country name and flag for a code. Public data; nothing withheld is used. */
@@ -66,7 +66,7 @@ export default function SharedWeekView() {
                 {String(i + 1).padStart(2, "0")}
               </span>
               <span className="min-w-0 flex-1 truncate text-[15px] text-ink-body">
-                {item?.shortName ?? day.i} in {flag} {name}
+                {item ? itemLabel(item) : day.i} in {flag} {name}
               </span>
               <span className="font-mono text-[13px] tabular-nums text-ink-muted">
                 {day.b}% off

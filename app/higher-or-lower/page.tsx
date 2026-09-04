@@ -4,7 +4,7 @@ import HigherLower from "@/components/HigherLower";
 import { pageMetadata } from "@/lib/seo";
 import { PRICES } from "@/lib/puzzle";
 import { suppressedPairs } from "@/lib/catalog";
-import { getItem } from "@/data/items";
+import { getItem, itemLabel } from "@/data/items";
 import { drawPair, toCard, MIN_RATIO, MAX_RATIO } from "@/lib/higherlower";
 
 export const metadata: Metadata = pageMetadata({
@@ -37,7 +37,7 @@ export default function HigherOrLowerPage() {
   )
     .map((p) => {
       const item = getItem(p.itemId);
-      return item ? toCard(p, item.shortName) : null;
+      return item ? toCard(p, itemLabel(item)) : null;
     })
     .filter((c): c is NonNullable<typeof c> => c !== null);
 

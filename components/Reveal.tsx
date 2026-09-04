@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import type { PriceEntry } from "@/lib/puzzle";
-import type { Item } from "@/data/items";
+import { itemLabel, type Item } from "@/data/items";
 import { countrySlug, suppressedPairs } from "@/lib/catalog";
 import {
   isPerfect,
@@ -215,7 +215,7 @@ export default function Reveal({
           hierarchy is carried by weight rather than by size. */}
       <ShareCard
         puzzleNumber={puzzleNumber}
-        itemName={item.shortName}
+        itemName={itemLabel(item)}
         countryName={price.countryName}
         flag={price.flag}
         guesses={guesses}
@@ -261,7 +261,7 @@ export default function Reveal({
 
           <CrowdPanel
             stats={crowd}
-            itemName={item.shortName}
+            itemName={itemLabel(item)}
             countryCode={price.countryCode}
             countryName={price.countryName}
             enabled={!isArchive}
@@ -326,7 +326,7 @@ export default function Reveal({
               href={`/items/${item.slug}`}
               className="bg-paper px-3 py-3 text-center text-[14px] font-medium text-ink-body transition-[background-color,color] duration-fast ease-out hover:bg-paper-raised hover:text-ink"
             >
-              {item.shortName} everywhere
+              {itemLabel(item)} everywhere
             </Link>
             <Link
               href={`/prices/${countrySlug(price.countryName)}`}

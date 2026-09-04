@@ -22,7 +22,7 @@ import { loadRoomCode, loadRoomName } from "@/lib/room";
 import { hintFor } from "@/lib/hints";
 import { beatTheBot } from "@/lib/bot";
 import { personaFor } from "@/lib/verdict";
-import { itemCategory } from "@/data/items";
+import { itemCategory, itemLabel, lowerName } from "@/data/items";
 import { MAX_GUESSES } from "@/lib/share";
 import {
   anchorPriceUSD,
@@ -219,7 +219,7 @@ export default function Game() {
     recordPlay({
       date: today,
       itemId: puzzle.item.id,
-      itemName: puzzle.item.shortName,
+      itemName: itemLabel(puzzle.item),
       countryCode: puzzle.price.countryCode,
       countryName: puzzle.price.countryName,
       flag: puzzle.price.flag,
@@ -432,7 +432,7 @@ export default function Game() {
                   {state.guesses.length === 0 && (
                     <p className="mb-2.5 text-center text-[12px] leading-relaxed text-ink-meta">
                       For scale, the median{" "}
-                      {puzzle.item.shortName.toLowerCase()} across all countries
+                      {lowerName(itemLabel(puzzle.item))} across all countries
                       is{" "}
                       <span className="font-mono tabular-nums text-ink-body">
                         {formatPrice(anchorPriceUSD(puzzle.item.id), currency)}

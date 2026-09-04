@@ -162,8 +162,8 @@ section below:
 | `robots.ts` named the assistants but not all of their fetchers. | `Applebot` (Siri and Spotlight), `meta-externalfetcher` and `Google-CloudVertexBot` are retrieval agents that were missing, and the link-preview bots were unnamed entirely. | Both lists extended, preview fetchers named separately with a comment saying why they are not crawlers. |
 
 A thing considered and **not** done: per-item-per-country pages, one for each of
-the 641 sourced rows. It looks like 641 long-tail pages answering "how much does
-a Big Mac cost in Norway" and it is really 641 pages that each restate one cell
+the 617 sourced rows. It looks like 617 long-tail pages answering "how much does
+a Big Mac cost in Norway" and it is really 617 pages that each restate one cell
 of a table. The country pages already carry a generated FAQ asking exactly that
 question in exactly those words, so the combination pages would compete with the
 pages that already answer the query, and thin programmatic pages are a known way
@@ -242,7 +242,7 @@ angle, r/teachers for the classroom use case.
 
 Cal's 45,000-star repository was not a marketing asset, it was a **thing worth
 citing** that happened to carry the brand. The equivalent asset here is the
-price table: `data/prices.json`, 641 sourced rows across 49 countries and 17
+price table: `data/prices.json`, 617 sourced rows across 49 countries and 16
 items, with provenance on every one.
 
 Published as a standalone open-data repository — CSV plus JSON, sources named,

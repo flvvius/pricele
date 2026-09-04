@@ -3,7 +3,7 @@
 // mount, so it always reflects the visitor's timezone.
 
 import pricesData from "@/data/prices.json";
-import { ROTATION } from "@/data/rotation";
+import { ROTATION, type RotationEra } from "@/data/rotation";
 import { getItem, type Item } from "@/data/items";
 
 export interface PriceEntry {
@@ -106,44 +106,45 @@ function mod(n: number, m: number): number {
 }
 
 /**
- * Which country a day belongs to.
+ * The schedule in force on a day, from a chain of eras.
  *
- * Same shape as itemOrderForDay below, and for the same reason: the roster grew
- * from 33 countries to 49, which moves `dayIndex % length` for every day at
- * once. Days before `countryOrderFrom` keep the country they were played with.
+ * Every list change appends an era rather than editing one, because changing a
+ * list's length moves `dayIndex % length` for every day at once and would
+ * silently rewrite which puzzle every past day had. See the stability note in
+ * data/rotation.ts.
+ *
+ * Days before the first era, i.e. dates before startDate, fall back to it; the
+ * positive modulo below keeps them in range.
  */
+function eraForDay(eras: RotationEra[], dayIndex: number): RotationEra | null {
+  let inForce: RotationEra | null = null;
+  for (const era of eras) {
+    if (dayIndex >= era.from) inForce = era;
+  }
+  return inForce ?? eras[0] ?? null;
+}
+
+/** Which country a day belongs to. */
 export function countryForDay(dayIndex: number): string | null {
-  const { countryOrder, legacyCountryOrder, countryOrderFrom } = ROTATION;
-  const legacy = dayIndex < countryOrderFrom;
-  const list = legacy ? legacyCountryOrder : countryOrder;
-  if (list.length === 0) return null;
-  const i = legacy
-    ? mod(dayIndex, list.length)
-    : mod(dayIndex - countryOrderFrom, list.length);
-  return list[i];
+  const era = eraForDay(ROTATION.countryEras, dayIndex);
+  if (!era || era.order.length === 0) return null;
+  return era.order[mod(dayIndex - era.from, era.order.length)];
 }
 
 /**
  * The item ids to try for a day, best candidate first.
  *
- * The catalogue grew from 7 items to 17, which changes `dayIndex % length` for
- * every day at once and would have silently rewritten which item every past
- * puzzle used. So days before `itemOrderFrom` keep the seven-item schedule they
- * were played with, and the full list takes over from that day on. See the
- * stability note in data/rotation.ts.
- *
  * The list is rotated rather than sliced, so a caller can walk the whole
- * catalogue from the scheduled item onwards when a country lacks it.
+ * catalogue from the scheduled item onwards when a country lacks it. A frozen
+ * era can still name an item that has since left the catalogue, which is what
+ * keeps its length fixed; getDailyPuzzle walks past those the same way it walks
+ * past an item a country does not stock.
  */
 export function itemOrderForDay(dayIndex: number): string[] {
-  const { itemOrder, legacyItemOrder, itemOrderFrom } = ROTATION;
-  const legacy = dayIndex < itemOrderFrom;
-  const list = legacy ? legacyItemOrder : itemOrder;
-  if (list.length === 0) return [];
-  const start = legacy
-    ? mod(dayIndex, list.length)
-    : mod(dayIndex - itemOrderFrom, list.length);
-  return list.map((_, i) => list[(start + i) % list.length]);
+  const era = eraForDay(ROTATION.itemEras, dayIndex);
+  if (!era || era.order.length === 0) return [];
+  const start = mod(dayIndex - era.from, era.order.length);
+  return era.order.map((_, i) => era.order[(start + i) % era.order.length]);
 }
 
 /**

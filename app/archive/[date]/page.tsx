@@ -14,7 +14,7 @@ import {
   medianPriceUSD,
   suppressedPairs,
 } from "@/lib/catalog";
-import { getItem } from "@/data/items";
+import { getItem, itemLabel, lowerName } from "@/data/items";
 import { COUNTRY_NOTES } from "@/data/countries";
 import { getPuzzleForISO } from "@/lib/puzzle";
 import {
@@ -56,10 +56,10 @@ export function generateMetadata({
   const { item, price, puzzleNumber } = puzzle;
   return pageMetadata({
     path: `/archive/${params.date}`,
-    title: `Pricele #${puzzleNumber} — ${item.shortName} in ${price.countryName}`,
+    title: `Pricele #${puzzleNumber} — ${itemLabel(item)} in ${price.countryName}`,
     description: `The answer to Pricele #${puzzleNumber} (${formatArchiveDate(
       params.date
-    )}): ${item.name.toLowerCase()} in ${price.countryName} cost ${formatUSD(
+    )}): ${lowerName(item.name)} in ${price.countryName} cost ${formatUSD(
       price.priceUSD
     )}. See how that compares with every other country.`,
   });
@@ -142,7 +142,7 @@ export default function ArchiveDatePage({
         <Prose>
           {rank && (
             <p>
-              Of the {total} countries priced for {item.shortName.toLowerCase()},{" "}
+              Of the {total} countries priced for {lowerName(itemLabel(item))},{" "}
               {price.countryName} ranks #{rank} from the top at{" "}
               {formatUSD(price.priceUSD)}, {price.priceUSD > median
                 ? `${(price.priceUSD / median).toFixed(1)}× the median`
@@ -161,7 +161,7 @@ export default function ArchiveDatePage({
               href: `/prices/${countrySlug(p.countryName)}`,
               price: p,
             }))}
-            labelHeader={`Nearby on the ${item.shortName.toLowerCase()} table`}
+            labelHeader={`Nearby on the ${lowerName(itemLabel(item))} table`}
           />
         )}
       </Section>
@@ -188,7 +188,7 @@ export default function ArchiveDatePage({
               href={`/items/${item.slug}`}
               className="underline decoration-rule underline-offset-2 transition-colors duration-fast ease-out hover:text-ink"
             >
-              {item.shortName.toLowerCase()} in every country
+              {lowerName(itemLabel(item))} in every country
             </Link>{" "}
             or everything priced in{" "}
             <Link

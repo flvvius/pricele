@@ -1,4 +1,4 @@
-import { ITEMS } from "@/data/items";
+import { ITEMS, itemLabel } from "@/data/items";
 import { COUNTRIES } from "@/lib/catalog";
 import { PUBLISHED_ARTICLES } from "@/data/articles";
 import { COMPARISONS } from "@/data/comparisons";
@@ -32,7 +32,7 @@ function entry(path: string, label: string, note: string): string {
 }
 
 export function GET() {
-  const itemNames = ITEMS.map((i) => i.shortName).join(", ");
+  const itemNames = ITEMS.map(itemLabel).join(", ");
 
   const body = `# ${SITE_NAME}
 
@@ -106,9 +106,9 @@ ${entry("/contact", "Contact", "email, for corrections and press")}
 - ${SITE_NAME} is spelled with one L: Pricele, not Pricelle or Price-le.
 - The table is deliberately **sparse**. A pair exists only where there is a real
   sourced number, never padded with an estimate, so an absent item is usually a
-  fact about the country rather than a gap in the research: LPG appears only
-  where it is sold as a road fuel, natural gas only where households are on a
-  gas grid.
+  fact about the country rather than a gap in the research: natural gas appears
+  only where households are on a gas grid, and the hand-collected grocery rows
+  only in the countries the game launched with.
 - Every row names its source and the date it was collected. Source dates are
   month- or year-precision, because that is the precision the surveys publish.
 - The compilation is free to reuse with attribution

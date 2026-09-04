@@ -16,6 +16,13 @@ export interface Item {
   name: string;
   /** Compact name for tight spots (share text, table headers). */
   shortName: string;
+  /**
+   * How much of the thing the price covers, when the short name alone doesn't
+   * say: "100 kWh". A litre of milk and a pack of 20 need no help; a price for
+   * "electricity" means nothing without the quantity beside it, so `itemLabel`
+   * carries this everywhere the short name stands next to a figure.
+   */
+  measure?: string;
   /** URL slug for /items/<slug>. */
   slug: string;
   /** What one unit is, e.g. "a 330ml can". Used in "how much does X cost" copy. */
@@ -125,21 +132,10 @@ export const ITEMS: Item[] = [
       "Diesel and petrol leave the same refinery, so the gap between them in any country is almost entirely tax. Much of Europe spent decades taxing diesel more lightly than petrol to favour freight and diesel cars, and has been closing that gap since 2015. Elsewhere the ordering flips: plenty of countries price diesel above petrol because it is the fuel of business rather than of voters.",
   },
   {
-    id: "lpg-1l",
-    name: "LPG (1 litre)",
-    shortName: "LPG",
-    slug: "lpg",
-    unit: "one litre of autogas at the pump",
-    imageUrl: "/items/lpg.svg",
-    sourceNote:
-      "GlobalPetrolPrices.com's weekly LPG (autogas) series. It covers far fewer countries than the diesel one, because a country only appears if LPG is sold as a road fuel at all.",
-    blurb:
-      "Liquefied petroleum gas is the cheap third fuel: a by-product of gas processing and oil refining that a car can burn after a conversion costing a few hundred dollars. It only becomes a mass-market fuel where a government decides to tax it lightly, which is why the LPG map looks nothing like the petrol map. Poland, Turkey and Italy run large autogas fleets; most of the English-speaking world barely sells it.",
-  },
-  {
     id: "electricity-100kwh",
     name: "Electricity (100 kWh)",
     shortName: "Electricity",
+    measure: "100 kWh",
     slug: "electricity",
     unit: "100 kilowatt-hours on a household tariff",
     imageUrl: "/items/electricity.svg",
@@ -152,6 +148,7 @@ export const ITEMS: Item[] = [
     id: "natural-gas-100kwh",
     name: "Natural gas (100 kWh)",
     shortName: "Natural gas",
+    measure: "100 kWh",
     slug: "natural-gas",
     unit: "100 kilowatt-hours on a household tariff",
     imageUrl: "/items/natural-gas.svg",
@@ -245,6 +242,24 @@ export function getItemBySlug(slug: string): Item | undefined {
   return BY_SLUG.get(slug);
 }
 
+/**
+ * The short name with its quantity, e.g. "Electricity (100 kWh)" but plain
+ * "Big Mac". Use this, not `shortName`, wherever the label sits next to a price:
+ * share cards, table headers, the higher-or-lower cards, the archive list.
+ */
+export function itemLabel(item: Item): string {
+  return item.measure ? `${item.shortName} (${item.measure})` : item.shortName;
+}
+
+/**
+ * A name lowercased for running prose, leaving a trailing parenthetical alone:
+ * "electricity (100 kWh)", never "electricity (100 kwh)". The bracket holds a
+ * unit, and kWh is a unit.
+ */
+export function lowerName(name: string): string {
+  return name.replace(/^[^(]+/, (head) => head.toLowerCase());
+}
+
 // ---------------------------------------------------------------------------
 // Categories
 // ---------------------------------------------------------------------------
@@ -254,7 +269,7 @@ export function getItemBySlug(slug: string): Item | undefined {
  *
  * Kept as a lookup beside the catalogue rather than a field inside it,
  * deliberately. Every object in ITEMS is load-bearing for the daily schedule and
- * the archive, and a mechanical edit across all seventeen of them to add a field
+ * the archive, and a mechanical edit across all sixteen of them to add a field
  * is a bigger risk than a map that cannot touch them.
  *
  * The split is by what actually moves the price, which is why beer sits with
@@ -284,7 +299,6 @@ const CATEGORY_BY_ID: Record<string, ItemCategory> = {
 
   "gasoline-1l": "energy",
   "diesel-1l": "energy",
-  "lpg-1l": "energy",
   "electricity-100kwh": "energy",
   "natural-gas-100kwh": "energy",
 

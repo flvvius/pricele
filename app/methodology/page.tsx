@@ -151,7 +151,7 @@ export default function MethodologyPage() {
       <Section heading="Fuel and household energy">
         <Prose>
           <p>
-            Diesel, LPG, residential electricity and residential natural gas come
+            Diesel, residential electricity and residential natural gas come
             from{" "}
             <a
               href="https://www.globalpetrolprices.com/"
@@ -174,10 +174,9 @@ export default function MethodologyPage() {
             Nothing else in the game is rescaled.
           </p>
           <p>
-            Coverage is uneven, and deliberately so. LPG appears only where it is
-            sold as a road fuel at all, and natural gas only where households are
-            on a gas grid. An absent row means the country does not have the
-            thing, not that we could not find a number for it.
+            Coverage is uneven, and deliberately so. Natural gas appears only
+            where households are on a gas grid. An absent row means the country
+            does not have the thing, not that we could not find a number for it.
           </p>
         </Prose>
       </Section>
