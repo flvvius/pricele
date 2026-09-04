@@ -49,23 +49,6 @@ const ARROW: Record<GuessRecord["direction"], string> = {
   exact: "",
 };
 
-/** Bar glyphs, thin to thick. Index is the digit they encode. */
-const BARS = ["▏", "▎", "▍", "▌", "▋", "▊", "▉", "█", "│", "║"];
-
-/**
- * A barcode for the puzzle number, which is the detail that sells the whole
- * conceit. It really does encode the number, one glyph per digit between
- * separators, so two different days never produce the same strip.
- */
-export function barcode(puzzleNumber: number): string {
-  const digits = String(Math.abs(Math.round(puzzleNumber))).padStart(4, "0");
-  const body = digits
-    .split("")
-    .map((d) => `${BARS[Number(d)]}│`)
-    .join("");
-  return `║${body}║`;
-}
-
 export interface ShareInput {
   puzzleNumber: number;
   itemName: string;
@@ -107,7 +90,6 @@ const RULE = "──────────────";
  *   ──────────────
  *   BIDS 3/5 · BEST 4% · SCORE 870
  *   "The Tourist" · 🔥12
- *   ║▏│▍│▎│▋│║
  */
 export function buildShareText({
   puzzleNumber,
@@ -153,7 +135,6 @@ export function buildShareText({
     lines.push(`"${title}"${fire}`);
   }
 
-  lines.push(barcode(puzzleNumber));
   return lines.join("\n");
 }
 

@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { personaFor, roastFor, highlightFor, lookalikeLine } from "./verdict";
 import { evaluate, pointsFor, roundScore, MAX_POINTS } from "./scoring";
-import { buildLineItems, buildShareText, barcode } from "./share";
+import { buildLineItems, buildShareText } from "./share";
 import { PRICES, findPrice } from "./puzzle";
 import type { GuessRecord } from "./storage";
 
@@ -222,12 +222,6 @@ describe("the receipt", () => {
     expect(buildLineItems(round([4.0]))).toBe("🟩");
   });
 
-  it("encodes the puzzle number in the barcode, differently for each day", () => {
-    expect(barcode(214)).toBe(barcode(214));
-    expect(barcode(214)).not.toBe(barcode(215));
-    expect(barcode(214).startsWith("║")).toBe(true);
-  });
-
   it("carries the header, the line items, the totals and the verdict", () => {
     const text = buildShareText({
       puzzleNumber: 214,
@@ -246,6 +240,10 @@ describe("the receipt", () => {
     expect(lines[1]).toBe("CAPPUCCINO · JAPAN 🇯🇵");
     expect(lines[5]).toBe("BIDS 3/5 · BEST 1% · SCORE 870");
     expect(lines[6]).toBe('"The Recovering Tourist" · 🔥12');
+    // The verdict is the last line of the slip. This used to be followed by a
+    // decorative "barcode" of box-drawing glyphs, which rendered as tofu in
+    // plenty of the places a result actually gets pasted.
+    expect(lines).toHaveLength(7);
   });
 
   it("marks a loss as X of five", () => {

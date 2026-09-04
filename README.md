@@ -263,13 +263,12 @@ CAPPUCCINO · JAPAN 🇯🇵
 ──────────────
 BIDS 3/5 · BEST 4% · SCORE 870
 "The Tourist" · 🔥12
-║▏│▍│▎│▋│║
 ```
 
-One line item per bid, a warmth block and a direction arrow, and a barcode that
-really does encode the puzzle number. A grid of squares is Wordle's and every
-game that copies it looks like a game that copied Wordle; this is a game about
-what things cost, so the artefact is the thing you get when you buy something.
+One line item per bid, a warmth block and a direction arrow. A grid of squares
+is Wordle's and every game that copies it looks like a game that copied Wordle;
+this is a game about what things cost, so the artefact is the thing you get when
+you buy something.
 
 > **The Receipt must never contain a bid or the price.** That is the property
 > that made Wordle's grid work and the easiest thing to lose while making a slip
