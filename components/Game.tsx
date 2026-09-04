@@ -241,17 +241,15 @@ export default function Game() {
     : null;
 
   return (
-    // One self-contained screen: the masthead and lot bar are fixed height, the
-    // board flexes to fill whatever is left, and the input sits at the bottom.
-    // With interactive-widget=resizes-content, the keyboard shrinks the viewport
-    // and this whole column reflows, so typing and results stay on one screen.
-    //
-    // The board keeps a column measure on a desk rather than stretching to the
-    // page: five ledger rows spread across a full-width screen stop reading as
-    // a stack. It widens by a third and then centres itself.
+    // On a phone this is one self-contained screen: the masthead and the lot bar
+    // are fixed height, the board flexes to fill whatever is left, and the input
+    // sits on the bottom edge. `.game-screen` is what holds that height — see
+    // app/globals.css, which also explains why it lets go on a desk and why it
+    // comes off entirely once the round is finished.
     <div
-      className="flex flex-col gap-3 pt-3 pb-[max(0.5rem,env(safe-area-inset-bottom))] lg:mx-auto lg:w-full lg:max-w-xl"
-      style={{ height: "var(--vvh, 100dvh)" }}
+      className={`flex flex-col gap-3 pt-3 pb-[max(0.5rem,env(safe-area-inset-bottom))] lg:gap-5 lg:pt-5 ${
+        state.done ? "" : "game-screen"
+      }`}
     >
       <header className="shrink-0">
         <div className="flex items-center justify-between">
@@ -279,7 +277,7 @@ export default function Game() {
               make, worded the way a person searching for this kind of game
               would put it. It is description, not a keyword list; keep it that
               way if it is ever edited. */}
-          <h1 className="display text-masthead text-ink">
+          <h1 className="display text-masthead text-ink lg:text-[2.75rem]">
             Pricele
             <span className="sr-only">
               {" "}
@@ -324,127 +322,141 @@ export default function Game() {
         </div>
       )}
 
-      {/* Both the item and the country change daily, so this band is the only
-          place that states what the player is actually pricing today.
+      {/* Phone: one column, the lot bar above the board. Desk: the lot moves
+          into the same 13rem standing-head rail every section further down this
+          page already uses, so the whole document hangs off one vertical
+          instead of a phone-width board floating in the middle of a wide
+          screen, and the board gets the copy column beside it. */}
+      <div className="flex min-h-0 flex-1 flex-col gap-3 lg:grid lg:grid-cols-[13rem_minmax(0,1fr)] lg:items-start lg:gap-x-12">
+        {/* Both the item and the country change daily, so this band is the only
+            place that states what the player is actually pricing today.
 
-          The headline wraps to a second line and steps down a size rather than
-          truncating: an item and a country together run past a phone's measure
-          often enough ("Coca-Cola (330ml can) in United Arab Emirates") that
-          cutting the line lost the country, which is the half of the sentence
-          the puzzle turns on. Two lines is the ceiling; nothing in the table
-          reaches it at the smallest step, and the clamp is there so a future
-          long name cannot push the input off a short screen. */}
-      <div className="flex shrink-0 items-start gap-3.5 border-y border-rule py-2.5">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={puzzle?.item.imageUrl ?? "/items/placeholder.svg"}
-          alt=""
-          width={44}
-          height={44}
-          className="mt-0.5 h-11 w-11 shrink-0 border border-rule bg-paper-raised object-contain p-1.5"
-        />
-        <div className="min-w-0 flex-1">
-          <p className="label">Today&apos;s lot</p>
-          <h2
-            // No `text-balance` here: line-clamp renders the box as a
-            // -webkit-box, which ignores text-wrap, so the class would sit in
-            // the markup doing nothing. The clamp is worth more than the
-            // prettier break — it is what stops a future long name pushing the
-            // guess box off a short screen.
-            className={`display mt-1 line-clamp-2 leading-[1.15] text-ink ${headlineSize(
-              puzzle ? `${puzzle.item.name} in ${puzzle.price.countryName}` : ""
-            )}`}
-          >
-            {puzzle ? (
-              <>
-                {puzzle.item.name}{" "}
-                <span className="text-ink-muted">in</span>{" "}
-                {puzzle.price.countryName}
-                {/* A non-breaking space, so the flag stays on the last word of
-                    the country rather than orphaning onto a line of its own.
-                    Only that pair is held together: making the whole country
-                    name unbreakable would just move the overflow. */}
-                {"\u00a0"}
-                <span aria-hidden className="text-[0.75em]">
-                  {puzzle.price.flag}
-                </span>
-              </>
+            The headline wraps to a second line and steps down a size rather than
+            truncating: an item and a country together run past a phone's measure
+            often enough ("Coca-Cola (330ml can) in United Arab Emirates") that
+            cutting the line lost the country, which is the half of the sentence
+            the puzzle turns on. Two lines is the ceiling on a phone; the clamp
+            exists so a long name cannot push the input off a short screen, a
+            risk that only exists on the height-locked phone screen, so it is
+            lifted again on a desk where the page just gets taller. */}
+        <div className="flex shrink-0 items-start gap-3.5 border-y border-rule py-2.5 lg:flex-col lg:gap-3 lg:border-y-0 lg:py-0">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={puzzle?.item.imageUrl ?? "/items/placeholder.svg"}
+            alt=""
+            width={44}
+            height={44}
+            className="mt-0.5 h-11 w-11 shrink-0 border border-rule bg-paper-raised object-contain p-1.5 lg:mt-0 lg:h-16 lg:w-16 lg:p-2.5"
+          />
+          <div className="min-w-0 flex-1 lg:w-full lg:flex-none">
+            <p className="label">Today&apos;s lot</p>
+            <h2
+              // No `text-balance` here: line-clamp renders the box as a
+              // -webkit-box, which ignores text-wrap, so the class would sit in
+              // the markup doing nothing.
+              className={`display mt-1 line-clamp-2 leading-[1.15] text-ink lg:mt-2 lg:line-clamp-none ${headlineSize(
+                puzzle ? `${puzzle.item.name} in ${puzzle.price.countryName}` : ""
+              )}`}
+            >
+              {puzzle ? (
+                <>
+                  {puzzle.item.name}{" "}
+                  <span className="text-ink-muted">in</span>{" "}
+                  {puzzle.price.countryName}
+                  {/* A non-breaking space, so the flag stays on the last word of
+                      the country rather than orphaning onto a line of its own.
+                      Only that pair is held together: making the whole country
+                      name unbreakable would just move the overflow. */}
+                  {"\u00a0"}
+                  <span aria-hidden className="text-[0.75em]">
+                    {puzzle.price.flag}
+                  </span>
+                </>
+              ) : (
+                <span className="text-ink-faint">Setting today&apos;s lot</span>
+              )}
+            </h2>
+          </div>
+        </div>
+
+        {/* The play column: the board, the input, and after the last bid the
+            reveal in their place. On a phone it is the rest of the locked
+            screen; on a desk it is the copy column beside the rail. */}
+        <div className="flex min-h-0 flex-1 flex-col gap-3">
+          {mounted && puzzle ? (
+            state.done ? (
+              // No inner scroller here. The reveal runs longer than a screen,
+              // and while the game was height-locked at every width it had to
+              // scroll inside the board area — which put a second scrollbar
+              // inside an already-scrolling page. The lock is off once the
+              // round is done, so the reveal simply makes the document taller.
+              <Reveal
+                puzzleNumber={puzzle.puzzleNumber}
+                item={puzzle.item}
+                price={puzzle.price}
+                guesses={state.guesses}
+                won={state.won}
+                stats={stats}
+                onShowStats={() => setShowStats(true)}
+                currency={currency}
+                isArchive={isArchive}
+                score={score}
+                crowd={crowd}
+                staged={justFinished}
+                today={today}
+                roomCode={roomCode}
+              />
             ) : (
-              <span className="text-ink-faint">Setting today&apos;s lot</span>
-            )}
-          </h2>
+              <>
+                {atRisk && (
+                  <p className="animate-set-in shrink-0 border-l-2 border-streak bg-streak/[0.08] py-1.5 pl-2.5 font-mono text-[11px] uppercase tracking-[0.14em] text-streak">
+                    {stats.currentStreak}-day streak on the line
+                    {stats.graceDays > 0 &&
+                      ` · ${stats.graceDays} ${GRACE_NAME}${stats.graceDays > 1 ? "s" : ""} banked`}
+                  </p>
+                )}
+
+                <GuessHistory guesses={state.guesses} currency={currency} />
+
+                <div className="shrink-0">
+                  {/* The clue before the last bid. About the study and the
+                      policy behind the price, never the figure. See
+                      lib/hints.ts. */}
+                  {hint && (
+                    <p className="animate-set-in mb-2.5 border-l-2 border-accent bg-accent/[0.06] py-1.5 pl-2.5 pr-2 text-[12px] leading-relaxed text-ink-body">
+                      <span className="label !text-accent">Clue</span>{" "}
+                      <span className="ml-1">{hint}</span>
+                    </p>
+                  )}
+
+                  {state.guesses.length === 0 && (
+                    <p className="mb-2.5 text-center text-[12px] leading-relaxed text-ink-meta">
+                      For scale, the median{" "}
+                      {puzzle.item.shortName.toLowerCase()} across all countries
+                      is{" "}
+                      <span className="font-mono tabular-nums text-ink-body">
+                        {formatPrice(anchorPriceUSD(puzzle.item.id), currency)}
+                      </span>
+                      .
+                    </p>
+                  )}
+                  <GuessInput
+                    disabled={state.done}
+                    remaining={MAX_GUESSES - state.guesses.length}
+                    currency={currency}
+                    onCurrencyChange={changeCurrency}
+                    onGuess={handleGuess}
+                  />
+                </div>
+              </>
+            )
+          ) : (
+            <div className="flex min-h-0 flex-1 items-center justify-center py-10">
+              <p className="label">Setting today&apos;s page</p>
+            </div>
+          )}
         </div>
       </div>
-
-      {mounted && puzzle ? (
-        state.done ? (
-          // Finished: the reveal is longer than a screen, so it scrolls inside
-          // the game area instead of pushing the page.
-          <div className="min-h-0 flex-1 overflow-y-auto">
-            <Reveal
-              puzzleNumber={puzzle.puzzleNumber}
-              item={puzzle.item}
-              price={puzzle.price}
-              guesses={state.guesses}
-              won={state.won}
-              stats={stats}
-              onShowStats={() => setShowStats(true)}
-              currency={currency}
-              isArchive={isArchive}
-              score={score}
-              crowd={crowd}
-              staged={justFinished}
-              today={today}
-              roomCode={roomCode}
-            />
-          </div>
-        ) : (
-          <>
-            {atRisk && (
-              <p className="animate-set-in shrink-0 border-l-2 border-streak bg-streak/[0.08] py-1.5 pl-2.5 font-mono text-[11px] uppercase tracking-[0.14em] text-streak">
-                {stats.currentStreak}-day streak on the line
-                {stats.graceDays > 0 &&
-                  ` · ${stats.graceDays} ${GRACE_NAME}${stats.graceDays > 1 ? "s" : ""} banked`}
-              </p>
-            )}
-
-            <GuessHistory guesses={state.guesses} currency={currency} />
-
-            <div className="shrink-0">
-              {/* The clue before the last bid. About the study and the policy
-                  behind the price, never the figure. See lib/hints.ts. */}
-              {hint && (
-                <p className="animate-set-in mb-2.5 border-l-2 border-accent bg-accent/[0.06] py-1.5 pl-2.5 pr-2 text-[12px] leading-relaxed text-ink-body">
-                  <span className="label !text-accent">Clue</span>{" "}
-                  <span className="ml-1">{hint}</span>
-                </p>
-              )}
-
-              {state.guesses.length === 0 && (
-                <p className="mb-2.5 text-center text-[12px] leading-relaxed text-ink-meta">
-                  For scale, the median{" "}
-                  {puzzle.item.shortName.toLowerCase()} across all countries is{" "}
-                  <span className="font-mono tabular-nums text-ink-body">
-                    {formatPrice(anchorPriceUSD(puzzle.item.id), currency)}
-                  </span>
-                  .
-                </p>
-              )}
-              <GuessInput
-                disabled={state.done}
-                remaining={MAX_GUESSES - state.guesses.length}
-                currency={currency}
-                onCurrencyChange={changeCurrency}
-                onGuess={handleGuess}
-              />
-            </div>
-          </>
-        )
-      ) : (
-        <div className="flex min-h-0 flex-1 items-center justify-center">
-          <p className="label">Setting today&apos;s page</p>
-        </div>
-      )}
 
       <HowToPlay open={showHowTo} onClose={() => setShowHowTo(false)} />
       <StatsPanel

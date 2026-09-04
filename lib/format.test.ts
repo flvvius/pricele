@@ -238,8 +238,11 @@ describe("headlineSize", () => {
   }
 
   it("leaves a short headline at the size the band has always used", () => {
-    expect(headlineSize("Milk (1 litre) in Peru")).not.toBe("text-[1.5rem]");
-    expect(headlineSize("Bread in Peru")).toBe("text-[1.5rem]");
+    // The phone step is the assertion; the `lg:` step appended after it only
+    // applies once the game is no longer height-locked, and `smallestRem` above
+    // is what the rest of this suite reads.
+    expect(headlineSize("Milk (1 litre) in Peru")).not.toMatch(/^text-\[1\.5rem\]/);
+    expect(headlineSize("Bread in Peru")).toMatch(/^text-\[1\.5rem\]/);
   });
 
   it("steps down monotonically as the headline grows", () => {
@@ -268,6 +271,6 @@ describe("headlineSize", () => {
   });
 
   it("survives the empty headline of the pre-hydration state", () => {
-    expect(headlineSize("")).toBe("text-[1.5rem]");
+    expect(headlineSize("")).toMatch(/^text-\[1\.5rem\]/);
   });
 });

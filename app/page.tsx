@@ -22,12 +22,14 @@ export const metadata: Metadata = pageMetadata({ path: "/" });
 
 export default function Home() {
   return (
-    // max-w-md is the phone column and stays the phone column. From lg up the
-    // page opens to a broadsheet measure and the sections below set as a
-    // standing head beside its copy. See the `lg:grid` rails below.
-    <main className="mx-auto flex max-w-md flex-col gap-10 px-4 pb-6 lg:max-w-4xl">
-      {/* The game occupies exactly the first screen; the prose below is for
-          readers and crawlers and sits deliberately below the fold. */}
+    // max-w-md is the phone column and stays the phone column. A tablet opens to
+    // the same measure the reference pages use rather than sitting at phone
+    // width with half the screen empty, and from lg up the page opens again to
+    // a broadsheet measure where each section sets as a standing head beside
+    // its copy. See the `lg:grid` rails below.
+    <main className="mx-auto flex max-w-md flex-col gap-10 px-4 pb-6 md:max-w-2xl lg:max-w-4xl">
+      {/* On a phone the game occupies exactly the first screen; the prose below
+          is for readers and crawlers and sits deliberately below the fold. */}
       <Game />
 
       <section

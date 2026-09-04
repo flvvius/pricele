@@ -88,7 +88,12 @@ export default function GuessInput({
             currency === "EUR" ? "Your guess in euros" : "Your guess in US dollars"
           }
           aria-invalid={error ? true : undefined}
-          className="w-full min-w-0 bg-transparent py-3.5 pl-2 pr-3 font-mono text-xl tabular-nums text-ink outline-none placeholder:text-ink-faint disabled:opacity-50"
+          // `outline-none` alone is not enough: the app-wide :focus-visible rule
+          // in globals.css puts an offset accent ring on whatever has keyboard
+          // focus, and this field is autofocused on load, so on a desk that ring
+          // was drawn on top of the currency toggle sitting inside the same
+          // frame. The frame's own focus-within border is the indicator here.
+          className="w-full min-w-0 bg-transparent py-3.5 pl-2 pr-3 font-mono text-xl tabular-nums text-ink outline-none placeholder:text-ink-faint focus-visible:outline-none disabled:opacity-50"
         />
         <button
           type="submit"

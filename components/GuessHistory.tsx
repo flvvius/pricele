@@ -41,7 +41,7 @@ function Row({
 
   return (
     <li
-      className="animate-set-in relative flex min-h-[2.75rem] flex-1 items-center gap-3 overflow-hidden border-b border-rule-soft px-3"
+      className="animate-set-in relative flex min-h-[2.75rem] flex-1 items-center gap-3 overflow-hidden border-b border-rule-soft px-3 lg:min-h-[3.25rem]"
       style={
         {
           "--warm": `var(--warm-${tier.level})`,
@@ -121,7 +121,7 @@ export default function GuessHistory({
   // end up overlapping the input.
   return (
     <ul
-      className="flex min-h-0 flex-1 flex-col justify-start overflow-y-auto border-t border-rule"
+      className="flex min-h-0 flex-1 flex-col justify-start overflow-y-auto border-t border-rule lg:overflow-y-visible"
       aria-label="Your guesses"
     >
       {guesses.map((g, i) => (
@@ -130,7 +130,7 @@ export default function GuessHistory({
       {Array.from({ length: empties }, (_, i) => (
         <li
           key={`empty-${i}`}
-          className="flex min-h-[2.75rem] flex-1 items-center gap-3 border-b border-rule-soft px-3"
+          className="flex min-h-[2.75rem] flex-1 items-center gap-3 border-b border-rule-soft px-3 lg:min-h-[3.25rem]"
         >
           <span className="font-mono text-[11px] tabular-nums text-ink-faint/60">
             {String(guesses.length + i + 1).padStart(2, "0")}

@@ -198,8 +198,8 @@ export function priceRankLine(price: PriceEntry): string {
  */
 export function headlineSize(headline: string): string {
   const n = headline.trim().length;
-  if (n >= 40) return "text-[1.0625rem] xs:text-[1.125rem]";
-  if (n >= 30) return "text-[1.1875rem] xs:text-[1.3125rem]";
-  if (n >= 22) return "text-[1.3125rem] xs:text-[1.4375rem]";
-  return "text-[1.5rem]";
+  if (n >= 40) return "text-[1.0625rem] xs:text-[1.125rem] lg:text-[1.5rem]";
+  if (n >= 30) return "text-[1.1875rem] xs:text-[1.3125rem] lg:text-[1.625rem]";
+  if (n >= 22) return "text-[1.3125rem] xs:text-[1.4375rem] lg:text-[1.75rem]";
+  return "text-[1.5rem] lg:text-[2.125rem]";
 }

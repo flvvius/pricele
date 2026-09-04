@@ -155,6 +155,51 @@
 }
 
 /* ============================================================================
+   THE GAME SCREEN
+
+   On a phone the game is one self-contained screen. The masthead and the lot
+   bar are fixed height, the board flexes into whatever is left, and the input
+   sits on the bottom edge; `--vvh` tracks the visible viewport so the on-screen
+   keyboard shrinks the column instead of covering the input. That lock is the
+   whole reason play never scrolls on a phone, and it stays.
+
+   A desk has no on-screen keyboard and nothing to hide behind, so from lg up
+   the lock buys nothing and costs a great deal: five ledger rows stretched down
+   a 900px column read as an empty table rather than a board, and the page's one
+   real column of content floats in the middle of a screen three times its
+   width. Above that breakpoint the game sizes to its content and the document
+   scrolls once, like every other page on the site.
+
+   The class is applied only while a round is in play. Once it is over there is
+   no input to keep on screen and no keyboard to dodge, so the height comes off
+   at every width — which is what stops the reveal scrolling inside a box that
+   is itself inside a scrolling page.
+   ========================================================================= */
+
+.game-screen {
+  height: var(--vvh, 100dvh);
+}
+
+/* Let go as soon as the screen is plainly not a phone held upright: wide enough
+   that the column is no longer the whole device, and tall enough that the input
+   does not need pinning to the bottom edge to stay reachable. A landscape phone
+   fails the height test and keeps the lock, which is the case the --vvh
+   machinery exists for. */
+@media (min-width: 768px) and (min-height: 640px) {
+  .game-screen {
+    height: auto;
+  }
+}
+
+/* And unconditionally from lg, where the game lays out as a two-column spread
+   that has no use for a fixed height at all. */
+@media (min-width: 1024px) {
+  .game-screen {
+    height: auto;
+  }
+}
+
+/* ============================================================================
    MOTION
 
    The stock CSS easings are too weak to read as intentional. These are the
