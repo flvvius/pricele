@@ -64,7 +64,10 @@ export default function ShareCard({
       )}
       <button
         onClick={onShare}
-        className="flex items-center justify-center gap-2.5 bg-ink px-5 py-3.5 font-mono text-[12px] uppercase tracking-[0.18em] text-paper-raised transition-transform duration-press ease-out active:scale-[0.98]"
+        // `border border-ink` is invisible against the ink fill and is there for
+        // geometry alone: Continue above it is outlined, and without a border of
+        // its own this button came out 2px shorter than the one it sits under.
+        className="flex w-full items-center justify-center gap-2.5 border border-ink bg-ink px-5 py-3.5 font-mono text-[12px] uppercase tracking-[0.18em] text-paper-raised transition-transform duration-press ease-out active:scale-[0.98]"
       >
         {copied ? <IconCheck size={14} /> : <IconShare size={14} />}
         {copied ? "Copied" : nativeShare ? "Share result" : "Copy result"}

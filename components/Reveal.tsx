@@ -184,15 +184,35 @@ export default function Reveal({
         </div>
       </figure>
 
-      {/* Sharing is available from the first frame, ahead of everything the
-          reveal is still holding back.
+      {stage < STAGES && (
+        <button
+          onClick={() => setStage((s) => Math.min(STAGES, s + 1))}
+          className="flex w-full items-center justify-center gap-2.5 border border-rule px-5 py-3.5 font-mono text-[12px] uppercase tracking-[0.18em] text-ink-body transition-[border-color,background-color,transform] duration-press ease-out hover:border-ink hover:bg-paper-raised active:scale-[0.98]"
+        >
+          Continue
+          <span className="text-ink-faint">
+            {stage}/{STAGES}
+          </span>
+        </button>
+      )}
 
-          It used to sit near the bottom of the last card, which meant a player
-          who had just won had to tap Continue three times before the button they
-          came for appeared. That is the wrong way round: the receipt is the whole
-          point of the screen and the staged cards are the flourish around it, so
-          the flourish does not get to gate it. Until the last card it renders as
-          the button alone, because the slip quotes the verdict. */}
+      {/* Sharing is available on every frame, including the first.
+
+          Continue sits above it because that is the order a player moves in:
+          the staged cards are the thing being advanced through, and the button
+          that advances them belongs first. Share is still rendered on every
+          frame rather than at the end, which is the part that matters. It used
+          to appear only at the bottom of the last card, so a player who had
+          just won had to tap Continue three times before the button they came
+          for existed — the flourish gating the point of the screen. Being
+          second in reading order is not the same as being gated.
+
+          Until the last card it renders as the button alone, because the full
+          slip quotes the verdict the stagger is still holding back.
+
+          Both buttons are deliberately the same box: same padding, same type,
+          both full width. Continue stays outlined and receipt stays solid, so the
+          hierarchy is carried by weight rather than by size. */}
       <ShareCard
         puzzleNumber={puzzleNumber}
         itemName={item.shortName}
@@ -206,18 +226,6 @@ export default function Reveal({
         actualUSD={price.priceUSD}
         compact={stage < STAGES}
       />
-
-      {stage < STAGES && (
-        <button
-          onClick={() => setStage((s) => Math.min(STAGES, s + 1))}
-          className="mx-auto flex items-center gap-2.5 border border-rule px-5 py-2.5 font-mono text-[11px] uppercase tracking-[0.16em] text-ink-body transition-[border-color,background-color,transform] duration-press ease-out hover:border-ink hover:bg-paper-raised active:scale-[0.97]"
-        >
-          Continue
-          <span className="text-ink-faint">
-            {stage}/{STAGES}
-          </span>
-        </button>
-      )}
 
       {at(2) && (
         <div className="animate-set-in flex flex-col gap-4">
