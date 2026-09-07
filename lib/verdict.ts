@@ -19,7 +19,7 @@
 import type { GuessRecord } from "./storage";
 import type { PriceEntry } from "./puzzle";
 import { PRICES } from "./puzzle";
-import { getItem } from "@/data/items";
+import { getItem, itemPhrase } from "@/data/items";
 import { pctOff } from "./format";
 
 export interface Persona {
@@ -293,9 +293,9 @@ export function lookalikeLine(
   // saying nothing.
   if (Math.exp(nearestGap) > 1.15) return null;
 
-  const noun = item.shortName.toLowerCase();
+  const phrase = itemPhrase(item);
   if (nearest.countryCode === price.countryCode) return null;
-  return `Your opening bid is about what a ${noun} costs in ${nearest.countryName} ${nearest.flag}.`;
+  return `Your opening bid is about what ${phrase} costs in ${nearest.countryName} ${nearest.flag}.`;
 }
 
 export interface Highlight {

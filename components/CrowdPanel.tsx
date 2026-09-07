@@ -20,7 +20,8 @@ import {
 
 interface Props {
   stats: CrowdStats | null;
-  itemName: string;
+  /** The item as prose, article included: "a litre of milk". */
+  itemPhrase: string;
   countryCode: string;
   countryName: string;
   /** Hidden on archive replays: yesterday's crowd is not today's crowd. */
@@ -89,7 +90,7 @@ function HomeAsk({ onAnswer }: { onAnswer: (code: string) => void }) {
  */
 export default function CrowdPanel({
   stats,
-  itemName,
+  itemPhrase,
   countryCode,
   countryName,
   enabled,
@@ -120,11 +121,11 @@ export default function CrowdPanel({
   const lines = [
     percentileLine(stats),
     overshootLine(all, countryName),
-    egoGapLine(all, itemName, countryName),
+    egoGapLine(all, itemPhrase, countryName),
     // Only shown to someone who lives in the country on the board. For everyone
     // else it is a fact about strangers.
     home === countryCode
-      ? homeBiasLine(stats?.locals ?? null, itemName, countryName)
+      ? homeBiasLine(stats?.locals ?? null, itemPhrase, countryName)
       : null,
   ].filter((l): l is string => !!l);
 

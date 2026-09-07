@@ -199,7 +199,7 @@ const rowOf = (over: Partial<CrowdRow> = {}): CrowdRow => ({
 describe("withholding a figure there is no sample for", () => {
   it("every line is silent below the threshold", () => {
     const thin = rowOf({ plays: MIN_CROWD - 1 });
-    expect(egoGapLine(thin, "Cappuccino", "Japan")).toBeNull();
+    expect(egoGapLine(thin, "a cappuccino", "Japan")).toBeNull();
     expect(overshootLine(thin, "Japan")).toBeNull();
     expect(turnoutLine(thin)).toBeNull();
     expect(
@@ -208,9 +208,9 @@ describe("withholding a figure there is no sample for", () => {
   });
 
   it("every line is silent with no data at all", () => {
-    expect(egoGapLine(null, "Cappuccino", "Japan")).toBeNull();
+    expect(egoGapLine(null, "a cappuccino", "Japan")).toBeNull();
     expect(overshootLine(null, "Japan")).toBeNull();
-    expect(homeBiasLine(null, "Cappuccino", "Japan")).toBeNull();
+    expect(homeBiasLine(null, "a cappuccino", "Japan")).toBeNull();
     expect(turnoutLine(null)).toBeNull();
     expect(percentileLine(null)).toBeNull();
   });
@@ -218,14 +218,14 @@ describe("withholding a figure there is no sample for", () => {
 
 describe("the ego gap", () => {
   it("reports the geometric mean of the opening bids", () => {
-    expect(egoGapLine(rowOf(), "Cappuccino", "Japan")).toBe(
+    expect(egoGapLine(rowOf(), "a cappuccino", "Japan")).toBe(
       "Players overestimate a cappuccino in Japan by 36% on their opening bid."
     );
   });
 
   it("says under when the crowd lowballs", () => {
     const low = rowOf({ first_log_sum: Math.log(0.7) * 100 });
-    expect(egoGapLine(low, "Cappuccino", "Japan")).toMatch(/underestimate/);
+    expect(egoGapLine(low, "a cappuccino", "Japan")).toMatch(/underestimate/);
   });
 
   // The whole reason the sums are kept in log space. One player typing 500 on a
@@ -233,14 +233,14 @@ describe("the ego gap", () => {
   it("is not run away with by a single absurd bid", () => {
     const sane = Math.log(1.1) * 99;
     const withOutlier = rowOf({ first_log_sum: sane + Math.log(125) });
-    const line = egoGapLine(withOutlier, "Cappuccino", "Japan")!;
+    const line = egoGapLine(withOutlier, "a cappuccino", "Japan")!;
     const pct = Number(line.match(/(\d+)%/)![1]);
     expect(pct).toBeLessThan(30);
   });
 
   it("does not claim a gap it cannot measure", () => {
     const flat = rowOf({ first_log_sum: Math.log(1.01) * 100 });
-    expect(egoGapLine(flat, "Cappuccino", "Japan")).toMatch(/almost exactly/);
+    expect(egoGapLine(flat, "a cappuccino", "Japan")).toMatch(/almost exactly/);
   });
 });
 
@@ -258,11 +258,11 @@ describe("who bid high", () => {
 describe("home-country bias", () => {
   it("needs its own, smaller sample", () => {
     expect(
-      homeBiasLine(rowOf({ plays: MIN_LOCALS - 1 }), "Cappuccino", "Japan")
+      homeBiasLine(rowOf({ plays: MIN_LOCALS - 1 }), "a cappuccino", "Japan")
     ).toBeNull();
     const line = homeBiasLine(
       rowOf({ plays: MIN_LOCALS, first_log_sum: Math.log(1.2) * MIN_LOCALS }),
-      "Cappuccino",
+      "a cappuccino",
       "Japan"
     );
     expect(line).toBe("Players in Japan overestimate their own cappuccino by 20%.");

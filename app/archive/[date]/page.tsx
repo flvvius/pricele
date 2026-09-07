@@ -14,7 +14,7 @@ import {
   medianPriceUSD,
   suppressedPairs,
 } from "@/lib/catalog";
-import { getItem, itemLabel, lowerName } from "@/data/items";
+import { getItem, itemLabel, itemPhrase, lowerName } from "@/data/items";
 import { COUNTRY_NOTES } from "@/data/countries";
 import { getPuzzleForISO } from "@/lib/puzzle";
 import {
@@ -106,8 +106,8 @@ export default function ArchiveDatePage({
       intro={
         <p>
           The puzzle for {formatArchiveDate(params.date)} asked what{" "}
-          {item.unit} of {item.shortName.toLowerCase()} costs in{" "}
-          {price.countryName}. Here is the answer and the context behind it.
+          {itemPhrase(item)} costs in {price.countryName}. Here is the answer
+          and the context behind it.
         </p>
       }
     >
@@ -132,7 +132,7 @@ export default function ArchiveDatePage({
         <p className="label">Source: {price.source}.</p>
       </Section>
 
-      <Section heading={`About ${item.shortName.toLowerCase()}`}>
+      <Section heading={`About ${lowerName(itemLabel(item))}`}>
         <Prose>
           <p>{item.blurb}</p>
         </Prose>

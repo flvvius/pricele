@@ -13,6 +13,7 @@
 // shaky one to fill the space is the exact failure to avoid.
 
 import type { CrowdRow, CrowdStats } from "./db";
+import { dropArticle } from "@/data/items";
 
 /** Below this many players, no percentage or average is published. */
 export const MIN_CROWD = 25;
@@ -142,19 +143,18 @@ function meanRatio(row: CrowdRow): number {
  */
 export function egoGapLine(
   all: CrowdRow | null,
-  itemName: string,
+  itemPhrase: string,
   countryName: string
 ): string | null {
   if (!all || all.plays < MIN_CROWD) return null;
   const ratio = meanRatio(all);
   const pct = Math.round(Math.abs(ratio - 1) * 100);
-  const noun = itemName.toLowerCase();
   if (pct < 5) {
-    return `Opening bids today average almost exactly the real price of a ${noun} in ${countryName}.`;
+    return `Opening bids today average almost exactly the real price of ${itemPhrase} in ${countryName}.`;
   }
   return ratio > 1
-    ? `Players overestimate a ${noun} in ${countryName} by ${pct}% on their opening bid.`
-    : `Players underestimate a ${noun} in ${countryName} by ${pct}% on their opening bid.`;
+    ? `Players overestimate ${itemPhrase} in ${countryName} by ${pct}% on their opening bid.`
+    : `Players underestimate ${itemPhrase} in ${countryName} by ${pct}% on their opening bid.`;
 }
 
 /**
@@ -185,13 +185,14 @@ export function overshootLine(
  */
 export function homeBiasLine(
   locals: CrowdRow | null,
-  itemName: string,
+  itemPhrase: string,
   countryName: string
 ): string | null {
   if (!locals || locals.plays < MIN_LOCALS) return null;
   const ratio = meanRatio(locals);
   const pct = Math.round(Math.abs(ratio - 1) * 100);
-  const noun = itemName.toLowerCase();
+  // "their own" is the determiner here, so the phrase drops its article.
+  const noun = dropArticle(itemPhrase);
   if (pct < 5) {
     return `Players in ${countryName} call their own ${noun} almost exactly right.`;
   }

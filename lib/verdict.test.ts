@@ -152,7 +152,8 @@ describe("the price-lookalike line", () => {
       (p) => p.itemId === "big-mac" && p.countryCode !== price.countryCode
     )!;
     const line = lookalikeLine(peer.priceUSD, price, new Set());
-    expect(line).toContain("big mac");
+    // A Big Mac keeps its capitals in prose; it is a product, not a noun.
+    expect(line).toContain("a Big Mac");
     expect(line).toMatch(/costs in /);
   });
 

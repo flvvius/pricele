@@ -9,7 +9,7 @@
 
 import type { PriceEntry } from "@/lib/puzzle";
 import { PRICES } from "@/lib/puzzle";
-import { getItem } from "@/data/items";
+import { getItem, itemPhrase, itemNoun } from "@/data/items";
 import { fromUSD, type Currency } from "@/lib/currency";
 
 /**
@@ -59,15 +59,19 @@ export function formatMoney(value: number, currency: string): string {
 
 /** How much local working time the item costs, as a human sentence. */
 export function affordanceLine(price: PriceEntry): string {
+  const item = getItem(price.itemId);
+  // "buys one" is a lie for the quantities: one what, of 100 kWh of
+  // electricity? Naming the amount is the whole point of the sentence.
+  const phrase = item ? itemPhrase(item) : "one";
   const minutes = (price.priceUSD / price.avgHourlyWageUSD) * 60;
   if (minutes < 1) {
-    return "Under a minute of the average local wage buys one.";
+    return `Under a minute of the average local wage buys ${phrase}.`;
   }
   if (minutes < 90) {
-    return `About ${Math.round(minutes)} minutes of the average local wage buys one.`;
+    return `About ${Math.round(minutes)} minutes of the average local wage buys ${phrase}.`;
   }
   const hours = minutes / 60;
-  return `About ${hours.toFixed(1)} hours of the average local wage buys one.`;
+  return `About ${hours.toFixed(1)} hours of the average local wage buys ${phrase}.`;
 }
 
 /**
@@ -157,7 +161,10 @@ export function priceRankLine(price: PriceEntry): string {
   const cheaper = all.filter((p) => p.priceUSD < price.priceUSD).length;
   if (dearer + cheaper === 0) return "";
 
-  const noun = (getItem(price.itemId)?.shortName ?? "item").toLowerCase();
+  // The superlative supplies its own article, so this is the phrase without
+  // one: "the cheapest litre of milk", "the cheapest 100 kWh of electricity".
+  const item = getItem(price.itemId);
+  const noun = item ? itemNoun(item) : "price";
   if (dearer === 0) {
     return `That makes it the most expensive ${noun} of all ${total} countries in the game.`;
   }

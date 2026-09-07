@@ -11,7 +11,7 @@
 // is optional, and declining is a complete answer that is remembered.
 
 import { PRICES, findPrice, type PriceEntry } from "./puzzle";
-import { getItem } from "@/data/items";
+import { getItem, itemPhrase, sentenceCase } from "@/data/items";
 import { formatPrice } from "./format";
 import type { Currency } from "./currency";
 
@@ -94,7 +94,7 @@ export function homeOptions(): {
 }
 
 /**
- * "That is 2.4 cappuccinos at Romanian prices."
+ * "The same money buys 2.4 times as much in Romania."
  *
  * The cross-table already exists, so this is one lookup: what the same item
  * costs at home, and how many of those the foreign price buys. Returns null when
@@ -102,8 +102,8 @@ export function homeOptions(): {
  * table is deliberately sparse rather than padded with invented numbers.
  *
  * `suppressed` is the live suppression set. If the player's home row for this
- * item is currently withheld, the line is withheld too: printing "2.4 cappuccinos
- * at Romanian prices" alongside today's answer would let a reader solve for the
+ * item is currently withheld, the line is withheld too: printing a ratio against
+ * Romanian prices alongside today's answer would let a reader solve for the
  * Romanian figure the rest of the site is holding back.
  */
 export function inYourMoneyLine(
@@ -121,15 +121,18 @@ export function inYourMoneyLine(
   if (!home || !item || !(home.priceUSD > 0)) return null;
 
   const ratio = price.priceUSD / home.priceUSD;
-  const noun = item.shortName.toLowerCase();
+  const phrase = itemPhrase(item);
 
   if (ratio >= 0.95 && ratio <= 1.05) {
-    return `That is almost exactly what a ${noun} costs in ${home.countryName} ${home.flag}.`;
+    return `That is almost exactly what ${phrase} costs in ${home.countryName} ${home.flag}.`;
   }
   if (ratio > 1) {
-    return `That buys ${ratio.toFixed(1)} of them in ${home.countryName} ${home.flag}.`;
+    // "That buys 2.4 of them" only works for things that come in ones. The same
+    // money buying 2.4 times as much says it for a dozen eggs and for 100 kWh
+    // of electricity too.
+    return `The same money buys ${ratio.toFixed(1)} times as much in ${home.countryName} ${home.flag}.`;
   }
-  return `A ${noun} at home in ${home.countryName} ${home.flag} costs ${(1 / ratio).toFixed(1)} times this.`;
+  return `${sentenceCase(phrase)} at home in ${home.countryName} ${home.flag} costs ${(1 / ratio).toFixed(1)} times this.`;
 }
 
 /** Working time as a phrase: "19 minutes", "4.4 hours". */
@@ -158,9 +161,9 @@ export function minutesOfWorkLine(
   homeCode: string
 ): string {
   const item = getItem(price.itemId);
-  const noun = item ? item.shortName.toLowerCase() : "one";
+  const phrase = item ? itemPhrase(item) : "one";
   const localMinutes = (price.priceUSD / price.avgHourlyWageUSD) * 60;
-  const local = `About ${workTime(localMinutes)} of the average local wage buys a ${noun} in ${price.countryName}.`;
+  const local = `About ${workTime(localMinutes)} of the average local wage buys ${phrase} in ${price.countryName}.`;
 
   if (!homeCode || homeCode === HOME_ELSEWHERE || homeCode === price.countryCode) {
     return local;

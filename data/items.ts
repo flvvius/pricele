@@ -252,6 +252,71 @@ export function itemLabel(item: Item): string {
 }
 
 /**
+ * The item as a noun phrase for running prose, article and quantity included:
+ * "a litre of milk", "100 kWh of electricity", "a pack of 20 cigarettes".
+ *
+ * `itemLabel` is a label — it sits next to a figure in a table header or a share
+ * card, where "Electricity (100 kWh)" reads correctly. Dropped into a sentence
+ * the same string produces "a electricity (100 kwh)", which is how the reveal
+ * came to read "About 65 minutes of the average local wage buys a electricity in
+ * Australia". A sentence needs the article the noun actually takes, and the
+ * quantity spelled out rather than bracketed, so the phrases are written out
+ * once here and used everywhere prose names the item.
+ *
+ * Kept as a lookup beside the catalogue rather than a field inside it, on the
+ * same reasoning as the category map below: every object in ITEMS is
+ * load-bearing for the daily schedule and the archive.
+ */
+const PHRASE_BY_ID: Record<string, string> = {
+  "big-mac": "a Big Mac",
+  "coke-330ml": "a 330ml can of Coca-Cola",
+  cappuccino: "a cappuccino",
+  "milk-1l": "a litre of milk",
+  "eggs-12": "a dozen eggs",
+  "apples-1kg": "a kilogram of apples",
+  "gasoline-1l": "a litre of gasoline",
+  "diesel-1l": "a litre of diesel",
+  "electricity-100kwh": "100 kWh of electricity",
+  "natural-gas-100kwh": "100 kWh of natural gas",
+  "cigarettes-20": "a pack of 20 cigarettes",
+  "beer-330ml": "a 330ml bottle of beer",
+  "spirits-750ml": "a 750ml bottle of spirits",
+  "eliquid-1ml": "a millilitre of vape liquid",
+  "mobile-data-1gb": "a gigabyte of mobile data",
+  "healthy-diet-day": "a day's healthy diet",
+};
+
+/**
+ * The phrase to use in a sentence: "buys a litre of milk in Japan", "buys
+ * 100 kWh of electricity in Australia". Falls back to the measure, then to the
+ * short name, so an item added without a phrase still reads as a sentence.
+ */
+export function itemPhrase(item: Item): string {
+  const written = PHRASE_BY_ID[item.id];
+  if (written) return written;
+  if (item.measure) return `${item.measure} of ${item.shortName.toLowerCase()}`;
+  return `a ${item.shortName.toLowerCase()}`;
+}
+
+/**
+ * The same phrase with its article removed, for the slots that supply their own
+ * determiner: "the cheapest litre of milk", "their own 100 kWh of electricity".
+ */
+export function itemNoun(item: Item): string {
+  return dropArticle(itemPhrase(item));
+}
+
+/** "a litre of milk" -> "litre of milk". Leaves an unarticled phrase alone. */
+export function dropArticle(phrase: string): string {
+  return phrase.replace(/^an? /, "");
+}
+
+/** A phrase at the head of a sentence: "a litre of milk" -> "A litre of milk". */
+export function sentenceCase(phrase: string): string {
+  return phrase.charAt(0).toUpperCase() + phrase.slice(1);
+}
+
+/**
  * A name lowercased for running prose, leaving a trailing parenthetical alone:
  * "electricity (100 kWh)", never "electricity (100 kwh)". The bracket holds a
  * unit, and kWh is a unit.

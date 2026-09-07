@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import type { PriceEntry } from "@/lib/puzzle";
-import { itemLabel, type Item } from "@/data/items";
+import { itemLabel, itemPhrase, type Item } from "@/data/items";
 import { countrySlug, suppressedPairs } from "@/lib/catalog";
 import {
   isPerfect,
@@ -244,7 +244,7 @@ export default function Reveal({
             <div className="border-l-2 border-rule pl-3.5">
               <p className="label">Beat the bot</p>
               <p className="mt-1.5 text-[14px] leading-relaxed text-ink-body">
-                A model that knows only the typical price of a {item.shortName.toLowerCase()}{" "}
+                A model that knows only the typical price of {itemPhrase(item)}{" "}
                 and how expensive {price.countryName} is in general would have
                 guessed {formatPrice(bot.guessUSD, currency)}, which is{" "}
                 {bot.pctOff}% out.{" "}
@@ -261,7 +261,7 @@ export default function Reveal({
 
           <CrowdPanel
             stats={crowd}
-            itemName={itemLabel(item)}
+            itemPhrase={itemPhrase(item)}
             countryCode={price.countryCode}
             countryName={price.countryName}
             enabled={!isArchive}
