@@ -200,6 +200,98 @@
 }
 
 /* ============================================================================
+   THE CRAMPED SCREEN
+
+   Sizing the column to the visible viewport keeps the input reachable. It does
+   not make the contents fit. Everything in the column is fixed height except the
+   board, so when the viewport is short the board is the only thing that gives,
+   and it gives until there is nothing left of it: five ledger rows squeezed into
+   a hairline, and a player typing with no record of what they already bid.
+
+   iOS is where this actually bites. The keyboard leaves a large phone around
+   440px, which is already thin. Attach the AutoFill bar to it — the floating
+   pill of password, card and address buttons — and WebKit subtracts that as
+   well, because in UIKit an input accessory view belongs to the keyboard's own
+   frame. Another ~80px, all of it out of the board, and the guesses disappear
+   entirely. That is the reported bug.
+
+   There is no arrangement of 375px of furniture that fits in 359px, so something
+   has to go, and the honest question is what a player needs while they are
+   typing a number. They need the lot, they need the clue, they need the field,
+   and above all they need to see their own guesses. They do not need the
+   wordmark, the issue number or a reminder about their streak — none of which
+   they are reading mid-bid, and all of which come straight back the moment the
+   keyboard goes down.
+
+   The document carries `cramped` whenever the visible height drops under that
+   line; useKeyboardViewport sets it and lib/viewport.ts holds the threshold.
+   ========================================================================= */
+
+/* Scoped to exactly the sizes where the height lock is on, written as the
+   complement of the two release queries above rather than as rules that undo
+   themselves afterwards: `revert` would drop the element's own Tailwind sizing
+   along with the override, since both are author styles. Where the lock is off
+   the page just gets taller, nothing competes for height, and there is nothing
+   to trim. If `.game-screen`'s breakpoints move, move these with them. */
+@media (max-width: 1023px) {
+  @media (max-width: 767px), (max-height: 639px) {
+    /* The furniture that is not the game. Collapsed rather than merely shrunk:
+       half a masthead reads as a rendering fault, an absent one reads as a game
+       that has made room. */
+    .cramped .screen-chrome {
+      display: none;
+    }
+
+    /* The lot stays — it is the question being asked — but it does not need a
+       44px plate and 20px of air to ask it. */
+    .cramped .screen-lot {
+      padding-top: 0.25rem;
+      padding-bottom: 0.25rem;
+    }
+
+    /* The air between the bands. 12px reads as considered spacing on a full
+       screen and as wasted height on a short one, where four of these gaps cost
+       more than a ledger row does. */
+    .cramped .screen-column {
+      gap: 0.5rem;
+    }
+
+    /* The plate, addressed by position rather than by tag: it is an <img> for
+       most rounds and a <span> of flag bands for the blind ones, and both want
+       the same treatment. */
+    .cramped .screen-lot > :first-child {
+      height: 2rem;
+      width: 2rem;
+    }
+
+    /* And the board's unplayed slots give up their height before a played row
+       gives up any of its own. An empty slot carries a row number and nothing
+       else; a played one carries the figure the whole screen exists to show.
+
+       They close all the way rather than shrinking in proportion — dropping the
+       grow as well as the minimum — because a slot given whatever is left over
+       lands on a few pixels of clipped numeral, which reads as a broken row
+       rather than an empty one. Closed, they leave hairlines; the played rows
+       take the space instead and set larger for it. */
+    .cramped .board-slot {
+      min-height: 0;
+      flex-grow: 0;
+    }
+
+    /* Except before the opening bid, when every slot on the board is an empty
+       one and there is nothing for them to be giving way *to*. A slot can only
+       be the board's first child if no bid has been played, so this matches that
+       state and no other: the ledger keeps one real row and the rest close up
+       behind it, rather than collapsing into a stack of hairlines that reads as
+       a board that failed to draw. */
+    .cramped .board-slot:first-child {
+      min-height: 2.75rem;
+      flex-grow: 1;
+    }
+  }
+}
+
+/* ============================================================================
    MOTION
 
    The stock CSS easings are too weak to read as intentional. These are the

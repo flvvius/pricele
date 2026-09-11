@@ -251,7 +251,7 @@ export default function Game() {
         state.done ? "" : "game-screen"
       }`}
     >
-      <header className="shrink-0">
+      <header className="screen-chrome shrink-0">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <IconButton label="How to play" onClick={() => setShowHowTo(true)}>
@@ -327,7 +327,7 @@ export default function Game() {
           page already uses, so the whole document hangs off one vertical
           instead of a phone-width board floating in the middle of a wide
           screen, and the board gets the copy column beside it. */}
-      <div className="flex min-h-0 flex-1 flex-col gap-3 lg:grid lg:grid-cols-[13rem_minmax(0,1fr)] lg:items-start lg:gap-x-12">
+      <div className="screen-column flex min-h-0 flex-1 flex-col gap-3 lg:grid lg:grid-cols-[13rem_minmax(0,1fr)] lg:items-start lg:gap-x-12">
         {/* Both the item and the country change daily, so this band is the only
             place that states what the player is actually pricing today.
 
@@ -339,7 +339,7 @@ export default function Game() {
             exists so a long name cannot push the input off a short screen, a
             risk that only exists on the height-locked phone screen, so it is
             lifted again on a desk where the page just gets taller. */}
-        <div className="flex shrink-0 items-start gap-3.5 border-y border-rule py-2.5 lg:flex-col lg:gap-3 lg:border-y-0 lg:py-0">
+        <div className="screen-lot flex shrink-0 items-start gap-3.5 border-y border-rule py-2.5 lg:flex-col lg:gap-3 lg:border-y-0 lg:py-0">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={puzzle?.item.imageUrl ?? "/items/placeholder.svg"}
@@ -382,7 +382,7 @@ export default function Game() {
         {/* The play column: the board, the input, and after the last bid the
             reveal in their place. On a phone it is the rest of the locked
             screen; on a desk it is the copy column beside the rail. */}
-        <div className="flex min-h-0 flex-1 flex-col gap-3">
+        <div className="screen-column flex min-h-0 flex-1 flex-col gap-3">
           {mounted && puzzle ? (
             state.done ? (
               // No inner scroller here. The reveal runs longer than a screen,
@@ -409,7 +409,7 @@ export default function Game() {
             ) : (
               <>
                 {atRisk && (
-                  <p className="animate-set-in shrink-0 border-l-2 border-streak bg-streak/[0.08] py-1.5 pl-2.5 font-mono text-[11px] uppercase tracking-[0.14em] text-streak">
+                  <p className="animate-set-in screen-chrome shrink-0 border-l-2 border-streak bg-streak/[0.08] py-1.5 pl-2.5 font-mono text-[11px] uppercase tracking-[0.14em] text-streak">
                     {stats.currentStreak}-day streak on the line
                     {stats.graceDays > 0 &&
                       ` · ${stats.graceDays} ${GRACE_NAME}${stats.graceDays > 1 ? "s" : ""} banked`}

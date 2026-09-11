@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useRef } from "react";
 import { tierFromCloseness, WARMTH_LEVELS } from "@/lib/scoring";
 import type { GuessRecord } from "@/lib/storage";
 import { MAX_GUESSES } from "@/lib/share";
@@ -114,14 +117,36 @@ export default function GuessHistory({
   currency: Currency;
 }) {
   const empties = Math.max(0, MAX_GUESSES - guesses.length);
+  const board = useRef<HTMLUListElement>(null);
 
-  // overflow-y-auto is a safety valve for extremely short viewports (a small
-  // phone with the keyboard up): rows shrink to their minimum first, and only if
-  // they still cannot fit does the board scroll internally, so a row can never
-  // end up overlapping the input.
+  // When the board is too short for every row, the rows it drops have to be the
+  // oldest ones. Left alone a scroll container shows its top, which on a phone
+  // with the keyboard up means the board renders the one bid the player has
+  // already stopped thinking about and hides the one they just made.
+  useEffect(() => {
+    const el = board.current;
+    if (el) el.scrollTop = el.scrollHeight;
+  }, [guesses.length]);
+
+  // Two safety valves, in the order they should be spent.
+  //
+  // The empty slots go first. They are the ledger's five-slot look and nothing
+  // more — no figure on them, nothing to read — so on a cramped screen they drop
+  // their minimum height and close up, which buys a played row its full height
+  // at no cost to anything the player is actually reading. Played rows keep
+  // their minimum and never compress. See `.cramped .board-slot` in globals.css;
+  // it is keyed off the cramped screen rather than off a breakpoint because the
+  // slots have to keep their height wherever the board sizes to its content,
+  // which is a question about height, not width.
+  //
+  // overflow-y-auto is the second valve, for when the played rows alone will not
+  // fit: the board scrolls internally rather than growing, so a row can never
+  // end up overlapping the input. The min-height is what stops the board being
+  // squeezed out of existence before either valve gets a chance to act.
   return (
     <ul
-      className="flex min-h-0 flex-1 flex-col justify-start overflow-y-auto border-t border-rule lg:overflow-y-visible"
+      ref={board}
+      className="flex min-h-[2.75rem] flex-1 flex-col justify-start overflow-y-auto border-t border-rule lg:overflow-y-visible"
       aria-label="Your guesses"
     >
       {guesses.map((g, i) => (
@@ -130,7 +155,7 @@ export default function GuessHistory({
       {Array.from({ length: empties }, (_, i) => (
         <li
           key={`empty-${i}`}
-          className="flex min-h-[2.75rem] flex-1 items-center gap-3 border-b border-rule-soft px-3 lg:min-h-[3.25rem]"
+          className="board-slot flex min-h-[2.75rem] flex-1 items-center gap-3 overflow-hidden border-b border-rule-soft px-3 lg:min-h-[3.25rem]"
         >
           <span className="font-mono text-[11px] tabular-nums text-ink-faint/60">
             {String(guesses.length + i + 1).padStart(2, "0")}
