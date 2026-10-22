@@ -55,7 +55,11 @@ describe("games registry", () => {
   it("nextGame skips finished games and returns null when all done", () => {
     const st = { pricele: { phase: "done" as const }, "then-and-now": { phase: "done" as const } };
     expect(nextGame("pricele", st)?.slug).toBe("rent-ratio");
-    expect(nextGame("rent-ratio", { ...st, "rent-ratio": { phase: "done" } })).toBeNull();
+    expect(nextGame("rent-ratio", { ...st, "rent-ratio": { phase: "done" } })?.slug).toBe(
+      "inflation-ladder"
+    );
+    const allDone = Object.fromEntries(GAMES.map((g) => [g.slug, { phase: "done" as const }]));
+    expect(nextGame("rent-ratio", allDone)).toBeNull();
   });
 });
 
@@ -97,7 +101,7 @@ describe("daily set share", () => {
       new Date(2026, 9, 22)
     );
     const lines = text.split("\n");
-    expect(lines[0]).toMatch(/^Pricele daily set #\d+ ✅⬜⬜$/);
+    expect(lines[0]).toMatch(/^Pricele daily set #\d+ ✅⬜⬜⬜$/);
     expect(text).toContain("✅ Pricele 2/5");
     expect(text).toContain("⬜ Rent Ratio");
     expect(text).toContain("🔥 4-day streak");

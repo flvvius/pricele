@@ -14,6 +14,12 @@ import { MAX_GUESSES } from "./share";
 import { judge, puzzleFor as thenNowPuzzle, MAX_GUESSES as TN_MAX } from "./thenandnow";
 import { ROUNDS as RR_ROUNDS, score as rrScore, puzzleFor as rentPuzzle } from "./rentratio";
 import { RENT_AREAS } from "@/data/rent-ratio";
+import {
+  KEY as LADDER_KEY,
+  isOver as ladderOver,
+  puzzleFor as ladderPuzzle,
+  result as ladderResult,
+} from "./inflationladder";
 
 export type Phase = "not_started" | "in_progress" | "done";
 
@@ -103,6 +109,21 @@ export const GAMES: DailyGame[] = [
         const n = rrScore(rentPuzzle(date, RENT_AREAS), s.picks);
         return { phase: "done", result: `${n}/${RR_ROUNDS}` };
       }
+      return { phase: "in_progress" };
+    },
+  },
+  {
+    slug: "inflation-ladder",
+    name: "Inflation Ladder",
+    href: "/games/inflation-ladder",
+    blurb: "Rank four groceries by how much their price rose.",
+    status(date, kv) {
+      const s = json<{ date: string; tries: string[][] }>(kv, LADDER_KEY);
+      if (!s || s.date !== date || !Array.isArray(s.tries) || s.tries.length === 0) {
+        return NOT_STARTED;
+      }
+      const { answer } = ladderPuzzle(date, THEN_NOW_ITEMS);
+      if (ladderOver(s, answer)) return { phase: "done", result: ladderResult(s, answer) };
       return { phase: "in_progress" };
     },
   },
