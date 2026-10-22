@@ -21,6 +21,10 @@ export type EventName =
   | "atlas_share"
   | "chain_complete"
   | "chain_share"
+  | "year_complete"
+  | "year_share"
+  | "range_complete"
+  | "range_share"
   | "today_share";
 
 type Props = Record<string, string | number | boolean>;

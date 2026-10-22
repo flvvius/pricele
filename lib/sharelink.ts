@@ -110,7 +110,7 @@ export function gameShareUrl(
 
 export function decodeGameScore(raw: string | null | undefined): string | null {
   if (!raw) return null;
-  const m = /^(\d{1,2}|X)\/(\d{1,2})$/.exec(raw);
+  const m = /^(\d{1,4}|X)\/(\d{1,4})$/.exec(raw);
   if (!m) return null;
   if (m[1] !== "X" && Number(m[1]) > Number(m[2])) return null;
   return raw;

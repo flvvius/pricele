@@ -244,6 +244,8 @@ subreddit sent everything.
 | --- | --- | --- |
 | Price Atlas | r/geography, r/MapPorn, Worldle and Globle players | "Worldle, but the clue is what a Big Mac costs there" |
 | Inflation Ladder | r/Economics, r/personalfinance, r/povertyfinance | "Eggs rose 362% since 1995, bananas 33%. Can you order them?" |
+| Price Year | r/nostalgia, r/80s, TimeGuessr players | "TimeGuessr, but the photo is a grocery receipt" |
+| Open Range | r/slatestarcodex, forecasting and calibration communities | "How sure are you about the price of eggs in Portugal?" |
 | Then & Now | r/nostalgia, r/Frugal, r/90s | "What did a gallon of gas cost in 1998?" |
 | Rent Ratio | r/RealEstate, city subreddits | "Is Buffalo dearer than Virginia Beach?" |
 | Higher or Lower Daily | Players of higherlowergame.com | "The higher-lower game, once a day, with real prices" |

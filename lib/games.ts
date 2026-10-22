@@ -32,6 +32,20 @@ import {
   puzzleFor as chainPuzzle,
   result as chainResult,
 } from "./pricechain";
+import { HISTORY_ITEMS } from "@/data/price-history";
+import {
+  KEY as YEAR_KEY,
+  isOver as yearOver,
+  puzzleFor as yearPuzzle,
+  result as yearResult,
+} from "./priceyear";
+import {
+  KEY as RANGE_KEY,
+  isOver as rangeOver,
+  puzzleFor as rangePuzzle,
+  result as rangeResult,
+  type RangeState,
+} from "./openrange";
 
 export type Phase = "not_started" | "in_progress" | "done";
 
@@ -127,6 +141,26 @@ export const GAMES: DailyGame[] = [
     },
   },
   {
+    slug: "price-year",
+    name: "Price Year",
+    href: "/games/price-year",
+    blurb: "Five grocery receipts. Guess the year of each.",
+    source: "BLS average prices, 1980 on",
+    minutes: 2,
+    status(date, kv) {
+      const s = json<{ date: string; guesses: number[] }>(kv, YEAR_KEY);
+      if (!s || s.date !== date || !Array.isArray(s.guesses) || s.guesses.length === 0) {
+        return NOT_STARTED;
+      }
+      if (yearOver(s))
+        return {
+          phase: "done",
+          result: yearResult(yearPuzzle(date, HISTORY_ITEMS), s),
+        };
+      return { phase: "in_progress" };
+    },
+  },
+  {
     slug: "then-and-now",
     name: "Then & Now",
     href: "/games/then-and-now",
@@ -143,6 +177,22 @@ export const GAMES: DailyGame[] = [
       if (won || s.guesses.length >= TN_MAX) {
         return { phase: "done", result: `${won ? s.guesses.length : "X"}/${TN_MAX}` };
       }
+      return { phase: "in_progress" };
+    },
+  },
+  {
+    slug: "open-range",
+    name: "Open Range",
+    href: "/games/open-range",
+    blurb: "Bracket five prices. Narrow scores more, if it lands.",
+    source: "Sourced prices, 49 countries",
+    minutes: 2,
+    status(date, kv) {
+      const s = json<RangeState>(kv, RANGE_KEY);
+      if (!s || s.date !== date || !Array.isArray(s.ranges) || s.ranges.length === 0) {
+        return NOT_STARTED;
+      }
+      if (rangeOver(s)) return { phase: "done", result: rangeResult(rangePuzzle(date), s) };
       return { phase: "in_progress" };
     },
   },

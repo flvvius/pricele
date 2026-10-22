@@ -122,6 +122,54 @@ CC BY, and limit the game to OECD countries.
   cards and nine calls. It uses the same 1.05x-3x ratio gate as the unlimited
   mode, and the item changes at every step.
 
-Next candidates from `hub-research.md`: a "what year was this price?" slider
-on the BLS data (TimeGuessr's control on Then & Now's data), and a five-round
-scored basket with a total out of 1,000.
+## Round two: Price Year and Open Range
+
+A deep-research run and two rounds of review by fresh agents, all on
+2026-10-22, narrowed 14 ideas to two.
+
+What the research could verify: MapTap's format (five rounds, 0-100 each,
+weights 1, 1, 2, 3, 3, out of 1,000) and TimeGuessr's year slider both got
+national press in 2026. BLS data is public domain and Eurostat allows
+commercial reuse with attribution. It could not verify any traffic numbers for
+Costcodle, TimeGuessr or the stat-guessing games, so growth claims about them
+stay out of this doc.
+
+Killed, and why:
+
+- **Price Connections**: groups computed from data have no wordplay and no
+  real red herrings, and 16 items is too few.
+- **Price Timeline**: BLS series repeat values (eggs were $1.66 in both 2009
+  and 2010), so some placements have no right answer.
+- **Exact Change**: a subset sum. A calculator solves it.
+- **Gas Map USA**: EIA publishes weekly gas prices for only a handful of
+  states.
+- **Line Reveal** (name the item from its price chart): most food lines are
+  noisy and rising, so it is a lottery.
+- **Work Time** (did X take more minutes of work then or now?): for most items
+  the answer is "then" until about 2019, so players learn the rule in a week.
+  The fact is good, so it moved into Price Year's reveal.
+- **Pricele 1000**: a scored mode of the main game. Worth doing, but it brings
+  no new players, so it waits.
+
+Shipped:
+
+- **Price Year** at `/games/price-year`. Five receipts, each three U.S.
+  average prices from one year between 1980 and 2025, one year from each
+  nine-year era. A single series can't give the year away (eggs were $1.99 in
+  2008 and $1.91 in 2013), so each receipt is the set of three items whose
+  prices differ most from every year four or more away, at least 12% on mean
+  absolute log price when such a set exists. Scoring is 200 × (1 − miss/8),
+  floored at 0. After each receipt the reveal shows the basket in minutes of
+  work at the BLS average hourly wage, then and now. The 1980-1994 data came
+  from the BLS API; `scripts/price-history/fetch.py` rebuilds the file and
+  matches `data/then-and-now.ts` exactly for 1995-2025.
+- **Open Range** at `/games/open-range`. Five items in five countries, with
+  the median across countries as an anchor. A hit scores
+  100 × (1 − ln(width)/ln 8), at least 10; a miss scores 0; ranges wider than
+  12x are refused. Tested against a year of puzzles: using the median ÷1.5 to
+  ×1.5 every time lands 57% of the time and averages 174 of 500, so knowing
+  country price levels is where the points are.
+
+Next: a born-year page ("the year you were born, coffee took 27 minutes of
+work") that uses the 1980 data for search, and the scored mode of the main
+game.

@@ -139,6 +139,8 @@ describe("game challenge scores", () => {
     expect(decodeGameScore("3/6")).toBe("3/6");
     expect(decodeGameScore("X/5")).toBe("X/5");
     expect(decodeGameScore("7/6")).toBeNull();
+    expect(decodeGameScore("684/1000")).toBe("684/1000");
+    expect(decodeGameScore("1200/1000")).toBeNull();
     expect(decodeGameScore("<b>")).toBeNull();
     expect(decodeGameScore(null)).toBeNull();
   });
