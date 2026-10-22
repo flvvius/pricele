@@ -20,6 +20,12 @@ import {
   puzzleFor as ladderPuzzle,
   result as ladderResult,
 } from "./inflationladder";
+import {
+  KEY as ATLAS_KEY,
+  isOver as atlasOver,
+  puzzleFor as atlasPuzzle,
+  result as atlasResult,
+} from "./priceatlas";
 
 export type Phase = "not_started" | "in_progress" | "done";
 
@@ -77,6 +83,22 @@ export const GAMES: DailyGame[] = [
     pastDoneDates(kv) {
       const h = json<{ date: string }[]>(kv, "pricele:history");
       return Array.isArray(h) ? h.map((r) => r.date).filter((d) => typeof d === "string") : [];
+    },
+  },
+  {
+    slug: "price-atlas",
+    name: "Price Atlas",
+    href: "/games/price-atlas",
+    blurb: "Name the country from a basket of its prices.",
+    source: "Sourced prices, 49 countries",
+    status(date, kv) {
+      const s = json<{ date: string; guesses: string[] }>(kv, ATLAS_KEY);
+      if (!s || s.date !== date || !Array.isArray(s.guesses) || s.guesses.length === 0) {
+        return NOT_STARTED;
+      }
+      const p = atlasPuzzle(date);
+      if (atlasOver(p, s)) return { phase: "done", result: atlasResult(p, s) };
+      return { phase: "in_progress" };
     },
   },
   {
