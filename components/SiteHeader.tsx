@@ -6,17 +6,10 @@ import ThemeToggle from "./ThemeToggle";
 // no nav, since it owns the full viewport, so this only appears on content pages,
 // where it gives readers (and crawlers) a path between every section.
 const LINKS = [
+  { href: "/games", label: "All games" },
   { href: "/prices", label: "Prices" },
   { href: "/items", label: "Items" },
   { href: "/archive", label: "Archive" },
-  // The two unlimited modes and the classroom. High in the run because they
-  // are the only links here a reader might follow to keep playing or to bring
-  // thirty other people, rather than to read.
-  { href: "/higher-or-lower", label: "Higher or lower" },
-  { href: "/where-in-the-world", label: "Where in the world" },
-  { href: "/games/then-and-now", label: "Then & Now" },
-  { href: "/games/rent-ratio", label: "Rent Ratio" },
-  { href: "/games/inflation-ladder", label: "Inflation Ladder" },
   { href: "/classroom", label: "Classroom" },
   { href: "/blog", label: "Guides" },
   { href: "/methodology", label: "Methodology" },

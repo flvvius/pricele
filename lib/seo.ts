@@ -753,3 +753,39 @@ export function webPageJsonLd({
     },
   };
 }
+
+export function dailyGameJsonLd({
+  name,
+  path,
+  description,
+  genre = ["Puzzle", "Trivia", "Educational"],
+}: {
+  name: string;
+  path: string;
+  description: string;
+  genre?: string[];
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": ["VideoGame", "SoftwareApplication"],
+    name,
+    url: absoluteUrl(path),
+    description,
+    inLanguage: "en",
+    genre,
+    gamePlatform: "Web browser",
+    applicationCategory: "Game",
+    operatingSystem: "Any (web browser)",
+    playMode: "SinglePlayer",
+    isAccessibleForFree: true,
+    isPartOf: { "@type": "WebSite", name: SITE_NAME, url: SITE_URL },
+    publisher: orgRef,
+    author: { "@id": PERSON_ID },
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD",
+      availability: "https://schema.org/InStock",
+    },
+  };
+}

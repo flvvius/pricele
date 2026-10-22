@@ -1,13 +1,16 @@
 import type { Metadata } from "next";
 import ContentPage from "@/components/ContentPage";
 import RentRatio from "@/components/RentRatio";
-import { pageMetadata } from "@/lib/seo";
+import JsonLd from "@/components/JsonLd";
+import { breadcrumbJsonLd, dailyGameJsonLd, pageMetadata } from "@/lib/seo";
+
+const DESCRIPTION =
+  "A daily rent game: five pairs of U.S. metro areas, pick the one with the higher HUD fair market rent for a two-bedroom. Sourced from HUD FY2026 Fair Market Rents.";
 
 export const metadata: Metadata = pageMetadata({
   path: "/games/rent-ratio",
   title: "Rent Ratio",
-  description:
-    "A daily rent game: five pairs of U.S. metro areas, pick the one with the higher HUD fair market rent for a two-bedroom. Sourced from HUD FY2026 Fair Market Rents.",
+  description: DESCRIPTION,
 });
 
 export default function RentRatioPage() {
@@ -21,6 +24,12 @@ export default function RentRatioPage() {
         </p>
       }
     >
+      <JsonLd
+        data={[
+          breadcrumbJsonLd([{ name: "Games", path: "/games" }, { name: "Rent Ratio" }]),
+          dailyGameJsonLd({ name: "Rent Ratio", path: "/games/rent-ratio", description: DESCRIPTION, genre: ["Puzzle", "Trivia"] }),
+        ]}
+      />
       <RentRatio />
       <div className="flex max-w-prose flex-col gap-3.5 text-[16px] leading-[1.7] text-ink-body">
         <p>

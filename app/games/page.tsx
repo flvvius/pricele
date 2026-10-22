@@ -1,0 +1,85 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import ContentPage, { Section, Prose } from "@/components/ContentPage";
+import GameGrid from "@/components/GameGrid";
+import JsonLd from "@/components/JsonLd";
+import { GAMES } from "@/lib/games";
+import { absoluteUrl, breadcrumbJsonLd, gameListJsonLd, pageMetadata } from "@/lib/seo";
+
+export const dynamic = "force-static";
+
+const TITLE = "Daily games about real prices";
+const DESCRIPTION =
+  "Every Pricele daily game in one place: guess prices around the world, what groceries cost decades ago, which U.S. metro has the higher rent, and how much prices have risen. Free, no sign-up, every number sourced.";
+
+export const metadata: Metadata = pageMetadata({
+  path: "/games",
+  title: TITLE,
+  description: DESCRIPTION,
+});
+
+const linkClass =
+  "underline decoration-rule underline-offset-2 transition-colors duration-fast ease-out hover:text-ink";
+
+export default function GamesPage() {
+  return (
+    <ContentPage
+      title="All games"
+      intro={
+        <p>
+          {GAMES.length} free daily games, each built on a published number: a price, a rent, a
+          price rise. One puzzle per game per day, new at your local midnight, and one streak across
+          all of them.
+        </p>
+      }
+    >
+      <JsonLd
+        data={[
+          breadcrumbJsonLd([{ name: "Games", path: "/games" }]),
+          gameListJsonLd({
+            name: TITLE,
+            description: DESCRIPTION,
+            path: "/games",
+            games: GAMES.map((g) => ({
+              name: g.name,
+              url: absoluteUrl(g.href),
+              description: g.blurb,
+            })),
+          }),
+        ]}
+      />
+      <GameGrid />
+      <Section heading="Play them as a set" id="set">
+        <Prose>
+          <p>
+            <Link href="/today" className={linkClass}>
+              Today
+            </Link>{" "}
+            shows which of today&apos;s games you have finished, keeps a streak for every day you
+            finish at least one, and gives you one share line for the whole set.
+          </p>
+        </Prose>
+      </Section>
+      <Section heading="Unlimited modes" id="unlimited">
+        <Prose>
+          <p>
+            The daily games stop after one round on purpose. If you want to keep going, try{" "}
+            <Link href="/higher-or-lower" className={linkClass}>
+              Higher or lower
+            </Link>
+            , which pits two prices against each other until you miss, or{" "}
+            <Link href="/where-in-the-world" className={linkClass}>
+              Where in the world
+            </Link>
+            , where you name the country from a basket of its prices. Teachers can run any round
+            with a whole class from the{" "}
+            <Link href="/classroom" className={linkClass}>
+              classroom
+            </Link>{" "}
+            page.
+          </p>
+        </Prose>
+      </Section>
+    </ContentPage>
+  );
+}

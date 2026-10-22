@@ -1,13 +1,16 @@
 import type { Metadata } from "next";
 import ContentPage from "@/components/ContentPage";
 import InflationLadder from "@/components/InflationLadder";
-import { pageMetadata } from "@/lib/seo";
+import JsonLd from "@/components/JsonLd";
+import { breadcrumbJsonLd, dailyGameJsonLd, pageMetadata } from "@/lib/seo";
+
+const DESCRIPTION =
+  "A daily inflation game: put four everyday U.S. groceries in order of how much their price rose since a given year. Three tries, sourced from BLS average price data.";
 
 export const metadata: Metadata = pageMetadata({
   path: "/games/inflation-ladder",
   title: "Inflation Ladder",
-  description:
-    "A daily inflation game: put four everyday U.S. groceries in order of how much their price rose since a given year. Three tries, sourced from BLS average price data.",
+  description: DESCRIPTION,
 });
 
 export default function InflationLadderPage() {
@@ -21,6 +24,12 @@ export default function InflationLadderPage() {
         </p>
       }
     >
+      <JsonLd
+        data={[
+          breadcrumbJsonLd([{ name: "Games", path: "/games" }, { name: "Inflation Ladder" }]),
+          dailyGameJsonLd({ name: "Inflation Ladder", path: "/games/inflation-ladder", description: DESCRIPTION, genre: ["Puzzle", "Educational"] }),
+        ]}
+      />
       <InflationLadder />
       <div className="flex max-w-prose flex-col gap-3.5 text-[16px] leading-[1.7] text-ink-body">
         <p>

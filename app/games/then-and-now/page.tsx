@@ -1,13 +1,16 @@
 import type { Metadata } from "next";
 import ContentPage from "@/components/ContentPage";
 import ThenAndNow from "@/components/ThenAndNow";
-import { pageMetadata } from "@/lib/seo";
+import JsonLd from "@/components/JsonLd";
+import { breadcrumbJsonLd, dailyGameJsonLd, pageMetadata } from "@/lib/seo";
+
+const DESCRIPTION =
+  "A daily price-history game: here is what an everyday item costs now in U.S. cities, guess what it cost years ago. Five guesses, sourced from BLS average price data.";
 
 export const metadata: Metadata = pageMetadata({
   path: "/games/then-and-now",
   title: "Then & Now",
-  description:
-    "A daily price-history game: here is what an everyday item costs now in U.S. cities, guess what it cost years ago. Five guesses, sourced from BLS average price data.",
+  description: DESCRIPTION,
 });
 
 export default function ThenAndNowPage() {
@@ -21,6 +24,12 @@ export default function ThenAndNowPage() {
         </p>
       }
     >
+      <JsonLd
+        data={[
+          breadcrumbJsonLd([{ name: "Games", path: "/games" }, { name: "Then & Now" }]),
+          dailyGameJsonLd({ name: "Then & Now", path: "/games/then-and-now", description: DESCRIPTION, genre: ["Puzzle", "Trivia", "Educational"] }),
+        ]}
+      />
       <ThenAndNow />
       <div className="flex max-w-prose flex-col gap-3.5 text-[16px] leading-[1.7] text-ink-body">
         <p>

@@ -4,6 +4,7 @@ import Game from "@/components/Game";
 import FaqSection from "@/components/FaqSection";
 import SiteFooter from "@/components/SiteFooter";
 import JsonLd from "@/components/JsonLd";
+import GameGrid from "@/components/GameGrid";
 import { HOME_FAQ } from "@/lib/faq";
 import { faqJsonLd, howToPlayJsonLd, pageMetadata } from "@/lib/seo";
 import { ITEMS } from "@/data/items";
@@ -125,16 +126,31 @@ export default function Home() {
           <Link href="/archive" className="underline decoration-rule underline-offset-2 transition-colors duration-fast ease-out hover:text-ink">
             archive
           </Link>
-          . New: guess what groceries cost years ago in{" "}
-          <Link href="/games/then-and-now" className="underline decoration-rule underline-offset-2 transition-colors duration-fast ease-out hover:text-ink">
-            Then &amp; Now
-          </Link>
-          , or pick the metro with the higher HUD fair market rent in{" "}
-          <Link href="/games/rent-ratio" className="underline decoration-rule underline-offset-2 transition-colors duration-fast ease-out hover:text-ink">
-            Rent Ratio
-          </Link>
           .
         </p>
+      </section>
+
+      <section
+        aria-labelledby="more-games-heading"
+        className="flex flex-col gap-3 lg:grid lg:grid-cols-[13rem_minmax(0,1fr)] lg:gap-x-12"
+      >
+        <h2 id="more-games-heading" className="display text-[2rem] text-ink">
+          More daily games
+        </h2>
+        <div className="flex flex-col gap-3">
+          <GameGrid exclude="pricele" />
+          <p className="text-[14px] text-ink-muted">
+            Track them all on{" "}
+            <Link href="/today" className="underline decoration-rule underline-offset-2 transition-colors duration-fast ease-out hover:text-ink">
+              Today
+            </Link>{" "}
+            with one streak, or see{" "}
+            <Link href="/games" className="underline decoration-rule underline-offset-2 transition-colors duration-fast ease-out hover:text-ink">
+              every game
+            </Link>
+            .
+          </p>
+        </div>
       </section>
 
       <FaqSection items={HOME_FAQ} />

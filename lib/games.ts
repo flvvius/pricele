@@ -39,6 +39,7 @@ export interface DailyGame {
   name: string;
   href: string;
   blurb: string;
+  source: string;
   status(date: string, kv: KV): GameStatus;
   /** Dates (other than today) this game's storage proves were finished. */
   pastDoneDates?(kv: KV): string[];
@@ -61,6 +62,7 @@ export const GAMES: DailyGame[] = [
     name: "Pricele",
     href: "/",
     blurb: "Guess the price of one item in one country.",
+    source: "Sourced prices, 49 countries",
     status(date, kv) {
       const s = json<{ date: string; guesses: unknown[]; done: boolean; won: boolean }>(
         kv,
@@ -82,6 +84,7 @@ export const GAMES: DailyGame[] = [
     name: "Then & Now",
     href: "/games/then-and-now",
     blurb: "Guess what an everyday item cost decades ago.",
+    source: "BLS average prices",
     status(date, kv) {
       const s = json<{ date: string; guesses: number[] }>(kv, "pricele:then-and-now");
       if (!s || s.date !== date || !Array.isArray(s.guesses) || s.guesses.length === 0) {
@@ -100,6 +103,7 @@ export const GAMES: DailyGame[] = [
     name: "Rent Ratio",
     href: "/games/rent-ratio",
     blurb: "Pick the U.S. metro with the higher rent, five times.",
+    source: "HUD fair market rents",
     status(date, kv) {
       const s = json<{ date: string; picks: ("a" | "b")[] }>(kv, "pricele:rent-ratio");
       if (!s || s.date !== date || !Array.isArray(s.picks) || s.picks.length === 0) {
@@ -117,6 +121,7 @@ export const GAMES: DailyGame[] = [
     name: "Inflation Ladder",
     href: "/games/inflation-ladder",
     blurb: "Rank four groceries by how much their price rose.",
+    source: "BLS average prices",
     status(date, kv) {
       const s = json<{ date: string; tries: string[][] }>(kv, LADDER_KEY);
       if (!s || s.date !== date || !Array.isArray(s.tries) || s.tries.length === 0) {
