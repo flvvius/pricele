@@ -12,6 +12,7 @@ export default function ShareButton({
   event,
   label = "Share result",
   props,
+  score,
 }: {
   text: (url: string) => string;
   path: string;
@@ -19,6 +20,7 @@ export default function ShareButton({
   event: EventName;
   label?: string;
   props?: Record<string, string | number | boolean>;
+  score?: string;
 }) {
   const [copied, setCopied] = useState(false);
   const [native, setNative] = useState(false);
@@ -26,7 +28,7 @@ export default function ShareButton({
   useEffect(() => setNative(shouldUseNativeShare()), []);
 
   async function share() {
-    const url = (channel: ShareChannel) => gameShareUrl(path, channel, campaign);
+    const url = (channel: ShareChannel) => gameShareUrl(path, channel, campaign, score);
     if (native) {
       try {
         const full = text(url("native"));

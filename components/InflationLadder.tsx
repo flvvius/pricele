@@ -132,6 +132,7 @@ export default function InflationLadder() {
             Prices are U.S. city averages in nominal dollars.
           </p>
           <ShareButton
+            score={result(state, p.answer)}
             text={(url) => shareText(p, state, url)}
             path="/games/inflation-ladder"
             campaign="game-inflation-ladder"

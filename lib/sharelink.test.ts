@@ -7,7 +7,7 @@ import {
   encodeChallenge,
   weekShareUrl,
 } from "./sharelink";
-import { gameShareUrl } from "./sharelink";
+import { decodeGameScore, gameShareUrl } from "./sharelink";
 import { buildShareTextWithUrl, shareLinkFor, type ShareInput } from "./share";
 import { pageMetadata, SITE_URL } from "./seo";
 import {
@@ -131,5 +131,22 @@ describe("gameShareUrl", () => {
     expect(url.searchParams.get("utm_source")).toBe("share");
     expect(url.searchParams.get("utm_medium")).toBe("native");
     expect(url.searchParams.get("utm_campaign")).toBe("game-price-atlas");
+  });
+});
+
+describe("game challenge scores", () => {
+  it("accepts n/m and X/m only", () => {
+    expect(decodeGameScore("3/6")).toBe("3/6");
+    expect(decodeGameScore("X/5")).toBe("X/5");
+    expect(decodeGameScore("7/6")).toBeNull();
+    expect(decodeGameScore("<b>")).toBeNull();
+    expect(decodeGameScore(null)).toBeNull();
+  });
+
+  it("puts a valid score on the link and drops a bad one", () => {
+    const good = new URL(gameShareUrl("/games/rent-ratio", "copy", "game-rent-ratio", "4/5"));
+    expect(good.searchParams.get("c")).toBe("4/5");
+    const bad = new URL(gameShareUrl("/games/rent-ratio", "copy", "game-rent-ratio", "nope"));
+    expect(bad.searchParams.has("c")).toBe(false);
   });
 });

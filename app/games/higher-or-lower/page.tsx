@@ -3,6 +3,7 @@ import Link from "next/link";
 import ContentPage from "@/components/ContentPage";
 import PriceChain from "@/components/PriceChain";
 import JsonLd from "@/components/JsonLd";
+import ChallengeBanner from "@/components/ChallengeBanner";
 import { breadcrumbJsonLd, dailyGameJsonLd, pageMetadata } from "@/lib/seo";
 
 const DESCRIPTION =
@@ -37,6 +38,7 @@ export default function HigherOrLowerDailyPage() {
           }),
         ]}
       />
+      <ChallengeBanner game="Higher or Lower Daily" />
       <PriceChain />
       <div className="flex max-w-prose flex-col gap-3.5 text-[16px] leading-[1.7] text-ink-body">
         <p>

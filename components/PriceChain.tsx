@@ -114,6 +114,7 @@ export default function PriceChain() {
             You called <strong>{result(p, state)}</strong> right.
           </p>
           <ShareButton
+            score={result(p, state)}
             text={(url) => shareText(p, state, url)}
             path="/games/higher-or-lower"
             campaign="game-higher-or-lower"

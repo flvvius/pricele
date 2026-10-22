@@ -88,6 +88,7 @@ export default function ThenAndNow() {
             <strong>{usd(p.answer)}</strong>.
           </p>
           <ShareButton
+            score={`${won ? state.guesses.length : "X"}/${MAX_GUESSES}`}
             text={(url) => shareText(p, state.guesses, url)}
             path="/games/then-and-now"
             campaign="game-then-and-now"

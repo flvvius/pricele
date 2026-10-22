@@ -132,6 +132,7 @@ export default function PriceAtlas() {
             The basket was from <strong>{p.answer.name}</strong> {p.answer.flag}.
           </p>
           <ShareButton
+            score={result(p, state)}
             text={(url) => shareText(p, state, url)}
             path="/games/price-atlas"
             campaign="game-price-atlas"

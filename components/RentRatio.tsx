@@ -111,6 +111,7 @@ export default function RentRatio() {
             You got <strong>{score(p, state.picks)} of {ROUNDS}</strong>.
           </p>
           <ShareButton
+            score={`${score(p, state.picks)}/${ROUNDS}`}
             text={(url) => shareText(p, state.picks, url)}
             path="/games/rent-ratio"
             campaign="game-rent-ratio"

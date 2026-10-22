@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import ContentPage from "@/components/ContentPage";
 import ThenAndNow from "@/components/ThenAndNow";
 import JsonLd from "@/components/JsonLd";
+import ChallengeBanner from "@/components/ChallengeBanner";
 import { breadcrumbJsonLd, dailyGameJsonLd, pageMetadata } from "@/lib/seo";
 
 const DESCRIPTION =
@@ -31,6 +32,7 @@ export default function ThenAndNowPage() {
           dailyGameJsonLd({ name: "Then & Now", path: "/games/then-and-now", description: DESCRIPTION, genre: ["Puzzle", "Trivia", "Educational"] }),
         ]}
       />
+      <ChallengeBanner game="Then & Now" />
       <ThenAndNow />
       <div className="flex max-w-prose flex-col gap-3.5 text-[16px] leading-[1.7] text-ink-body">
         <p>

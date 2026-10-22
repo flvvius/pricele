@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import ContentPage from "@/components/ContentPage";
 import PriceAtlas from "@/components/PriceAtlas";
 import JsonLd from "@/components/JsonLd";
+import ChallengeBanner from "@/components/ChallengeBanner";
 import { breadcrumbJsonLd, dailyGameJsonLd, pageMetadata } from "@/lib/seo";
 
 const DESCRIPTION =
@@ -37,6 +38,7 @@ export default function PriceAtlasPage() {
           }),
         ]}
       />
+      <ChallengeBanner game="Price Atlas" />
       <PriceAtlas />
       <div className="flex max-w-prose flex-col gap-3.5 text-[16px] leading-[1.7] text-ink-body">
         <p>

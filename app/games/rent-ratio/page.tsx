@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import ContentPage from "@/components/ContentPage";
 import RentRatio from "@/components/RentRatio";
 import JsonLd from "@/components/JsonLd";
+import ChallengeBanner from "@/components/ChallengeBanner";
 import { breadcrumbJsonLd, dailyGameJsonLd, pageMetadata } from "@/lib/seo";
 
 const DESCRIPTION =
@@ -31,6 +32,7 @@ export default function RentRatioPage() {
           dailyGameJsonLd({ name: "Rent Ratio", path: "/games/rent-ratio", description: DESCRIPTION, genre: ["Puzzle", "Trivia"] }),
         ]}
       />
+      <ChallengeBanner game="Rent Ratio" />
       <RentRatio />
       <div className="flex max-w-prose flex-col gap-3.5 text-[16px] leading-[1.7] text-ink-body">
         <p>

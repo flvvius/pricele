@@ -97,6 +97,21 @@ export function challengeVerdict(
   return `Dead heat: ${you.score} each.`;
 }
 
-export function gameShareUrl(path: string, channel: ShareChannel, campaign: ShareCampaign): string {
-  return `${SITE_URL}${path}?${utmParams(channel, campaign).toString()}`;
+export function gameShareUrl(
+  path: string,
+  channel: ShareChannel,
+  campaign: ShareCampaign,
+  score?: string
+): string {
+  const params = utmParams(channel, campaign);
+  if (score && decodeGameScore(score)) params.set("c", score);
+  return `${SITE_URL}${path}?${params.toString()}`;
+}
+
+export function decodeGameScore(raw: string | null | undefined): string | null {
+  if (!raw) return null;
+  const m = /^(\d{1,2}|X)\/(\d{1,2})$/.exec(raw);
+  if (!m) return null;
+  if (m[1] !== "X" && Number(m[1]) > Number(m[2])) return null;
+  return raw;
 }
