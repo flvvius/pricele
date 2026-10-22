@@ -18,7 +18,7 @@
 import { SITE_URL } from "./seo";
 
 export type ShareChannel = "native" | "copy";
-export type ShareCampaign = "daily" | "weekly";
+export type ShareCampaign = "daily" | "weekly" | "today" | `game-${string}`;
 
 /** The utm set for a shared link, in a fixed order so links are stable. */
 export function utmParams(
@@ -95,4 +95,8 @@ export function challengeVerdict(
   if (diff > 0) return `You beat your friend by ${diff} points (${you.score} to ${them.score}).`;
   if (diff < 0) return `Your friend wins this one, ${them.score} to ${you.score}.`;
   return `Dead heat: ${you.score} each.`;
+}
+
+export function gameShareUrl(path: string, channel: ShareChannel, campaign: ShareCampaign): string {
+  return `${SITE_URL}${path}?${utmParams(channel, campaign).toString()}`;
 }

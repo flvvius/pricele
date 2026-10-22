@@ -2,9 +2,8 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import ShareButton from "./ShareButton";
 import { GAMES, dailySetShare, readStatuses, syncHub, type GameStatus } from "@/lib/games";
-import { SITE_URL } from "@/lib/seo";
-import { trackEvent } from "@/lib/analytics";
 
 const LABEL: Record<GameStatus["phase"], string> = {
   not_started: "Not played",
@@ -15,7 +14,6 @@ const LABEL: Record<GameStatus["phase"], string> = {
 export default function TodayHub() {
   const [st, setSt] = useState<Record<string, GameStatus> | null>(null);
   const [streak, setStreak] = useState(0);
-  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     setStreak(syncHub());
@@ -25,17 +23,6 @@ export default function TodayHub() {
   if (!st) return <p className="text-ink-muted">Loading today&apos;s set…</p>;
 
   const doneCount = GAMES.filter((g) => st[g.slug]?.phase === "done").length;
-
-  async function share() {
-    const text = dailySetShare(st!, streak, `${SITE_URL}/today`);
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(true);
-      trackEvent("today_share", { channel: "copy", done: doneCount, streak });
-    } catch {
-      /* clipboard blocked */
-    }
-  }
 
   return (
     <div className="flex max-w-xl flex-col gap-5">
@@ -78,12 +65,14 @@ export default function TodayHub() {
           );
         })}
       </ul>
-      <button
-        onClick={share}
-        className="bg-ink px-6 py-3.5 font-mono text-[12px] uppercase tracking-[0.18em] text-paper-raised"
-      >
-        {copied ? "Copied" : "Share today's set"}
-      </button>
+      <ShareButton
+        text={(url) => dailySetShare(st, streak, url)}
+        path="/today"
+        campaign="today"
+        event="today_share"
+        label="Share today's set"
+        props={{ done: doneCount, streak }}
+      />
       <p className="text-[13px] text-ink-muted">
         Your streak counts every local day you finish at least one game. New puzzles at your local midnight.
       </p>

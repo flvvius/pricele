@@ -17,9 +17,9 @@ import {
   type LadderState,
 } from "@/lib/inflationladder";
 import { isoDate } from "@/lib/puzzle";
-import { SITE_URL } from "@/lib/seo";
 import { trackEvent } from "@/lib/analytics";
 import NextUp from "./NextUp";
+import ShareButton from "./ShareButton";
 
 const usd = (n: number) => `$${n.toFixed(2)}`;
 
@@ -31,7 +31,6 @@ export default function InflationLadder() {
   const [date, setDate] = useState<string | null>(null);
   const [state, setState] = useState<LadderState | null>(null);
   const [order, setOrder] = useState<string[]>([]);
-  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     const d = isoDate();
@@ -59,17 +58,6 @@ export default function InflationLadder() {
     if (isOver(next, p.answer)) {
       setOrder(p.answer);
       trackEvent("ladder_complete", { result: result(next, p.answer) });
-    }
-  }
-
-  async function share() {
-    const text = shareText(p, state!, `${SITE_URL}/games/inflation-ladder`);
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(true);
-      trackEvent("ladder_share", { channel: "copy" });
-    } catch {
-      setCopied(false);
     }
   }
 
@@ -143,12 +131,12 @@ export default function InflationLadder() {
               : "Out of tries. That's the real order above."}{" "}
             Prices are U.S. city averages in nominal dollars.
           </p>
-          <button
-            onClick={share}
-            className="bg-ink px-6 py-3.5 font-mono text-[12px] uppercase tracking-[0.18em] text-paper-raised"
-          >
-            {copied ? "Copied" : "Share result"}
-          </button>
+          <ShareButton
+            text={(url) => shareText(p, state, url)}
+            path="/games/inflation-ladder"
+            campaign="game-inflation-ladder"
+            event="ladder_share"
+          />
           <p className="text-[13px] text-ink-muted">A new ladder at your local midnight.</p>
           <NextUp current="inflation-ladder" />
         </div>

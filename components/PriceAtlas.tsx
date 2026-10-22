@@ -17,9 +17,9 @@ import {
   type AtlasState,
 } from "@/lib/priceatlas";
 import { isoDate } from "@/lib/puzzle";
-import { SITE_URL } from "@/lib/seo";
 import { trackEvent } from "@/lib/analytics";
 import NextUp from "./NextUp";
+import ShareButton from "./ShareButton";
 
 const usd = (n: number) => (n >= 100 ? `$${Math.round(n)}` : `$${n.toFixed(2)}`);
 const km = (n: number) => `${n.toLocaleString("en-US")} km`;
@@ -35,7 +35,6 @@ export default function PriceAtlas() {
   const [date, setDate] = useState<string | null>(null);
   const [state, setState] = useState<AtlasState | null>(null);
   const [query, setQuery] = useState("");
-  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     const d = isoDate();
@@ -67,17 +66,6 @@ export default function PriceAtlas() {
   function submit(e: React.FormEvent) {
     e.preventDefault();
     if (matches[0]) guess(matches[0].code);
-  }
-
-  async function share() {
-    const text = shareText(p, state!, `${SITE_URL}/games/price-atlas`);
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(true);
-      trackEvent("atlas_share", { channel: "copy" });
-    } catch {
-      setCopied(false);
-    }
   }
 
   return (
@@ -143,12 +131,12 @@ export default function PriceAtlas() {
             {won ? `Found it in ${result(p, state).split("/")[0]}. ` : ""}
             The basket was from <strong>{p.answer.name}</strong> {p.answer.flag}.
           </p>
-          <button
-            onClick={share}
-            className="bg-ink px-6 py-3.5 font-mono text-[12px] uppercase tracking-[0.18em] text-paper-raised"
-          >
-            {copied ? "Copied" : "Share result"}
-          </button>
+          <ShareButton
+            text={(url) => shareText(p, state, url)}
+            path="/games/price-atlas"
+            campaign="game-price-atlas"
+            event="atlas_share"
+          />
           <p className="text-[13px] text-ink-muted">A new basket at your local midnight.</p>
           <NextUp current="price-atlas" />
         </div>

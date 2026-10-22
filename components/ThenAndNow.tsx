@@ -13,9 +13,9 @@ import {
   type ThenNowState,
 } from "@/lib/thenandnow";
 import { isoDate } from "@/lib/puzzle";
-import { SITE_URL } from "@/lib/seo";
 import { trackEvent } from "@/lib/analytics";
 import NextUp from "./NextUp";
+import ShareButton from "./ShareButton";
 
 const usd = (n: number) => `$${n.toFixed(2)}`;
 
@@ -24,7 +24,6 @@ export default function ThenAndNow() {
   const [date, setDate] = useState<string | null>(null);
   const [state, setState] = useState<ThenNowState | null>(null);
   const [input, setInput] = useState("");
-  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     const d = isoDate();
@@ -51,17 +50,6 @@ export default function ThenAndNow() {
         won: next.guesses.some((g) => judge(g, p.answer) === "win"),
         guesses: next.guesses.length,
       });
-    }
-  }
-
-  async function share() {
-    const text = shareText(p, state!.guesses, `${SITE_URL}/games/then-and-now`);
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(true);
-      trackEvent("thenandnow_share", { channel: "copy" });
-    } catch {
-      /* clipboard blocked */
     }
   }
 
@@ -99,12 +87,12 @@ export default function ThenAndNow() {
             {won ? "Nice. " : ""}In {p.year}, {p.item.name.toLowerCase()} averaged{" "}
             <strong>{usd(p.answer)}</strong>.
           </p>
-          <button
-            onClick={share}
-            className="bg-ink px-6 py-3.5 font-mono text-[12px] uppercase tracking-[0.18em] text-paper-raised"
-          >
-            {copied ? "Copied" : "Share result"}
-          </button>
+          <ShareButton
+            text={(url) => shareText(p, state.guesses, url)}
+            path="/games/then-and-now"
+            campaign="game-then-and-now"
+            event="thenandnow_share"
+          />
           <p className="text-[13px] text-ink-muted">A new item at your local midnight.</p>
           <NextUp current="then-and-now" />
         </div>

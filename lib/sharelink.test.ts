@@ -7,6 +7,7 @@ import {
   encodeChallenge,
   weekShareUrl,
 } from "./sharelink";
+import { gameShareUrl } from "./sharelink";
 import { buildShareTextWithUrl, shareLinkFor, type ShareInput } from "./share";
 import { pageMetadata, SITE_URL } from "./seo";
 import {
@@ -120,5 +121,15 @@ describe("streakSafetyLine", () => {
     expect(
       streakSafetyLine({ ...EMPTY_STATS, currentStreak: 12, graceDays: 1 })
     ).toContain("1 rain check banked");
+  });
+});
+
+describe("gameShareUrl", () => {
+  it("tags the game page with its own campaign", () => {
+    const url = new URL(gameShareUrl("/games/price-atlas", "native", "game-price-atlas"));
+    expect(url.pathname).toBe("/games/price-atlas");
+    expect(url.searchParams.get("utm_source")).toBe("share");
+    expect(url.searchParams.get("utm_medium")).toBe("native");
+    expect(url.searchParams.get("utm_campaign")).toBe("game-price-atlas");
   });
 });

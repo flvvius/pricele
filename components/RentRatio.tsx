@@ -17,9 +17,9 @@ import {
   type RentState,
 } from "@/lib/rentratio";
 import { isoDate } from "@/lib/puzzle";
-import { SITE_URL } from "@/lib/seo";
 import { trackEvent } from "@/lib/analytics";
 import NextUp from "./NextUp";
+import ShareButton from "./ShareButton";
 
 const usd = (n: number) => `$${n.toLocaleString("en-US")}`;
 
@@ -35,7 +35,6 @@ export default function RentRatio() {
   // Date is read after mount so the puzzle follows the player's local midnight.
   const [date, setDate] = useState<string | null>(null);
   const [state, setState] = useState<RentState | null>(null);
-  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     const d = isoDate();
@@ -55,17 +54,6 @@ export default function RentRatio() {
     setState(next);
     saveState(next);
     if (isOver(next)) trackEvent("rentratio_complete", { score: score(p, next.picks) });
-  }
-
-  async function share() {
-    const text = shareText(p, state!.picks, `${SITE_URL}/games/rent-ratio`);
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(true);
-      trackEvent("rentratio_share", { channel: "copy" });
-    } catch {
-      /* clipboard blocked */
-    }
   }
 
   const btn =
@@ -122,12 +110,12 @@ export default function RentRatio() {
           <p className="text-[16px] text-ink-body">
             You got <strong>{score(p, state.picks)} of {ROUNDS}</strong>.
           </p>
-          <button
-            onClick={share}
-            className="bg-ink px-6 py-3.5 font-mono text-[12px] uppercase tracking-[0.18em] text-paper-raised"
-          >
-            {copied ? "Copied" : "Share result"}
-          </button>
+          <ShareButton
+            text={(url) => shareText(p, state.picks, url)}
+            path="/games/rent-ratio"
+            campaign="game-rent-ratio"
+            event="rentratio_share"
+          />
           <p className="text-[13px] text-ink-muted">New matchups at your local midnight.</p>
           <NextUp current="rent-ratio" />
         </div>
