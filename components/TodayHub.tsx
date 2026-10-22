@@ -136,6 +136,11 @@ export default function TodayHub() {
       />
       <p className="text-[13px] text-ink-muted">
         Your streak counts every local day you finish at least one game. New puzzles at your local midnight.
+        Missed a day? Replay it from the{" "}
+        <Link href="/games/archive" className="underline underline-offset-2">
+          games archive
+        </Link>
+        .
       </p>
     </div>
   );

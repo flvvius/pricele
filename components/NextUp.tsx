@@ -27,6 +27,14 @@ export default function NextUp({ current }: { current: string }) {
       <Link href="/today" className="text-ink-muted underline-offset-4 hover:text-ink hover:underline">
         {next ? "Today's set" : "Set complete: today's set →"}
       </Link>
+      {!next && (
+        <Link
+          href="/games/archive"
+          className="text-ink-muted underline-offset-4 hover:text-ink hover:underline"
+        >
+          Past days →
+        </Link>
+      )}
     </p>
   );
 }

@@ -41,6 +41,16 @@ export default function ArchiveIndex() {
             shared by everyone, so recent answers stay in the game only. You can
             still replay them from the archive button inside the game.
           </p>
+          <p>
+            The other daily games keep their past days in the{" "}
+            <Link
+              href="/games/archive"
+              className="underline decoration-rule underline-offset-2 transition-colors duration-fast ease-out hover:text-ink"
+            >
+              games archive
+            </Link>
+            .
+          </p>
         </>
       }
     >
