@@ -48,6 +48,7 @@ import StatsPanel from "./StatsPanel";
 import ArchiveModal from "./ArchiveModal";
 import ThemeToggle from "./ThemeToggle";
 import IconButton from "./IconButton";
+import TodaySetChip from "./TodaySetChip";
 import { IconArchive, IconHelp, IconStats } from "./Icons";
 
 const INTRO_KEY = "pricele:seen-intro";
@@ -330,6 +331,7 @@ export default function Game() {
           <span className="label">
             {puzzle ? `No. ${puzzle.puzzleNumber}` : " "}
           </span>
+          {!isArchive && <TodaySetChip />}
           <span className="label">{dateline(activeDate)}</span>
         </div>
       </header>
