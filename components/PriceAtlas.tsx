@@ -15,8 +15,12 @@ import {
   shareText,
   visibleClues,
   type AtlasState,
+  KEY,
+  EPOCH,
 } from "@/lib/priceatlas";
 import { isoDate } from "@/lib/puzzle";
+import { archiveDate, archiveKey } from "@/lib/gamedate";
+import ArchiveNote from "./ArchiveNote";
 import { trackEvent } from "@/lib/analytics";
 import NextUp from "./NextUp";
 import ShareButton from "./ShareButton";
@@ -34,12 +38,15 @@ function levelText(level: number | null): string {
 export default function PriceAtlas() {
   const [date, setDate] = useState<string | null>(null);
   const [state, setState] = useState<AtlasState | null>(null);
+  const [archived, setArchived] = useState(false);
   const [query, setQuery] = useState("");
 
   useEffect(() => {
-    const d = isoDate();
+    const past = archiveDate(window.location.search, EPOCH);
+    const d = past ?? isoDate();
+    setArchived(past !== null);
     setDate(d);
-    setState(loadState(d));
+    setState(loadState(d, past ? archiveKey(KEY) : KEY));
   }, []);
 
   if (!date || !state) return <p className="text-ink-muted">Loading today&apos;s puzzle…</p>;
@@ -56,7 +63,7 @@ export default function PriceAtlas() {
     if (!state || over || state.guesses.includes(code)) return;
     const next = { ...state, guesses: [...state.guesses, code] };
     setState(next);
-    saveState(next);
+    saveState(next, archived ? archiveKey(KEY) : KEY);
     setQuery("");
     if (isOver(p, next)) {
       trackEvent("atlas_complete", { won: isWon(p, next), guesses: next.guesses.length });
@@ -70,6 +77,7 @@ export default function PriceAtlas() {
 
   return (
     <div className="flex max-w-xl flex-col gap-5">
+      {archived && <ArchiveNote date={date} href="/games/price-atlas" />}
       <figure className="border border-rule border-t-2 border-t-ink bg-paper-raised px-4 py-4">
         <figcaption className="label text-center">
           Price Atlas #{p.number} · {over ? `${p.answer.flag} ${p.answer.name}` : "Mystery country"}

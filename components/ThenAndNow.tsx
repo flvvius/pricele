@@ -13,8 +13,12 @@ import {
   shareText,
   MAX_GUESSES,
   type ThenNowState,
+  KEY,
+  EPOCH,
 } from "@/lib/thenandnow";
 import { isoDate } from "@/lib/puzzle";
+import { archiveDate, archiveKey } from "@/lib/gamedate";
+import ArchiveNote from "./ArchiveNote";
 import { trackEvent } from "@/lib/analytics";
 import NextUp from "./NextUp";
 import ShareButton from "./ShareButton";
@@ -26,12 +30,15 @@ export default function ThenAndNow() {
   // Date is read after mount so the puzzle follows the player's local midnight.
   const [date, setDate] = useState<string | null>(null);
   const [state, setState] = useState<ThenNowState | null>(null);
+  const [archived, setArchived] = useState(false);
   const [input, setInput] = useState("");
 
   useEffect(() => {
-    const d = isoDate();
+    const past = archiveDate(window.location.search, EPOCH);
+    const d = past ?? isoDate();
+    setArchived(past !== null);
     setDate(d);
-    setState(loadState(d));
+    setState(loadState(d, past ? archiveKey(KEY) : KEY));
   }, []);
 
   if (!date || !state) return <p className="text-ink-muted">Loading today&apos;s puzzle…</p>;
@@ -46,7 +53,7 @@ export default function ThenAndNow() {
     if (!state || over || !Number.isFinite(n) || n <= 0) return;
     const next = { ...state, guesses: [...state.guesses, Math.round(n * 100) / 100] };
     setState(next);
-    saveState(next);
+    saveState(next, archived ? archiveKey(KEY) : KEY);
     setInput("");
     if (isOver(next, p.answer)) {
       trackEvent("thenandnow_complete", {
@@ -58,6 +65,7 @@ export default function ThenAndNow() {
 
   return (
     <div className="flex max-w-xl flex-col gap-5">
+      {archived && <ArchiveNote date={date} href="/games/then-and-now" />}
       <figure className="border border-rule border-t-2 border-t-ink bg-paper-raised px-5 py-5 text-center">
         <figcaption className="label">
           Then &amp; Now #{p.number} · {p.item.unit}

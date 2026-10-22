@@ -20,9 +20,13 @@ import {
   type Range,
   type RangeQuestion,
   type RangeState,
+  KEY,
+  EPOCH,
 } from "@/lib/openrange";
 import { formatLocal, formatUSD } from "@/lib/format";
 import { isoDate } from "@/lib/puzzle";
+import { archiveDate, archiveKey } from "@/lib/gamedate";
+import ArchiveNote from "./ArchiveNote";
 import { trackEvent } from "@/lib/analytics";
 import NextUp from "./NextUp";
 import ShareButton from "./ShareButton";
@@ -68,6 +72,7 @@ function hint(r: Range, empty: boolean): string {
 export default function OpenRange() {
   const [date, setDate] = useState<string | null>(null);
   const [state, setState] = useState<RangeState | null>(null);
+  const [archived, setArchived] = useState(false);
   const [low, setLow] = useState("");
   const [high, setHigh] = useState("");
   const [reviewing, setReviewing] = useState(false);
@@ -81,9 +86,11 @@ export default function OpenRange() {
   }, [reviewing]);
 
   useEffect(() => {
-    const d = isoDate();
+    const past = archiveDate(window.location.search, EPOCH);
+    const d = past ?? isoDate();
+    setArchived(past !== null);
     setDate(d);
-    setState(loadState(d));
+    setState(loadState(d, past ? archiveKey(KEY) : KEY));
   }, []);
 
   if (!date || !state) return <p className="text-ink-muted">Loading today&apos;s questions…</p>;
@@ -100,7 +107,7 @@ export default function OpenRange() {
     if (!state || over || !isValidRange(draft)) return;
     const next = { ...state, ranges: [...state.ranges, draft] };
     setState(next);
-    saveState(next);
+    saveState(next, archived ? archiveKey(KEY) : KEY);
     acted.current = true;
     setReviewing(true);
     if (isOver(next)) trackEvent("range_complete", { score: result(p, next) });
@@ -118,6 +125,7 @@ export default function OpenRange() {
 
   return (
     <div className="flex max-w-xl flex-col gap-5">
+      {archived && <ArchiveNote date={date} href="/games/open-range" />}
       <p className="label text-center">
         Open Range #{p.number} ·{" "}
         {over && !reviewing ? "Final score" : `Question ${showing + 1} of ${QUESTIONS}`}

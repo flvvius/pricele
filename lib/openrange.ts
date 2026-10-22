@@ -169,9 +169,9 @@ export function shareText(p: RangePuzzle, state: RangeState, url: string): strin
 
 export const KEY = "pricele:open-range";
 
-export function loadState(date: string): RangeState {
+export function loadState(date: string, key: string = KEY): RangeState {
   try {
-    const raw = localStorage.getItem(KEY);
+    const raw = localStorage.getItem(key);
     if (raw) {
       const s = JSON.parse(raw) as RangeState;
       if (s.date === date && Array.isArray(s.ranges)) return s;
@@ -182,9 +182,9 @@ export function loadState(date: string): RangeState {
   return { date, ranges: [] };
 }
 
-export function saveState(state: RangeState): void {
+export function saveState(state: RangeState, key: string = KEY): void {
   try {
-    localStorage.setItem(KEY, JSON.stringify(state));
+    localStorage.setItem(key, JSON.stringify(state));
   } catch {
     return;
   }

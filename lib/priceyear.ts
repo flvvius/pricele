@@ -193,9 +193,9 @@ export function shareText(p: YearPuzzle, state: YearState, url: string): string 
 
 export const KEY = "pricele:price-year";
 
-export function loadState(date: string): YearState {
+export function loadState(date: string, key: string = KEY): YearState {
   try {
-    const raw = localStorage.getItem(KEY);
+    const raw = localStorage.getItem(key);
     if (raw) {
       const s = JSON.parse(raw) as YearState;
       if (s.date === date && Array.isArray(s.guesses)) return s;
@@ -206,9 +206,9 @@ export function loadState(date: string): YearState {
   return { date, guesses: [] };
 }
 
-export function saveState(state: YearState): void {
+export function saveState(state: YearState, key: string = KEY): void {
   try {
-    localStorage.setItem(KEY, JSON.stringify(state));
+    localStorage.setItem(key, JSON.stringify(state));
   } catch {
     return;
   }

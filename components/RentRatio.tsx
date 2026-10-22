@@ -15,8 +15,12 @@ import {
   ROUNDS,
   type RentArea,
   type RentState,
+  KEY,
+  EPOCH,
 } from "@/lib/rentratio";
 import { isoDate } from "@/lib/puzzle";
+import { archiveDate, archiveKey } from "@/lib/gamedate";
+import ArchiveNote from "./ArchiveNote";
 import { trackEvent } from "@/lib/analytics";
 import NextUp from "./NextUp";
 import ShareButton from "./ShareButton";
@@ -35,11 +39,14 @@ export default function RentRatio() {
   // Date is read after mount so the puzzle follows the player's local midnight.
   const [date, setDate] = useState<string | null>(null);
   const [state, setState] = useState<RentState | null>(null);
+  const [archived, setArchived] = useState(false);
 
   useEffect(() => {
-    const d = isoDate();
+    const past = archiveDate(window.location.search, EPOCH);
+    const d = past ?? isoDate();
+    setArchived(past !== null);
     setDate(d);
-    setState(loadState(d));
+    setState(loadState(d, past ? archiveKey(KEY) : KEY));
   }, []);
 
   if (!date || !state) return <p className="text-ink-muted">Loading today&apos;s puzzle…</p>;
@@ -52,7 +59,7 @@ export default function RentRatio() {
     if (!state || over) return;
     const next = { ...state, picks: [...state.picks, k] };
     setState(next);
-    saveState(next);
+    saveState(next, archived ? archiveKey(KEY) : KEY);
     if (isOver(next)) trackEvent("rentratio_complete", { score: score(p, next.picks) });
   }
 
@@ -61,6 +68,7 @@ export default function RentRatio() {
 
   return (
     <div className="flex max-w-xl flex-col gap-5">
+      {archived && <ArchiveNote date={date} href="/games/rent-ratio" />}
       {!over && current && (
         <figure className="flex flex-col gap-3">
           <figcaption className="label text-center">

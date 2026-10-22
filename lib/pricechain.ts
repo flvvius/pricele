@@ -102,9 +102,9 @@ export function shareText(p: ChainPuzzle, state: ChainState, url: string): strin
 
 export const KEY = "pricele:price-chain";
 
-export function loadState(date: string): ChainState {
+export function loadState(date: string, key: string = KEY): ChainState {
   try {
-    const raw = localStorage.getItem(KEY);
+    const raw = localStorage.getItem(key);
     if (raw) {
       const s = JSON.parse(raw) as ChainState;
       if (s.date === date && Array.isArray(s.calls)) return s;
@@ -115,9 +115,9 @@ export function loadState(date: string): ChainState {
   return { date, calls: [] };
 }
 
-export function saveState(state: ChainState): void {
+export function saveState(state: ChainState, key: string = KEY): void {
   try {
-    localStorage.setItem(KEY, JSON.stringify(state));
+    localStorage.setItem(key, JSON.stringify(state));
   } catch {
     return;
   }

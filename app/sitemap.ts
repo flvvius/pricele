@@ -86,6 +86,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
         priority: 0.6,
       },
       {
+        url: `${SITE_URL}/games/archive`,
+        changeFrequency: "daily",
+        priority: 0.5,
+      },
+      {
         url: `${SITE_URL}/games/open-range`,
         changeFrequency: "daily",
         priority: 0.6,

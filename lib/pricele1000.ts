@@ -104,9 +104,9 @@ export function shareText(p: ScoredPuzzle, state: ScoredState, url: string): str
 
 export const KEY = "pricele:1000";
 
-export function loadState(date: string): ScoredState {
+export function loadState(date: string, key: string = KEY): ScoredState {
   try {
-    const raw = localStorage.getItem(KEY);
+    const raw = localStorage.getItem(key);
     if (raw) {
       const s = JSON.parse(raw) as ScoredState;
       if (s.date === date && Array.isArray(s.guesses)) return s;
@@ -117,9 +117,9 @@ export function loadState(date: string): ScoredState {
   return { date, guesses: [] };
 }
 
-export function saveState(state: ScoredState): void {
+export function saveState(state: ScoredState, key: string = KEY): void {
   try {
-    localStorage.setItem(KEY, JSON.stringify(state));
+    localStorage.setItem(key, JSON.stringify(state));
   } catch {
     return;
   }

@@ -70,6 +70,13 @@ export default function GamesPage() {
             is the daily Pricele without hints: five prices, one guess each, scored out of 1,000.
           </p>
           <p>
+            Missed a day? The{" "}
+            <Link href="/games/archive" className={linkClass}>
+              games archive
+            </Link>{" "}
+            replays any past puzzle without touching your streak.
+          </p>
+          <p>
             The daily games stop after one round on purpose. If you want to keep going, try{" "}
             <Link href="/higher-or-lower" className={linkClass}>
               Higher or lower

@@ -15,8 +15,12 @@ import {
   shareText,
   MAX_TRIES,
   type LadderState,
+  KEY,
+  EPOCH,
 } from "@/lib/inflationladder";
 import { isoDate } from "@/lib/puzzle";
+import { archiveDate, archiveKey } from "@/lib/gamedate";
+import ArchiveNote from "./ArchiveNote";
 import { trackEvent } from "@/lib/analytics";
 import NextUp from "./NextUp";
 import ShareButton from "./ShareButton";
@@ -30,11 +34,14 @@ function startingOrder(ids: string[], answer: string[]): string[] {
 export default function InflationLadder() {
   const [date, setDate] = useState<string | null>(null);
   const [state, setState] = useState<LadderState | null>(null);
+  const [archived, setArchived] = useState(false);
   const [order, setOrder] = useState<string[]>([]);
 
   useEffect(() => {
-    const d = isoDate();
-    const s = loadState(d);
+    const past = archiveDate(window.location.search, EPOCH);
+    const d = past ?? isoDate();
+    setArchived(past !== null);
+    const s = loadState(d, past ? archiveKey(KEY) : KEY);
     const p = puzzleFor(d, THEN_NOW_ITEMS);
     setDate(d);
     setState(s);
@@ -63,7 +70,7 @@ export default function InflationLadder() {
     if (!state || over) return;
     const next = { ...state, tries: [...state.tries, order] };
     setState(next);
-    saveState(next);
+    saveState(next, archived ? archiveKey(KEY) : KEY);
     if (isOver(next, p.answer)) {
       setOrder(p.answer);
       trackEvent("ladder_complete", { result: result(next, p.answer) });
@@ -74,6 +81,7 @@ export default function InflationLadder() {
 
   return (
     <div className="flex max-w-xl flex-col gap-5">
+      {archived && <ArchiveNote date={date} href="/games/inflation-ladder" />}
       <p className="label text-center">
         Inflation Ladder #{p.number} · {p.baseYear} → {p.latestYear}
       </p>

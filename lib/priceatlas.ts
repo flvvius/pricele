@@ -205,9 +205,9 @@ export function matchCountries(query: string, exclude: string[] = []): Country[]
 
 export const KEY = "pricele:price-atlas";
 
-export function loadState(date: string): AtlasState {
+export function loadState(date: string, key: string = KEY): AtlasState {
   try {
-    const raw = localStorage.getItem(KEY);
+    const raw = localStorage.getItem(key);
     if (raw) {
       const s = JSON.parse(raw) as AtlasState;
       if (s.date === date && Array.isArray(s.guesses)) return s;
@@ -218,9 +218,9 @@ export function loadState(date: string): AtlasState {
   return { date, guesses: [] };
 }
 
-export function saveState(state: AtlasState): void {
+export function saveState(state: AtlasState, key: string = KEY): void {
   try {
-    localStorage.setItem(KEY, JSON.stringify(state));
+    localStorage.setItem(key, JSON.stringify(state));
   } catch {
     return;
   }

@@ -12,9 +12,13 @@ import {
   truth,
   type Call,
   type ChainState,
+  KEY,
+  EPOCH,
 } from "@/lib/pricechain";
 import type { Card } from "@/lib/higherlower";
 import { isoDate } from "@/lib/puzzle";
+import { archiveDate, archiveKey } from "@/lib/gamedate";
+import ArchiveNote from "./ArchiveNote";
 import { trackEvent } from "@/lib/analytics";
 import NextUp from "./NextUp";
 import ShareButton from "./ShareButton";
@@ -37,11 +41,14 @@ function CardFace({ card, price, label }: { card: Card; price: boolean; label: s
 export default function PriceChain() {
   const [date, setDate] = useState<string | null>(null);
   const [state, setState] = useState<ChainState | null>(null);
+  const [archived, setArchived] = useState(false);
 
   useEffect(() => {
-    const d = isoDate();
+    const past = archiveDate(window.location.search, EPOCH);
+    const d = past ?? isoDate();
+    setArchived(past !== null);
     setDate(d);
-    setState(loadState(d));
+    setState(loadState(d, past ? archiveKey(KEY) : KEY));
   }, []);
 
   if (!date || !state) return <p className="text-ink-muted">Loading today&apos;s chain…</p>;
@@ -54,12 +61,13 @@ export default function PriceChain() {
     if (!state || over) return;
     const next = { ...state, calls: [...state.calls, c] };
     setState(next);
-    saveState(next);
+    saveState(next, archived ? archiveKey(KEY) : KEY);
     if (isOver(next)) trackEvent("chain_complete", { score: result(p, next) });
   }
 
   return (
     <div className="flex max-w-xl flex-col gap-5">
+      {archived && <ArchiveNote date={date} href="/games/higher-or-lower" />}
       <p className="label text-center">
         Higher or Lower Daily #{p.number} · Call {Math.min(i + 1, CALLS)} of {CALLS}
       </p>

@@ -99,11 +99,11 @@ export function shareText(p: RentPuzzle, picks: ("a" | "b")[], url: string): str
   return `Rent Ratio #${p.number} ${score(p, picks)}/${ROUNDS}\n${row}\n${url}`;
 }
 
-const KEY = "pricele:rent-ratio";
+export const KEY = "pricele:rent-ratio";
 
-export function loadState(date: string): RentState {
+export function loadState(date: string, key: string = KEY): RentState {
   try {
-    const raw = localStorage.getItem(KEY);
+    const raw = localStorage.getItem(key);
     if (raw) {
       const s = JSON.parse(raw) as RentState;
       if (s.date === date && Array.isArray(s.picks)) return s;
@@ -114,9 +114,9 @@ export function loadState(date: string): RentState {
   return { date, picks: [] };
 }
 
-export function saveState(state: RentState): void {
+export function saveState(state: RentState, key: string = KEY): void {
   try {
-    localStorage.setItem(KEY, JSON.stringify(state));
+    localStorage.setItem(key, JSON.stringify(state));
   } catch {
     /* ignore */
   }

@@ -100,11 +100,11 @@ export function shareText(p: ThenNowPuzzle, guesses: number[], url: string): str
   return `Then & Now #${p.number} ${score}\n${p.item.name}, ${p.year}\n${row}\n${url}`;
 }
 
-const KEY = "pricele:then-and-now";
+export const KEY = "pricele:then-and-now";
 
-export function loadState(date: string): ThenNowState {
+export function loadState(date: string, key: string = KEY): ThenNowState {
   try {
-    const raw = localStorage.getItem(KEY);
+    const raw = localStorage.getItem(key);
     if (raw) {
       const s = JSON.parse(raw) as ThenNowState;
       if (s.date === date && Array.isArray(s.guesses)) return s;
@@ -115,9 +115,9 @@ export function loadState(date: string): ThenNowState {
   return { date, guesses: [] };
 }
 
-export function saveState(state: ThenNowState): void {
+export function saveState(state: ThenNowState, key: string = KEY): void {
   try {
-    localStorage.setItem(KEY, JSON.stringify(state));
+    localStorage.setItem(key, JSON.stringify(state));
   } catch {
     /* ignore */
   }

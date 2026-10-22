@@ -131,9 +131,9 @@ export function percent(change: number): string {
 
 export const KEY = "pricele:inflation-ladder";
 
-export function loadState(date: string): LadderState {
+export function loadState(date: string, key: string = KEY): LadderState {
   try {
-    const raw = localStorage.getItem(KEY);
+    const raw = localStorage.getItem(key);
     if (raw) {
       const s = JSON.parse(raw) as LadderState;
       if (s.date === date && Array.isArray(s.tries)) return s;
@@ -144,9 +144,9 @@ export function loadState(date: string): LadderState {
   return { date, tries: [] };
 }
 
-export function saveState(state: LadderState): void {
+export function saveState(state: LadderState, key: string = KEY): void {
   try {
-    localStorage.setItem(KEY, JSON.stringify(state));
+    localStorage.setItem(key, JSON.stringify(state));
   } catch {
     return;
   }
