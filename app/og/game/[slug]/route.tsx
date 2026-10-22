@@ -1,5 +1,5 @@
 import { ImageResponse } from "next/og";
-import { GAMES, gameBySlug } from "@/lib/games";
+import { GAMES, gameBySlug, type DailyGame } from "@/lib/games";
 
 export const dynamic = "force-static";
 export const dynamicParams = false;
@@ -8,12 +8,21 @@ const PAPER = "#F2EDE1";
 const INK = "#1A1613";
 const ACCENT = "#C4321C";
 
+const MODES: Pick<DailyGame, "slug" | "name" | "blurb" | "source">[] = [
+  {
+    slug: "pricele-1000",
+    name: "Pricele 1000",
+    blurb: "Five prices, one guess each, scored out of 1,000.",
+    source: "Sourced prices, 49 countries",
+  },
+];
+
 export function generateStaticParams() {
-  return [...GAMES.map((g) => ({ slug: g.slug })), { slug: "hub" }];
+  return [...GAMES, ...MODES].map((g) => ({ slug: g.slug })).concat({ slug: "hub" });
 }
 
 export function GET(_req: Request, { params }: { params: { slug: string } }) {
-  const game = gameBySlug(params.slug);
+  const game = gameBySlug(params.slug) ?? MODES.find((m) => m.slug === params.slug);
   const name = game?.name ?? "Daily games about real prices";
   const blurb = game?.blurb ?? GAMES.map((g) => g.name).join(" · ");
   const kicker = game ? `PRICELE · ${game.source.toUpperCase()}` : `${GAMES.length} FREE DAILY GAMES`;

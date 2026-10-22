@@ -18,7 +18,7 @@
 import { SITE_URL } from "./seo";
 
 export type ShareChannel = "native" | "copy";
-export type ShareCampaign = "daily" | "weekly" | "today" | `game-${string}`;
+export type ShareCampaign = "daily" | "weekly" | "today" | "years" | `game-${string}`;
 
 /** The utm set for a shared link, in a fixed order so links are stable. */
 export function utmParams(

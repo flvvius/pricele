@@ -70,6 +70,8 @@ tracks one streak across all of them.
 
 ${gameLines}
 
+Scored mode: [Pricele 1000](${absoluteUrl("/games/pricele-1000")}), five prices with one guess each, scored out of 1,000.
+
 Unlimited modes: [Higher or lower](${absoluteUrl("/higher-or-lower")}) and
 [Where in the world](${absoluteUrl("/where-in-the-world")}).
 
@@ -96,6 +98,7 @@ ${COMPARISONS.map((c) => entry(`/vs/${c.slug}`, `${SITE_NAME} vs ${c.opponent}`,
 ## Reference
 
 ${entry("/prices", "Prices by country", `every price on the site, grouped by country (${COUNTRIES.length} of them)`)}
+${entry("/years", "Prices by year", "what 15 U.S. groceries and gas cost each year from 1980, then and now, in dollars and in minutes of work at the BLS average wage")}
 ${entry("/items", "Items", `what drives the price spread for each of the ${ITEMS.length} items`)}
 ${entry("/methodology", "Methodology", "where each number comes from, how it is converted, and the specific ways it can be wrong")}
 ${entry("/data", "The data", "every price source, its licence, and where to get it properly")}

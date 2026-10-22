@@ -61,8 +61,14 @@ export default function GamesPage() {
           </p>
         </Prose>
       </Section>
-      <Section heading="Unlimited modes" id="unlimited">
+      <Section heading="More ways to play" id="unlimited">
         <Prose>
+          <p>
+            <Link href="/games/pricele-1000" className={linkClass}>
+              Pricele 1000
+            </Link>{" "}
+            is the daily Pricele without hints: five prices, one guess each, scored out of 1,000.
+          </p>
           <p>
             The daily games stop after one round on purpose. If you want to keep going, try{" "}
             <Link href="/higher-or-lower" className={linkClass}>
@@ -78,6 +84,13 @@ export default function GamesPage() {
               classroom
             </Link>{" "}
             page.
+          </p>
+          <p>
+            Not a game, but made from the same numbers:{" "}
+            <Link href="/years" className={linkClass}>
+              prices the year you were born
+            </Link>
+            , every year from 1980, in dollars and in minutes of work.
           </p>
         </Prose>
       </Section>

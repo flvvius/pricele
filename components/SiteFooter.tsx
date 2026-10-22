@@ -16,6 +16,7 @@ const GROUPS: { title: string; links: { href: string; label: string }[] }[] = [
       { href: "/archive", label: "Puzzle archive" },
       { href: "/games", label: "All daily games" },
       { href: "/today", label: "Today's set" },
+      { href: "/years", label: "Prices by year" },
     ],
   },
   {

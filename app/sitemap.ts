@@ -5,6 +5,7 @@ import { ITEMS } from "@/data/items";
 import { PUBLISHED_ARTICLES } from "@/data/articles";
 import { COMPARISONS } from "@/data/comparisons";
 import { dateFromISO } from "@/lib/puzzle";
+import { YEARS } from "@/lib/yearprices";
 
 // Regenerated hourly so newly-archived days enter the sitemap without a deploy.
 export const revalidate = 3600;
@@ -79,6 +80,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
         priority: 0.6,
       },
       {
+        url: `${SITE_URL}/games/pricele-1000`,
+        changeFrequency: "daily",
+        priority: 0.6,
+      },
+      {
         url: `${SITE_URL}/games/open-range`,
         changeFrequency: "daily",
         priority: 0.6,
@@ -98,6 +104,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         changeFrequency: "monthly",
         priority: 0.7,
       },
+      { url: `${SITE_URL}/years`, changeFrequency: "monthly", priority: 0.8 },
       { url: `${SITE_URL}/editorial`, changeFrequency: "monthly", priority: 0.6 },
       { url: `${SITE_URL}/data`, changeFrequency: "monthly", priority: 0.6 },
       { url: `${SITE_URL}/support`, changeFrequency: "monthly", priority: 0.4 },
@@ -131,6 +138,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: now,
     changeFrequency: "weekly",
     priority: 0.8,
+  }));
+
+  const yearPages: MetadataRoute.Sitemap = YEARS.map((y) => ({
+    url: `${SITE_URL}/years/${y}`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.7,
   }));
 
   const archivePages: MetadataRoute.Sitemap = publishedArchiveDates().map(
@@ -167,6 +181,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...blogIndex,
     ...comparisonPages,
     ...itemPages,
+    ...yearPages,
     ...countryPages,
     ...articlePages,
     ...archivePages,

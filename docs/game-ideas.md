@@ -170,6 +170,6 @@ Shipped:
   ×1.5 every time lands 57% of the time and averages 174 of 500, so knowing
   country price levels is where the points are.
 
-Next: a born-year page ("the year you were born, coffee took 27 minutes of
-work") that uses the 1980 data for search, and the scored mode of the main
-game.
+Also shipped the same day: the born-year pages at `/years/<year>`, each
+with a share card ("Born in 1985? ... a grocery run took 153 minutes of work
+then, 124 now"), and Pricele 1000, the scored mode of the main game.

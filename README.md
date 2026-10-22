@@ -406,6 +406,17 @@ browsing and `/today` for a player's own progress.
 | Rent Ratio | `/games/rent-ratio` | Five metro pairs, pick the higher HUD fair market rent | HUD FY2026 FMRs |
 | Inflation Ladder | `/games/inflation-ladder` | Order four groceries by price rise since a base year | BLS average prices |
 
+Pricele 1000 (`/games/pricele-1000`) is a scored mode of the main game, not a
+member of the daily set: five prices, one slider guess each, 0-100 a round by
+how close the guess is on a log scale (1.75x off scores 0), with rounds
+weighted 1, 1, 2, 3, 3 for a total out of 1,000. It never deals a price that
+Open Range uses the same day. The main game's reveal links to it.
+
+`/years` and `/years/<year>` (1980 on) are reference pages built from the same
+BLS data: what each item cost that year and now, in dollars and in minutes of
+work. They hide the live Then & Now answers for yesterday, today and tomorrow,
+rebuild hourly, and so does their share image at `/og/year/<year>`.
+
 Every game is one entry in `GAMES` in `lib/games.ts`. That entry reads the
 game's own `localStorage` key and returns its status for a date. Everything
 else reads from the list: `/today`, `/games`, the homepage grid, the "next

@@ -56,15 +56,20 @@ function hiddenPairs(date: string): Set<string> {
   return out;
 }
 
-export function puzzleFor(date: string): RangePuzzle {
-  const idx = dayIndex(date);
-  const rand = rng(idx * 2654435761 + 500);
+export function dealQuestions(
+  date: string,
+  count: number,
+  seed: number,
+  exclude: Set<string> = new Set()
+): RangeQuestion[] {
+  const rand = rng(dayIndex(date) * 2654435761 + seed);
   const hidden = hiddenPairs(date);
   const pool = PRICES.filter(
     (p) =>
       p.priceUSD > 0 &&
       !UNSOURCED.test(p.source) &&
       !hidden.has(`${p.itemId}:${p.countryCode}`) &&
+      !exclude.has(`${p.itemId}:${p.countryCode}`) &&
       getItem(p.itemId)
   );
   const itemIds = [...new Set(pool.map((p) => p.itemId))];
@@ -72,7 +77,7 @@ export function puzzleFor(date: string): RangePuzzle {
   const questions: RangeQuestion[] = [];
   const usedItems = new Set<string>();
   const usedCountries = new Set<string>();
-  for (let attempt = 0; attempt < 2000 && questions.length < QUESTIONS; attempt++) {
+  for (let attempt = 0; attempt < 2000 && questions.length < count; attempt++) {
     const itemId = itemIds[Math.floor(rand() * itemIds.length)];
     if (usedItems.has(itemId)) continue;
     const options = pool.filter((p) => p.itemId === itemId && !usedCountries.has(p.countryCode));
@@ -86,7 +91,11 @@ export function puzzleFor(date: string): RangePuzzle {
       median: medianPriceUSD(itemId),
     });
   }
-  return { number: idx + 1, date, questions };
+  return questions;
+}
+
+export function puzzleFor(date: string): RangePuzzle {
+  return { number: dayIndex(date) + 1, date, questions: dealQuestions(date, QUESTIONS, 500) };
 }
 
 export function width(r: Range): number {

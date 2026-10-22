@@ -412,10 +412,10 @@ export default function Reveal({
               </div>
               <div className="flex items-center gap-2">
                 <Link
-                  href="/higher-or-lower"
+                  href="/games/pricele-1000"
                   className="border border-ink bg-paper-raised px-4 py-2.5 font-mono text-[11px] uppercase tracking-[0.16em] text-ink transition-[background-color,border-color,transform] duration-press ease-out hover:bg-paper-sunk active:scale-[0.97]"
                 >
-                  One more
+                  Pricele 1000
                 </Link>
                 <button
                   onClick={onShowStats}
