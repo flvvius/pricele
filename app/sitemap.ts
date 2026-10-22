@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/seo";
 import { COUNTRIES, publishedArchiveDates } from "@/lib/catalog";
+import { publishedAnswerDates } from "@/lib/answers";
 import { ITEMS } from "@/data/items";
 import { PUBLISHED_ARTICLES } from "@/data/articles";
 import { COMPARISONS } from "@/data/comparisons";
@@ -171,6 +172,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })
   );
 
+  const answerPages: MetadataRoute.Sitemap = [
+    { url: `${SITE_URL}/games/answers`, lastModified: now, changeFrequency: "daily", priority: 0.5 },
+    ...publishedAnswerDates().map((date) => ({
+      url: `${SITE_URL}/games/answers/${date}`,
+      lastModified: dateFromISO(date),
+      changeFrequency: "yearly" as const,
+      priority: 0.4,
+    })),
+  ];
+
   const articlePages: MetadataRoute.Sitemap = PUBLISHED_ARTICLES.map((a) => ({
     url: `${SITE_URL}/blog/${a.slug}`,
     lastModified: dateFromISO(a.date),
@@ -198,6 +209,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...itemPages,
     ...yearPages,
     ...historyPages,
+    ...answerPages,
     ...countryPages,
     ...articlePages,
     ...archivePages,

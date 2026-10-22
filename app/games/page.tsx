@@ -74,7 +74,11 @@ export default function GamesPage() {
             <Link href="/games/archive" className={linkClass}>
               games archive
             </Link>{" "}
-            replays any past puzzle without touching your streak.
+            replays any past puzzle without touching your streak, and{" "}
+            <Link href="/games/answers" className={linkClass}>
+              past answers
+            </Link>{" "}
+            go up two days after each day ends.
           </p>
           <p>
             The daily games stop after one round on purpose. If you want to keep going, try{" "}

@@ -6,6 +6,7 @@ import { GAMES } from "@/lib/games";
 import { EPOCH } from "@/lib/openrange";
 import { pastDates } from "@/lib/gamedate";
 import { formatArchiveDate } from "@/lib/format";
+import { isPublishedAnswerDate } from "@/lib/answers";
 
 const ARCHIVED = [
   ...GAMES.filter((g) => g.slug !== "pricele").map((g) => ({ name: g.name, href: g.href })),
@@ -45,6 +46,14 @@ export default function GameArchive() {
                 {g.name}
               </Link>
             ))}
+            {isPublishedAnswerDate(d) && (
+              <Link
+                href={`/games/answers/${d}`}
+                className="text-ink-muted underline decoration-rule underline-offset-2 hover:text-ink"
+              >
+                Answers
+              </Link>
+            )}
           </span>
         </li>
       ))}
