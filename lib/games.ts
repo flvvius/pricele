@@ -26,6 +26,12 @@ import {
   puzzleFor as atlasPuzzle,
   result as atlasResult,
 } from "./priceatlas";
+import {
+  KEY as CHAIN_KEY,
+  isOver as chainOver,
+  puzzleFor as chainPuzzle,
+  result as chainResult,
+} from "./pricechain";
 
 export type Phase = "not_started" | "in_progress" | "done";
 
@@ -98,6 +104,21 @@ export const GAMES: DailyGame[] = [
       }
       const p = atlasPuzzle(date);
       if (atlasOver(p, s)) return { phase: "done", result: atlasResult(p, s) };
+      return { phase: "in_progress" };
+    },
+  },
+  {
+    slug: "higher-or-lower",
+    name: "Higher or Lower Daily",
+    href: "/games/higher-or-lower",
+    blurb: "Ten prices in a chain. Call each one higher or lower.",
+    source: "Sourced prices, 49 countries",
+    status(date, kv) {
+      const s = json<{ date: string; calls: ("higher" | "lower")[] }>(kv, CHAIN_KEY);
+      if (!s || s.date !== date || !Array.isArray(s.calls) || s.calls.length === 0) {
+        return NOT_STARTED;
+      }
+      if (chainOver(s)) return { phase: "done", result: chainResult(chainPuzzle(date), s) };
       return { phase: "in_progress" };
     },
   },

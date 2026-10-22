@@ -99,7 +99,7 @@ describe("daily set share", () => {
       new Date(2026, 9, 22)
     );
     const lines = text.split("\n");
-    expect(lines[0]).toMatch(/^Pricele daily set #\d+ ✅⬜⬜⬜⬜$/);
+    expect(lines[0]).toMatch(/^Pricele daily set #\d+ ✅⬜⬜⬜⬜⬜$/);
     expect(text).toContain("✅ Pricele 2/5");
     expect(text).toContain("⬜ Rent Ratio");
     expect(text).toContain("🔥 4-day streak");

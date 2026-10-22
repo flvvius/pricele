@@ -59,6 +59,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
         priority: 0.6,
       },
       {
+        url: `${SITE_URL}/games/higher-or-lower`,
+        changeFrequency: "daily",
+        priority: 0.6,
+      },
+      {
         url: `${SITE_URL}/games/price-atlas`,
         changeFrequency: "daily",
         priority: 0.6,
