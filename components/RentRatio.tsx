@@ -19,6 +19,7 @@ import {
 import { isoDate } from "@/lib/puzzle";
 import { SITE_URL } from "@/lib/seo";
 import { trackEvent } from "@/lib/analytics";
+import NextUp from "./NextUp";
 
 const usd = (n: number) => `$${n.toLocaleString("en-US")}`;
 
@@ -128,6 +129,7 @@ export default function RentRatio() {
             {copied ? "Copied" : "Share result"}
           </button>
           <p className="text-[13px] text-ink-muted">New matchups at your local midnight.</p>
+          <NextUp current="rent-ratio" />
         </div>
       )}
 

@@ -15,6 +15,7 @@ import {
 import { isoDate } from "@/lib/puzzle";
 import { SITE_URL } from "@/lib/seo";
 import { trackEvent } from "@/lib/analytics";
+import NextUp from "./NextUp";
 
 const usd = (n: number) => `$${n.toFixed(2)}`;
 
@@ -105,6 +106,7 @@ export default function ThenAndNow() {
             {copied ? "Copied" : "Share result"}
           </button>
           <p className="text-[13px] text-ink-muted">A new item at your local midnight.</p>
+          <NextUp current="then-and-now" />
         </div>
       ) : (
         <form onSubmit={submit} className="flex gap-2">

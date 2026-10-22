@@ -58,6 +58,14 @@ export default function SiteHeader() {
               Play
             </Link>
           </li>
+          <li>
+            <Link
+              href="/today"
+              className="inline-block border border-ink px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.16em] text-ink transition-transform duration-press ease-out active:scale-[0.97]"
+            >
+              Today
+            </Link>
+          </li>
           {LINKS.map((l) => (
             <li key={l.href}>
               <Link

@@ -14,7 +14,8 @@ export type EventName =
   | "thenandnow_complete"
   | "thenandnow_share"
   | "rentratio_complete"
-  | "rentratio_share";
+  | "rentratio_share"
+  | "today_share";
 
 type Props = Record<string, string | number | boolean>;
 

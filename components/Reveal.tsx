@@ -30,6 +30,7 @@ import type { CrowdStats } from "@/lib/db";
 import { USD_TO_EUR, type Currency } from "@/lib/currency";
 import ShareCard from "./ShareCard";
 import Countdown from "./Countdown";
+import NextUp from "./NextUp";
 import CrowdPanel from "./CrowdPanel";
 import WeekCard from "./WeekCard";
 import RoomBoard from "./RoomBoard";
@@ -400,6 +401,9 @@ export default function Reveal({
               <div>
                 <p className="label">Next edition</p>
                 <Countdown />
+                <div className="mt-1.5">
+                  <NextUp current="pricele" />
+                </div>
                 {streakLine && (
                   <p className="mt-1 max-w-[16rem] text-[12px] leading-snug text-streak">
                     {streakLine}

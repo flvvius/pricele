@@ -59,6 +59,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
         priority: 0.6,
       },
       {
+        url: `${SITE_URL}/today`,
+        changeFrequency: "daily",
+        priority: 0.7,
+      },
+      {
         url: `${SITE_URL}/classroom`,
         changeFrequency: "monthly",
         priority: 0.7,
