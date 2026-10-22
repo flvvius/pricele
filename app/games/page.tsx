@@ -81,6 +81,43 @@ export default function GamesPage() {
           </p>
         </Prose>
       </Section>
+      <Section heading="Questions" id="questions">
+        <Prose>
+          <h3 className="font-bold text-ink">Are these games free?</h3>
+          <p>
+            Yes. There is no account, no download and no paywall. Your results and streaks stay in
+            your own browser.
+          </p>
+          <h3 className="font-bold text-ink">How long does the whole set take?</h3>
+          <p>
+            About {GAMES.reduce((n, g) => n + g.minutes, 0)} minutes for all {GAMES.length}. Each
+            game is one short puzzle, so you can also play one and come back tomorrow.
+          </p>
+          <h3 className="font-bold text-ink">Where do the numbers come from?</h3>
+          <p>
+            Every answer is a published figure: world prices from sources such as The
+            Economist&apos;s Big Mac Index and Numbeo, U.S. price history from the Bureau of Labor
+            Statistics, and rents from HUD. The{" "}
+            <Link href="/methodology" className={linkClass}>
+              methodology
+            </Link>{" "}
+            and{" "}
+            <Link href="/data" className={linkClass}>
+              data
+            </Link>{" "}
+            pages list each source and its licence.
+          </p>
+          <h3 className="font-bold text-ink">What if I like Wordle, Worldle or Costcodle?</h3>
+          <p>
+            Price Atlas plays like Worldle with prices in place of a map outline. Pricele and Then
+            &amp; Now are closest to Costcodle. For daily games made by other people, see{" "}
+            <Link href="/daily-games" className={linkClass}>
+              daily games like Wordle
+            </Link>
+            .
+          </p>
+        </Prose>
+      </Section>
     </ContentPage>
   );
 }

@@ -3,6 +3,7 @@ import { COUNTRIES } from "@/lib/catalog";
 import { PUBLISHED_ARTICLES } from "@/data/articles";
 import { COMPARISONS } from "@/data/comparisons";
 import { SITE_NAME, SITE_URL, absoluteUrl } from "@/lib/seo";
+import { GAMES } from "@/lib/games";
 
 /**
  * `/llms.txt`: a plain-text map of the site for anything reading it as an agent
@@ -33,6 +34,7 @@ function entry(path: string, label: string, note: string): string {
 
 export function GET() {
   const itemNames = ITEMS.map(itemLabel).join(", ");
+  const gameLines = GAMES.map((g) => entry(g.href, g.name, `${g.blurb} Data: ${g.source}.`)).join("\n");
 
   const body = `# ${SITE_NAME}
 
@@ -58,6 +60,18 @@ reference tables and the guides are written to be read without playing.
 ${entry("/", "Today's puzzle", "the game itself; one item, one country, five guesses")}
 ${entry("/archive", "Archive", "every past puzzle, replayable, and it cannot affect your streak")}
 ${entry("/daily-games", "Daily games like Wordle", "the other daily games worth playing, including our direct competitors, described honestly")}
+
+## Daily games
+
+${SITE_NAME} is also a small hub of daily games, all free, all built on published
+numbers, each with one puzzle a day that resets at the player's local midnight.
+[All games](${absoluteUrl("/games")}) lists them, and [Today](${absoluteUrl("/today")})
+tracks one streak across all of them.
+
+${gameLines}
+
+Unlimited modes: [Higher or lower](${absoluteUrl("/higher-or-lower")}) and
+[Where in the world](${absoluteUrl("/where-in-the-world")}).
 
 ## Sister game
 
