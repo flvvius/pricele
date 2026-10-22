@@ -108,7 +108,7 @@ export default function HistoryPage({ params }: { params: { item: string } }) {
               <tr className="border-b border-rule text-left text-[11px] uppercase tracking-[0.14em] text-ink-muted">
                 <th className="py-2 pr-3 font-normal">Year</th>
                 <th className="py-2 pr-3 text-right font-normal">Price</th>
-                <th className="py-2 pr-3 text-right font-normal">On year</th>
+                <th className="py-2 pr-3 text-right font-normal">Change</th>
                 <th className="py-2 text-right font-normal">Work</th>
               </tr>
             </thead>

@@ -2,7 +2,7 @@ import { segments, type HistoryPoint } from "@/lib/itemhistory";
 
 const W = 480;
 const H = 220;
-const PAD = { top: 12, right: 60, bottom: 28, left: 52 };
+const PAD = { top: 12, right: 76, bottom: 28, left: 52 };
 
 function niceStep(max: number): number {
   const raw = max / 4;
@@ -36,7 +36,10 @@ export default function PriceLineChart({
     PAD.left + ((year - first) / (last - first)) * (W - PAD.left - PAD.right);
   const y = (price: number) =>
     PAD.top + (1 - (price - base) / (top - base)) * (H - PAD.top - PAD.bottom);
-  const ticks = Array.from({ length: Math.round((top - base) / step) + 1 }, (_, i) => base + i * step);
+  const ticks = Array.from(
+    { length: Math.round((top - base) / step) + 1 },
+    (_, i) => base + i * step
+  );
   const decades = points.map((p) => p.year).filter((yr) => yr % 10 === 0);
   const end = visible[visible.length - 1];
   const fmt = (n: number) =>
@@ -107,7 +110,7 @@ export default function PriceLineChart({
       </svg>
       {caption && (
         <figcaption className="text-[13px] text-ink-muted">
-          Annual U.S. city average in the dollars of each year. Hover a point for the year.
+          Annual U.S. city average in the dollars of each year. Every year is in the table below.
         </figcaption>
       )}
     </figure>

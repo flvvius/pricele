@@ -22,7 +22,7 @@ export default function Pricele1000Page() {
       intro={
         <p>
           Five items, five countries, one guess each. No hints, just a slider and a score for how
-          close you land. The last two rounds count triple.
+          close you land. Round three counts double and the last two count triple.
         </p>
       }
     >

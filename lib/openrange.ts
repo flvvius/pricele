@@ -1,4 +1,4 @@
-import { getItem, itemLabel } from "@/data/items";
+import { getItem, itemPhrase, sentenceCase } from "@/data/items";
 import { medianPriceUSD, pairForDate, type PriceEntry } from "./catalog";
 import { PRICES, dateFromISO } from "./puzzle";
 
@@ -87,7 +87,7 @@ export function dealQuestions(
     usedCountries.add(price.countryCode);
     questions.push({
       price,
-      label: itemLabel(getItem(itemId)!),
+      label: sentenceCase(itemPhrase(getItem(itemId)!)),
       median: medianPriceUSD(itemId),
     });
   }
@@ -116,6 +116,12 @@ export function questionScore(r: Range, answer: number): number {
     MIN_SCORE,
     Math.round(QUESTION_MAX * (1 - Math.log(width(r)) / Math.log(FULL_WIDTH)))
   );
+}
+
+export function missDirection(r: Range, answer: number): "above" | "below" | null {
+  if (answer > r.high) return "above";
+  if (answer < r.low) return "below";
+  return null;
 }
 
 export function missedBy(r: Range, answer: number): number {

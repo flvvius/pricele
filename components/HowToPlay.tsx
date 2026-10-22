@@ -28,13 +28,8 @@ export default function HowToPlay({
         </p>
 
         <p className="text-ink-muted">
-          Guess in{" "}
-          <strong className="font-semibold text-ink-body">dollars</strong> or{" "}
-          <strong className="font-semibold text-ink-body">euros</strong>: the
-          pair of buttons inside the guess box switches between them at any
-          point, mid-round included, and remembers which you picked. Because you
-          win on a percentage rather than a fixed amount, the currency you play
-          in never changes how close a guess counts as.
+          Guess in dollars or euros with the $ / € switch in the guess box. The
+          5% rule is the same in either.
         </p>
 
         <div>
@@ -55,14 +50,11 @@ export default function HowToPlay({
           <h3 className="label rule-label mb-3">Clue two · temperature</h3>
           {/* The ramp is shown as the actual swatches the board uses, so the
               legend and the game cannot drift apart in the player's head. */}
-          <ul className="flex flex-col">
+          <ul className="flex flex-wrap gap-x-4 gap-y-2">
             {RAMP.map((t) => (
-              <li
-                key={t.level}
-                className="flex items-center gap-3 border-b border-rule-soft py-2 last:border-b-0"
-              >
+              <li key={t.level} className="flex items-center gap-2">
                 <span
-                  className="h-3.5 w-8 shrink-0"
+                  className="h-3.5 w-6 shrink-0"
                   style={{ backgroundColor: `rgb(var(--warm-${t.level}))` }}
                   aria-hidden
                 />
@@ -83,6 +75,13 @@ export default function HowToPlay({
           A new item and country are set every day at your local midnight. Play
           daily to keep a streak.
         </p>
+
+        <button
+          onClick={onClose}
+          className="bg-ink px-6 py-3.5 font-mono text-[12px] uppercase tracking-[0.18em] text-paper-raised transition-transform duration-press ease-out active:scale-[0.98]"
+        >
+          Play
+        </button>
       </div>
     </Modal>
   );

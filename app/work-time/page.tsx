@@ -4,7 +4,7 @@ import ContentPage, { Prose, Section } from "@/components/ContentPage";
 import EmbedCode from "@/components/EmbedCode";
 import JsonLd from "@/components/JsonLd";
 import PriceLineChart from "@/components/PriceLineChart";
-import { HOURLY_WAGE, WAGE_SERIES } from "@/data/price-history";
+import { HISTORY_ITEMS, HOURLY_WAGE, WAGE_SERIES } from "@/data/price-history";
 import { historyTitle } from "@/lib/itemhistory";
 import { absoluteUrl, breadcrumbJsonLd, datasetJsonLd, pageMetadata } from "@/lib/seo";
 import { BASKET, basketSeries, itemWorkChanges, lowest } from "@/lib/worktime";
@@ -14,7 +14,8 @@ const series = basketSeries();
 const first = series[0];
 const last = series[series.length - 1];
 const low = lowest(series);
-const changes = itemWorkChanges(last.year);
+const changes = itemWorkChanges(last.year).filter((c) => BASKET.includes(c.item));
+const outside = HISTORY_ITEMS.filter((i) => !BASKET.includes(i));
 const dearer = changes.filter((c) => c.change > 0);
 const pct = (c: number) => `${c >= 0 ? "+" : ""}${Math.round(c * 100)}%`;
 const linkClass = "underline underline-offset-2 hover:text-ink";
@@ -32,7 +33,8 @@ export default function WorkTimePage() {
       title="The grocery work-time index"
       intro={
         <p>
-          A basket of {BASKET.filter((i) => i.id !== "gasoline").length} everyday U.S. groceries and a gallon of gas took{" "}
+          A basket of {BASKET.filter((i) => i.id !== "gasoline").length} everyday U.S. groceries and
+          a gallon of gas took{" "}
           <strong className="font-semibold text-ink">{Math.round(first.price)} minutes</strong> of
           work at the average hourly wage in {first.year}. It bottomed out at{" "}
           {Math.round(low.price)} minutes in {low.year} and took{" "}
@@ -93,8 +95,16 @@ export default function WorkTimePage() {
           ))}
         </ul>
         <p className="text-[13px] text-ink-muted">
-          From each item&apos;s first year in the data (1980, or 1984 for beef and cheddar) to{" "}
-          {last.year}.
+          From {first.year} to {last.year}.{" "}
+          {outside.map((i, k) => (
+            <span key={i.id}>
+              <Link href={`/history/${i.id}`} className={linkClass}>
+                {historyTitle(i).replace(/ prices$/, "")}
+              </Link>
+              {k < outside.length - 2 ? ", " : k === outside.length - 2 ? " and " : ""}
+            </span>
+          ))}{" "}
+          {outside.length === 1 ? "is" : "are"} left out because BLS has gaps or starts later.
         </p>
       </Section>
       <Section heading="What it shows">
@@ -102,8 +112,8 @@ export default function WorkTimePage() {
           <p>
             Nominal prices rose for every item, but the average hourly wage rose from $
             {HOURLY_WAGE[first.year].toFixed(2)} to ${HOURLY_WAGE[last.year].toFixed(2)}, faster
-            than most of them. Measured in work, the basket got cheaper over the period as a whole, though
-            not every year: it climbed again from 2008 to 2012, and again after {low.year}.
+            than most of them. Measured in work, the basket got cheaper over the period as a whole,
+            though not every year: it climbed again from 2008 to 2012, and again after {low.year}.
           </p>
           {dearer.length > 0 && (
             <p>

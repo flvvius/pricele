@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   MAX_SCORE,
   ROUNDS,
@@ -28,6 +28,7 @@ import NextUp from "./NextUp";
 import ShareButton from "./ShareButton";
 
 const STEPS = 400;
+const WEIGHT_LABEL: Record<number, string> = { 2: " · counts double", 3: " · counts triple" };
 
 function startAt(r: ScoredRound): number {
   return Math.round(priceToSlider(r.median, r.min, r.max) * STEPS);
@@ -38,6 +39,14 @@ export default function Pricele1000() {
   const [state, setState] = useState<ScoredState | null>(null);
   const [step, setStep] = useState<number | null>(null);
   const [reviewing, setReviewing] = useState(false);
+  const acted = useRef(false);
+
+  useEffect(() => {
+    if (!acted.current) return;
+    document
+      .querySelector<HTMLElement>(reviewing ? "[data-focus=next]" : "[data-focus=after]")
+      ?.focus();
+  }, [reviewing]);
 
   useEffect(() => {
     const d = isoDate();
@@ -60,11 +69,13 @@ export default function Pricele1000() {
     const next = { ...state, guesses: [...state.guesses, guess] };
     setState(next);
     saveState(next);
+    acted.current = true;
     setReviewing(true);
     if (isOver(next)) trackEvent("p1000_complete", { score: result(p, next) });
   }
 
   function nextRound() {
+    acted.current = true;
     setReviewing(false);
     setStep(null);
   }
@@ -79,7 +90,7 @@ export default function Pricele1000() {
         Pricele 1000 #{p.number} ·{" "}
         {over && !reviewing
           ? "Final score"
-          : `Round ${showing + 1} of ${ROUNDS} · ×${round.weight}`}
+          : `Round ${showing + 1} of ${ROUNDS}${WEIGHT_LABEL[round.weight] ?? ""}`}
       </p>
 
       {!over || reviewing ? (
@@ -113,7 +124,7 @@ export default function Pricele1000() {
                   : ""}
               </p>
               <p className="text-[13px] text-ink-muted">Source: {round.price.source}</p>
-              <button onClick={over ? () => setReviewing(false) : nextRound} className={button}>
+              <button data-focus="next" onClick={nextRound} className={button}>
                 {over ? "See your score" : "Next round"}
               </button>
             </div>
@@ -144,6 +155,7 @@ export default function Pricele1000() {
               </div>
               <input
                 id="p1000-slider"
+                data-focus="after"
                 type="range"
                 min={0}
                 max={STEPS}
@@ -169,6 +181,8 @@ export default function Pricele1000() {
           <p
             className="display text-center text-[2.4rem] leading-none text-ink"
             data-testid="p1000-total"
+            data-focus="after"
+            tabIndex={-1}
           >
             {result(p, state)}
           </p>
@@ -182,11 +196,14 @@ export default function Pricele1000() {
                   {bandEmoji(state.guesses[k], r.price.priceUSD)} {r.label}, {r.price.countryName}
                 </span>
                 <span className="shrink-0 font-mono text-ink-muted">
-                  {formatUSD(state.guesses[k])} · {formatUSD(r.price.priceUSD)}
+                  You {formatUSD(state.guesses[k])} · Real {formatUSD(r.price.priceUSD)}
                 </span>
               </li>
             ))}
           </ol>
+          <p className="text-[13px] text-ink-muted">
+            🟩 within 10% · 🟨 within 25% · 🟧 within 50% · ⬛ further off
+          </p>
           <ShareButton
             score={result(p, state)}
             text={(url) => shareText(p, state, url)}

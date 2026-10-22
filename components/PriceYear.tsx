@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { HISTORY_ITEMS, HOURLY_WAGE } from "@/data/price-history";
 import {
   ROUNDS,
@@ -66,6 +66,14 @@ export default function PriceYear() {
   const [state, setState] = useState<YearState | null>(null);
   const [year, setYear] = useState(2003);
   const [reviewing, setReviewing] = useState(false);
+  const acted = useRef(false);
+
+  useEffect(() => {
+    if (!acted.current) return;
+    document
+      .querySelector<HTMLElement>(reviewing ? "[data-focus=next]" : "[data-focus=after]")
+      ?.focus();
+  }, [reviewing]);
 
   useEffect(() => {
     const d = isoDate();
@@ -87,11 +95,13 @@ export default function PriceYear() {
     const next = { ...state, guesses: [...state.guesses, year] };
     setState(next);
     saveState(next);
+    acted.current = true;
     setReviewing(true);
     if (isOver(next)) trackEvent("year_complete", { score: result(p, next) });
   }
 
   function nextReceipt() {
+    acted.current = true;
     setReviewing(false);
     setYear(mid);
   }
@@ -122,7 +132,8 @@ export default function PriceYear() {
               </p>
               <WorkTime receipt={p.receipts[showing]} latestYear={p.latestYear} />
               <button
-                onClick={over ? () => setReviewing(false) : nextReceipt}
+                data-focus="next"
+                onClick={nextReceipt}
                 className="bg-ink px-6 py-3.5 font-mono text-[12px] uppercase tracking-[0.18em] text-paper-raised transition-transform duration-press ease-out active:scale-[0.98]"
               >
                 {over ? "See your score" : "Next receipt"}
@@ -158,6 +169,7 @@ export default function PriceYear() {
               </div>
               <input
                 id="year-slider"
+                data-focus="after"
                 type="range"
                 min={p.firstYear}
                 max={p.latestYear}
@@ -185,6 +197,8 @@ export default function PriceYear() {
           <p
             className="display text-center text-[2.4rem] leading-none text-ink"
             data-testid="year-total"
+            data-focus="after"
+            tabIndex={-1}
           >
             {result(p, state)}
           </p>
@@ -199,7 +213,7 @@ export default function PriceYear() {
                   {r.items.map((x) => lowerFirst(x.name.replace(/^An? /, ""))).join(", ")}
                 </span>
                 <span className="shrink-0 pl-3 font-mono text-ink-muted">
-                  {state.guesses[i]} →{" "}
+                  You {state.guesses[i]} · Real{" "}
                   <Link
                     href={`/years/${r.year}`}
                     className="underline underline-offset-2 hover:text-ink"
@@ -210,6 +224,9 @@ export default function PriceYear() {
               </li>
             ))}
           </ol>
+          <p className="text-[13px] text-ink-muted">
+            🟩 within 1 year · 🟨 within 3 · 🟧 within 7 · ⬛ 8 or more off
+          </p>
           <ShareButton
             score={result(p, state)}
             text={(url) => shareText(p, state, url)}
