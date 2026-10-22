@@ -264,4 +264,7 @@ Newsletters are next. `hub-research.md` records GeoSports going from 575 to over
 economics and personal-finance newsletters are worth one short email each.
 Pitch Price Atlas to the geography ones and Inflation Ladder to the money ones.
 
-Run `pnpm indexnow` after each deploy that adds a page.
+Run `pnpm indexnow` after each deploy that adds a page. It posts to Bing's
+endpoint, which shares with the other IndexNow engines. On 2026-10-22 the
+shared api.indexnow.org endpoint returned 403 for a key Bing accepted;
+`INDEXNOW_ENDPOINT` overrides the target.
