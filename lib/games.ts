@@ -52,6 +52,7 @@ export interface DailyGame {
   href: string;
   blurb: string;
   source: string;
+  minutes: number;
   status(date: string, kv: KV): GameStatus;
   /** Dates (other than today) this game's storage proves were finished. */
   pastDoneDates?(kv: KV): string[];
@@ -75,6 +76,7 @@ export const GAMES: DailyGame[] = [
     href: "/",
     blurb: "Guess the price of one item in one country.",
     source: "Sourced prices, 49 countries",
+    minutes: 2,
     status(date, kv) {
       const s = json<{ date: string; guesses: unknown[]; done: boolean; won: boolean }>(
         kv,
@@ -97,6 +99,7 @@ export const GAMES: DailyGame[] = [
     href: "/games/price-atlas",
     blurb: "Name the country from a basket of its prices.",
     source: "Sourced prices, 49 countries",
+    minutes: 2,
     status(date, kv) {
       const s = json<{ date: string; guesses: string[] }>(kv, ATLAS_KEY);
       if (!s || s.date !== date || !Array.isArray(s.guesses) || s.guesses.length === 0) {
@@ -113,6 +116,7 @@ export const GAMES: DailyGame[] = [
     href: "/games/higher-or-lower",
     blurb: "Ten prices in a chain. Call each one higher or lower.",
     source: "Sourced prices, 49 countries",
+    minutes: 1,
     status(date, kv) {
       const s = json<{ date: string; calls: ("higher" | "lower")[] }>(kv, CHAIN_KEY);
       if (!s || s.date !== date || !Array.isArray(s.calls) || s.calls.length === 0) {
@@ -128,6 +132,7 @@ export const GAMES: DailyGame[] = [
     href: "/games/then-and-now",
     blurb: "Guess what an everyday item cost decades ago.",
     source: "BLS average prices",
+    minutes: 1,
     status(date, kv) {
       const s = json<{ date: string; guesses: number[] }>(kv, "pricele:then-and-now");
       if (!s || s.date !== date || !Array.isArray(s.guesses) || s.guesses.length === 0) {
@@ -147,6 +152,7 @@ export const GAMES: DailyGame[] = [
     href: "/games/rent-ratio",
     blurb: "Pick the U.S. metro with the higher rent, five times.",
     source: "HUD fair market rents",
+    minutes: 1,
     status(date, kv) {
       const s = json<{ date: string; picks: ("a" | "b")[] }>(kv, "pricele:rent-ratio");
       if (!s || s.date !== date || !Array.isArray(s.picks) || s.picks.length === 0) {
@@ -165,6 +171,7 @@ export const GAMES: DailyGame[] = [
     href: "/games/inflation-ladder",
     blurb: "Rank four groceries by how much their price rose.",
     source: "BLS average prices",
+    minutes: 1,
     status(date, kv) {
       const s = json<{ date: string; tries: string[][] }>(kv, LADDER_KEY);
       if (!s || s.date !== date || !Array.isArray(s.tries) || s.tries.length === 0) {
@@ -227,6 +234,23 @@ export function hubStreak(doneDates: Iterable<string>, today: string): number {
   return n;
 }
 
+export function bestStreak(doneDates: Iterable<string>): number {
+  const sorted = [...new Set(doneDates)].sort();
+  let best = 0;
+  let run = 0;
+  let prev: string | null = null;
+  for (const d of sorted) {
+    run = prev !== null && daysBefore(d, 1) === prev ? run + 1 : 1;
+    best = Math.max(best, run);
+    prev = d;
+  }
+  return best;
+}
+
+export function minutesLeft(st: Record<string, GameStatus>): number {
+  return GAMES.filter((g) => st[g.slug]?.phase !== "done").reduce((n, g) => n + g.minutes, 0);
+}
+
 /** Every date we know at least one game was finished, from all sources. */
 export function knownDoneDates(today: string, kv: KV): Set<string> {
   const out = new Set<string>();
@@ -276,8 +300,12 @@ function browserKV(): KV | null {
  * Safe to call from any game's finished state or from /today.
  */
 export function syncHub(today: string = isoDate()): number {
+  return syncHubStreaks(today).current;
+}
+
+export function syncHubStreaks(today: string = isoDate()): { current: number; best: number } {
   const kv = browserKV();
-  if (!kv) return 0;
+  if (!kv) return { current: 0, best: 0 };
   const dates = knownDoneDates(today, kv);
   if (dates.has(today)) {
     try {
@@ -291,7 +319,7 @@ export function syncHub(today: string = isoDate()): number {
       /* quota or privacy mode */
     }
   }
-  return hubStreak(dates, today);
+  return { current: hubStreak(dates, today), best: bestStreak(dates) };
 }
 
 export function readStatuses(today: string = isoDate()): Record<string, GameStatus> {

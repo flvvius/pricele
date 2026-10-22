@@ -3,7 +3,15 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import ShareButton from "./ShareButton";
-import { GAMES, dailySetShare, readStatuses, syncHub, type GameStatus } from "@/lib/games";
+import Countdown from "./Countdown";
+import {
+  GAMES,
+  dailySetShare,
+  minutesLeft,
+  readStatuses,
+  syncHubStreaks,
+  type GameStatus,
+} from "@/lib/games";
 
 const LABEL: Record<GameStatus["phase"], string> = {
   not_started: "Not played",
@@ -14,15 +22,22 @@ const LABEL: Record<GameStatus["phase"], string> = {
 export default function TodayHub() {
   const [st, setSt] = useState<Record<string, GameStatus> | null>(null);
   const [streak, setStreak] = useState(0);
+  const [best, setBest] = useState(0);
 
   useEffect(() => {
-    setStreak(syncHub());
+    const streaks = syncHubStreaks();
+    setStreak(streaks.current);
+    setBest(streaks.best);
     setSt(readStatuses());
   }, []);
 
   if (!st) return <p className="text-ink-muted">Loading today&apos;s set…</p>;
 
   const doneCount = GAMES.filter((g) => st[g.slug]?.phase === "done").length;
+  const next =
+    GAMES.find((g) => st[g.slug]?.phase === "in_progress") ??
+    GAMES.find((g) => st[g.slug]?.phase !== "done");
+  const left = minutesLeft(st);
 
   return (
     <div className="flex max-w-xl flex-col gap-5">
@@ -32,8 +47,47 @@ export default function TodayHub() {
         </p>
         <p data-testid="hub-streak" className="font-mono text-[12px] uppercase tracking-[0.14em] text-streak">
           {streak > 0 ? `🔥 ${streak}-day streak` : "No streak yet"}
+          {best > streak ? ` · best ${best}` : ""}
         </p>
       </div>
+      <div
+        className="flex h-1.5 gap-1"
+        role="progressbar"
+        aria-label="Games finished today"
+        aria-valuemin={0}
+        aria-valuemax={GAMES.length}
+        aria-valuenow={doneCount}
+      >
+        {GAMES.map((g) => (
+          <span
+            key={g.slug}
+            className={`flex-1 ${st[g.slug]?.phase === "done" ? "bg-accent" : "bg-rule"}`}
+          />
+        ))}
+      </div>
+      {next ? (
+        <Link
+          href={next.href}
+          data-testid="today-next"
+          className="flex items-center justify-between gap-3 bg-ink px-5 py-4 text-paper-raised transition-transform duration-press ease-out active:scale-[0.98]"
+        >
+          <span className="flex flex-col">
+            <span className="font-mono text-[11px] uppercase tracking-[0.16em] opacity-70">
+              {st[next.slug]?.phase === "in_progress" ? "Pick up where you left off" : "Play next"}
+            </span>
+            <span className="display text-[1.5rem] leading-tight">{next.name}</span>
+          </span>
+          <span className="shrink-0 font-mono text-[12px] uppercase tracking-[0.14em]">
+            ~{left} min left →
+          </span>
+        </Link>
+      ) : (
+        <div className="flex flex-col items-center gap-1 border border-rule bg-paper-raised px-5 py-4 text-center">
+          <span className="display text-[1.5rem] text-ink">Set complete</span>
+          <span className="text-[14px] text-ink-muted">New puzzles in</span>
+          <Countdown />
+        </div>
+      )}
       <ul className="flex flex-col gap-3">
         {GAMES.map((g) => {
           const s = st[g.slug] ?? { phase: "not_started" as const };

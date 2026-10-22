@@ -6,6 +6,8 @@ import { puzzleFor as rrPuzzle } from "./rentratio";
 import {
   GAMES,
   HUB_KEY,
+  bestStreak,
+  minutesLeft,
   dailySetShare,
   hubStreak,
   knownDoneDates,
@@ -104,5 +106,20 @@ describe("daily set share", () => {
     expect(text).toContain("⬜ Rent Ratio");
     expect(text).toContain("🔥 4-day streak");
     expect(lines.at(-1)).toBe("https://x/today");
+  });
+});
+
+describe("hub streak extras", () => {
+  it("finds the longest run of days", () => {
+    expect(bestStreak([])).toBe(0);
+    expect(bestStreak(["2026-10-01", "2026-10-02", "2026-10-04", "2026-10-05", "2026-10-06"])).toBe(3);
+    expect(bestStreak(["2026-10-31", "2026-11-01", "2026-11-01"])).toBe(2);
+  });
+
+  it("adds up minutes for unfinished games", () => {
+    const total = GAMES.reduce((n, g) => n + g.minutes, 0);
+    expect(minutesLeft({})).toBe(total);
+    const st = { [GAMES[0].slug]: { phase: "done" as const } };
+    expect(minutesLeft(st)).toBe(total - GAMES[0].minutes);
   });
 });
