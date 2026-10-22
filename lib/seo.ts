@@ -113,6 +113,7 @@ export interface PageMetaInput {
   publishedTime?: string;
   /** Set false to keep a page (an empty index, a draft) out of the index. */
   index?: boolean;
+  image?: string;
 }
 
 /**
@@ -138,7 +139,9 @@ export function pageMetadata({
   type = "website",
   publishedTime,
   index = true,
+  image,
 }: PageMetaInput): Metadata {
+  const ogImage = image ? { ...OG_IMAGE, url: image, type: "image/png" } : OG_IMAGE;
   const fullTitle = titleFor(title);
   const desc = description ?? SITE_DESCRIPTION;
   // Next renders `canonical: "/"` as the bare origin, and the sitemap lists the
@@ -166,14 +169,14 @@ export function pageMetadata({
       url,
       title: fullTitle,
       description: desc,
-      images: [OG_IMAGE],
+      images: [ogImage],
       ...(publishedTime ? { publishedTime } : {}),
     },
     twitter: {
       card: "summary_large_image",
       title: fullTitle,
       description: desc,
-      images: [OG_IMAGE.url],
+      images: [ogImage.url],
     },
   };
 }

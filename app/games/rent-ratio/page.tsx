@@ -11,6 +11,7 @@ export const metadata: Metadata = pageMetadata({
   path: "/games/rent-ratio",
   title: "Rent Ratio",
   description: DESCRIPTION,
+  image: "/og/game/rent-ratio",
 });
 
 export default function RentRatioPage() {

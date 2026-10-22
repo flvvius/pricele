@@ -11,6 +11,7 @@ export const metadata: Metadata = pageMetadata({
   path: "/games/price-atlas",
   title: "Price Atlas",
   description: DESCRIPTION,
+  image: "/og/game/price-atlas",
 });
 
 export default function PriceAtlasPage() {

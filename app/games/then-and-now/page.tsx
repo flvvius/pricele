@@ -11,6 +11,7 @@ export const metadata: Metadata = pageMetadata({
   path: "/games/then-and-now",
   title: "Then & Now",
   description: DESCRIPTION,
+  image: "/og/game/then-and-now",
 });
 
 export default function ThenAndNowPage() {

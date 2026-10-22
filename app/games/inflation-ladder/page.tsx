@@ -11,6 +11,7 @@ export const metadata: Metadata = pageMetadata({
   path: "/games/inflation-ladder",
   title: "Inflation Ladder",
   description: DESCRIPTION,
+  image: "/og/game/inflation-ladder",
 });
 
 export default function InflationLadderPage() {

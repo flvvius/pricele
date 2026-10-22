@@ -14,6 +14,7 @@ const DESCRIPTION =
 
 export const metadata: Metadata = pageMetadata({
   path: "/games",
+  image: "/og/game/hub",
   title: TITLE,
   description: DESCRIPTION,
 });
