@@ -17,7 +17,9 @@ export default function TodayPage() {
       title="Today"
       intro={<p>Today&apos;s daily set. Finish at least one game a day to keep your streak.</p>}
     >
-      <TodayHub />
+      <div className="lg:pl-64">
+        <TodayHub />
+      </div>
     </ContentPage>
   );
 }

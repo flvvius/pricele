@@ -29,18 +29,25 @@ export default function InflationLadderPage() {
       <JsonLd
         data={[
           breadcrumbJsonLd([{ name: "Games", path: "/games" }, { name: "Inflation Ladder" }]),
-          dailyGameJsonLd({ name: "Inflation Ladder", path: "/games/inflation-ladder", description: DESCRIPTION, genre: ["Puzzle", "Educational"] }),
+          dailyGameJsonLd({
+            name: "Inflation Ladder",
+            path: "/games/inflation-ladder",
+            description: DESCRIPTION,
+            genre: ["Puzzle", "Educational"],
+          }),
         ]}
       />
-      <ChallengeBanner game="Inflation Ladder" />
-      <InflationLadder />
-      <div className="flex max-w-prose flex-col gap-3.5 text-[16px] leading-[1.7] text-ink-body">
-        <p>
-          Inflation is an average, and the items inside it move very differently. Over the same
-          thirty years, eggs and ground beef have more than quadrupled in price while bananas have
-          barely moved. The ladder is built from the Bureau of Labor Statistics Average Price Data,
-          the survey that feeds the Consumer Price Index, so every percentage is a published number.
-        </p>
+      <div className="flex flex-col gap-8 lg:pl-64">
+        <ChallengeBanner game="Inflation Ladder" />
+        <InflationLadder />
+        <div className="flex max-w-prose flex-col gap-3.5 text-[16px] leading-[1.7] text-ink-body">
+          <p>
+            Inflation is an average, and the items inside it move very differently. Over the same
+            thirty years, eggs and ground beef have more than quadrupled in price while bananas have
+            barely moved. The ladder is built from the Bureau of Labor Statistics Average Price Data,
+            the survey that feeds the Consumer Price Index, so every percentage is a published number.
+          </p>
+        </div>
       </div>
     </ContentPage>
   );

@@ -38,17 +38,19 @@ export default function PriceAtlasPage() {
           }),
         ]}
       />
-      <ChallengeBanner game="Price Atlas" />
-      <PriceAtlas />
-      <div className="flex max-w-prose flex-col gap-3.5 text-[16px] leading-[1.7] text-ink-body">
-        <p>
-          If you play Worldle or Globle, the distance and arrow will feel familiar. The difference
-          is the clue: instead of a map outline you get what a Big Mac, a cappuccino or a litre of
-          petrol costs there. Cheap petrol points to an oil producer, dear beer to high alcohol
-          duty, and a cheap Big Mac to a weak currency. The price comparison after each guess is
-          the typical gap across every item both countries have, so it narrows things down even
-          when the map arrow does not.
-        </p>
+      <div className="flex flex-col gap-8 lg:pl-64">
+        <ChallengeBanner game="Price Atlas" />
+        <PriceAtlas />
+        <div className="flex max-w-prose flex-col gap-3.5 text-[16px] leading-[1.7] text-ink-body">
+          <p>
+            If you play Worldle or Globle, the distance and arrow will feel familiar. The difference
+            is the clue: instead of a map outline you get what a Big Mac, a cappuccino or a litre of
+            petrol costs there. Cheap petrol points to an oil producer, dear beer to high alcohol
+            duty, and a cheap Big Mac to a weak currency. The price comparison after each guess is
+            the typical gap across every item both countries have, so it narrows things down even
+            when the map arrow does not.
+          </p>
+        </div>
       </div>
     </ContentPage>
   );

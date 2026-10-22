@@ -29,18 +29,25 @@ export default function RentRatioPage() {
       <JsonLd
         data={[
           breadcrumbJsonLd([{ name: "Games", path: "/games" }, { name: "Rent Ratio" }]),
-          dailyGameJsonLd({ name: "Rent Ratio", path: "/games/rent-ratio", description: DESCRIPTION, genre: ["Puzzle", "Trivia"] }),
+          dailyGameJsonLd({
+            name: "Rent Ratio",
+            path: "/games/rent-ratio",
+            description: DESCRIPTION,
+            genre: ["Puzzle", "Trivia"],
+          }),
         ]}
       />
-      <ChallengeBanner game="Rent Ratio" />
-      <RentRatio />
-      <div className="flex max-w-prose flex-col gap-3.5 text-[16px] leading-[1.7] text-ink-body">
-        <p>
-          Every figure is a HUD Fair Market Rent for fiscal year 2026, published by the Department
-          of Housing and Urban Development to set Housing Choice Voucher payment standards. Fair
-          market rents include essential utilities and sit below the typical asking rent, so treat
-          them as a consistent yardstick between places rather than what a listing will say.
-        </p>
+      <div className="flex flex-col gap-8 lg:pl-64">
+        <ChallengeBanner game="Rent Ratio" />
+        <RentRatio />
+        <div className="flex max-w-prose flex-col gap-3.5 text-[16px] leading-[1.7] text-ink-body">
+          <p>
+            Every figure is a HUD Fair Market Rent for fiscal year 2026, published by the Department
+            of Housing and Urban Development to set Housing Choice Voucher payment standards. Fair
+            market rents include essential utilities and sit below the typical asking rent, so treat
+            them as a consistent yardstick between places rather than what a listing will say.
+          </p>
+        </div>
       </div>
     </ContentPage>
   );

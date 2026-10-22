@@ -29,18 +29,25 @@ export default function ThenAndNowPage() {
       <JsonLd
         data={[
           breadcrumbJsonLd([{ name: "Games", path: "/games" }, { name: "Then & Now" }]),
-          dailyGameJsonLd({ name: "Then & Now", path: "/games/then-and-now", description: DESCRIPTION, genre: ["Puzzle", "Trivia", "Educational"] }),
+          dailyGameJsonLd({
+            name: "Then & Now",
+            path: "/games/then-and-now",
+            description: DESCRIPTION,
+            genre: ["Puzzle", "Trivia", "Educational"],
+          }),
         ]}
       />
-      <ChallengeBanner game="Then & Now" />
-      <ThenAndNow />
-      <div className="flex max-w-prose flex-col gap-3.5 text-[16px] leading-[1.7] text-ink-body">
-        <p>
-          Every figure is from the Bureau of Labor Statistics Average Price Data, the same survey
-          that feeds the Consumer Price Index. Prices are nominal dollars of the time, so the game
-          is as much about how uneven inflation has been (eggs and coffee have their own stories)
-          as about the general drift upward.
-        </p>
+      <div className="flex flex-col gap-8 lg:pl-64">
+        <ChallengeBanner game="Then & Now" />
+        <ThenAndNow />
+        <div className="flex max-w-prose flex-col gap-3.5 text-[16px] leading-[1.7] text-ink-body">
+          <p>
+            Every figure is from the Bureau of Labor Statistics Average Price Data, the same survey
+            that feeds the Consumer Price Index. Prices are nominal dollars of the time, so the game
+            is as much about how uneven inflation has been (eggs and coffee have their own stories)
+            as about the general drift upward.
+          </p>
+        </div>
       </div>
     </ContentPage>
   );
