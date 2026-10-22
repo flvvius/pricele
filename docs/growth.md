@@ -193,6 +193,8 @@ or a price).
 | `share_landing` | Arrival with `utm_source=share`, `utm_source=dickle` or `?c=` (`components/LandingTracker.tsx` in the root layout). Once per session per URL; `/d/[n]` is skipped because it forwards to `/` | `source` (`share`/`dickle`/`challenge`), `medium`, `campaign`, `challenge`, `path` |
 | `thenandnow_complete` | A Then & Now round ends | `won`, `guesses` |
 | `thenandnow_share` | Then & Now result copied | `channel` |
+| `rentratio_complete` | A Rent Ratio day ends | `score` |
+| `rentratio_share` | Rent Ratio result copied | `channel` |
 
 After `share_landing` fires, the `utm_*` tags are removed from the address bar
 with `history.replaceState`. `?c=` stays so the challenge banner survives a

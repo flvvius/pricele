@@ -18,6 +18,7 @@ import {
 } from "@/lib/rentratio";
 import { isoDate } from "@/lib/puzzle";
 import { SITE_URL } from "@/lib/seo";
+import { trackEvent } from "@/lib/analytics";
 
 const usd = (n: number) => `$${n.toLocaleString("en-US")}`;
 
@@ -52,6 +53,7 @@ export default function RentRatio() {
     const next = { ...state, picks: [...state.picks, k] };
     setState(next);
     saveState(next);
+    if (isOver(next)) trackEvent("rentratio_complete", { score: score(p, next.picks) });
   }
 
   async function share() {
@@ -59,6 +61,7 @@ export default function RentRatio() {
     try {
       await navigator.clipboard.writeText(text);
       setCopied(true);
+      trackEvent("rentratio_share", { channel: "copy" });
     } catch {
       /* clipboard blocked */
     }

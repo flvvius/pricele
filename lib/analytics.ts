@@ -12,7 +12,9 @@ export type EventName =
   | "share"
   | "share_landing"
   | "thenandnow_complete"
-  | "thenandnow_share";
+  | "thenandnow_share"
+  | "rentratio_complete"
+  | "rentratio_share";
 
 type Props = Record<string, string | number | boolean>;
 
