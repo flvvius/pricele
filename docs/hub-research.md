@@ -11,7 +11,8 @@ they are the only public numbers there are for most of these sites.
 
 - Keep the Pricele game at "/". Put the hub at `/today` for personal progress
   and add a plain `/games` index for browsing and for directories to link to.
-  Every comparable I could check that is small or mid-size leads with one game.
+  The small and mid-size sites I could check either lead with the game or, like
+  TimeGuessr, put one click between "/" and it.
   I found no public before-and-after case of a game site moving its game off "/",
   so the switch rule below is my judgment, not a measured threshold.
 - Brand-name search and direct visits carry these games. Between 43% and 75% of
@@ -39,8 +40,7 @@ I fetched each homepage on 22 Oct 2026 unless noted.
 | TimeGuessr | Three tiles: Play, Multiplayer, Daily. The daily is one click, at `/play?mode=daily` [S7] | None shown |
 | Clues by Sam | A hub for one product: the week's puzzles by weekday, plus links to packs and sister sites [S8] | Other domains |
 | Sporcle | Pitch banner, the day's Acrostic, a quiz grid, a games row, a "Daily Dose" row of four dated cards [S9] | Same page |
-| dles.gg | A directory of 1,091 games in 17 categories, no flagship [S10] | Same page |
-| Arkadium | A catalogue of about 35 genre tiles and rows of cards, with a B2B pitch [S11] | Same page |
+| dles.gg, Arkadium | Directory of 1,091 games [S10]. Catalogue of about 35 genre tiles with a B2B pitch [S11] | Same page |
 | The Dozen (Barstool) | The game, with a leaderboard link [S12] | None |
 | NYT Games | Wordle has its own URL. The hub is the Games app [S1][S13]. nytimes.com would not fetch | App home |
 
@@ -57,7 +57,7 @@ Reading the table:
    a root-domain total across all games [S15].
 3. A menu at "/" belongs to either one product with several modes (TimeGuessr,
    Waffle, Clues by Sam) or a true catalogue of 200 to 1,000+ games (Arkadium,
-   dles.gg, Sporcle). Pricele, at five games, is the first kind.
+   dles.gg, Sporcle). Pricele, at about five games, is the first kind.
 4. NYT turned its app into a hub in March 2024 because the app had been built
    for crosswords and had outgrown it. It cut the bottom bar from five tabs to
    three and put all games in one list with progress on each card [S1]. That is
@@ -136,7 +136,6 @@ Visits are Semrush estimates for September 2026, sourced per row.
 | TimeGuessr | Five photos a day. Drop a pin on a map and set a year on a slider, up to 5,000 points each [S23] | 1.52M, from 1.15M in July [S21] | Friends' leaderboard. The developer has said a global one would fill with cheaters [S24], secondhand |
 | MapTap | Five places a day on a map, each scored 0 to 100, later rounds weighted up, total out of 1,000 [S25] | Not found | A copy-paste text line with five emoji scores and a total [S25]. Made by John Donham, released June 2024 per Kotaku [S26], unverified in detail |
 | Higher Lower Game | Two Google search terms, pick which gets more searches, streak | 234k, 59% from Google [S27] | One number, the streak. The 2016 original claimed over 50M plays [S28] |
-| OpenGuessr | Free GeoGuessr-style street view | 3.28M [S29] | Mostly brand and "geoguessr free" searches [S29] |
 | WhenTaken, Bandle | Guess where and when a photo was taken. Guess a song from instrument layers | 369k [S30]. 2.85M [S18] | Not checked |
 | Clues by Sam | Deduction grid of 20 suspects, no guessing allowed [S8] | 1.98M [S8] | Scenario-share links that keep old puzzles circulating [S31] |
 | Wikitrivia | Place a card on a timeline, lose a life per wrong spot, three lives. Data from Wikidata. Peaked January 2022 [S32] | Not found | Single score |
@@ -152,24 +151,17 @@ Three patterns:
    about eight times larger and adds time to the guess, so a time axis on a
    price looks like the bigger lane. That is an inference from two sites.
 2. The biggest numbers come from geography-shaped games with a scored distance
-   and a map: TimeGuessr, OpenGuessr, the Teuteuf family. A scored closeness
+   and a map: TimeGuessr, OpenGuessr (3.28M visits [S29]), the Teuteuf family. A scored closeness
    number is the part of that worth borrowing.
 3. Shares that carry a number and five small icons spread. MapTap's line is the
    cleanest modern example. A Wordle-style grid is not required.
 
-Search terms that carry volume, from the same Semrush pages (US, September
-2026) [S14][S21][S27][S15][S30]:
-
-| Query | Monthly volume | Who ranks |
-| --- | --- | --- |
-| guess the price | 1,000 | Costcodle at 3 |
-| what year | 22,200 | TimeGuessr at 4, WhenTaken at 5 |
-| guess the country | 22,200 | Teuteuf family at 1 |
-| geography wordle | 4,400 | Teuteuf family at 1 |
-| higher lower game | 9,900 | higherlowergame.com at 1 |
-
-"What year" is generic and mostly means something else, so only part of that
-volume is winnable. I did not find volume for "daily price game". Unverified.
+Query volumes from the same Semrush pages (US, September 2026) [S14][S21][S27][S15][S30].
+"Guess the price" has 1,000 searches a month and Costcodle ranks third.
+"What year" has 22,200, with TimeGuessr fourth and WhenTaken fifth. It is a
+generic phrase, so only part of that volume is winnable. "Guess the country" has
+22,200 and "higher lower game" 9,900, both led by the sites named above. I found
+no volume for "daily price game". Unverified.
 
 ### Five cheap mechanics from the data Pricele already has
 
