@@ -417,6 +417,12 @@ BLS data: what each item cost that year and now, in dollars and in minutes of
 work. They hide the live Then & Now answers for yesterday, today and tomorrow,
 rebuild hourly, and so does their share image at `/og/year/<year>`.
 
+`/history/<item>` has one page per BLS item: a chart (`components/PriceLineChart.tsx`,
+plain server-rendered SVG), the full yearly table and minutes of work. `/work-time`
+charts the minutes of work for the 12 items priced every year since 1980. Both
+offer iframe embeds from `/embed/history/<item>` and `/embed/work-time`, which are
+noindexed, point their canonical at the full page and link back with utm tags.
+
 Every game is one entry in `GAMES` in `lib/games.ts`. That entry reads the
 game's own `localStorage` key and returns its status for a date. Everything
 else reads from the list: `/today`, `/games`, the homepage grid, the "next
