@@ -200,6 +200,60 @@ verbatim so the description of the game is identical everywhere; consistency
 across sources is itself a signal, and it means a model summarising several
 directories sees one coherent entity rather than three different games.
 
+
+### Full directory audit (22 Oct 2026)
+
+Checked by fetching each listing page and searching it for "pricele", plus a
+web search for "pricele". **Only one listing turned up: Wordleverse.** None of
+the six submissions made on 19 Aug show up yet, so after two months treat them
+as declined (see the rule above) and send them once more using the copy below.
+For audience size, H means roughly 1M+ visits a month, M means 100k to 1M, and L
+means under 100k. These are rough estimates and were not measured.
+
+| Directory | URL | Submit via | Listed? (evidence) | Audience | Priority | Notes |
+| --- | --- | --- | --- | --- | --- | --- |
+| Wordleverse | https://wordleverse.net/games/pricele | n/a | **Yes**: the page exists and says "Pricele" 25 times | M | done | Check the description is right |
+| DleList | https://dlelist.com/ | Submit form | No: the homepage (907 games) never says "pricele" | M | P1 | Resubmit, pending since 19 Aug |
+| Listdle | https://listdle.com/ | Suggest a Game / contact@listdle.com | No | M | P1 | Has a Price category |
+| The Dles | https://dles.aukspot.com/ | Form, GitHub repo, Discord | No | M | P1 | Try a GitHub PR or issue |
+| Wordle.today games | https://wordle.today/games | Contact | No (1470 games listed) | H | P1 | Pending |
+| adoryvo dailies | https://adoryvo.github.io/lists/dailies.html | GitHub issue | No | L | P2 | Open the issue |
+| AlternativeTo | https://alternativeto.net/software/pricele/ | Suggest app | Unknown: blocked by a Cloudflare challenge | H | P1 | Check by hand while logged in |
+| DLE Games | https://dlegames.org/ | Contact / "Fresh finds" | No | M | P1 | New, not yet submitted |
+| Wordly spinoff list | https://wordly.org/wordle-games | Contact | No (398 games) | H | P1 | New |
+| DailyDles | https://dailydles.com/wordle-alternatives | Contact | No | L-M | P2 | New |
+| DailyGameList | https://dailygamelist.com/ | Contact | No | L-M | P2 | New |
+| Crosswordle blog | https://crosswordle.com/blog/wordle-alternatives | Email author | No | M | P2 | Listicle outreach |
+| Poople blog | https://pooplegame.com/blog/alternatives/games-like-wordle | Email author | Unknown | L | P3 | Listicle |
+| itch.io | https://itch.io/ | Self-publish as an HTML/web link page | No (search shows only the query) | H | P1 | Free and instant; tag it "daily", "wordle" |
+| Newgrounds | https://www.newgrounds.com/ | Self-upload (needs an embeddable build) | No | H | P3 | Needs an iframe/HTML5 zip |
+| CrazyGames | https://developer.crazygames.com/ | Developer portal, SDK | No | H | P3 | Needs the SDK and their ad rules; a poor fit for an ad-supported site |
+| Poki | https://developers.poki.com/ | Apply | No | H | P3 | Curated, unlikely to take it |
+| GameDistribution / Armor Games | https://gamedistribution.com/ / https://armorgames.com/ | Upload / email | No | M | P3 | Embedding means losing our own ads |
+| Product Hunt | https://www.producthunt.com/ | Launch (account) | No | H | P2 | Launch on a Tuesday to Thursday |
+| Hacker News Show HN | https://news.ycombinator.com/submit | "Show HN:" post | No (Algolia search finds only an unrelated "priceless") | H | P1 | Lead with the sourced dataset angle |
+| IndieHackers | https://www.indiehackers.com/ | Product page / post | No | M | P3 | |
+| BetaList | https://betalist.com/submit | Form (free tier has a long queue) | No | M | P3 | |
+| SaaSHub | https://www.saashub.com/submit | Form | No | M | P3 | Weak fit |
+| r/WebGames | https://reddit.com/r/WebGames | Post | No (no Reddit search results) | H | P1 | Self-posts allowed, follow the flair rules |
+| r/dailygames / r/WordleGames | https://reddit.com/r/WordleGames | Post | No | M | P1 | Built for exactly this kind of game |
+| r/InternetIsBeautiful | https://reddit.com/r/InternetIsBeautiful | Post | No | H | P2 | Strict rules: no ads above the fold |
+| r/wordle | https://reddit.com/r/wordle | Comment in "other games" threads | No | H | P3 | Don't make a promotional post |
+| r/SideProject / r/geography / r/teachers | reddit | Post | No | M | P2 | Use the education angle for r/teachers |
+| Discord server lists (Disboard, top.gg) | https://disboard.org/ | Only if we run a server | n/a | M | P3 | Better to post in The Dles' Discord |
+| Chrome Web Store | https://chrome.google.com/webstore/devconsole | $5 dev account, wrapper extension | No | H | P3 | A new-tab or launcher extension, low value |
+| PWA stores (Microsoft Store via PWABuilder, store.app) | https://www.pwabuilder.com/ | Package the PWA | No | M | P3 | Needs a manifest and service worker |
+| Newsletters (e.g. Thinky Games) | https://thinkygames.com/ | Email the editor | No | M | P2 | Listicle outreach |
+
+**Do these first:** Show HN, itch.io, r/WebGames, r/WordleGames, DLE Games,
+Wordly, the AlternativeTo check, and resubmitting to DleList, Listdle, The Dles
+and Wordle.today.
+
+**Tags for portals and launch sites:** daily-game, browser-game, puzzle,
+trivia, geography, economics, wordle, free, no-signup, educational.
+
+**Show HN title:** Show HN: Pricele – guess what everyday things cost in a different country each day
+
 ### 2. Listicles
 
 The "N games like Wordle" articles are where the ChatGPT 41% actually lives.
