@@ -28,7 +28,7 @@
   --ink-strong: 38 32 25; /* #262019 emphasis inside body copy */
   --ink-body: 61 53 44; /* #3D352C running text */
   --ink-muted: 107 96 85; /* #6B6055 secondary */
-  --ink-meta: 140 129 117; /* #8C8175 bylines, captions, counts */
+  --ink-meta: 114 104 93; /* #72685D bylines, captions, counts; 4.6:1 on paper */
   --ink-faint: 173 162 148; /* #ADA294 disabled, placeholder marks */
 
   /* Rules — a broadsheet separates with hairlines, not with boxes. */
@@ -39,7 +39,7 @@
   --accent: 196 50 28; /* #C4321C vermilion */
   --accent-ink: 253 248 238; /* text sitting on the accent */
   --win: 28 107 69; /* #1C6B45 */
-  --streak: 178 88 20; /* #B25814 */
+  --streak: 160 76 14; /* #A04C0E */
 
   /* Temperature ramp — the hotter/colder mechanic, cold to scorching. */
   --warm-0: 62 110 150; /* freezing */
@@ -66,7 +66,7 @@
   --night-ink-strong: 237 231 218;
   --night-ink-body: 214 206 191;
   --night-ink-muted: 156 146 132;
-  --night-ink-meta: 124 115 101;
+  --night-ink-meta: 140 130 116; /* 4.6:1 on night-paper-raised */
   --night-ink-faint: 94 86 74;
 
   --night-rule: 50 44 36; /* #322C24 */

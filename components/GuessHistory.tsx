@@ -155,6 +155,7 @@ export default function GuessHistory({
       {Array.from({ length: empties }, (_, i) => (
         <li
           key={`empty-${i}`}
+          aria-hidden
           className="board-slot flex min-h-[2.75rem] flex-1 items-center gap-3 overflow-hidden border-b border-rule-soft px-3 lg:min-h-[3.25rem]"
         >
           <span className="font-mono text-[11px] tabular-nums text-ink-faint/60">
