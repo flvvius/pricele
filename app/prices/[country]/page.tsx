@@ -29,6 +29,8 @@ import {
 } from "@/lib/seo";
 import { countryPriceFaq, newestSourceDate } from "@/lib/faq";
 
+import { isCountryIndexable } from "@/lib/indexing";
+
 export const revalidate = 3600;
 
 export function generateStaticParams() {
@@ -44,6 +46,7 @@ export function generateMetadata({
   if (!country) return {};
   return pageMetadata({
     path: `/prices/${country.slug}`,
+    index: isCountryIndexable(country.code),
     title: `Prices in ${country.name}`,
     description: `What everyday items cost in ${country.name}: a Big Mac, a cappuccino, groceries, fuel, household energy, cigarettes, a beer and mobile data, priced in US dollars, in ${country.localCurrency}, and in how long the average local wage takes to earn them.`,
   });

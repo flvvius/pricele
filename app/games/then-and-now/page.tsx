@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import ContentPage from "@/components/ContentPage";
+import Link from "next/link";
+import ContentPage, { Section, Prose } from "@/components/ContentPage";
 import ThenAndNow from "@/components/ThenAndNow";
 import JsonLd from "@/components/JsonLd";
 import ChallengeBanner from "@/components/ChallengeBanner";
@@ -49,6 +50,45 @@ export default function ThenAndNowPage() {
           </p>
         </div>
       </div>
+      <Section heading="How to play">
+        <Prose>
+          <p>
+            Each day picks one everyday item, such as a dozen eggs, a pound of ground beef or a
+            pound of coffee, and shows its average price in U.S. cities in the latest full year.
+            Your job is to guess what the same item averaged in an earlier year named on screen.
+          </p>
+          <p>
+            You get five guesses. After each one the game tells you whether the real price was
+            higher or lower. A guess within 10% of the historical average wins. Your result and
+            streak are saved in your browser, and you can share a spoiler-free grid.
+          </p>
+        </Prose>
+      </Section>
+      <Section heading="Method and sources">
+        <Prose>
+          <p>
+            Prices come from the Bureau of Labor Statistics Average Price Data series (CPI
+            average prices for U.S. city averages). We use the annual average of the monthly
+            figures for each year, in nominal dollars of the time with no inflation adjustment,
+            so the gap you are guessing is the full change shoppers saw at the register.
+          </p>
+          <p>
+            Some series start later than others or have gaps; an item only appears for years the
+            BLS actually published. Because these are national city averages, a price in your
+            own town may differ, which is part of what makes the guess interesting.
+          </p>
+        </Prose>
+      </Section>
+      <Section heading="More daily games">
+        <Prose>
+          <p>
+            <Link href="/" className="underline decoration-rule underline-offset-2 hover:text-ink">Pricele (world prices)</Link>{" · "}
+            <Link href="/today" className="underline decoration-rule underline-offset-2 hover:text-ink">Today hub</Link>{" · "}
+            <Link href="/games/rent-ratio" className="underline decoration-rule underline-offset-2 hover:text-ink">Rent Ratio</Link>{" · "}
+            <Link href="/methodology" className="underline decoration-rule underline-offset-2 hover:text-ink">Methodology</Link>
+          </p>
+        </Prose>
+      </Section>
     </ContentPage>
   );
 }

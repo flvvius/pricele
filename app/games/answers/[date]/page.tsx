@@ -26,6 +26,8 @@ export function generateMetadata({ params }: { params: { date: string } }): Meta
   const [atlas] = answersFor(params.date);
   return pageMetadata({
     path: `/games/answers/${params.date}`,
+    // Thin, templated daily list: see the rule in lib/indexing.ts.
+    index: false,
     title: `Daily game answers for ${day}`,
     description: `Answers for ${day}: ${atlas.summary.replace(/ \S+\.$/, ".")} Plus Higher or Lower, Price Year, Then & Now, Open Range, Rent Ratio, Inflation Ladder and Pricele 1000, with every sourced price.`,
   });

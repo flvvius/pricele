@@ -33,6 +33,8 @@ import {
   PERSON_ID,
 } from "@/lib/seo";
 
+import { isArchiveDateIndexable } from "@/lib/indexing";
+
 export const revalidate = 3600;
 
 // Only past dates are pre-rendered. dynamicParams stays on (the default) so a
@@ -56,6 +58,7 @@ export function generateMetadata({
   const { item, price, puzzleNumber } = puzzle;
   return pageMetadata({
     path: `/archive/${params.date}`,
+    index: isArchiveDateIndexable(params.date),
     title: `Pricele #${puzzleNumber} — ${itemLabel(item)} in ${price.countryName}`,
     description: `The answer to Pricele #${puzzleNumber} (${formatArchiveDate(
       params.date

@@ -25,6 +25,8 @@ import {
 import { itemPriceFaq, itemWithUnit, newestSourceDate } from "@/lib/faq";
 import { HISTORY_TITLES } from "@/lib/itemhistory";
 
+import { isItemIndexable } from "@/lib/indexing";
+
 export const revalidate = 3600;
 
 const US_HISTORY: Record<string, string> = { "eggs-12": "eggs", "gasoline-1l": "gasoline" };
@@ -46,6 +48,7 @@ export function generateMetadata({
   const local = rows.some((p) => p.priceLocal != null) ? " and local currency," : "";
   return pageMetadata({
     path: `/items/${item.slug}`,
+    index: isItemIndexable(item.id),
     title: `${item.name} prices by country`,
     description: `What ${lowerName(item.name)} costs in ${rows.length} countries, ranked cheapest to most expensive, in US dollars${local} plus how long the average local wage takes to earn one.`,
   });

@@ -1,13 +1,17 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/seo";
 import { COUNTRIES, publishedArchiveDates } from "@/lib/catalog";
-import { publishedAnswerDates } from "@/lib/answers";
 import { ITEMS } from "@/data/items";
 import { PUBLISHED_ARTICLES } from "@/data/articles";
 import { COMPARISONS } from "@/data/comparisons";
 import { dateFromISO } from "@/lib/puzzle";
 import { YEARS } from "@/lib/yearprices";
 import { HISTORY_ITEMS } from "@/data/price-history";
+import {
+  indexableArchiveDates,
+  isCountryIndexable,
+  isItemIndexable,
+} from "@/lib/indexing";
 
 // Regenerated hourly so newly-archived days enter the sitemap without a deploy.
 export const revalidate = 3600;
@@ -20,6 +24,9 @@ export const revalidate = 3600;
  *    the world (see publishedArchiveDates), so those pages 404 until they age in.
  *  - Unwritten guides. Draft articles carry a noindex tag; listing them here
  *    would contradict that and advertise empty pages.
+ *  - Thin or near-duplicate generated pages (few-row countries and items,
+ *    repeat archive answers). The rule lives in lib/indexing.ts; those pages
+ *    carry noindex and so are left out here too.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
@@ -135,14 +142,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  const countryPages: MetadataRoute.Sitemap = COUNTRIES.map((c) => ({
+  const countryPages: MetadataRoute.Sitemap = COUNTRIES.filter((c) => isCountryIndexable(c.code)).map((c) => ({
     url: `${SITE_URL}/prices/${c.slug}`,
     lastModified: now,
     changeFrequency: "weekly",
     priority: 0.7,
   }));
 
-  const itemPages: MetadataRoute.Sitemap = ITEMS.map((i) => ({
+  const itemPages: MetadataRoute.Sitemap = ITEMS.filter((i) => isItemIndexable(i.id)).map((i) => ({
     url: `${SITE_URL}/items/${i.slug}`,
     lastModified: now,
     changeFrequency: "weekly",
@@ -163,7 +170,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  const archivePages: MetadataRoute.Sitemap = publishedArchiveDates().map(
+  const keepArchive = indexableArchiveDates(now);
+  const archivePages: MetadataRoute.Sitemap = publishedArchiveDates(now)
+    .filter((d) => keepArchive.has(d))
+    .map(
     (date) => ({
       url: `${SITE_URL}/archive/${date}`,
       lastModified: dateFromISO(date),
@@ -172,14 +182,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })
   );
 
+  // Per-day answer pages are noindex (lib/indexing.ts); only the index is listed.
   const answerPages: MetadataRoute.Sitemap = [
     { url: `${SITE_URL}/games/answers`, lastModified: now, changeFrequency: "daily", priority: 0.5 },
-    ...publishedAnswerDates().map((date) => ({
-      url: `${SITE_URL}/games/answers/${date}`,
-      lastModified: dateFromISO(date),
-      changeFrequency: "yearly" as const,
-      priority: 0.4,
-    })),
   ];
 
   const articlePages: MetadataRoute.Sitemap = PUBLISHED_ARTICLES.map((a) => ({

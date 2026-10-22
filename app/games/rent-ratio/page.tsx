@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import ContentPage from "@/components/ContentPage";
+import Link from "next/link";
+import ContentPage, { Section, Prose } from "@/components/ContentPage";
 import RentRatio from "@/components/RentRatio";
 import JsonLd from "@/components/JsonLd";
 import ChallengeBanner from "@/components/ChallengeBanner";
@@ -49,6 +50,44 @@ export default function RentRatioPage() {
           </p>
         </div>
       </div>
+      <Section heading="How to play">
+        <Prose>
+          <p>
+            Each day brings five matchups. Every matchup shows two U.S. metropolitan areas; tap
+            the one you think has the higher Fair Market Rent for a two-bedroom home. The actual
+            figures for both appear as soon as you pick, so you learn as you go.
+          </p>
+          <p>
+            Your score is how many of the five you got right. Pairs are chosen so the rents
+            differ by at least $40 a month, which rules out coin flips. Results are kept
+            in your browser and the share line shows only right and wrong, not the answers.
+          </p>
+        </Prose>
+      </Section>
+      <Section heading="Method and sources">
+        <Prose>
+          <p>
+            Figures are HUD Fair Market Rents for fiscal year 2026, published annually by the U.S.
+            Department of Housing and Urban Development. A Fair Market Rent is normally the 40th
+            percentile gross rent (rent plus essential utilities) paid by recent movers for a
+            standard-quality unit in that area, used to set Housing Choice Voucher payments.
+          </p>
+          <p>
+            Because the method is identical everywhere, Fair Market Rents are a fair way to
+            compare places, even though they sit below typical asking rents in listings.
+          </p>
+        </Prose>
+      </Section>
+      <Section heading="More daily games">
+        <Prose>
+          <p>
+            <Link href="/" className="underline decoration-rule underline-offset-2 hover:text-ink">Pricele (world prices)</Link>{" · "}
+            <Link href="/today" className="underline decoration-rule underline-offset-2 hover:text-ink">Today hub</Link>{" · "}
+            <Link href="/games/then-and-now" className="underline decoration-rule underline-offset-2 hover:text-ink">Then &amp; Now</Link>{" · "}
+            <Link href="/methodology" className="underline decoration-rule underline-offset-2 hover:text-ink">Methodology</Link>
+          </p>
+        </Prose>
+      </Section>
     </ContentPage>
   );
 }
