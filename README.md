@@ -388,6 +388,51 @@ Everything that wants to keep playing gets sent elsewhere.
 > reason: it used to read "48 of the countries in the game", which sat next to an
 > electricity answer of $48.31 and looked precisely like the answer.
 
+## The daily games hub
+
+Pricele is one of six daily games. The main puzzle stays at `/` because most
+visits to a daily game come from people who already know which game they want
+(see `docs/hub-research.md`). The hub lives beside it, at `/games` for
+browsing and `/today` for a player's own progress.
+
+| Game | Route | Mechanic | Data |
+| --- | --- | --- | --- |
+| Pricele | `/` | Guess one price, five tries | `data/prices.json` |
+| Price Atlas | `/games/price-atlas` | Name the country from a basket of its prices; distance, arrow and price level after each miss | `data/prices.json`, `data/capitals.ts` |
+| Higher or Lower Daily | `/games/higher-or-lower` | Ten-price chain, call each step higher or lower | `data/prices.json` |
+| Then & Now | `/games/then-and-now` | Guess a U.S. price in an earlier year | BLS average prices |
+| Rent Ratio | `/games/rent-ratio` | Five metro pairs, pick the higher HUD fair market rent | HUD FY2026 FMRs |
+| Inflation Ladder | `/games/inflation-ladder` | Order four groceries by price rise since a base year | BLS average prices |
+
+Every game is one entry in `GAMES` in `lib/games.ts`. That entry reads the
+game's own `localStorage` key and returns its status for a date. Everything
+else reads from the list: `/today`, `/games`, the homepage grid, the "next
+game" link, the combined share line, the per-game social card at
+`/og/game/<slug>`, `llms.txt` and the hub streak.
+
+To add a game:
+
+1. Write the pure logic in `lib/<game>.ts` with a `puzzleFor(date)`, a
+   `shareText` and its own storage key. Test it.
+2. Write the component. Finish with `<ShareButton score=...>` and
+   `<NextUp current="<slug>">`.
+3. Add the page under `app/games/<slug>` with `dailyGameJsonLd`, a
+   `ChallengeBanner` and `image: "/og/game/<slug>"`.
+4. Add the `GAMES` entry, the sitemap row and the two analytics event names.
+
+The games that draw from the world price table keep the main puzzle's answer
+out. Price Atlas never deals that day's country, and Higher or Lower Daily skips
+the main pair for yesterday, today and tomorrow.
+
+The hub writes two keys of its own and never writes a game's key.
+`pricele:hub:days` holds the days on which anything was finished, and it drives
+the streak. `pricele:hub:results` holds each game's result for the last 60 days,
+and it drives the seven-day grid on `/today`.
+
+Share links from the hub games carry `?c=<result>`. The landing page shows a
+"can you beat it" banner, and the landing tracker counts the visit as a
+challenge.
+
 ## Retention
 
 - **Rain checks** (`lib/storage.ts`). One earned per ten days of streak, two
@@ -522,6 +567,8 @@ pnpm refresh-big-mac            # pull the latest Economist edition
 pnpm refresh-big-mac --check    # CI guard: fail if Big Mac rows are stale
 pnpm refresh-open-prices        # re-pull the ten openly-sourced items
 pnpm refresh-open-prices --check   # CI guard: fail if any of them is stale
+pnpm indexnow                   # after a deploy: submit the sitemap to IndexNow (Bing and others)
+pnpm indexnow /games            # or only the URLs containing a fragment
 ```
 
 The crowd figures and the classroom need one variable in `.env.local`, and

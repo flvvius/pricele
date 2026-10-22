@@ -50,9 +50,9 @@ shared), **Sponsor** (fits a sponsor). Total out of 20.
 |---|---|---|---|---|---|---|---|---|
 | 1 | **Then & Now** *(shipped)* | Shown an item's latest U.S. average price, guess its price in an earlier year | BLS Average Price Data, APU series (US gov, public domain) | 5 | 5 | 4 | 4 | **18** |
 | 2 | **Fill-Up** | Guess the price of a litre of petrol/diesel in a country, compared with yours | Already in `data/prices.json` (sources as on `/data`) | 5 | 4 | 3 | 4 | 16 |
-| 3 | **Inflation Ladder** | Order 5 items by how much their price rose 1995→2025 | BLS AP (public domain) | 4 | 5 | 3 | 4 | 16 |
-| 4 | **Higher/Lower daily** | Promote the side mode to a fixed 10-pair daily with a score | Existing price table | 5 | 4 | 3 | 3 | 15 |
-| 5 | **Where in the World daily** | One fixed basket a day, name the country | Existing price table | 5 | 4 | 3 | 3 | 15 |
+| 3 | **Inflation Ladder** *(shipped)* | Order 5 items by how much their price rose 1995→2025 | BLS AP (public domain) | 4 | 5 | 3 | 4 | 16 |
+| 4 | **Higher/Lower daily** *(shipped as Higher or Lower Daily)* | Promote the side mode to a fixed 10-pair daily with a score | Existing price table | 5 | 4 | 3 | 3 | 15 |
+| 5 | **Where in the World daily** *(shipped as Price Atlas)* | One fixed basket a day, name the country | Existing price table | 5 | 4 | 3 | 3 | 15 |
 | 6 | **Power Bill** | Guess the U.S. average price per kWh or gallon of heating oil in year X / by state | BLS AP; EIA state electricity prices (US gov, public domain) | 4 | 5 | 2 | 5 | 16 |
 | 7 | **Distance Duel** | Guess the great-circle km between two capitals | Natural Earth (public domain), computed | 4 | 5 | 3 | 3 | 15 |
 | 8 | **Population Pin** | Guess a city's population, log-scale hot/cold | GeoNames (CC BY 4.0) | 4 | 4 | 3 | 2 | 13 |
@@ -105,3 +105,23 @@ CC BY, and limit the game to OECD countries.
   always at least 5 years before the anchor year.
 - Refresh once a year after BLS publishes December data: re-run the
   extraction, and the anchor year moves forward on its own.
+
+## Shipped 2026-10-22
+
+- **Inflation Ladder** at `/games/inflation-ladder`. Four items from the Then &
+  Now data and one base year between 1995 and 2010. Order them by price rise to
+  the latest full year. You get three tries and see which rungs are right after
+  each. Rises within a puzzle are at least 15 percentage points apart, so the
+  order is never a coin flip.
+- **Price Atlas** at `/games/price-atlas`. This replaced the plain "Where in the
+  World daily". A single price does not identify a country, so the puzzle
+  starts with three and adds one per miss. Each guess also returns Worldle's
+  distance and arrow, measured capital to capital, plus the typical price gap
+  between the two countries. That last clue is the one only this site can give.
+- **Higher or Lower Daily** at `/games/higher-or-lower`. A fixed chain of ten
+  cards and nine calls. It uses the same 1.05x-3x ratio gate as the unlimited
+  mode, and the item changes at every step.
+
+Next candidates from `hub-research.md`: a "what year was this price?" slider
+on the BLS data (TimeGuessr's control on Then & Now's data), and a five-round
+scored basket with a total out of 1,000.

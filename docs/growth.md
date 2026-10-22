@@ -232,3 +232,34 @@ Accessed October 2026.
 **Still unverified:** Costcodle, Framed and Spotle growth numbers and
 channels; any share-rate or D7 benchmark for daily web games; all 30/90/180
 targets.
+
+## Launching the hub games (October 2026)
+
+Each new game has its own audience, so each one gets its own launch post. One
+post about "a hub" would land in nobody's community. Globle's history is the
+model here: the general programming subreddit sent nothing, and the topic
+subreddit sent everything.
+
+| Game | Where its players already are | The hook |
+| --- | --- | --- |
+| Price Atlas | r/geography, r/MapPorn, Worldle and Globle players | "Worldle, but the clue is what a Big Mac costs there" |
+| Inflation Ladder | r/Economics, r/personalfinance, r/povertyfinance | "Eggs rose 362% since 1995, bananas 33%. Can you order them?" |
+| Then & Now | r/nostalgia, r/Frugal, r/90s | "What did a gallon of gas cost in 1998?" |
+| Rent Ratio | r/RealEstate, city subreddits | "Is Buffalo dearer than Virginia Beach?" |
+| Higher or Lower Daily | Players of higherlowergame.com | "The higher-lower game, once a day, with real prices" |
+
+Rules for each post:
+
+- Post the game page, never `/` or `/games`. The game page has its own social
+  card and its own challenge banner.
+- Post once per community, at least a week apart across communities, and read
+  each one's self-promotion rules first.
+- Check `share_landing` by `utm_campaign` in Vercel Analytics after 48 hours.
+  The campaign is `game-<slug>`, so each game's spread is visible on its own.
+
+Newsletters are next. `hub-research.md` records GeoSports going from 575 to over
+4,000 players in a day from one feature in a sports newsletter. Geography,
+economics and personal-finance newsletters are worth one short email each.
+Pitch Price Atlas to the geography ones and Inflation Ladder to the money ones.
+
+Run `pnpm indexnow` after each deploy that adds a page.
