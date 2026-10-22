@@ -129,6 +129,10 @@ export default function Home() {
           <Link href="/games/then-and-now" className="underline decoration-rule underline-offset-2 transition-colors duration-fast ease-out hover:text-ink">
             Then &amp; Now
           </Link>
+          , or pick the metro with the higher HUD fair market rent in{" "}
+          <Link href="/games/rent-ratio" className="underline decoration-rule underline-offset-2 transition-colors duration-fast ease-out hover:text-ink">
+            Rent Ratio
+          </Link>
           .
         </p>
       </section>

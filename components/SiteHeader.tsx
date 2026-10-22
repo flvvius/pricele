@@ -15,6 +15,7 @@ const LINKS = [
   { href: "/higher-or-lower", label: "Higher or lower" },
   { href: "/where-in-the-world", label: "Where in the world" },
   { href: "/games/then-and-now", label: "Then & Now" },
+  { href: "/games/rent-ratio", label: "Rent Ratio" },
   { href: "/classroom", label: "Classroom" },
   { href: "/blog", label: "Guides" },
   { href: "/methodology", label: "Methodology" },
