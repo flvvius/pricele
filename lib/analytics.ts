@@ -29,6 +29,7 @@ export type EventName =
   | "p1000_complete"
   | "p1000_share"
   | "years_pick"
+  | "embed_copy"
   | "today_share";
 
 type Props = Record<string, string | number | boolean>;

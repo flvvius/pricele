@@ -5,8 +5,16 @@ import ContentPage, { Prose, Section } from "@/components/ContentPage";
 import FaqSection from "@/components/FaqSection";
 import JsonLd from "@/components/JsonLd";
 import PriceLineChart from "@/components/PriceLineChart";
+import EmbedCode from "@/components/EmbedCode";
 import { HISTORY_ITEMS } from "@/data/price-history";
-import { breadcrumbJsonLd, datasetJsonLd, faqJsonLd, pageMetadata, type FaqItem } from "@/lib/seo";
+import {
+  absoluteUrl,
+  breadcrumbJsonLd,
+  datasetJsonLd,
+  faqJsonLd,
+  pageMetadata,
+  type FaqItem,
+} from "@/lib/seo";
 import { extremes, historyFor, historyItem, historyTitle, shown } from "@/lib/itemhistory";
 import { liveThenNowPairs, itemInProse } from "@/lib/yearprices";
 
@@ -141,6 +149,18 @@ export default function HistoryPage({ params }: { params: { item: string } }) {
           with fewer than ten months published are left out. Work is minutes at the BLS average
           hourly earnings of production and nonsupervisory employees. Not adjusted for inflation.
         </p>
+      </Section>
+      <Section heading="Use this chart">
+        <Prose>
+          <p>
+            Writing about {historyTitle(item).toLowerCase()}? Paste this into your page. The chart
+            updates when the data does and links back to the full table.
+          </p>
+        </Prose>
+        <EmbedCode
+          item={item.id}
+          code={`<iframe src="${absoluteUrl(`/embed/history/${item.id}`)}" title="${historyTitle(item)} by year" width="100%" height="360" style="border:0;max-width:600px" loading="lazy"></iframe>`}
+        />
       </Section>
       <FaqSection items={faq} heading="Answered" />
       <Section heading="Play with it">

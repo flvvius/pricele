@@ -13,9 +13,11 @@ function niceStep(max: number): number {
 export default function PriceLineChart({
   points,
   label,
+  caption = true,
 }: {
   points: HistoryPoint[];
   label: string;
+  caption?: boolean;
 }) {
   const visible = points.filter((p) => !p.hidden);
   if (visible.length < 2) return null;
@@ -89,9 +91,11 @@ export default function PriceLineChart({
           ))}
         </g>
       </svg>
-      <figcaption className="text-[13px] text-ink-muted">
-        Annual U.S. city average in the dollars of each year. Hover a point for the year.
-      </figcaption>
+      {caption && (
+        <figcaption className="text-[13px] text-ink-muted">
+          Annual U.S. city average in the dollars of each year. Hover a point for the year.
+        </figcaption>
+      )}
     </figure>
   );
 }
