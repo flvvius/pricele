@@ -1,0 +1,161 @@
+# Growth strategy (Pricele + Dickle)
+
+This doc owns *getting players*. Discoverability (directories, schema, AI
+recommendations) lives in `docs/visibility.md`; money is in
+`docs/monetisation.md`. Written October 2026.
+
+## What the genre teaches
+
+- **Wordle** went from ~90 daily players (1 Nov 2021) to ~300k (early Jan) and
+  ~2M within weeks, with no ads and no marketing. The turning point was the
+  spoiler-free emoji grid: every result posted was an ad that did not leak the
+  answer. One puzzle a day made it a shared event. Sources:
+  [TechCrunch](https://techcrunch.com/2022/01/12/josh-wardle-interview-wordle/),
+  [Wikipedia](https://en.wikipedia.org/wiki/Wordle).
+- **The clone wave** (Worldle, Globle, Heardle, Framed, Costcodle, Spotle) grew
+  on the same loop plus a niche identity: geography, film or music fans share
+  inside their own communities, such as subreddits, Discords and fan Twitter. The
+  communal effect fades as the genre crowds
+  ([TheGamer](https://www.thegamer.com/wordle-clones-communal-phase-ended-framed-heardle-worldle-dordle/)),
+  so a niche identity and a press hook now matter more than the grid alone.
+- **Costcodle** (Sept 2023) shows that price games travel. It rode the Costco
+  fandom (r/Costco) and TikTok "guess the price" content.
+- **Aggregators are a steady source of traffic**: dles.gg, dailydles.com,
+  listdle.com, dailys.gg, dlegames.org. These are tracked in `docs/visibility.md`.
+
+What we take from this: Pricele already has the share artefact (The Receipt),
+the cap of one puzzle a day, side modes and classrooms. What it lacks is
+distribution. Most of the work is off-site.
+
+## 1. Share loop
+
+Already done: a spoiler-free Receipt, native share on mobile, a persona verdict,
+a streak, and a Weekly Wrapped link.
+
+Improvements, in priority order:
+1. **Measure it.** Add `?s=r` (or the `utm_source=receipt` set) to the shared
+   link and track landings in Vercel Analytics. The bare URL looks cleaner in a
+   group chat, so use a short, neutral parameter. Today we cannot tell share
+   traffic from other traffic.
+2. **Per-day OG image** on the share URL ("Pricele #214 — Cappuccino in 🇯🇵 —
+   can you beat 870?"). A link that unfurls in WhatsApp or iMessage gets more
+   clicks than a plain one. Never show the price.
+3. **Challenge link**: "I scored 870, beat me". The score goes in the URL
+   fragment, and the landing page shows the score to beat. This works like
+   Weekly Wrapped.
+4. **Group/classroom leaderboard sharing**: rooms already exist, and a
+   "family/office room" variant is the same feature with a different label.
+5. **Cross-promo** (shipped, see below): after sharing, point players at Dickle.
+   Dickle should point back at Pricele.
+
+## 2. Content and social (TikTok / Shorts / Reels)
+
+The format is a face-cam reaction while guessing, plus an on-screen price
+reveal. Post daily at about 30s. Concepts:
+- "Guess what a Big Mac costs in Switzerland": the creator guesses, then the
+  reveal and the crowd's Ego Gap ("players overestimate by 36%").
+- "Americans vs Europeans guess grocery prices" (street or Discord interviews).
+- "The most expensive country for X": a weekly ranking from our data.
+- "I made a game where…" founder dev-log. Indie stories perform well on TikTok.
+- Dickle: the hook writes itself, but platforms restrict it, so keep it
+  clinical and data-led ("what the studies actually say"). Reddit and X suit it
+  better than TikTok.
+Repurpose every clip to Shorts, Reels and X. Pin the link in the bio and use one
+link-in-bio page that covers both games.
+
+## 3. Reddit and communities
+
+Subreddits: r/WebGames, r/IndieGaming, r/geography, r/MapPorn (for data
+maps), r/dataisbeautiful (OC charts from our price table), r/teachers,
+r/economics and r/personalfinance (only as data posts), r/wordle and
+r/DailyGames-style communities. Rules: one post per sub, lead with something
+useful (a chart or a finding) rather than "play my game", answer every comment,
+and never post from a fresh account. Also post on Hacker News (Show HN: "a
+daily game where every price cites its source"), Product Hunt, Discord daily-game
+servers and the Lemmy equivalents.
+
+## 4. Press angles (the strongest lever)
+
+Cost-of-living data stories built from our sourced table and from the crowd
+stats, which no one else has:
+- "People overestimate prices abroad by X%": the crowd Ego Gap, a novel dataset.
+- "Where your coffee or Big Mac costs most": timed to Economist Big Mac Index
+  releases (January and July) and to CPI days.
+- "Home-country bias: Brits underestimate UK prices"; national papers love a
+  nationally framed finding.
+- Teacher angle: "a free, no-signup economics game for classrooms". Pitch to
+  edtech newsletters and to TES/Edutopia.
+Targets: money and consumer desks (Guardian Money, BBC, Insider, Lifehacker),
+puzzle columns (puzzle round-ups in the Guardian, the Verge and Polygon), and
+local papers per country. Send a one-paragraph pitch, one chart and a quote. Go
+for one story per month, not a blast.
+
+## 5. Creators and newsletters
+
+- Micro-creators (10k–200k) in personal finance, travel, geography and
+  "guess the price" TikTok. Offer a custom room code and a "creator vs
+  followers" day. Free, and no paid deals until we know the rate at which their
+  audiences convert.
+- Geography YouTubers (GeoGuessr scene) for Where in the World.
+- Newsletters: games and puzzle newsletters, plus finance and indie-web ones
+  (e.g. curated "cool sites" newsletters). Ask for a one-line mention.
+
+## 6. SEO
+
+The on-site work is largely done (see `docs/visibility.md`). Next steps: grow
+`/prices/*` and `/items/*` as answers to "how much does X cost in Y" (a
+long-tail query with real volume), refresh pages on index-release days, and earn
+links through the press items above. Directory listings matter more than new
+pages.
+
+## 7. Retention
+
+Already done: streaks with rain checks, milestones, passport, calibration and
+Weekly Wrapped. Next:
+- **Web push** (PWA exists): one opt-in daily reminder after a player's third
+  game, never before. Default time 08:00 local.
+- **Email**: an optional "daily puzzle + yesterday's answer + one price fact"
+  newsletter (Buttondown/Beehiiv). It also works as a growth channel (forwards)
+  and ties into monetisation via sponsorships.
+- **Streak-safe**: never reset streaks (already a rule).
+
+## 8. Metrics and targets
+
+The north star is daily active players (DAP). Supporting metrics: the share rate
+(shares/completions), the share-landing rate, D1/D7/D30 retention and the share
+of traffic from referral sources.
+
+| | 30 days | 90 days | 180 days |
+|---|---|---|---|
+| Pricele DAP | 300 | 2,000 | 10,000 |
+| Share rate | 15% | 20% | 25% |
+| D7 retention | 15% | 20% | 25% |
+| Directory listings | 10 | 20 | 30 |
+| Press mentions | 1 | 4 | 10 |
+| Email/push subscribers | 100 | 1,000 | 5,000 |
+| Active classrooms/week | 5 | 30 | 150 |
+| Dickle DAP (cross-promo) | 150 | 1,000 | 5,000 |
+
+These targets are ambitious but realistic for a niche game. If DAP is under 100
+at day 30, fix the share loop and the landing experience before spending more
+on reach.
+
+## 9. First 8 weeks
+
+| Week | Focus | Actions |
+|---|---|---|
+| 1 | Instrument | Share-link parameter and analytics events (complete, share, landing). Check that the Dickle↔Pricele cross-links are live. Submit to the 5 aggregators above. |
+| 2 | Communities | Show HN and r/WebGames (one each, staggered). Post a data chart to r/dataisbeautiful. Set up TikTok/Shorts accounts and post 5 clips. |
+| 3 | Share loop | Per-day OG image and a challenge link. Daily clips continue. Look at which formats get views. |
+| 4 | Press 1 | "Ego Gap" crowd-data story pitched to 10 money desks. Product Hunt launch. |
+| 5 | Creators | 20 creator DMs with room codes. Geography YouTubers for Where in the World. |
+| 6 | Retention | Web push opt-in after the third game. Email signup. |
+| 7 | Education | Pitch to teacher communities (r/teachers, edtech newsletters) as the term-time push. Write a classroom one-pager. |
+| 8 | Review | Compare against the 30-day targets. Double down on the top two channels and drop the bottom two. Plan press story 2 around the next data release. |
+
+## Shipped in repo with this doc
+
+- `components/ShareCard.tsx`: after the Receipt, a "Try Dickle, our sister
+  game" link tagged `utm_source=pricele&utm_medium=referral&utm_campaign=share_card`.
+  It appears only once the round is done, so it never pulls a player out
+  mid-game. Dickle should add the mirror link.
