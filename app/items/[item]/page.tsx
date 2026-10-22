@@ -23,8 +23,11 @@ import {
   webPageJsonLd,
 } from "@/lib/seo";
 import { itemPriceFaq, itemWithUnit, newestSourceDate } from "@/lib/faq";
+import { HISTORY_TITLES } from "@/lib/itemhistory";
 
 export const revalidate = 3600;
+
+const US_HISTORY: Record<string, string> = { "eggs-12": "eggs", "gasoline-1l": "gasoline" };
 
 export function generateStaticParams() {
   return ITEMS.map((i) => ({ item: i.slug }));
@@ -172,6 +175,20 @@ export default function ItemPage({ params }: { params: { item: string } }) {
                 matter.
               </p>
             )}
+          </Prose>
+        </Section>
+      )}
+
+      {US_HISTORY[item.id] && (
+        <Section heading="In the U.S. since 1980">
+          <Prose>
+            <p>
+              For how this price moved over time rather than across countries, see{" "}
+              <Link href={`/history/${US_HISTORY[item.id]}`} className="underline hover:text-neutral-300">
+                {HISTORY_TITLES[US_HISTORY[item.id]].toLowerCase()} by year
+              </Link>
+              , the U.S. city average every year since 1980.
+            </p>
           </Prose>
         </Section>
       )}

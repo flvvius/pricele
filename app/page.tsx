@@ -122,9 +122,13 @@ export default function Home() {
           <Link href="/methodology" className="underline decoration-rule underline-offset-2 transition-colors duration-fast ease-out hover:text-ink">
             methodology
           </Link>
-          , or replay past rounds in the{" "}
+          , replay past rounds in the{" "}
           <Link href="/archive" className="underline decoration-rule underline-offset-2 transition-colors duration-fast ease-out hover:text-ink">
             archive
+          </Link>
+          , or look up U.S.{" "}
+          <Link href="/history" className="underline decoration-rule underline-offset-2 transition-colors duration-fast ease-out hover:text-ink">
+            price history since 1980
           </Link>
           .
         </p>
