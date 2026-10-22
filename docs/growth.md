@@ -268,3 +268,25 @@ Run `pnpm indexnow` after each deploy that adds a page. It posts to Bing's
 endpoint, which shares with the other IndexNow engines. On 2026-10-22 the
 shared api.indexnow.org endpoint returned 403 for a key Bing accepted;
 `INDEXNOW_ENDPOINT` overrides the target.
+
+### The reference pages as link bait
+
+The games need players, and the reference pages need links. Three pages exist
+mainly to earn links from people who write about prices:
+
+- `/work-time` charts how many minutes of work a fixed basket of 12 U.S.
+  items took each year since 1980: 112 minutes in 1980, 76 in 2020, 86 in
+  2025. "Groceries take 13% more work than in 2020, and still 23% less than in
+  1980" is a claim a reporter can check against BLS in five minutes, which is
+  what makes it citable. Pitch it to r/dataisbeautiful as an original chart
+  (`[OC]`, source in the first comment) and to economics and personal-finance
+  newsletters.
+- `/history/<item>` answers "egg prices by year" and "gas prices by year" with
+  the full BLS table and a chart.
+- `/years/<year>` answers "what did things cost in 1985" and carries a share
+  card for birthdays.
+
+Each history chart and the work-time chart can be embedded with an iframe
+from `/embed/...`. Every embed links back with `utm_campaign=history` or
+`work-time`, so links from embeds show up in Vercel Analytics. When a news
+story about egg prices runs, offer the embed to whoever wrote it.
