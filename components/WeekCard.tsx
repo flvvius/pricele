@@ -5,6 +5,7 @@ import { loadHistory, summariseWeek, weekOf, type PlayRecord } from "@/lib/histo
 import { encodeWeek, roastWeek, toSharedWeek } from "@/lib/weekshare";
 import { copyToClipboard } from "@/lib/share";
 import { weekShareUrl } from "@/lib/sharelink";
+import { trackEvent } from "@/lib/analytics";
 
 /**
  * The Sunday card: the same seven days the player already has, cut so there is
@@ -38,6 +39,7 @@ export default function WeekCard({ today }: { today: string }) {
       ["My Pricele week:", ...roast, link].join("\n")
     );
     setCopied(ok);
+    if (ok) trackEvent("share", { channel: "copy", campaign: "weekly" });
     if (ok) setTimeout(() => setCopied(false), 2000);
   }
 

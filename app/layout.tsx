@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Instrument_Serif, Archivo, IBM_Plex_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import LandingTracker from "@/components/LandingTracker";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import JsonLd from "@/components/JsonLd";
@@ -197,6 +198,7 @@ export default function RootLayout({
       <body className="min-h-dvh bg-paper font-sans text-ink-body antialiased">
         {children}
         <Analytics />
+        <LandingTracker />
         <SpeedInsights />
       </body>
     </html>

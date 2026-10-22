@@ -180,6 +180,28 @@ on reach.
 | 7 | Education | Pitch to teacher communities (r/teachers, edtech newsletters) as the term-time push. Write a classroom one-pager. |
 | 8 | Review | Compare against the 30-day targets. Double down on the top two channels and drop the bottom two. Plan press story 2 around the next data release. |
 
+## Measurement
+
+Custom events go through `lib/analytics.ts` (`trackEvent`, a no-throw wrapper
+around Vercel Analytics `track()`: cookieless, no personal data, never a guess
+or a price).
+
+| Event | Fired when | Properties |
+|---|---|---|
+| `puzzle_complete` | A Pricele round ends (`components/Game.tsx`) | `won`, `guesses`, `archive`, `challenge` (arrived with `?c=`) |
+| `share` | A share succeeds (`ShareCard`, `WeekCard`) | `channel` (`native`/`copy`), `campaign` (`daily`/`weekly`) |
+| `share_landing` | Arrival with `utm_source=share`, `utm_source=dickle` or `?c=` (`components/LandingTracker.tsx` in the root layout). Once per session per URL; `/d/[n]` is skipped because it forwards to `/` | `source` (`share`/`dickle`/`challenge`), `medium`, `campaign`, `challenge`, `path` |
+| `thenandnow_complete` | A Then & Now round ends | `won`, `guesses` |
+| `thenandnow_share` | Then & Now result copied | `channel` |
+
+After `share_landing` fires, the `utm_*` tags are removed from the address bar
+with `history.replaceState`. `?c=` stays so the challenge banner survives a
+reload. The pageview still records the tagged URL, because it is sent on load.
+
+Plan note: Vercel Web Analytics custom events need a Pro or Enterprise plan.
+On Hobby, `track()` calls are dropped without error. Pageviews and utm
+referrer breakdowns work on every plan.
+
 ## Shipped in repo with this doc
 
 - `components/ShareCard.tsx`: after the Receipt, a "Try Dickle, our sister

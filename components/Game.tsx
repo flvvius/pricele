@@ -1,5 +1,6 @@
 "use client";
 
+import { trackEvent } from "@/lib/analytics";
 import { useEffect, useRef, useState } from "react";
 import { getDailyPuzzle, isoDate, dateFromISO } from "@/lib/puzzle";
 import { evaluate, roundScore } from "@/lib/scoring";
@@ -202,6 +203,12 @@ export default function Game() {
 
     if (!done) return;
     setJustFinished(true);
+    trackEvent("puzzle_complete", {
+      won,
+      guesses: guesses.length,
+      archive: isArchive,
+      challenge: challenge !== null,
+    });
 
     // Archive replays are practice: they save your result but never touch the
     // streak, the lifetime record or the crowd counters.

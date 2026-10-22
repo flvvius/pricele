@@ -14,6 +14,7 @@ import {
 } from "@/lib/thenandnow";
 import { isoDate } from "@/lib/puzzle";
 import { SITE_URL } from "@/lib/seo";
+import { trackEvent } from "@/lib/analytics";
 
 const usd = (n: number) => `$${n.toFixed(2)}`;
 
@@ -44,6 +45,12 @@ export default function ThenAndNow() {
     setState(next);
     saveState(next);
     setInput("");
+    if (isOver(next, p.answer)) {
+      trackEvent("thenandnow_complete", {
+        won: next.guesses.some((g) => judge(g, p.answer) === "win"),
+        guesses: next.guesses.length,
+      });
+    }
   }
 
   async function share() {
@@ -51,6 +58,7 @@ export default function ThenAndNow() {
     try {
       await navigator.clipboard.writeText(text);
       setCopied(true);
+      trackEvent("thenandnow_share", { channel: "copy" });
     } catch {
       /* clipboard blocked */
     }

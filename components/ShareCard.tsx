@@ -9,6 +9,7 @@ import {
   shareLinkFor,
   type ShareInput,
 } from "@/lib/share";
+import { trackEvent } from "@/lib/analytics";
 import { IconCheck, IconShare } from "./Icons";
 
 /**
@@ -44,6 +45,7 @@ export default function ShareCard({
           text: buildShareText(props),
           url: shareLinkFor(props, "native"),
         });
+        trackEvent("share", { channel: "native", campaign: "daily" });
         return;
       } catch (err) {
         // Dismissing the sheet is a decision, not a failure: don't go and copy
@@ -54,6 +56,7 @@ export default function ShareCard({
     }
     const ok = await copyToClipboard(text);
     setCopied(ok);
+    if (ok) trackEvent("share", { channel: "copy", campaign: "daily" });
     if (ok) setTimeout(() => setCopied(false), 2000);
   }
 
