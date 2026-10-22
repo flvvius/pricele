@@ -39,6 +39,7 @@ export function generateMetadata({ params }: { params: { item: string } }): Meta
   return pageMetadata({
     path: `/history/${item.id}`,
     title: `${historyTitle(item)} by year, ${first} to ${last}`,
+    image: `/og/history/${item.id}`,
     description: `The U.S. average price of ${itemInProse(item)} every year from ${first} to ${last}, from BLS data, with the yearly change and how many minutes of work it took at the average wage.`,
   });
 }

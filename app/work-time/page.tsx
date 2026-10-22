@@ -21,6 +21,7 @@ const linkClass = "underline underline-offset-2 hover:text-ink";
 
 export const metadata: Metadata = pageMetadata({
   path: "/work-time",
+  image: "/og/history/work-time",
   title: `How many minutes of work groceries cost, ${first.year} to ${last.year}`,
   description: `A basket of ${BASKET.length} everyday U.S. items took ${Math.round(first.price)} minutes of work at the average wage in ${first.year}, ${Math.round(low.price)} in ${low.year} and ${Math.round(last.price)} in ${last.year}. BLS prices and wages, every year.`,
 });
