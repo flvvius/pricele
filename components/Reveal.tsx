@@ -10,6 +10,7 @@ import {
   milestoneFor,
   nextMilestone,
   GRACE_NAME,
+  streakSafetyLine,
   type GuessRecord,
   type Stats,
 } from "@/lib/storage";
@@ -108,6 +109,7 @@ export default function Reveal({
   const roast = roastFor(bestOff, puzzleNumber);
   const highlight = highlightFor(guesses, price.priceUSD, won);
   const fact = factFor(puzzleNumber, item.id);
+  const streakLine = isArchive ? null : streakSafetyLine(stats);
   const passUsed = !isArchive && !!stats.graceUsedOn && stats.graceUsedOn === today;
   const isSunday = !!today && new Date(`${today}T00:00:00`).getDay() === SUNDAY;
 
@@ -398,6 +400,11 @@ export default function Reveal({
               <div>
                 <p className="label">Next edition</p>
                 <Countdown />
+                {streakLine && (
+                  <p className="mt-1 max-w-[16rem] text-[12px] leading-snug text-streak">
+                    {streakLine}
+                  </p>
+                )}
               </div>
               <div className="flex items-center gap-2">
                 <Link

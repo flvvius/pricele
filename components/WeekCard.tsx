@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import { loadHistory, summariseWeek, weekOf, type PlayRecord } from "@/lib/history";
 import { encodeWeek, roastWeek, toSharedWeek } from "@/lib/weekshare";
-import { copyToClipboard, SHARE_URL } from "@/lib/share";
+import { copyToClipboard } from "@/lib/share";
+import { weekShareUrl } from "@/lib/sharelink";
 
 /**
  * The Sunday card: the same seven days the player already has, cut so there is
@@ -32,7 +33,7 @@ export default function WeekCard({ today }: { today: string }) {
   const roast = roastWeek(toSharedWeek(records));
 
   async function onCopy() {
-    const link = `${SHARE_URL}/week#${encodeWeek(records)}`;
+    const link = weekShareUrl(encodeWeek(records));
     const ok = await copyToClipboard(
       ["My Pricele week:", ...roast, link].join("\n")
     );

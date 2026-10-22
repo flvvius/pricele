@@ -179,3 +179,23 @@ export function getDailyPuzzle(today: Date = new Date()): DailyPuzzle | null {
 export function getPuzzleForISO(iso: string): DailyPuzzle | null {
   return getDailyPuzzle(dateFromISO(iso));
 }
+
+/** The ISO date a puzzle number belongs to. Inverse of puzzleNumber(). */
+export function isoForPuzzleNumber(n: number): string {
+  return addDaysISO(ROTATION.epoch, n - 1);
+}
+
+/**
+ * The puzzle a shared day link (/d/[n]) points at, or null.
+ *
+ * Bounded above by tomorrow's number rather than today's: the server runs in
+ * UTC and a player east of it is already on tomorrow. Anything later would let
+ * a link unfurl the item and country of a day nobody can play yet.
+ */
+export function puzzleForShareNumber(
+  n: number,
+  now: Date = new Date()
+): DailyPuzzle | null {
+  if (!Number.isInteger(n) || n < 1 || n > puzzleNumber(now) + 1) return null;
+  return getPuzzleForISO(isoForPuzzleNumber(n));
+}

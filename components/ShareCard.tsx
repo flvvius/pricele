@@ -6,7 +6,7 @@ import {
   buildShareTextWithUrl,
   copyToClipboard,
   shouldUseNativeShare,
-  SHARE_URL,
+  shareLinkFor,
   type ShareInput,
 } from "@/lib/share";
 import { IconCheck, IconShare } from "./Icons";
@@ -40,7 +40,10 @@ export default function ShareCard({
     // the grid away, so there the whole card goes to the clipboard instead.
     if (nativeShare) {
       try {
-        await navigator.share({ text: buildShareText(props), url: SHARE_URL });
+        await navigator.share({
+          text: buildShareText(props),
+          url: shareLinkFor(props, "native"),
+        });
         return;
       } catch (err) {
         // Dismissing the sheet is a decision, not a failure: don't go and copy

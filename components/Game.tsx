@@ -25,6 +25,12 @@ import { personaFor } from "@/lib/verdict";
 import { itemCategory, itemLabel, lowerName } from "@/data/items";
 import { MAX_GUESSES } from "@/lib/share";
 import {
+  challengeLine,
+  challengeVerdict,
+  decodeChallenge,
+  type Challenge,
+} from "@/lib/sharelink";
+import {
   anchorPriceUSD,
   bestPctOff,
   formatPrice,
@@ -91,6 +97,8 @@ export default function Game() {
   // True only for a round that ended in this session, which is the only time the
   // reveal is staged. See the comment on Reveal's `staged` prop.
   const [justFinished, setJustFinished] = useState(false);
+  // A friend's result from a shared link (?c=), if one came with the visit.
+  const [challenge, setChallenge] = useState<Challenge | null>(null);
   // One submission per day per mount, whatever React decides to do with effects.
   const submitted = useRef("");
 
@@ -106,6 +114,9 @@ export default function Game() {
     setRoomCode(loadRoomCode());
     setMounted(true);
     initPwa();
+    setChallenge(
+      decodeChallenge(new URLSearchParams(window.location.search).get("c"))
+    );
 
     const dayState = loadDayState(day);
     if (!window.localStorage.getItem(INTRO_KEY) && dayState.guesses.length === 0) {
@@ -235,6 +246,12 @@ export default function Game() {
 
   const highlightGuess =
     state.won && !isArchive ? state.guesses.length : undefined;
+  // Only for the day the friend played: a challenge from last Tuesday shown on
+  // today's board would be a score to beat on a different puzzle.
+  const liveChallenge =
+    challenge && puzzle && !isArchive && challenge.puzzleNumber === puzzle.puzzleNumber
+      ? challenge
+      : null;
   const atRisk = mounted && !isArchive && !state.done && streakAtRisk(stats, today);
   const hint = puzzle
     ? hintFor(puzzle.price, state.guesses.length, puzzle.puzzleNumber)
@@ -385,11 +402,20 @@ export default function Game() {
         <div className="screen-column flex min-h-0 flex-1 flex-col gap-3">
           {mounted && puzzle ? (
             state.done ? (
-              // No inner scroller here. The reveal runs longer than a screen,
-              // and while the game was height-locked at every width it had to
-              // scroll inside the board area — which put a second scrollbar
-              // inside an already-scrolling page. The lock is off once the
-              // round is done, so the reveal simply makes the document taller.
+              <>
+              {liveChallenge && (
+                <p className="animate-set-in border-l-2 border-accent bg-accent/[0.06] py-1.5 pl-2.5 font-mono text-[11px] uppercase tracking-[0.14em] text-accent">
+                  {challengeVerdict(liveChallenge, {
+                    bids: state.won ? state.guesses.length : 0,
+                    score,
+                  })}
+                </p>
+              )}
+              {/* No inner scroller here. The reveal runs longer than a screen,
+                  and while the game was height-locked at every width it had to
+                  scroll inside the board area — which put a second scrollbar
+                  inside an already-scrolling page. The lock is off once the
+                  round is done, so the reveal simply makes the document taller. */}
               <Reveal
                 puzzleNumber={puzzle.puzzleNumber}
                 item={puzzle.item}
@@ -406,8 +432,14 @@ export default function Game() {
                 today={today}
                 roomCode={roomCode}
               />
+              </>
             ) : (
               <>
+                {liveChallenge && (
+                  <p className="animate-set-in screen-chrome shrink-0 border-l-2 border-accent bg-accent/[0.06] py-1.5 pl-2.5 font-mono text-[11px] uppercase tracking-[0.14em] text-accent">
+                    {challengeLine(liveChallenge)}
+                  </p>
+                )}
                 {atRisk && (
                   <p className="animate-set-in screen-chrome shrink-0 border-l-2 border-streak bg-streak/[0.08] py-1.5 pl-2.5 font-mono text-[11px] uppercase tracking-[0.14em] text-streak">
                     {stats.currentStreak}-day streak on the line

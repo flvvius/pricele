@@ -372,3 +372,21 @@ export function applyCompletion(
     botRounds: stats.botRounds + (c.beatBot === undefined ? 0 : 1),
   };
 }
+
+/**
+ * The line under the countdown once today is done: what the streak is now and
+ * what keeps it. A player who knows a rain check covers one missed day, or how
+ * close the next one is, has a reason to come back that the bare number does
+ * not give them. Null when there is no streak to talk about.
+ */
+export function streakSafetyLine(stats: Stats): string | null {
+  const n = stats.currentStreak;
+  if (n <= 0) return null;
+  const head = `${n}-day streak safe. Play tomorrow to make it ${n + 1}.`;
+  if (stats.graceDays > 0) {
+    const s = stats.graceDays > 1 ? "s" : "";
+    return `${head} ${stats.graceDays} ${GRACE_NAME}${s} banked, so one missed day won't break it.`;
+  }
+  const next = (Math.floor(n / GRACE_EVERY) + 1) * GRACE_EVERY;
+  return `${head} Reach ${next} to bank a ${GRACE_NAME} for a missed day.`;
+}

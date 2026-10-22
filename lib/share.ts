@@ -20,6 +20,7 @@
 import { tierFromCloseness } from "./scoring";
 import { personaFor } from "./verdict";
 import type { GuessRecord } from "./storage";
+import { dayShareUrl, type ShareChannel } from "./sharelink";
 
 export const MAX_GUESSES = 5;
 
@@ -80,7 +81,7 @@ export function buildLineItems(guesses: GuessRecord[]): string {
 const RULE = "──────────────";
 
 /**
- * Build the shareable text (without the URL; callers append SHARE_URL, or pass
+ * Build the shareable text (without the URL; callers append shareLinkFor(), or pass
  * it as the dedicated `url` field of the native share sheet).
  *
  *   🧾 PRICELE #214
@@ -138,9 +139,26 @@ export function buildShareText({
   return lines.join("\n");
 }
 
+/**
+ * The link that rides with a Receipt: the day's own page (so the unfurl shows
+ * the day's item and country), utm-tagged by channel, and carrying the score to
+ * beat when there is one. An archive replay has no score, so it ships no
+ * challenge rather than a challenge of zero.
+ */
+export function shareLinkFor(input: ShareInput, channel: ShareChannel): string {
+  const challenge =
+    input.score !== undefined
+      ? { bids: input.won ? input.guesses.length : 0, score: input.score }
+      : undefined;
+  return dayShareUrl(input.puzzleNumber, channel, challenge);
+}
+
 /** The full share text including the https:// link (for clipboard/display). */
-export function buildShareTextWithUrl(input: ShareInput): string {
-  return `${buildShareText(input)}\n${SHARE_URL}`;
+export function buildShareTextWithUrl(
+  input: ShareInput,
+  channel: ShareChannel = "copy"
+): string {
+  return `${buildShareText(input)}\n${shareLinkFor(input, channel)}`;
 }
 
 /** Copy text to the clipboard, with a legacy fallback. Returns success. */
