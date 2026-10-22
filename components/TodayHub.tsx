@@ -4,11 +4,15 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import ShareButton from "./ShareButton";
 import Countdown from "./Countdown";
+import HubWeek from "./HubWeek";
+import { isoDate } from "@/lib/puzzle";
 import {
   GAMES,
   dailySetShare,
   minutesLeft,
+  readResults,
   readStatuses,
+  type ResultLog,
   syncHubStreaks,
   type GameStatus,
 } from "@/lib/games";
@@ -23,11 +27,13 @@ export default function TodayHub() {
   const [st, setSt] = useState<Record<string, GameStatus> | null>(null);
   const [streak, setStreak] = useState(0);
   const [best, setBest] = useState(0);
+  const [log, setLog] = useState<ResultLog>({});
 
   useEffect(() => {
     const streaks = syncHubStreaks();
     setStreak(streaks.current);
     setBest(streaks.best);
+    setLog(readResults());
     setSt(readStatuses());
   }, []);
 
@@ -119,6 +125,7 @@ export default function TodayHub() {
           );
         })}
       </ul>
+      <HubWeek log={log} today={isoDate()} />
       <ShareButton
         text={(url) => dailySetShare(st, streak, url)}
         path="/today"

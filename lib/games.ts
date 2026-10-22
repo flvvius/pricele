@@ -185,6 +185,30 @@ export const GAMES: DailyGame[] = [
 ];
 
 export const HUB_KEY = "pricele:hub:days";
+export const RESULTS_KEY = "pricele:hub:results";
+const RESULTS_DAYS = 60;
+
+export type ResultLog = Record<string, Record<string, string>>;
+
+export function mergeResults(
+  log: ResultLog | null,
+  today: string,
+  st: Record<string, GameStatus>
+): ResultLog {
+  const base: ResultLog = log && typeof log === "object" ? { ...log } : {};
+  const done = Object.fromEntries(
+    Object.entries(st)
+      .filter(([, v]) => v.phase === "done")
+      .map(([k, v]) => [k, v.result ?? "✓"])
+  );
+  if (Object.keys(done).length > 0) base[today] = { ...(base[today] ?? {}), ...done };
+  const keep = Object.keys(base).sort().slice(-RESULTS_DAYS);
+  return Object.fromEntries(keep.map((d) => [d, base[d]]));
+}
+
+export function lastDays(today: string, n: number): string[] {
+  return Array.from({ length: n }, (_, i) => daysBefore(today, n - 1 - i));
+}
 const HUB_MAX = 430;
 
 export function gameBySlug(slug: string): DailyGame | undefined {
@@ -319,7 +343,19 @@ export function syncHubStreaks(today: string = isoDate()): { current: number; be
       /* quota or privacy mode */
     }
   }
+  try {
+    const st = statuses(today, kv);
+    const merged = mergeResults(json<ResultLog>(kv, RESULTS_KEY), today, st);
+    window.localStorage.setItem(RESULTS_KEY, JSON.stringify(merged));
+  } catch {
+    /* quota or privacy mode */
+  }
   return { current: hubStreak(dates, today), best: bestStreak(dates) };
+}
+
+export function readResults(): ResultLog {
+  const kv = browserKV();
+  return (kv && json<ResultLog>(kv, RESULTS_KEY)) || {};
 }
 
 export function readStatuses(today: string = isoDate()): Record<string, GameStatus> {

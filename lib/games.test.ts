@@ -8,6 +8,8 @@ import {
   HUB_KEY,
   bestStreak,
   minutesLeft,
+  lastDays,
+  mergeResults,
   dailySetShare,
   hubStreak,
   knownDoneDates,
@@ -121,5 +123,31 @@ describe("hub streak extras", () => {
     expect(minutesLeft({})).toBe(total);
     const st = { [GAMES[0].slug]: { phase: "done" as const } };
     expect(minutesLeft(st)).toBe(total - GAMES[0].minutes);
+  });
+});
+
+describe("hub results log", () => {
+  it("records finished games for today and keeps earlier days", () => {
+    const st = {
+      pricele: { phase: "done" as const, result: "3/5" },
+      "rent-ratio": { phase: "in_progress" as const },
+    };
+    const log = mergeResults({ "2026-10-21": { pricele: "X/5" } }, D, st);
+    expect(log).toEqual({ "2026-10-21": { pricele: "X/5" }, [D]: { pricele: "3/5" } });
+  });
+
+  it("leaves the log alone when nothing is finished and survives junk", () => {
+    expect(mergeResults(null, D, {})).toEqual({});
+  });
+
+  it("caps the log at 60 days", () => {
+    const old = Object.fromEntries(lastDays("2026-09-30", 80).map((d) => [d, { pricele: "1/5" }]));
+    const log = mergeResults(old, D, { pricele: { phase: "done", result: "2/5" } });
+    expect(Object.keys(log)).toHaveLength(60);
+    expect(log[D]).toEqual({ pricele: "2/5" });
+  });
+
+  it("lists the last n days ending today", () => {
+    expect(lastDays("2026-11-01", 3)).toEqual(["2026-10-30", "2026-10-31", "2026-11-01"]);
   });
 });
