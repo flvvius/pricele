@@ -81,7 +81,7 @@ export default function RentRatio() {
         </figure>
       )}
 
-      <ol className="flex flex-col gap-2">
+      <ol className="flex flex-col gap-2" aria-live="polite">
         {state.picks.map((k, i) => {
           const r = p.rounds[i];
           const ok = isCorrect(r, k);

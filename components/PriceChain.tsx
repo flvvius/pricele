@@ -91,7 +91,7 @@ export default function PriceChain() {
       )}
 
       {i > 0 && (
-        <ol className="flex flex-col gap-1.5" aria-label="Your calls">
+        <ol className="flex flex-col gap-1.5" aria-label="Your calls" aria-live="polite">
           {state.calls.map((c, k) => {
             const ok = c === truth(p, k);
             const a = p.cards[k];

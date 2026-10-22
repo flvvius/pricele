@@ -69,7 +69,7 @@ export default function ThenAndNow() {
         </p>
       </figure>
 
-      <ol className="flex flex-col gap-1.5">
+      <ol className="flex flex-col gap-1.5" aria-live="polite">
         {state.guesses.map((g, i) => {
           const v = judge(g, p.answer);
           return (

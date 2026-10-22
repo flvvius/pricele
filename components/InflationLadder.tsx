@@ -50,6 +50,15 @@ export default function InflationLadder() {
   const lastMarks = state.tries.length ? markOrder(state.tries.at(-1)!, p.answer) : null;
   const shown = over ? p.answer : order;
 
+  function move(id: string, from: number, to: number, dir: "up" | "down") {
+    setOrder(moveRung(order, from, to));
+    requestAnimationFrame(() => {
+      const atEdge = to === 0 || to === order.length - 1;
+      const target = atEdge ? (dir === "up" ? "down" : "up") : dir;
+      document.querySelector<HTMLButtonElement>(`[data-move="${id}-${target}"]`)?.focus();
+    });
+  }
+
   function submit() {
     if (!state || over) return;
     const next = { ...state, tries: [...state.tries, order] };
@@ -103,7 +112,8 @@ export default function InflationLadder() {
                   <button
                     aria-label={`Move ${r.item.name} up`}
                     disabled={i === 0}
-                    onClick={() => setOrder(moveRung(order, i, i - 1))}
+                    data-move={`${id}-up`}
+                    onClick={() => move(id, i, i - 1, "up")}
                     className="h-10 w-10 border border-rule font-mono text-ink disabled:opacity-30"
                   >
                     ↑
@@ -111,7 +121,8 @@ export default function InflationLadder() {
                   <button
                     aria-label={`Move ${r.item.name} down`}
                     disabled={i === shown.length - 1}
-                    onClick={() => setOrder(moveRung(order, i, i + 1))}
+                    data-move={`${id}-down`}
+                    onClick={() => move(id, i, i + 1, "down")}
                     className="h-10 w-10 border border-rule font-mono text-ink disabled:opacity-30"
                   >
                     ↓
@@ -150,7 +161,10 @@ export default function InflationLadder() {
           >
             Lock in order
           </button>
-          <p className="text-center text-[13px] text-ink-muted">
+          <p className="text-center text-[13px] text-ink-muted" aria-live="polite">
+            {lastMarks
+              ? `${lastMarks.filter((m) => m === "right").length} of ${lastMarks.length} on the right rung. `
+              : ""}
             {MAX_TRIES - state.tries.length} {MAX_TRIES - state.tries.length === 1 ? "try" : "tries"} left.
             {unchangedSinceLastTry ? " Move something before trying again." : ""}
           </p>

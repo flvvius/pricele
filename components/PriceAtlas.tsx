@@ -97,7 +97,7 @@ export default function PriceAtlas() {
       </figure>
 
       {state.guesses.length > 0 && (
-        <ol className="flex flex-col gap-1.5" aria-label="Your guesses">
+        <ol className="flex flex-col gap-1.5" aria-label="Your guesses" aria-live="polite">
           {state.guesses.map((g) => {
             const c = byCode.get(g);
             const f = feedback(p, g);
