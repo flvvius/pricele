@@ -41,9 +41,7 @@ function lead(s: YearSummary): string {
     .map((id) => rows.find((r) => r.item.id === id))
     .filter((r): r is YearRow => Boolean(r))
     .slice(0, 2);
-  const parts = pick.map(
-    (r) => `${itemInProse(r.item)} cost ${usd(r.then)}`
-  );
+  const parts = pick.map((r) => `${itemInProse(r.item)} cost ${usd(r.then)}`);
   return `In ${s.year}, ${parts.join(" and ")} in the U.S., and the average hourly wage was ${usd(s.wageThen)}.`;
 }
 
@@ -106,7 +104,12 @@ export default function YearPage({ params }: { params: { year: string } }) {
         <ul className="flex flex-col border-t border-rule" data-testid="year-rows">
           {s.rows.map((r) => (
             <li key={r.item.id} className="flex flex-col gap-0.5 border-b border-rule-soft py-3">
-              <span className="text-[16px] text-ink">{r.item.name}</span>
+              <Link
+                href={`/history/${r.item.id}`}
+                className="text-[16px] text-ink underline-offset-4 hover:underline"
+              >
+                {r.item.name}
+              </Link>
               {r.hidden ? (
                 <span className="font-mono text-[13px] text-ink-muted">
                   Hidden: this is a live{" "}

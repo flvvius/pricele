@@ -6,6 +6,7 @@ import { PUBLISHED_ARTICLES } from "@/data/articles";
 import { COMPARISONS } from "@/data/comparisons";
 import { dateFromISO } from "@/lib/puzzle";
 import { YEARS } from "@/lib/yearprices";
+import { HISTORY_ITEMS } from "@/data/price-history";
 
 // Regenerated hourly so newly-archived days enter the sitemap without a deploy.
 export const revalidate = 3600;
@@ -105,6 +106,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         priority: 0.7,
       },
       { url: `${SITE_URL}/years`, changeFrequency: "monthly", priority: 0.8 },
+      { url: `${SITE_URL}/history`, changeFrequency: "monthly", priority: 0.8 },
       { url: `${SITE_URL}/editorial`, changeFrequency: "monthly", priority: 0.6 },
       { url: `${SITE_URL}/data`, changeFrequency: "monthly", priority: 0.6 },
       { url: `${SITE_URL}/support`, changeFrequency: "monthly", priority: 0.4 },
@@ -147,6 +149,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
+  const historyPages: MetadataRoute.Sitemap = HISTORY_ITEMS.map((i) => ({
+    url: `${SITE_URL}/history/${i.id}`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.8,
+  }));
+
   const archivePages: MetadataRoute.Sitemap = publishedArchiveDates().map(
     (date) => ({
       url: `${SITE_URL}/archive/${date}`,
@@ -182,6 +191,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...comparisonPages,
     ...itemPages,
     ...yearPages,
+    ...historyPages,
     ...countryPages,
     ...articlePages,
     ...archivePages,

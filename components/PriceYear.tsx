@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { HISTORY_ITEMS, HOURLY_WAGE } from "@/data/price-history";
 import {
@@ -198,7 +199,13 @@ export default function PriceYear() {
                   {r.items.map((x) => lowerFirst(x.name.replace(/^An? /, ""))).join(", ")}
                 </span>
                 <span className="shrink-0 pl-3 font-mono text-ink-muted">
-                  {state.guesses[i]} → {r.year}
+                  {state.guesses[i]} →{" "}
+                  <Link
+                    href={`/years/${r.year}`}
+                    className="underline underline-offset-2 hover:text-ink"
+                  >
+                    {r.year}
+                  </Link>
                 </span>
               </li>
             ))}
@@ -210,7 +217,9 @@ export default function PriceYear() {
             campaign="game-price-year"
             event="year_share"
           />
-          <p className="text-[13px] text-ink-muted">Five new receipts at your local midnight.</p>
+          <p className="text-[13px] text-ink-muted">
+            Five new receipts at your local midnight. Tap a year to see everything it cost.
+          </p>
           <NextUp current="price-year" />
         </div>
       )}

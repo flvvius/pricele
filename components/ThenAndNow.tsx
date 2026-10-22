@@ -1,7 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { THEN_NOW_ITEMS } from "@/data/then-and-now";
+import { HOURLY_WAGE } from "@/data/price-history";
 import {
   isOver,
   judge,
@@ -18,6 +20,7 @@ import NextUp from "./NextUp";
 import ShareButton from "./ShareButton";
 
 const usd = (n: number) => `$${n.toFixed(2)}`;
+const minutes = (m: number) => (m < 10 ? m.toFixed(1) : String(Math.round(m)));
 
 export default function ThenAndNow() {
   // Date is read after mount so the puzzle follows the player's local midnight.
@@ -87,6 +90,19 @@ export default function ThenAndNow() {
             {won ? "Nice. " : ""}In {p.year}, {p.item.name.toLowerCase()} averaged{" "}
             <strong>{usd(p.answer)}</strong>.
           </p>
+          {HOURLY_WAGE[p.year] && HOURLY_WAGE[p.anchorYear] && (
+            <p className="text-[14px] text-ink-muted">
+              At the average hourly wage that was about{" "}
+              {minutes((p.answer / HOURLY_WAGE[p.year]) * 60)} minutes of work. In {p.anchorYear} it
+              was about {minutes((p.anchor / HOURLY_WAGE[p.anchorYear]) * 60)}.{" "}
+              <Link
+                href={`/years/${p.year}`}
+                className="underline underline-offset-2 hover:text-ink"
+              >
+                Everything else from {p.year}
+              </Link>
+            </p>
+          )}
           <ShareButton
             score={`${won ? state.guesses.length : "X"}/${MAX_GUESSES}`}
             text={(url) => shareText(p, state.guesses, url)}
