@@ -14,24 +14,34 @@ export default function PriceLineChart({
   points,
   label,
   caption = true,
+  unit = "usd",
+  fromZero = true,
 }: {
   points: HistoryPoint[];
   label: string;
   caption?: boolean;
+  unit?: "usd" | "min";
+  fromZero?: boolean;
 }) {
   const visible = points.filter((p) => !p.hidden);
   if (visible.length < 2) return null;
   const first = points[0].year;
   const last = points[points.length - 1].year;
-  const step = niceStep(Math.max(...visible.map((p) => p.price)));
-  const top = Math.ceil(Math.max(...visible.map((p) => p.price)) / step) * step;
+  const hi = Math.max(...visible.map((p) => p.price));
+  const lo = Math.min(...visible.map((p) => p.price));
+  const step = niceStep(fromZero ? hi : hi - lo);
+  const top = Math.ceil(hi / step) * step;
+  const base = fromZero ? 0 : Math.max(0, Math.floor(lo / step) * step - step);
   const x = (year: number) =>
     PAD.left + ((year - first) / (last - first)) * (W - PAD.left - PAD.right);
-  const y = (price: number) => PAD.top + (1 - price / top) * (H - PAD.top - PAD.bottom);
-  const ticks = Array.from({ length: Math.round(top / step) + 1 }, (_, i) => i * step);
+  const y = (price: number) =>
+    PAD.top + (1 - (price - base) / (top - base)) * (H - PAD.top - PAD.bottom);
+  const ticks = Array.from({ length: Math.round((top - base) / step) + 1 }, (_, i) => base + i * step);
   const decades = points.map((p) => p.year).filter((yr) => yr % 10 === 0);
   const end = visible[visible.length - 1];
-  const fmt = (n: number) => (Number.isInteger(n) ? `$${n}` : `$${n.toFixed(2)}`);
+  const fmt = (n: number) =>
+    unit === "min" ? `${n}m` : Number.isInteger(n) ? `$${n}` : `$${n.toFixed(2)}`;
+  const endLabel = unit === "min" ? `${Math.round(end.price)} min` : `$${end.price.toFixed(2)}`;
 
   return (
     <figure className="flex flex-col gap-2">
@@ -81,12 +91,16 @@ export default function PriceLineChart({
           <circle cx={x(end.year)} cy={y(end.price)} r={4} fill="currentColor" />
         </g>
         <text x={x(end.year) + 8} y={y(end.price) + 4} className="fill-ink font-mono text-[15px]">
-          ${end.price.toFixed(2)}
+          {endLabel}
         </text>
         <g>
           {visible.map((p) => (
             <circle key={p.year} cx={x(p.year)} cy={y(p.price)} r={9} fill="transparent">
-              <title>{`${p.year}: $${p.price.toFixed(2)}, ${p.minutes.toFixed(1)} min of work`}</title>
+              <title>
+                {unit === "min"
+                  ? `${p.year}: ${Math.round(p.price)} minutes of work`
+                  : `${p.year}: $${p.price.toFixed(2)}, ${p.minutes.toFixed(1)} min of work`}
+              </title>
             </circle>
           ))}
         </g>

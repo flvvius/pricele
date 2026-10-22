@@ -51,7 +51,11 @@ export default function HistoryIndex() {
       <Section heading="By year instead">
         <Prose>
           <p>
-            To see every item for one year, start from{" "}
+            For the whole basket in minutes of work, see the{" "}
+            <Link href="/work-time" className="underline underline-offset-2">
+              grocery work-time index
+            </Link>
+            . To see every item for one year, start from{" "}
             <Link href="/years" className="underline underline-offset-2">
               prices the year you were born
             </Link>

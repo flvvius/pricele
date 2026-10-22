@@ -107,6 +107,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       },
       { url: `${SITE_URL}/years`, changeFrequency: "monthly", priority: 0.8 },
       { url: `${SITE_URL}/history`, changeFrequency: "monthly", priority: 0.8 },
+      { url: `${SITE_URL}/work-time`, changeFrequency: "monthly", priority: 0.8 },
       { url: `${SITE_URL}/editorial`, changeFrequency: "monthly", priority: 0.6 },
       { url: `${SITE_URL}/data`, changeFrequency: "monthly", priority: 0.6 },
       { url: `${SITE_URL}/support`, changeFrequency: "monthly", priority: 0.4 },
