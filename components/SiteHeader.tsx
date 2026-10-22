@@ -14,6 +14,7 @@ const LINKS = [
   // thirty other people, rather than to read.
   { href: "/higher-or-lower", label: "Higher or lower" },
   { href: "/where-in-the-world", label: "Where in the world" },
+  { href: "/games/then-and-now", label: "Then & Now" },
   { href: "/classroom", label: "Classroom" },
   { href: "/blog", label: "Guides" },
   { href: "/methodology", label: "Methodology" },

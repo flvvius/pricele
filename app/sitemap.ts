@@ -49,6 +49,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
         priority: 0.6,
       },
       {
+        url: `${SITE_URL}/games/then-and-now`,
+        changeFrequency: "daily",
+        priority: 0.6,
+      },
+      {
         url: `${SITE_URL}/classroom`,
         changeFrequency: "monthly",
         priority: 0.7,

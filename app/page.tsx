@@ -125,6 +125,10 @@ export default function Home() {
           <Link href="/archive" className="underline decoration-rule underline-offset-2 transition-colors duration-fast ease-out hover:text-ink">
             archive
           </Link>
+          . New: guess what groceries cost years ago in{" "}
+          <Link href="/games/then-and-now" className="underline decoration-rule underline-offset-2 transition-colors duration-fast ease-out hover:text-ink">
+            Then &amp; Now
+          </Link>
           .
         </p>
       </section>
