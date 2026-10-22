@@ -6,8 +6,9 @@ recommendations) lives in `docs/visibility.md`; money is in
 
 ## What the genre teaches
 
-- **Wordle** went from ~90 daily players (1 Nov 2021) to ~300k (early Jan) and
-  ~2M within weeks, with no ads and no marketing. The turning point was the
+- **Wordle** went from fewer than 100 daily players (1 Nov 2021) to 300k a few
+  weeks later ([Nieman Lab, Jan 2022](https://www.niemanlab.org/2022/01/the-new-york-times-buys-wordle-for-a-price-in-the-low-seven-figures/)) and about 2M the following
+  week, with no ads and no marketing. The turning point was the
   spoiler-free emoji grid: every result posted was an ad that did not leak the
   answer. One puzzle a day made it a shared event. Sources:
   [TechCrunch](https://techcrunch.com/2022/01/12/josh-wardle-interview-wordle/),
@@ -18,8 +19,25 @@ recommendations) lives in `docs/visibility.md`; money is in
   communal effect fades as the genre crowds
   ([TheGamer](https://www.thegamer.com/wordle-clones-communal-phase-ended-framed-heardle-worldle-dordle/)),
   so a niche identity and a press hook now matter more than the grid alone.
-- **Costcodle** (Sept 2023) shows that price games travel. It rode the Costco
-  fandom (r/Costco) and TikTok "guess the price" content.
+- **Globle** (Jan 2022) is the best-documented niche case: a post to r/webdev
+  got "absolutely zero traffic", a post to r/geography took off, and it
+  averaged about 1.3-1.4M players a day in 2022 per its creator
+  ([Hey, Good Game, Jan 2024](https://www.hey.gg/blog/trainwrecklabs); [Yahoo/CP](https://www.yahoo.com/entertainment/creating-online-geography-game-globle-164331615.html)). Lesson: the right
+  subreddit matters more than the post.
+- **Heardle** grew from "eight friends" to over 1M users a day per its
+  creator ([Variety, 2022](https://variety.com/2022/music/news/heardle-music-wordle-game-1235212963/)), then was bought by Spotify and shut within a year.
+- **Clues by Sam** (daily since May 2025) reportedly passed 50k DAU by early
+  2026 through organic sharing, with its largest spike from Northernlion
+  playing it on stream ([Wikipedia](https://en.wikipedia.org/wiki/Clues_By_Sam), approximate). Streamers are a channel.
+- **Connections** (NYT, beta June 2023) reached 10M weekly actives by Nov
+  2023 ([Aftermath](https://aftermath.site/new-york-times-wordle-connections-puzzmo-games/), citing Vanity Fair) and 3.3B plays in 2024
+  ([Wikipedia](https://en.wikipedia.org/wiki/The_New_York_Times_Connections)), but it had NYT distribution, so it is not a template for us.
+- **Costcodle** (Sept 2023, by KermWasTaken, MIT-licensed and widely forked,
+  [GitHub](https://github.com/KermWasTaken/costcodle)) shows that price games travel. *Unverified:* no
+  player numbers or press coverage were found; the r/Costco/TikTok story is
+  our assumption. **Framed** (Mar 2022) and **Spotle** likewise have no
+  public player figures from their creators; third-party "1M a day" claims
+  come from unaffiliated clone sites and are not credible.
 - **Aggregators are a steady source of traffic**: dles.gg, dailydles.com,
   listdle.com, dailys.gg, dlegames.org. These are tracked in `docs/visibility.md`.
 
@@ -121,7 +139,8 @@ Weekly Wrapped. Next:
 
 ## 8. Metrics and targets
 
-The north star is daily active players (DAP). Supporting metrics: the share rate
+The north star is daily active players (DAP). All targets below are
+*(est.)*, our own goals, not benchmarks. Supporting metrics: the share rate
 (shares/completions), the share-landing rate, D1/D7/D30 retention and the share
 of traffic from referral sources.
 
@@ -136,7 +155,15 @@ of traffic from referral sources.
 | Active classrooms/week | 5 | 30 | 150 |
 | Dickle DAP (cross-promo) | 150 | 1,000 | 5,000 |
 
-These targets are ambitious but realistic for a niche game. If DAP is under 100
+For calibration: the GameAnalytics 2025 benchmarks (11.6k mobile games,
+all genres) put the median at about 22% D1, under 4% D7 and 0.7-0.8% D30
+([GameAnalytics](https://www.gameanalytics.com/reports/2026-mobile-pc-gaming-benchmarks); [GameDev Reports summary](https://gamedevreports.substack.com/p/gameanalytics-mobile-gaming-benchmarks)), with top 1% at
+64-68% D1. Those are paid-install mobile cohorts. A daily web game played by
+choice from a shared link should retain better, but no public benchmark for
+daily web games exists, so our 15-25% D7 is a goal to test, not a norm. No
+public data was found on share rates either.
+
+These targets are ambitious but plausible for a niche game. If DAP is under 100
 at day 30, fix the share loop and the landing experience before spending more
 on reach.
 
@@ -159,3 +186,25 @@ on reach.
   game" link tagged `utm_source=pricele&utm_medium=referral&utm_campaign=share_card`.
   It appears only once the round is done, so it never pulls a player out
   mid-game. Dickle should add the mirror link.
+
+## Sources
+
+Accessed October 2026.
+
+- Nieman Lab, NYT buys Wordle, Jan 2022. https://www.niemanlab.org/2022/01/the-new-york-times-buys-wordle-for-a-price-in-the-low-seven-figures/
+- TechCrunch, Josh Wardle interview, 12 Jan 2022. https://techcrunch.com/2022/01/12/josh-wardle-interview-wordle/
+- Wikipedia, Wordle. https://en.wikipedia.org/wiki/Wordle
+- TheGamer, Wordle clones' communal phase. https://www.thegamer.com/wordle-clones-communal-phase-ended-framed-heardle-worldle-dordle/
+- Hey, Good Game, Globle & Trainwreck Labs, Jan 2024. https://www.hey.gg/blog/trainwrecklabs
+- Yahoo / Canadian Press, Globle interview, 2022. https://www.yahoo.com/entertainment/creating-online-geography-game-globle-164331615.html
+- Variety, Heardle, 2022. https://variety.com/2022/music/news/heardle-music-wordle-game-1235212963/
+- Wikipedia, Clues By Sam (flagged for deletion). https://en.wikipedia.org/wiki/Clues_By_Sam
+- Aftermath, NYT and Puzzmo games, 18 Apr 2024. https://aftermath.site/new-york-times-wordle-connections-puzzmo-games/
+- Wikipedia, The New York Times Connections. https://en.wikipedia.org/wiki/The_New_York_Times_Connections
+- GitHub, KermWasTaken/costcodle. https://github.com/KermWasTaken/costcodle
+- GameAnalytics, 2026 Mobile & PC Gaming Benchmarks (2025 data). https://www.gameanalytics.com/reports/2026-mobile-pc-gaming-benchmarks
+- GameDev Reports, GameAnalytics 2025 benchmarks summary. https://gamedevreports.substack.com/p/gameanalytics-mobile-gaming-benchmarks
+
+**Still unverified:** Costcodle, Framed and Spotle growth numbers and
+channels; any share-rate or D7 benchmark for daily web games; all 30/90/180
+targets.
