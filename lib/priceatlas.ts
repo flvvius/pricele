@@ -212,16 +212,40 @@ export function shareText(p: AtlasPuzzle, state: AtlasState, url: string): strin
   return [`Price Atlas #${p.number} ${result(p, state)}`, rows.join(" "), url].join("\n");
 }
 
+// What people actually type for a country whose listed name they don't use.
+// "usa" and "uk" used to match nothing at all, so the Guess button just sat
+// disabled with no hint why. An alias matches from its start only, so these
+// short ones don't turn up inside unrelated queries.
+const ALIASES: Record<string, string[]> = {
+  US: ["usa", "us", "america", "united states of america"],
+  GB: ["uk", "britain", "great britain", "england", "scotland", "wales"],
+  AE: ["uae", "emirates", "dubai"],
+  CZ: ["czech republic"],
+  KR: ["korea", "republic of korea"],
+  NL: ["holland"],
+  TR: ["turkiye"],
+  VN: ["viet nam"],
+  CI: ["ivory coast", "cote d'ivoire"],
+};
+
+/** Lower case, accents dropped, so "Türkiye" and "turkiye" are one query. */
+function fold(s: string): string {
+  return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
+}
+
 export function matchCountries(query: string, exclude: string[] = []): Country[] {
-  const q = query.trim().toLowerCase();
+  const q = fold(query).replace(/\s+/g, " ");
   if (!q) return [];
-  return COUNTRIES.filter(
-    (c) => !exclude.includes(c.code) && c.name.toLowerCase().includes(q)
-  ).sort((a, b) => {
-    const aStarts = a.name.toLowerCase().startsWith(q) ? 0 : 1;
-    const bStarts = b.name.toLowerCase().startsWith(q) ? 0 : 1;
-    return aStarts - bStarts || a.name.localeCompare(b.name);
-  });
+  // 0: the name starts with the query; 1: an alias does; 2: the name contains it.
+  const rank = (c: Country): number => {
+    const name = fold(c.name);
+    if (name.startsWith(q)) return 0;
+    if ((ALIASES[c.code] ?? []).some((a) => a.startsWith(q))) return 1;
+    return name.includes(q) ? 2 : 3;
+  };
+  return COUNTRIES.filter((c) => !exclude.includes(c.code) && rank(c) < 3).sort(
+    (a, b) => rank(a) - rank(b) || a.name.localeCompare(b.name)
+  );
 }
 
 export const KEY = "pricele:price-atlas";

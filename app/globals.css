@@ -351,6 +351,15 @@ body::after {
   border-radius: 2px;
 }
 
+/* Except on the things focus is only *moved* to: a final score or a result
+   heading given tabindex="-1" so a screen reader announces it when a round
+   ends. Chrome treats that scripted focus as visible after a keyboard submit,
+   and a red ring around the total read as an error box. Nothing there can be
+   activated, so there is nothing for the ring to say. */
+[tabindex="-1"]:focus-visible {
+  outline: none;
+}
+
 /* Numerals are the subject matter of both games; they get the mono face, lining
    figures and fixed advance width everywhere, without a class on every span. */
 .tnum,

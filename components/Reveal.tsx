@@ -179,8 +179,11 @@ export default function Reveal({
             <p className="label !text-[10px]">Score</p>
           </div>
           <div>
+            {/* A bid that rounds to 0% off used to print as "1%", floored so
+                the plate never showed a bare zero, directly under a line
+                saying the price was nailed exactly. The two now agree. */}
             <p className="display text-2xl tabular-nums text-ink">
-              {Math.max(bestOff, 1)}%
+              {bestOff === 0 ? "Exact" : `${bestOff}%`}
             </p>
             <p className="label !text-[10px]">Best bid</p>
           </div>

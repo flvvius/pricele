@@ -169,6 +169,16 @@ export default function OpenRange() {
                     inputMode="decimal"
                     autoComplete="off"
                     placeholder="low"
+                    enterKeyHint="next"
+                    // The keyboard's return key on the low field used to submit
+                    // a half-filled form, which did nothing at all, so the
+                    // player had to reach up and tap the high field. It moves
+                    // there instead, the way a two-field form should.
+                    onKeyDown={(e) => {
+                      if (e.key !== "Enter" || isValidRange(draft)) return;
+                      e.preventDefault();
+                      document.querySelector<HTMLInputElement>("[data-testid=range-high]")?.focus();
+                    }}
                     value={low}
                     onChange={(e) => setLow(sanitizePrice(e.target.value))}
                     data-testid="range-low"
@@ -186,6 +196,7 @@ export default function OpenRange() {
                     inputMode="decimal"
                     autoComplete="off"
                     placeholder="high"
+                    enterKeyHint="done"
                     value={high}
                     onChange={(e) => setHigh(sanitizePrice(e.target.value))}
                     data-testid="range-high"

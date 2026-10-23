@@ -8,8 +8,11 @@ import { pastDates } from "@/lib/gamedate";
 import { formatArchiveDate } from "@/lib/format";
 import { isPublishedAnswerDate } from "@/lib/answers";
 
+// Pricele reads ?d= too now (its own back numbers go further, to the rotation
+// start, through the archive sheet on its page), so every game in the set is a
+// link here.
 const ARCHIVED = [
-  ...GAMES.filter((g) => g.slug !== "pricele").map((g) => ({ name: g.name, href: g.href })),
+  ...GAMES.map((g) => ({ name: g.name, href: g.href })),
   { name: "Pricele 1000", href: "/games/pricele-1000" },
 ];
 

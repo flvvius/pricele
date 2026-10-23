@@ -116,4 +116,16 @@ describe("price atlas play", () => {
     expect(matchCountries("ar", ["AR"]).some((c) => c.code === "AR")).toBe(false);
     expect(matchCountries("  ")).toEqual([]);
   });
+
+  it("matches the short names people type", () => {
+    expect(matchCountries("usa")[0].code).toBe("US");
+    expect(matchCountries("USA ")[0].code).toBe("US");
+    expect(matchCountries("uk")[0].code).toBe("GB");
+    expect(matchCountries("england")[0].code).toBe("GB");
+    expect(matchCountries("uae")[0].code).toBe("AE");
+    expect(matchCountries("Türkiye")[0].code).toBe("TR");
+    // A name that starts with the query still outranks an alias that does.
+    expect(matchCountries("u")[0].name.startsWith("U")).toBe(true);
+    expect(matchCountries("us")[0].code).toBe("US");
+  });
 });
