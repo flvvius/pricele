@@ -7,7 +7,7 @@ import JsonLd from "@/components/JsonLd";
 import GameGrid from "@/components/GameGrid";
 import { HOME_FAQ } from "@/lib/faq";
 import { faqJsonLd, howToPlayJsonLd, pageMetadata } from "@/lib/seo";
-import { ITEMS } from "@/data/items";
+import { ITEMS, RETIRED_FROM_GAMES } from "@/data/items";
 import { COUNTRIES, pricesForItem, medianPriceUSD } from "@/lib/catalog";
 import { formatUSD } from "@/lib/format";
 import { getDailyPuzzle } from "@/lib/puzzle";
@@ -32,6 +32,10 @@ export const revalidate = 3600;
 // rely on the one set in the layout, which is exactly what made that layout
 // canonical leak onto routes it was never meant to describe.
 export const metadata: Metadata = pageMetadata({ path: "/" });
+
+// The items still dealt in the games. The retired ones keep their /items pages,
+// but listing them under "What's in the game" would promise puzzles that never come.
+const GAME_ITEMS = ITEMS.filter((i) => !RETIRED_FROM_GAMES.has(i.id));
 
 export default function Home() {
   // Server clock (UTC). Players east or west of UTC may be a day either side,
@@ -93,15 +97,15 @@ export default function Home() {
           What&apos;s in the game
         </h2>
         <p className="text-[16px] leading-[1.7] text-ink-body">
-          {ITEMS.length} items, priced across {COUNTRIES.length} countries. Each
+          {GAME_ITEMS.length} items, priced across {COUNTRIES.length} countries. Each
           item has its own page ranking every country from cheapest to most
           expensive.
         </p>
         {/* The index runs the full measure and sets in two columns on a desk,
-            since seventeen one-line rows down a narrow column is a lot of
+            since thirteen one-line rows down a narrow column is a lot of
             scrolling. */}
         <ul className="border-t border-rule lg:col-span-2 lg:grid lg:grid-cols-2 lg:gap-x-10">
-          {ITEMS.map((item) => (
+          {GAME_ITEMS.map((item) => (
             <li key={item.id}>
               <Link
                 href={`/items/${item.slug}`}
