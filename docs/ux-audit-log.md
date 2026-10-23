@@ -222,3 +222,28 @@ Found and fixed:
 - /today re-reads the set whenever it comes back into view, so returning to it
   with the back button (which can restore the page without re-running any
   code) no longer shows a just-finished game as "Not played".
+
+## Round 10: dark mode contrast and the reference tables
+
+Checked: computed WCAG contrast of every text node on the home page, /today,
+a game, a country page, an item page, a guide and a comparison page, in light
+and dark; every `<table>` at 320px.
+
+Found: no contrast failures in either scheme. The muted greys come out around
+5.3:1 on paper in light and 6.5:1 in dark, so nothing to fix there.
+
+Found and fixed:
+
+- The price table on /prices/<country> and /items/<item> needed 480px for its
+  four columns, so on a phone "Local" and "Work time" sat off the right edge,
+  cut mid-number, with nothing to say the table scrolled. Below the sm
+  breakpoint the local-currency figure now sits under the dollar price, and
+  the table fits a 320px screen with no sideways scroll.
+- /data: the three-column sources table ran its licence column off the edge
+  and stood each row a screen tall around one wrapped sentence. On a phone each
+  source is now a stacked block (items, source link, licence).
+
+Left: the /vs/<game> comparison table still scrolls sideways on a phone. It
+has four columns of sentences and a verdict column whose whole point is to
+be read across a row; stacking it would lose that, and it is a reference page
+rather than part of play.
