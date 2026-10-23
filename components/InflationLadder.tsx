@@ -93,7 +93,10 @@ export default function InflationLadder() {
       <ol className="flex flex-col gap-2" aria-label="Your order">
         {shown.map((id, i) => {
           const r = byId.get(id)!;
-          const mark = !over && lastMarks && unchangedSinceLastTry ? lastMarks[i] : null;
+          // A rung keeps its verdict for as long as it stays where it was
+          // judged. The marks used to vanish on the first move, so after one
+          // swap the player had to remember which three rungs had been right.
+          const mark = !over && lastMarks && state.tries.at(-1)![i] === id ? lastMarks[i] : null;
           return (
             <li
               key={id}
@@ -123,7 +126,7 @@ export default function InflationLadder() {
                     disabled={i === 0}
                     data-move={`${id}-up`}
                     onClick={() => move(id, i, i - 1, "up")}
-                    className="h-10 w-10 border border-rule font-mono text-ink disabled:opacity-30"
+                    className="h-11 w-11 border border-rule font-mono text-ink disabled:opacity-30"
                   >
                     ↑
                   </button>
@@ -132,7 +135,7 @@ export default function InflationLadder() {
                     disabled={i === shown.length - 1}
                     data-move={`${id}-down`}
                     onClick={() => move(id, i, i + 1, "down")}
-                    className="h-10 w-10 border border-rule font-mono text-ink disabled:opacity-30"
+                    className="h-11 w-11 border border-rule font-mono text-ink disabled:opacity-30"
                   >
                     ↓
                   </button>

@@ -97,3 +97,28 @@ Found and fixed:
 Left: the main Pricele input (`components/GuessInput.tsx`) has the same
 blur-on-tap behaviour, but that file belongs to the parallel data/backlog
 work (its comma parser is on the backlog), so it is left alone.
+
+## Round 5: Inflation Ladder and Rent Ratio
+
+Checked: both games played to the end at 320px light and dark, moving rungs
+with the arrow buttons, a wrong first try, picking every Rent Ratio round.
+
+Found and fixed (Inflation Ladder):
+
+- The right/wrong marks from the last try vanished on the very first move, so
+  after one swap the player had to remember which rungs had been right. A rung
+  now keeps its mark for as long as it stays where it was judged.
+- The move buttons were 40px; they are 44px now.
+
+Found and fixed (Rent Ratio):
+
+- On a phone the round list sits below both answer buttons, off the bottom of
+  the screen, so a pick just swapped in the next pair with no sign of whether
+  it had been right. The verdict on the round just played (with both rents)
+  now shows inside the matchup card.
+- The final score and share button came after five rounds of rents and HUD
+  citations, a full screen of scrolling after finishing. They come first now.
+- Each round row set both areas side by side in mono, so at 320px two long
+  names broke mid-name against each other ("St. / Louis, MO" opposite
+  "Riverside-San / Bernardino, CA"). One area per line now, with the one the
+  player picked in bold.

@@ -55,6 +55,9 @@ export default function RentRatio() {
   const p = puzzleFor(date, RENT_AREAS);
   const over = isOver(state);
   const current = p.rounds[state.picks.length];
+  const lastIndex = state.picks.length - 1;
+  const last = lastIndex >= 0 ? p.rounds[lastIndex] : null;
+  const lastOk = last ? isCorrect(last, state.picks[lastIndex]) : false;
 
   function pick(k: "a" | "b") {
     if (!state || over) return;
@@ -75,6 +78,19 @@ export default function RentRatio() {
           <figcaption className="label text-center">
             Rent Ratio #{p.number} · Round {state.picks.length + 1} of {ROUNDS}
           </figcaption>
+          {/* The verdict on the round just played, where the player is
+              looking. On a phone the running list sits below both buttons,
+              off the bottom of the screen, so a pick used to swap in the next
+              pair with no sign of whether it had been right. */}
+          {last && (
+            <p
+              className="border-l-2 border-rule py-1 pl-2.5 text-[14px] text-ink-body"
+              aria-live="polite"
+            >
+              {lastOk ? "🟩 Right." : "🟥 Wrong."} {last.a.name} {usd(twoBed(last.a))}, {last.b.name}{" "}
+              {usd(twoBed(last.b))}.
+            </p>
+          )}
           <p className="display text-center text-[1.5rem] leading-tight text-ink">
             Which has the higher HUD fair market rent for a two-bedroom?
           </p>
@@ -90,30 +106,9 @@ export default function RentRatio() {
         </figure>
       )}
 
-      <ol className="flex flex-col gap-2" aria-live="polite">
-        {state.picks.map((k, i) => {
-          const r = p.rounds[i];
-          const ok = isCorrect(r, k);
-          const chosen = k === "a" ? r.a : r.b;
-          return (
-            <li key={i} className="border-b border-rule-soft py-2 text-[14px]">
-              <div className="flex justify-between gap-3 font-mono">
-                <span>
-                  {ok ? "🟩" : "🟥"} {r.a.name} {usd(twoBed(r.a))}
-                </span>
-                <span className="text-right">
-                  {r.b.name} {usd(twoBed(r.b))}
-                </span>
-              </div>
-              <p className="mt-1 text-[12px] text-ink-muted">
-                You picked {chosen.name}. Source: HUD {FY} fair market rent, 2-bedroom, monthly;{" "}
-                <Citation area={r.a} />; <Citation area={r.b} />.
-              </p>
-            </li>
-          );
-        })}
-      </ol>
-
+      {/* The score and the share button first: five rounds of rents and
+          citations used to sit above them, a full phone screen of scrolling
+          between finishing and finding out how it went. */}
       {over && (
         <div className="flex flex-col gap-3">
           <p className="text-[16px] text-ink-body">
@@ -130,6 +125,35 @@ export default function RentRatio() {
           <NextUp current="rent-ratio" />
         </div>
       )}
+      <ol className="flex flex-col gap-2" aria-live="polite">
+        {state.picks.map((k, i) => {
+          const r = p.rounds[i];
+          const ok = isCorrect(r, k);
+          const chosen = k === "a" ? r.a : r.b;
+          return (
+            <li key={i} className="border-b border-rule-soft py-2 text-[14px]">
+              <div className="flex gap-2">
+                <span aria-label={ok ? "Right" : "Wrong"}>{ok ? "🟩" : "🟥"}</span>
+                <div className="min-w-0 flex-1">
+                  {[r.a, r.b].map((area) => (
+                    <p key={area.code} className="flex justify-between gap-3">
+                      <span className={area === chosen ? "font-semibold text-ink" : undefined}>
+                        {area.name}
+                      </span>
+                      <span className="shrink-0 font-mono">{usd(twoBed(area))}</span>
+                    </p>
+                  ))}
+                </div>
+              </div>
+              <p className="mt-1 text-[12px] text-ink-muted">
+                You picked {chosen.name}. Source: HUD {FY} fair market rent, 2-bedroom, monthly;{" "}
+                <Citation area={r.a} />; <Citation area={r.b} />.
+              </p>
+            </li>
+          );
+        })}
+      </ol>
+
 
       <p className="text-[13px] leading-relaxed text-ink-muted">
         Source: U.S. Department of Housing and Urban Development,{" "}
