@@ -115,7 +115,7 @@ export const ITEMS: Item[] = [
     unit: "one litre",
     imageUrl: "/items/gasoline.svg",
     sourceNote:
-      "Numbeo's country price rankings for 'Gasoline (1 litre)' in the transportation category, retrieved August 2026.",
+      "Numbeo's country price rankings for 'Gasoline (1 litre)' in the transportation category, retrieved August 2026. Countries without a Numbeo figure use GlobalPetrolPrices.com's national average pump price for regular unleaded.",
     blurb:
       "Crude oil trades on a world market at one price, so the pump price is almost pure policy. Countries that tax fuel heavily land near the top of the table; oil producers that subsidise it land at the bottom, sometimes below what it costs to refine. The spread between the cheapest and most expensive country here is wider than for any other item in the game.",
   },

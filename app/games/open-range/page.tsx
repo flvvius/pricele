@@ -58,7 +58,7 @@ export default function OpenRangePage() {
         <GameFaq
           name="Open Range"
           description={DESCRIPTION}
-          source="Prices come from The Economist's Big Mac Index, Numbeo, GlobalPetrolPrices.com and other published surveys, across 49 countries"
+          source="Prices come from The Economist's Big Mac Index, Numbeo, GlobalPetrolPrices.com and other published surveys, across 61 countries"
         />
       </div>
     </ContentPage>

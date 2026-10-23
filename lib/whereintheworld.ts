@@ -34,7 +34,7 @@ export interface Round {
  * Build a round from a price row.
  *
  * The options are only the countries that actually have a price for this item,
- * because offering all 49 when 20 of them have no row would mean a fifth of the
+ * because offering all 61 when 20 of them have no row would mean a fifth of the
  * picker was never the answer, and a player who noticed would have a free hint.
  */
 export function roundFor(price: PriceEntry): Round | null {

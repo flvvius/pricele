@@ -20,7 +20,8 @@
  *   data/prices.json. This script never touches those rows.
  *
  * SOURCES
- *   GlobalPetrolPrices.com   diesel, electricity, natural gas.
+ *   GlobalPetrolPrices.com   diesel, electricity, natural gas, and petrol for
+ *                            countries with no hand-collected Numbeo figure.
  *                            Weekly for fuels, quarterly for the two utilities.
  *                            Their robots.txt is `Allow: /`, and each country
  *                            page publishes the local-currency price next to
@@ -80,6 +81,8 @@ interface PriceEntry {
   avgHourlyWageUSD: number;
   source: string;
   sourceDate: string;
+  /** First game date the row may be dealt on; see PriceEntry.since. */
+  since?: string;
 }
 
 /** One harvested figure, before it is merged into the price table. */
@@ -92,6 +95,7 @@ interface Harvested {
   localCurrency?: string;
   source: string;
   sourceDate: string;
+  since?: string;
 }
 
 interface SourceNames {
@@ -161,6 +165,18 @@ const SOURCE_NAMES: Record<string, SourceNames> = {
   UY: { gpp: "Uruguay", iso3: "URY" },
   VN: { gpp: "Vietnam", iso3: "VNM" },
   ZA: { gpp: "South-Africa", iso3: "ZAF" },
+  AT: { gpp: "Austria", iso3: "AUT" },
+  BA: { gpp: "Bosnia-and-Herzegovina", iso3: "BIH" },
+  DO: { gpp: "Dominican-Republic", iso3: "DOM" },
+  EC: { gpp: "Ecuador", iso3: "ECU" },
+  FI: { gpp: "Finland", iso3: "FIN" },
+  GR: { gpp: "Greece", iso3: "GRC" },
+  GT: { gpp: "Guatemala", iso3: "GTM" },
+  IS: { gpp: "Iceland", iso3: "ISL" },
+  JO: { gpp: "Jordan", iso3: "JOR" },
+  LK: { gpp: "Sri-Lanka", iso3: "LKA" },
+  MD: { gpp: "Moldova", iso3: "MDA" },
+  SK: { gpp: "Slovakia", iso3: "SVK" },
 };
 
 const CODES = Object.keys(COUNTRY_META);
@@ -297,10 +313,30 @@ async function harvestGlobalPetrolPrices(): Promise<Harvested[]> {
     },
   ];
 
+  // Petrol is a gap-filler, not an owned item: most rows are Numbeo figures
+  // collected by hand, and only a country with no other petrol row gets
+  // GlobalPetrolPrices' national average. Same thing measured (the average pump
+  // price of regular unleaded), labelled with its own source on every row.
+  products.push({
+    itemId: "gasoline-1l",
+    path: "gasoline_prices",
+    scale: 1,
+    read: (t) => {
+      const m = t.match(
+        new RegExp(
+          `current gasoline price in .+? is (?:([A-Z]{3}) ${N} per liter or )?USD ${N} per liter and was updated on (\\d{2}-[A-Za-z]{3}-\\d{4})`
+        )
+      );
+      if (!m) return null;
+      return m[1] ? [m[1], num(m[2]), num(m[3]), m[4]] : ["USD", num(m[3]), num(m[3]), m[4]];
+    },
+  });
+
   const out: Harvested[] = [];
   for (const p of products) {
     let found = 0;
     for (const code of CODES) {
+      if (p.itemId === "gasoline-1l" && HAND_PETROL.has(code)) continue;
       const url = `https://www.globalpetrolprices.com/${SOURCE_NAMES[code].gpp}/${p.path}/`;
       let body = "";
       try {
@@ -323,6 +359,7 @@ async function harvestGlobalPetrolPrices(): Promise<Harvested[]> {
         localCurrency: currency || undefined,
         source: `GlobalPetrolPrices.com, ${date}`,
         sourceDate: gppSourceDate(date),
+        ...(p.itemId === "gasoline-1l" ? { since: PETROL_FILL_SINCE } : {}),
       });
     }
     console.log(`  ${p.itemId}: ${found} countries`);
@@ -590,6 +627,23 @@ async function harvestHealthyDiet(): Promise<Harvested[]> {
 // Merge
 // ---------------------------------------------------------------------------
 
+/**
+ * Countries whose petrol row is hand-collected from Numbeo, read from the table
+ * before anything is rebuilt. The script never fetches petrol for these.
+ */
+const HAND_PETROL = new Set(
+  (JSON.parse(readFileSync(PRICES_PATH, "utf8")) as PriceEntry[])
+    .filter((p) => p.itemId === "gasoline-1l" && !p.source.startsWith("GlobalPetrolPrices"))
+    .map((p) => p.countryCode)
+);
+
+/**
+ * The first game day the filled-in petrol rows are dealt on. A new row for a
+ * country already in the rotation changes which item that country falls
+ * through to on a sparse day, so it may only count from a day not yet played.
+ */
+const PETROL_FILL_SINCE = "2026-10-26";
+
 /** Every item id this script owns. Rows for these are rebuilt wholesale. */
 const MANAGED = [
   "diesel-1l",
@@ -669,13 +723,19 @@ async function main() {
       avgHourlyWageUSD: base.avgHourlyWageUSD,
       source: h.source,
       sourceDate: h.sourceDate,
+      ...(h.since ? { since: h.since } : {}),
     });
   }
 
   const managed = new Set(MANAGED);
-  const kept = prices.filter((p) => !managed.has(p.itemId));
+  const filled = (p: PriceEntry) =>
+    p.itemId === "gasoline-1l" && p.source.startsWith("GlobalPetrolPrices");
+  const kept = prices.filter((p) => !managed.has(p.itemId) && !filled(p));
   const next = [
     ...kept,
+    ...built
+      .filter((p) => p.itemId === "gasoline-1l")
+      .sort((a, b) => a.countryCode.localeCompare(b.countryCode)),
     ...MANAGED.flatMap((id) =>
       built
         .filter((p) => p.itemId === id)

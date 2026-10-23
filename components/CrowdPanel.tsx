@@ -38,7 +38,7 @@ interface Props {
  * Declining is a first-class answer: dismissHome() remembers the refusal so the
  * prompt does not come back and start reading as a nag.
  *
- * A select rather than a grid of flags, because the list is 49 long. A grid at
+ * A select rather than a grid of flags, because the list is 61 long. A grid at
  * that size is a wall.
  */
 function HomeAsk({ onAnswer }: { onAnswer: (code: string) => void }) {

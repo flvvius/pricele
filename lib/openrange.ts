@@ -1,6 +1,6 @@
-import { dealtInGames, getItem, itemPhrase, sentenceCase } from "@/data/items";
-import { medianPriceUSD, pairForDate, type PriceEntry } from "./catalog";
-import { PRICES, dateFromISO } from "./puzzle";
+import { getItem, itemPhrase, sentenceCase } from "@/data/items";
+import { gameRows, medianPriceUSD, pairForDate, type PriceEntry } from "./catalog";
+import { dateFromISO } from "./puzzle";
 
 export interface RangeQuestion {
   price: PriceEntry;
@@ -64,13 +64,12 @@ export function dealQuestions(
 ): RangeQuestion[] {
   const rand = rng(dayIndex(date) * 2654435761 + seed);
   const hidden = hiddenPairs(date);
-  const pool = PRICES.filter(
+  const pool = gameRows(date).filter(
     (p) =>
       p.priceUSD > 0 &&
       !UNSOURCED.test(p.source) &&
       !hidden.has(`${p.itemId}:${p.countryCode}`) &&
       !exclude.has(`${p.itemId}:${p.countryCode}`) &&
-      dealtInGames(p.itemId, date) &&
       getItem(p.itemId)
   );
   const itemIds = [...new Set(pool.map((p) => p.itemId))];
@@ -89,7 +88,7 @@ export function dealQuestions(
     questions.push({
       price,
       label: sentenceCase(itemPhrase(getItem(itemId)!)),
-      median: medianPriceUSD(itemId),
+      median: medianPriceUSD(itemId, date),
     });
   }
   return questions;

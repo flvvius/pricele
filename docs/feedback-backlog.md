@@ -5,29 +5,30 @@ commit when it ships.
 
 ## Open
 
-### More countries (reported 2026-10-23, Price Atlas)
+### More countries: next batch
 
-"Nu sunt așa multe țări." The games run on 49 countries, and in Price Atlas
-that is the whole answer pool, so regulars will start recognising baskets.
+12 countries were added on 2026-10-26 (see Done). Ones considered and held
+back, and why:
 
-Why it isn't a quick fix: every country needs sourced data, not estimates.
-The checklist is in the `CountryMeta` comment in `data/countries.ts`:
+- **Bulgaria, Serbia, Ukraine, Albania, Estonia, Latvia, Lithuania,
+  Slovenia, Cyprus, Belgium:** the newest ILO hourly-earnings figure is
+  from 2018 or earlier (Ukraine's is from 2016), from before the 2022 price
+  shock. Rule used: ILO 2020 or later. To add them, either relax that rule
+  or source a newer official wage. ILO monthly earnings are often more
+  recent, but converting them to hourly would mean picking an hours figure
+  ourselves.
+- **Denmark, Croatia, Morocco, Qatar, Kuwait, Georgia, Azerbaijan,
+  Kazakhstan:** the ILO publishes no hourly-earnings series for them in USD
+  (dataflow `DF_EAR_EHRA_SEX_CUR_NB`).
+- **Hong Kong, Taiwan:** not in the WHO or World Bank tables, so only four
+  items. Price Atlas needs at least five.
+- **Ethiopia:** four game items. Same problem.
 
-- a row in the country table, plus `COUNTRY_TAX` and a written
-  `COUNTRY_NOTES` entry (not generated: see the indexing note in that file)
-- an ILO average hourly wage, converted to USD
-- name-map entries in `scripts/refresh-open-prices.ts` and
-  `scripts/refresh-big-mac.ts`, then run both scripts
-- a capital in `data/capitals.ts`, or Price Atlas skips the country
-- a new country era in `data/rotation.ts` (read the stability rule first).
-  The country count must stay coprime with the item count (13 right now), so
-  the total can't be a multiple of 13.
-
-Good candidates are countries the 49-coverage sources already publish (diesel
-and electricity from GlobalPetrolPrices, cigarettes from WHO, mobile data from
-Cable.co.uk, healthy diet from the World Bank) **and** that the Big Mac Index
-covers, so each one has at least five or six items rather than falling back to
-the same item every day.
+How the 12 were added, for repeating it: rows from
+`pnpm refresh-open-prices` (online) and `refresh-big-mac --offline`, then
+existing countries' rows restored byte for byte so no past answer moved.
+Countries join the games by date via `COUNTRIES_ADDED_ON` in
+`data/countries.ts`. `lib/gamerows.test.ts` guards the archive.
 
 ### More approachable items
 
@@ -39,10 +40,13 @@ rotation, so the real fix is **adding** everyday items with wide sourced
 coverage (bread, rice, a taxi ride, a cinema ticket, rent?). Adding items
 doesn't touch past days if it's done as a new era in `data/rotation.ts`.
 
-Many countries have only the five "global" items, because the Numbeo grocery
-rows (milk, eggs, apples, cappuccino, petrol) cover 32 of 49 countries.
-Filling those gaps would also make Pricele less repetitive in sparse
-countries.
+Many countries have only the "global" items, because the Numbeo grocery
+rows (milk, eggs, apples, cappuccino) cover 32 of 61 countries, and none of
+the 12 added in October 2026. Petrol is done: the 29 gaps were filled from
+GlobalPetrolPrices on 2026-10-26. Numbeo can't be bulk-fetched (rate
+limits and its terms; the site returned HTTP 429 when checked), so those rows
+are collected by hand. Filling them would make Pricele and Price Atlas less
+repetitive in sparse countries.
 
 ### Guessing by direction alone in the main Pricele game
 
@@ -52,15 +56,16 @@ guess, so bisecting works there too. The score already charges 40 points
 per extra guess. Ideas if it comes up again: make the points more prominent
 than the X/5, or hide the warmth tier on the first guess.
 
-### Comma handling in the main Pricele input
-
-`components/GuessInput.tsx` has its own `sanitize`, which treats the first
-separator as the decimal point, so "1,600" there reads as 1.60. Then & Now
-and Open Range now use `lib/priceinput.ts`, which reads "1,600" as 1600.
-It's harmless at Pricele's price levels, but the three inputs should share
-one parser.
-
 ## Done
+
+- **2026-10-26:** 12 countries added, all with sourced prices and an ILO
+  2020+ wage: Austria, Bosnia & Herzegovina, Dominican Republic, Ecuador,
+  Finland, Greece, Guatemala, Iceland, Jordan, Moldova, Slovakia, Sri Lanka.
+  That takes the game from 49 to 61 countries, rotating from day 94 with a 2.4%
+  same-item repeat rate. Petrol now covers all 61 (29 rows filled from
+  GlobalPetrolPrices, Romania among them), and those rows join the games on
+  2026-10-26 via a per-row `since` date. Pricele's own guess box now uses the
+  shared price parser.
 
 - **2026-10-23 (398ae09):** "1,6" read as 16 in Then & Now and Open Range;
   Price Atlas solvable from the compass arrow alone; spirits, vape liquid and

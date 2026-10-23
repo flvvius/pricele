@@ -13,7 +13,7 @@ const MODES: Pick<DailyGame, "slug" | "name" | "blurb" | "source">[] = [
     slug: "pricele-1000",
     name: "Pricele 1000",
     blurb: "Five prices, one guess each, scored out of 1,000.",
-    source: "Sourced prices, 49 countries",
+    source: "Sourced prices, 61 countries",
   },
 ];
 

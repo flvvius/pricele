@@ -1,7 +1,7 @@
 import { getItem } from "@/data/items";
-import { pairForDate } from "./catalog";
+import { gameRows, pairForDate } from "./catalog";
 import { isPlayablePair, toCard, type Card } from "./higherlower";
-import { PRICES, dateFromISO } from "./puzzle";
+import { dateFromISO } from "./puzzle";
 
 export const CARDS = 10;
 export const CALLS = CARDS - 1;
@@ -42,7 +42,7 @@ function deckFor(date: string): Card[] {
     const pair = pairForDate(d);
     if (pair) hidden.add(`${pair.itemId}:${pair.countryCode}`);
   }
-  return PRICES.filter((p) => p.priceUSD > 0 && !hidden.has(`${p.itemId}:${p.countryCode}`))
+  return gameRows(date).filter((p) => p.priceUSD > 0 && !hidden.has(`${p.itemId}:${p.countryCode}`))
     .map((p) => {
       const item = getItem(p.itemId);
       return item ? toCard(p, item.name) : null;

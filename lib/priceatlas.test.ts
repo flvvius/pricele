@@ -28,7 +28,7 @@ function days(n: number): string[] {
 
 describe("price atlas puzzle", () => {
   it("covers every country with a capital", () => {
-    expect(COUNTRIES.length).toBe(49);
+    expect(COUNTRIES.length).toBe(61);
   });
 
   it("never picks the country of the main daily on the same day", () => {

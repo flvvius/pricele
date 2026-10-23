@@ -167,6 +167,12 @@ export default function MethodologyPage() {
             the energy, the network and every tax and fee on the bill.
           </p>
           <p>
+            Petrol is the one item with two sources. Most rows are Numbeo
+            figures; a country Numbeo did not give us gets GlobalPetrolPrices&apos;
+            national average pump price for regular unleaded instead. Both
+            measure the same thing, and every row names the one it came from.
+          </p>
+          <p>
             The two utilities are published per kilowatt-hour, which lands
             between two and forty cents and rounds to something unguessable. They
             are shown here per 100 kWh instead, which is the same figure

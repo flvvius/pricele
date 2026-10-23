@@ -57,7 +57,7 @@ export default function HigherOrLowerDailyPage() {
         <GameFaq
           name="Higher or Lower Daily"
           description={DESCRIPTION}
-          source="Prices come from The Economist's Big Mac Index, Numbeo, GlobalPetrolPrices.com and other published surveys, across 49 countries"
+          source="Prices come from The Economist's Big Mac Index, Numbeo, GlobalPetrolPrices.com and other published surveys, across 61 countries"
         />
       </div>
     </ContentPage>

@@ -71,7 +71,7 @@ export const HOME_FAQ: FaqItem[] = [
   {
     question: "Is Pricele or Costcodle better?",
     answer:
-      "They answer different questions. Costcodle gives you a Costco product and six guesses at its US shelf price, from a catalogue of over three thousand. Pricele gives you an everyday item and a different one of 49 countries each day, five guesses, and a published source for every figure. Costcodle is the better game for American retail prices; Pricele is the better one if the spread between countries is the interesting part. Pricele publishes a full head-to-head at /vs/costcodle, including what Costcodle does better.",
+      "They answer different questions. Costcodle gives you a Costco product and six guesses at its US shelf price, from a catalogue of over three thousand. Pricele gives you an everyday item and a different one of 61 countries each day, five guesses, and a published source for every figure. Costcodle is the better game for American retail prices; Pricele is the better one if the spread between countries is the interesting part. Pricele publishes a full head-to-head at /vs/costcodle, including what Costcodle does better.",
   },
   {
     question: "What should I play if I like Pricele?",

@@ -89,7 +89,7 @@ export const GAMES: DailyGame[] = [
     name: "Pricele",
     href: "/",
     blurb: "Guess the price of one item in one country.",
-    source: "Sourced prices, 49 countries",
+    source: "Sourced prices, 61 countries",
     minutes: 2,
     status(date, kv) {
       const s = json<{ date: string; guesses: unknown[]; done: boolean; won: boolean }>(
@@ -112,7 +112,7 @@ export const GAMES: DailyGame[] = [
     name: "Price Atlas",
     href: "/games/price-atlas",
     blurb: "Name the country from a basket of its prices.",
-    source: "Sourced prices, 49 countries",
+    source: "Sourced prices, 61 countries",
     minutes: 2,
     status(date, kv) {
       const s = json<{ date: string; guesses: string[] }>(kv, ATLAS_KEY);
@@ -129,7 +129,7 @@ export const GAMES: DailyGame[] = [
     name: "Higher or Lower Daily",
     href: "/games/higher-or-lower",
     blurb: "Ten prices in a chain. Call each one higher or lower.",
-    source: "Sourced prices, 49 countries",
+    source: "Sourced prices, 61 countries",
     minutes: 1,
     status(date, kv) {
       const s = json<{ date: string; calls: ("higher" | "lower")[] }>(kv, CHAIN_KEY);
@@ -185,7 +185,7 @@ export const GAMES: DailyGame[] = [
     name: "Open Range",
     href: "/games/open-range",
     blurb: "Bracket five prices. Narrow scores more, if it lands.",
-    source: "Sourced prices, 49 countries",
+    source: "Sourced prices, 61 countries",
     minutes: 2,
     status(date, kv) {
       const s = json<RangeState>(kv, RANGE_KEY);
