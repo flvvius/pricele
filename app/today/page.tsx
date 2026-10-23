@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import ContentPage, { Section, Prose } from "@/components/ContentPage";
 import TodayHub from "@/components/TodayHub";
-import Link from "next/link";
 import JsonLd from "@/components/JsonLd";
 import { GAMES } from "@/lib/games";
 import { absoluteUrl, breadcrumbJsonLd, gameListJsonLd, pageMetadata } from "@/lib/seo";
@@ -14,6 +13,8 @@ export const metadata: Metadata = pageMetadata({
   description:
     "Every Pricele daily game in one place: what you have played today, one streak across all games, and a single share line for the whole set.",
 });
+
+const linkClass = "underline decoration-rule underline-offset-2 hover:text-ink";
 
 export default function TodayPage() {
   return (
@@ -54,37 +55,36 @@ export default function TodayPage() {
       <Section heading="How to play">
         <Prose>
           <p>
-            The Today hub collects every Pricele daily game: the world-price puzzle, Then &amp; Now
-            and Rent Ratio. Each card shows whether you have played today and links straight to
-            the game. Finish at least one game on a given day to keep your shared streak alive.
+            Today collects all {GAMES.length} Pricele daily games. Each card shows whether you have
+            played today and links straight to the game. Finish at least one game on a given day to
+            keep your shared streak alive.
           </p>
           <p>
-            When you are done, copy the combined share line to post your whole set at once. It
-            shows your results as emoji and never reveals any answer.
+            When you are done, copy the combined share line to post your whole set at once. It shows
+            your results as emoji and never reveals an answer.
           </p>
         </Prose>
       </Section>
       <Section heading="Method and sources">
         <Prose>
           <p>
-            Each game has its own source. Pricele uses published world price data (The Economist
-            Big Mac Index, GlobalPetrolPrices.com, WHO tax surveys, the World Bank and others),
-            Then &amp; Now uses Bureau of Labor Statistics average prices, and Rent Ratio uses HUD
-            FY2026 Fair Market Rents. Every game resets at midnight in your own time zone.
+            Each game has its own source: {GAMES.map((g) => `${g.name} (${g.source})`).join(", ")}.
+            Every game resets at midnight in your own time zone.
           </p>
           <p>
-            Progress is stored only in your browser, so clearing site data resets your streak.
-            The methodology page explains how each data set is converted and dated.
-          </p>
-        </Prose>
-      </Section>
-      <Section heading="More daily games">
-        <Prose>
-          <p>
-            <Link href="/" className="underline decoration-rule underline-offset-2 hover:text-ink">Pricele (world prices)</Link>{" · "}
-            <Link href="/games/then-and-now" className="underline decoration-rule underline-offset-2 hover:text-ink">Then &amp; Now</Link>{" · "}
-            <Link href="/games/rent-ratio" className="underline decoration-rule underline-offset-2 hover:text-ink">Rent Ratio</Link>{" · "}
-            <Link href="/methodology" className="underline decoration-rule underline-offset-2 hover:text-ink">Methodology</Link>
+            Progress is stored only in your browser, so clearing site data resets your streak. The{" "}
+            <Link href="/methodology" className={linkClass}>
+              methodology
+            </Link>{" "}
+            page explains how each data set is converted and dated. Missed a day? Replay it from the{" "}
+            <Link href="/games/archive" className={linkClass}>
+              games archive
+            </Link>{" "}
+            or check the{" "}
+            <Link href="/games/answers" className={linkClass}>
+              past answers
+            </Link>
+            .
           </p>
         </Prose>
       </Section>
