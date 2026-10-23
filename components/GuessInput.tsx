@@ -92,6 +92,10 @@ export default function GuessInput({
         <button
           type="submit"
           disabled={disabled}
+          // Never takes focus from the field: a tap that blurred it closed the
+          // phone keyboard after every guess, and the height-locked screen
+          // resized twice (keyboard down, then up again for the next bid).
+          onMouseDown={(e) => e.preventDefault()}
           // Submitting is the most repeated action in the game, so it gets
           // press feedback and nothing else: no hover lift, no glow. The
           // scale is on transform only, which never touches layout.

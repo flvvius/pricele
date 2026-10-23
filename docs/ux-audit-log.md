@@ -247,3 +247,22 @@ Left: the /vs/<game> comparison table still scrolls sideways on a phone. It
 has four columns of sentences and a verdict column whose whole point is to
 be read across a row; stacking it would lose that, and it is a reference page
 rather than part of play.
+
+## Round 11: the main game on a short Android screen and in landscape
+
+Checked: Pricele at 360×640 with the viewport cut to 330px after focusing the
+field (Android resizes the layout for the keyboard), guessing with the Guess
+button rather than return, and the same board in landscape (740×360).
+
+Found and fixed:
+
+- Tapping Guess blurred the field, so the keyboard dropped after every bid
+  and the height-locked screen resized twice: down when the keyboard left,
+  up again when the player tapped back into the field. The button no longer
+  takes focus (a one-line change in `components/GuessInput.tsx`, which the
+  parallel data work also touches; kept minimal on purpose). Round 4 left this
+  open; it is closed here.
+
+Checked and fine: the cramped mode drops the masthead and keeps both played
+rows, the input and the status line on a 330px-tall screen; landscape keeps
+the lock and the input on screen.
