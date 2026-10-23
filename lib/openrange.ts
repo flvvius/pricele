@@ -1,4 +1,4 @@
-import { getItem, itemPhrase, sentenceCase } from "@/data/items";
+import { dealtInGames, getItem, itemPhrase, sentenceCase } from "@/data/items";
 import { medianPriceUSD, pairForDate, type PriceEntry } from "./catalog";
 import { PRICES, dateFromISO } from "./puzzle";
 
@@ -70,6 +70,7 @@ export function dealQuestions(
       !UNSOURCED.test(p.source) &&
       !hidden.has(`${p.itemId}:${p.countryCode}`) &&
       !exclude.has(`${p.itemId}:${p.countryCode}`) &&
+      dealtInGames(p.itemId, date) &&
       getItem(p.itemId)
   );
   const itemIds = [...new Set(pool.map((p) => p.itemId))];

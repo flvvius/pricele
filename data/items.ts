@@ -387,3 +387,28 @@ export const CATEGORIES: ItemCategory[] = [
   "vice",
   "connectivity",
 ];
+
+/**
+ * Items that keep their reference pages but are no longer dealt in the games,
+ * from GAME_RETIREMENT_DATE on.
+ *
+ * Players said these made bad puzzles, and the data agrees. Spirits is "the most
+ * sold spirit", which is soju in one country and whisky in the next, so there
+ * is no one product to picture. Vape liquid is priced in only a handful of
+ * countries, so its mere presence in a basket narrows the answer. And 100 kWh of
+ * piped gas is a figure almost nobody has ever seen on a bill.
+ *
+ * Gated by date because the games are seeded per day: dropping an item from the
+ * pool reshuffles that day's deal, and the days already played must keep theirs.
+ */
+export const RETIRED_FROM_GAMES: ReadonlySet<string> = new Set([
+  "spirits-750ml",
+  "eliquid-1ml",
+  "natural-gas-100kwh",
+]);
+export const GAME_RETIREMENT_DATE = "2026-10-26";
+
+/** Whether a game dated `date` ("YYYY-MM-DD") may deal this item. */
+export function dealtInGames(itemId: string, date: string): boolean {
+  return date < GAME_RETIREMENT_DATE || !RETIRED_FROM_GAMES.has(itemId);
+}

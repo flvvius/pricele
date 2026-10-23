@@ -1,10 +1,12 @@
 import { describe, expect, it } from "vitest";
 import { pairForDate } from "./catalog";
 import { dateFromISO } from "./puzzle";
+import { GAME_RETIREMENT_DATE, RETIRED_FROM_GAMES } from "@/data/items";
 import {
   COUNTRIES,
   MAX_GUESSES,
   START_CLUES,
+  ARROW_AFTER,
   arrow,
   bearing,
   distanceKm,
@@ -42,6 +44,13 @@ describe("price atlas puzzle", () => {
       expect(p.clues.length).toBeGreaterThanOrEqual(START_CLUES + 2);
       expect(visibleClues(p, 0)).toHaveLength(START_CLUES);
       expect(visibleClues(p, 2).length).toBeGreaterThan(START_CLUES);
+    }
+  });
+
+  it("stops dealing retired items as clues from the retirement date", () => {
+    const dealt = (d: string) => puzzleFor(d).clues.map((c) => c.itemId);
+    for (const d of days(60).filter((d) => d >= GAME_RETIREMENT_DATE)) {
+      for (const id of dealt(d)) expect(RETIRED_FROM_GAMES.has(id), `${d} ${id}`).toBe(false);
     }
   });
 
@@ -85,7 +94,13 @@ describe("price atlas play", () => {
   });
 
   it("gives a bullseye on the answer", () => {
-    expect(feedback(p, p.answer.code).arrow).toBe("🎯");
+    expect(feedback(p, p.answer.code, 0).arrow).toBe("🎯");
+  });
+
+  it("holds the compass arrow back until the late guesses", () => {
+    for (let i = 0; i < ARROW_AFTER; i++) expect(feedback(p, wrong[0], i).arrow).toBe("");
+    expect(feedback(p, wrong[0], ARROW_AFTER).arrow).not.toBe("");
+    expect(feedback(p, wrong[0], 0).km).toBeGreaterThan(0);
   });
 
   it("shares without naming the country", () => {

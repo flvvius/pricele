@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import {
   COUNTRIES,
+  ARROW_AFTER,
   MAX_GUESSES,
   feedback,
   isOver,
@@ -107,9 +108,9 @@ export default function PriceAtlas() {
 
       {state.guesses.length > 0 && (
         <ol className="flex flex-col gap-1.5" aria-label="Your guesses" aria-live="polite">
-          {state.guesses.map((g) => {
+          {state.guesses.map((g, i) => {
             const c = byCode.get(g);
-            const f = feedback(p, g);
+            const f = feedback(p, g, i);
             return (
               <li
                 key={g}
@@ -185,8 +186,10 @@ export default function PriceAtlas() {
             </ul>
           )}
           <p className="text-[13px] text-ink-muted">
-            {MAX_GUESSES - state.guesses.length} guesses left. Distance and direction are measured
-            capital to capital.
+            {MAX_GUESSES - state.guesses.length} guesses left.{" "}
+            {state.guesses.length < ARROW_AFTER
+              ? `Read the prices: the compass arrow only shows from guess ${ARROW_AFTER + 1}.`
+              : "Distance and direction are measured capital to capital."}
           </p>
         </form>
       )}

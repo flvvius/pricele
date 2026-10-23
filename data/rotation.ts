@@ -4,10 +4,10 @@
 // where dayIndex = daysSince(startDate) and `from` is the day the list in force
 // took over (see the era chain below).
 //
-// The two lists advance independently. Their lengths (49 and 16) are coprime, so
-// a given pair only recurs after 49 x 16 = 784 days: a different country every
+// The two lists advance independently. Their lengths (49 and 13) are coprime, so
+// a given pair only recurs after 49 x 13 = 637 days: a different country every
 // day, a different item every day, and the same combination about once every
-// two years.
+// year and three quarters.
 //
 // STABILITY RULE. Read this before editing:
 //   Never move startDate, and never edit an era that is already in force. Each
@@ -124,6 +124,23 @@ const ITEMS_NO_LPG: string[] = [
   "big-mac", "beer-330ml", "electricity-100kwh", "cigarettes-20",
 ];
 
+// The catalogue the games still deal, in force from day 94 (2026-10-26).
+//
+// Spirits, vape liquid and natural gas left the games (see RETIRED_FROM_GAMES in
+// data/items.ts): players found them unguessable, and the reference pages keep
+// them. Dropping three takes the list to 13. Dropping only the two players named
+// would have left 14, which shares a factor of 7 with the 49 countries and
+// collapses the pairing onto a seventh of the combinations.
+//
+// The order was searched for the lowest rate of the same item showing two days
+// running against FULL_COUNTRIES, under 4% across a full cycle.
+const GAME_ITEMS: string[] = [
+  "electricity-100kwh", "cigarettes-20", "healthy-diet-day", "beer-330ml",
+  "apples-1kg", "eggs-12", "gasoline-1l", "cappuccino",
+  "milk-1l", "coke-330ml", "big-mac", "mobile-data-1gb",
+  "diesel-1l",
+];
+
 export const ROTATION: Rotation = {
   epoch: "2026-07-01",
   startDate: "2026-07-24",
@@ -138,5 +155,7 @@ export const ROTATION: Rotation = {
     // 2026-09-08, four days after LPG was dropped. Nothing already played, and
     // nothing inside the answer-suppression window, moves.
     { from: 46, order: ITEMS_NO_LPG },
+    // 2026-10-26, three days out: past the answer-suppression window.
+    { from: 94, order: GAME_ITEMS },
   ],
 };

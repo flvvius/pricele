@@ -17,6 +17,7 @@ import {
   EPOCH,
 } from "@/lib/thenandnow";
 import { isoDate } from "@/lib/puzzle";
+import { parsePrice, sanitizePrice } from "@/lib/priceinput";
 import { archiveDate, archiveKey } from "@/lib/gamedate";
 import ArchiveNote from "./ArchiveNote";
 import { trackEvent } from "@/lib/analytics";
@@ -50,7 +51,7 @@ export default function ThenAndNow() {
 
   function submit(e: React.FormEvent) {
     e.preventDefault();
-    const n = Number(input.replace(/[$,\s]/g, ""));
+    const n = parsePrice(input);
     if (!state || over || !Number.isFinite(n) || n <= 0) return;
     const next = { ...state, guesses: [...state.guesses, Math.round(n * 100) / 100] };
     setState(next);
@@ -129,7 +130,7 @@ export default function ThenAndNow() {
             aria-label={`Price in ${p.year}, in US dollars`}
             placeholder="$0.00"
             value={input}
-            onChange={(e) => setInput(e.target.value)}
+            onChange={(e) => setInput(sanitizePrice(e.target.value))}
             className="min-w-0 flex-1 border border-rule bg-paper-raised px-3 py-2.5 font-mono text-ink"
           />
           <button type="submit" className="bg-ink px-5 font-mono text-[12px] uppercase tracking-[0.18em] text-paper-raised">

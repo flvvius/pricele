@@ -51,8 +51,8 @@ function Stat({ value, label }: { value: string | number; label: string }) {
 /**
  * The passport: one page per country, one visa stamp per item bought there.
  *
- * The retention object a streak cannot be. The table is 49 countries by 16
- * items and a pair only recurs every 784 days, so the collection has a real long
+ * The retention object a streak cannot be. The table is 49 countries by 13
+ * items and a pair only recurs every 637 days, so the collection has a real long
  * tail: a player two years in still has stamps they have never seen. A streak is
  * one number that stops being interesting the moment it is large.
  */

@@ -5,7 +5,7 @@ import JsonLd from "@/components/JsonLd";
 import { breadcrumbJsonLd, dailyGameJsonLd, pageMetadata } from "@/lib/seo";
 import { PRICES } from "@/lib/puzzle";
 import { suppressedPairs } from "@/lib/catalog";
-import { getItem, itemLabel } from "@/data/items";
+import { RETIRED_FROM_GAMES, getItem, itemLabel } from "@/data/items";
 import { drawPair, toCard, MIN_RATIO, MAX_RATIO } from "@/lib/higherlower";
 
 const DESCRIPTION =
@@ -35,7 +35,12 @@ export const revalidate = 3600;
 
 export default function HigherOrLowerPage() {
   const hidden = suppressedPairs();
-  const deck = PRICES.filter((p) => p.priceUSD > 0 && !hidden.has(`${p.itemId}:${p.countryCode}`))
+  const deck = PRICES.filter(
+    (p) =>
+      p.priceUSD > 0 &&
+      !RETIRED_FROM_GAMES.has(p.itemId) &&
+      !hidden.has(`${p.itemId}:${p.countryCode}`)
+  )
     .map((p) => {
       const item = getItem(p.itemId);
       return item ? toCard(p, itemLabel(item)) : null;

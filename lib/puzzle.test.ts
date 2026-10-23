@@ -14,7 +14,7 @@ import {
   PRICES,
 } from "./puzzle";
 import { ROTATION } from "@/data/rotation";
-import { ITEMS } from "@/data/items";
+import { ITEMS, RETIRED_FROM_GAMES } from "@/data/items";
 import {
   suppressedPairs,
   pairForDate,
@@ -208,7 +208,7 @@ describe("daily puzzle rotation", () => {
 
   it("only repeats an (item, country) pair after a full cycle", () => {
     const period = countryOrder.length * itemOrder.length;
-    expect(period).toBe(784); // 49 countries x 16 items
+    expect(period).toBe(637); // 49 countries x 13 items
 
     const seen = new Set<string>();
     for (let i = itemOrderFrom; i < itemOrderFrom + period; i++) {
@@ -216,10 +216,10 @@ describe("daily puzzle rotation", () => {
       expect(pair).not.toBeNull();
       seen.add(`${pair!.itemId}:${pair!.countryCode}`);
     }
-    // The table is sparse, so a country's 16 scheduled slots collapse onto
-    // however many items it actually stocks. Every row in the table should be
-    // reachable.
-    expect(seen.size).toBe(PRICES.length);
+    // The table is sparse, so a country's 13 scheduled slots collapse onto
+    // however many items it actually stocks. Every row of an item the games
+    // still deal should be reachable.
+    expect(seen.size).toBe(PRICES.filter((p) => !RETIRED_FROM_GAMES.has(p.itemId)).length);
 
     // And the cycle really does close: one full period on, the pair repeats.
     const first = pairForDate(
@@ -408,8 +408,10 @@ describe("catalog", () => {
     }
   });
 
-  it("schedules the whole catalog, with nothing listed twice", () => {
-    expect([...itemOrder].sort()).toEqual(ITEMS.map((i) => i.id).sort());
+  it("schedules the whole catalog the games deal, with nothing listed twice", () => {
+    expect([...itemOrder].sort()).toEqual(
+      ITEMS.map((i) => i.id).filter((id) => !RETIRED_FROM_GAMES.has(id)).sort()
+    );
   });
 
   it("resolves a puzzle on every day of a retired era, tombstones and all", () => {

@@ -1,10 +1,17 @@
 import { CAPITALS } from "@/data/capitals";
-import { getItem } from "@/data/items";
+import { dealtInGames, getItem } from "@/data/items";
 import { pairForDate } from "./catalog";
 import { PRICES, dateFromISO, type PriceEntry } from "./puzzle";
 
 export const MAX_GUESSES = 6;
 export const START_CLUES = 3;
+/**
+ * Misses before the compass arrow shows. With an arrow from the first guess the
+ * basket stopped mattering: two guesses and a map solved it, so players walked
+ * the arrow instead of reading prices. Distance and the price comparison still
+ * come back on every miss; direction is the late lifeline.
+ */
+export const ARROW_AFTER = 3;
 export const EPOCH = "2026-10-22";
 
 const FIRST_CLUES = ["big-mac", "cappuccino", "gasoline-1l", "beer-330ml", "milk-1l", "eggs-12"];
@@ -82,7 +89,7 @@ export function puzzleFor(date: string): AtlasPuzzle {
   const answer = COUNTRIES.find((c) => c.code === code)!;
 
   const rand = rng(idx * 2654435761 + lap);
-  const rows = rowsFor(code);
+  const rows = rowsFor(code).filter((r) => dealtInGames(r.itemId, date));
   const lead = shuffled(
     rows.filter((r) => FIRST_CLUES.includes(r.itemId)),
     rand
@@ -156,12 +163,13 @@ export interface Feedback {
   level: number | null;
 }
 
-export function feedback(p: AtlasPuzzle, guess: string): Feedback {
+/** Feedback for a guess; `index` is its position in the round, from 0. */
+export function feedback(p: AtlasPuzzle, guess: string, index: number): Feedback {
   const km = distanceKm(guess, p.answer.code);
   return {
     code: guess,
     km,
-    arrow: km === 0 ? "🎯" : arrow(bearing(guess, p.answer.code)),
+    arrow: km === 0 ? "🎯" : index >= ARROW_AFTER ? arrow(bearing(guess, p.answer.code)) : "",
     level: km === 0 ? null : priceLevel(p.answer.code, guess),
   };
 }
@@ -184,8 +192,8 @@ export function result(p: AtlasPuzzle, state: AtlasState): string {
 }
 
 export function shareText(p: AtlasPuzzle, state: AtlasState, url: string): string {
-  const rows = state.guesses.map((g) => {
-    const f = feedback(p, g);
+  const rows = state.guesses.map((g, i) => {
+    const f = feedback(p, g, i);
     return `${proximity(f.km)}${f.arrow}`;
   });
   return [`Price Atlas #${p.number} ${result(p, state)}`, rows.join(" "), url].join("\n");

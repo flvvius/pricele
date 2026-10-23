@@ -25,6 +25,7 @@ import {
 } from "@/lib/openrange";
 import { formatLocal, formatUSD } from "@/lib/format";
 import { isoDate } from "@/lib/puzzle";
+import { parsePrice, sanitizePrice } from "@/lib/priceinput";
 import { archiveDate, archiveKey } from "@/lib/gamedate";
 import ArchiveNote from "./ArchiveNote";
 import { trackEvent } from "@/lib/analytics";
@@ -54,20 +55,14 @@ function Verdict({ q, r }: { q: RangeQuestion; r: Range }) {
   );
 }
 
-const clean = (v: string) => v.replace(/[$,\s]/g, "");
-const PRICE_INPUT = /^\d{0,6}(\.\d{0,2})?$/;
-
-function parse(v: string): number {
-  const n = Number(v);
-  return v !== "" && Number.isFinite(n) ? n : NaN;
-}
-
 function hint(r: Range, empty: boolean): string {
   if (empty) return "Enter a low and a high price.";
+  if (Number.isNaN(r.low) || Number.isNaN(r.high)) return "That doesn't read as a price. Try 1.60 or 1,60.";
   if (!(r.low > 0) || !(r.high > 0)) return "Prices have to be above $0.";
   if (r.high <= r.low) return "The high has to be above the low.";
   if (width(r) > MAX_WIDTH) return `Too wide. Keep the high within ${MAX_WIDTH}x the low.`;
-  return `Width ${width(r).toFixed(1)}x. Worth ${questionScore(r, r.low)} points if it lands.`;
+  // Echo the range back as read, so "1,6" visibly becomes $1.60 and not $16.
+  return `${formatUSD(r.low)} to ${formatUSD(r.high)}, width ${width(r).toFixed(1)}x. Worth ${questionScore(r, r.low)} points if it lands.`;
 }
 
 export default function OpenRange() {
@@ -101,7 +96,7 @@ export default function OpenRange() {
   const i = state.ranges.length;
   const showing = reviewing ? i - 1 : i;
   const q = p.questions[Math.min(showing, QUESTIONS - 1)];
-  const draft = { low: parse(low), high: parse(high) };
+  const draft = { low: parsePrice(low), high: parsePrice(high) };
 
   function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -175,9 +170,7 @@ export default function OpenRange() {
                     autoComplete="off"
                     placeholder="low"
                     value={low}
-                    onChange={(e) =>
-                      PRICE_INPUT.test(clean(e.target.value)) && setLow(clean(e.target.value))
-                    }
+                    onChange={(e) => setLow(sanitizePrice(e.target.value))}
                     data-testid="range-low"
                     data-focus="after"
                     className={input}
@@ -194,9 +187,7 @@ export default function OpenRange() {
                     autoComplete="off"
                     placeholder="high"
                     value={high}
-                    onChange={(e) =>
-                      PRICE_INPUT.test(clean(e.target.value)) && setHigh(clean(e.target.value))
-                    }
+                    onChange={(e) => setHigh(sanitizePrice(e.target.value))}
                     data-testid="range-high"
                     className={input}
                   />
