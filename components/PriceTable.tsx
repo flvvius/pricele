@@ -43,8 +43,13 @@ export default function PriceTable({
   showLocal?: boolean;
 }) {
   return (
+    // On a phone the local-currency figure moves under the dollar price
+    // instead of taking a column of its own. As four columns the table needed
+    // 480px, so on a 320-390px screen "Local" and "Work time" sat off the right
+    // edge, cut mid-number, and nothing said the table scrolled. The scroller
+    // stays as a backstop for very long labels.
     <div className="-mx-4 overflow-x-auto px-4">
-      <table className="w-full min-w-[30rem] border-collapse text-base">
+      <table className="w-full border-collapse text-base sm:min-w-[30rem]">
         <thead>
           {/* Column heads in the meta face, same as every other standing head
               in the paper, over the same heavy rule the masthead uses. */}
@@ -56,7 +61,7 @@ export default function PriceTable({
               USD
             </th>
             {showLocal && (
-              <th scope="col" className="py-2 pr-3 text-right font-semibold">
+              <th scope="col" className="hidden py-2 pr-3 text-right font-semibold sm:table-cell">
                 Local
               </th>
             )}
@@ -93,9 +98,14 @@ export default function PriceTable({
                 <>
                   <td className="py-2.5 pr-3 text-right font-mono tabular-nums text-ink">
                     {formatUSD(r.price.priceUSD)}
+                    {showLocal && formatLocal(r.price) && (
+                      <span className="block whitespace-nowrap text-[12px] text-ink-muted sm:hidden">
+                        {formatLocal(r.price)}
+                      </span>
+                    )}
                   </td>
                   {showLocal && (
-                    <td className="py-2.5 pr-3 text-right font-mono text-[14px] tabular-nums text-ink-muted">
+                    <td className="hidden py-2.5 pr-3 text-right font-mono text-[14px] tabular-nums text-ink-muted sm:table-cell">
                       {formatLocal(r.price) ?? "—"}
                     </td>
                   )}

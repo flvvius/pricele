@@ -156,8 +156,12 @@ export default function DataPage() {
 
       <Section heading="Every source, and what you may do with it">
         <div className="overflow-x-auto">
-          <table className="w-full border-collapse text-left text-base">
-            <thead>
+          {/* Below sm each source is a stacked block rather than a row of
+              three columns: as a table it needed ~390px, so on a phone the
+              licence column ran off the right edge and every row stood a
+              screen tall around one wrapped sentence. */}
+          <table className="block w-full border-collapse text-left text-base sm:table">
+            <thead className="hidden sm:table-header-group">
               <tr className="border-b-2 border-ink">
                 <th className="py-2 pr-4 font-mono text-[12px] uppercase tracking-wide text-ink-muted">
                   Items
@@ -170,13 +174,13 @@ export default function DataPage() {
                 </th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="block border-t-2 border-ink sm:table-row-group sm:border-t-0">
               {SOURCES.map((s) => (
-                <tr key={s.source} className="border-b border-rule align-top">
-                  <td className="py-3 pr-4 leading-relaxed text-ink">
+                <tr key={s.source} className="block border-b border-rule py-3 align-top sm:table-row sm:py-0">
+                  <td className="block font-medium leading-relaxed text-ink sm:table-cell sm:py-3 sm:pr-4 sm:font-normal">
                     {s.items}
                   </td>
-                  <td className="py-3 pr-4 leading-relaxed">
+                  <td className="block leading-relaxed sm:table-cell sm:py-3 sm:pr-4">
                     <a
                       href={s.url}
                       target="_blank"
@@ -186,7 +190,7 @@ export default function DataPage() {
                       {s.source}
                     </a>
                   </td>
-                  <td className="py-3 leading-relaxed text-ink-body">
+                  <td className="mt-1 block leading-relaxed text-ink-body sm:mt-0 sm:table-cell sm:py-3">
                     <span className="font-mono text-[13px] text-ink">
                       {s.licence}
                     </span>
