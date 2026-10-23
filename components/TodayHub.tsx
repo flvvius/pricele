@@ -31,11 +31,31 @@ export default function TodayHub() {
   const [log, setLog] = useState<ResultLog>({});
 
   useEffect(() => {
-    const streaks = syncHubStreaks();
-    setStreak(streaks.current);
-    setBest(streaks.best);
-    setLog(readResults());
-    setSt(readStatuses());
+    const read = () => {
+      const streaks = syncHubStreaks();
+      setStreak(streaks.current);
+      setBest(streaks.best);
+      setLog(readResults());
+      setSt(readStatuses());
+    };
+    read();
+    // Re-read whenever the page comes back into view. The hub is where a
+    // player returns between games, often with the browser's back button,
+    // which can restore this page from the back/forward cache without
+    // re-running any effect, so the game they had just finished still read
+    // "Not played". The same re-read rolls the set over to a new day for a
+    // tab left open past midnight. All of it is a few localStorage reads.
+    const onShow = () => {
+      if (document.visibilityState === "visible") read();
+    };
+    document.addEventListener("visibilitychange", onShow);
+    window.addEventListener("pageshow", onShow);
+    window.addEventListener("focus", onShow);
+    return () => {
+      document.removeEventListener("visibilitychange", onShow);
+      window.removeEventListener("pageshow", onShow);
+      window.removeEventListener("focus", onShow);
+    };
   }, []);
 
   if (!st) return <p className="min-h-[100svh] text-ink-muted">Loading today&apos;s set…</p>;

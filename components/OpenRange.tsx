@@ -32,6 +32,7 @@ import { trackEvent } from "@/lib/analytics";
 import NextUp from "./NextUp";
 import ScoreRank from "./ScoreRank";
 import ShareButton from "./ShareButton";
+import { useDayRollover } from "./useDayRollover";
 
 function Verdict({ q, r }: { q: RangeQuestion; r: Range }) {
   const answer = q.price.priceUSD;
@@ -69,6 +70,7 @@ export default function OpenRange() {
   const [date, setDate] = useState<string | null>(null);
   const [state, setState] = useState<RangeState | null>(null);
   const [archived, setArchived] = useState(false);
+  const busy = useDayRollover(date, archived);
   const [low, setLow] = useState("");
   const [high, setHigh] = useState("");
   const [reviewing, setReviewing] = useState(false);
@@ -93,6 +95,7 @@ export default function OpenRange() {
 
   const p = puzzleFor(date);
   const over = isOver(state);
+  busy.current = state.ranges.length > 0 && !over;
   const i = state.ranges.length;
   const showing = reviewing ? i - 1 : i;
   const q = p.questions[Math.min(showing, QUESTIONS - 1)];

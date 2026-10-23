@@ -42,6 +42,7 @@ import { initPwa } from "@/lib/pwa";
 import { archiveDate } from "@/lib/gamedate";
 import { ROTATION } from "@/data/rotation";
 import { useKeyboardViewport } from "./useKeyboardViewport";
+import { useDayRollover } from "./useDayRollover";
 import GuessInput from "./GuessInput";
 import GuessHistory from "./GuessHistory";
 import Reveal from "./Reveal";
@@ -135,6 +136,8 @@ export default function Game() {
   }, []);
 
   const isArchive = mounted && activeDate !== today;
+  const busy = useDayRollover(mounted ? today : null, isArchive);
+  busy.current = state.guesses.length > 0 && !state.done;
   const puzzle = mounted ? getDailyPuzzle(dateFromISO(activeDate)) : null;
 
   // The round score, recomputed rather than stored on the day state: it is a

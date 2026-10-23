@@ -176,8 +176,15 @@ export async function copyToClipboard(text: string): Promise<boolean> {
     ta.value = text;
     ta.style.position = "fixed";
     ta.style.opacity = "0";
+    // iOS reaches this path inside in-app browsers that block the async
+    // clipboard. There a focused field under 16px zooms the page, and an
+    // editable one raises the keyboard; and select() alone selects nothing,
+    // so the explicit range is what actually gets copied.
+    ta.style.fontSize = "16px";
+    ta.readOnly = true;
     document.body.appendChild(ta);
     ta.select();
+    ta.setSelectionRange(0, text.length);
     const ok = document.execCommand("copy");
     document.body.removeChild(ta);
     return ok;

@@ -24,6 +24,7 @@ import { trackEvent } from "@/lib/analytics";
 import NextUp from "./NextUp";
 import ScoreRank from "./ScoreRank";
 import ShareButton from "./ShareButton";
+import { useDayRollover } from "./useDayRollover";
 
 const usd = (n: number) => `$${n.toFixed(2)}`;
 const minutes = (m: number) => (m < 10 ? m.toFixed(1) : String(Math.round(m)));
@@ -33,6 +34,7 @@ export default function ThenAndNow() {
   const [date, setDate] = useState<string | null>(null);
   const [state, setState] = useState<ThenNowState | null>(null);
   const [archived, setArchived] = useState(false);
+  const busy = useDayRollover(date, archived);
   const [input, setInput] = useState("");
 
   useEffect(() => {
@@ -47,6 +49,7 @@ export default function ThenAndNow() {
 
   const p = puzzleFor(date, THEN_NOW_ITEMS);
   const over = isOver(state, p.answer);
+  busy.current = state.guesses.length > 0 && !over;
   const won = state.guesses.some((g) => judge(g, p.answer) === "win");
 
   function submit(e: React.FormEvent) {

@@ -27,6 +27,7 @@ import { trackEvent } from "@/lib/analytics";
 import NextUp from "./NextUp";
 import ScoreRank from "./ScoreRank";
 import ShareButton from "./ShareButton";
+import { useDayRollover } from "./useDayRollover";
 
 const usd = (n: number) => `$${n.toFixed(2)}`;
 const lowerFirst = (s: string) => s.charAt(0).toLowerCase() + s.slice(1);
@@ -70,6 +71,7 @@ export default function PriceYear() {
   const [date, setDate] = useState<string | null>(null);
   const [state, setState] = useState<YearState | null>(null);
   const [archived, setArchived] = useState(false);
+  const busy = useDayRollover(date, archived);
   const [year, setYear] = useState(2003);
   const [reviewing, setReviewing] = useState(false);
   const acted = useRef(false);
@@ -93,6 +95,7 @@ export default function PriceYear() {
 
   const p = puzzleFor(date, HISTORY_ITEMS);
   const over = isOver(state);
+  busy.current = state.guesses.length > 0 && !over;
   const round = state.guesses.length;
   const mid = Math.round((p.firstYear + p.latestYear) / 2);
   const showing = reviewing ? round - 1 : round;

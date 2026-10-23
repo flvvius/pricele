@@ -25,6 +25,7 @@ import { trackEvent } from "@/lib/analytics";
 import NextUp from "./NextUp";
 import ScoreRank from "./ScoreRank";
 import ShareButton from "./ShareButton";
+import { useDayRollover } from "./useDayRollover";
 
 const usd = (n: number) => `$${n.toFixed(2)}`;
 
@@ -36,6 +37,7 @@ export default function InflationLadder() {
   const [date, setDate] = useState<string | null>(null);
   const [state, setState] = useState<LadderState | null>(null);
   const [archived, setArchived] = useState(false);
+  const busy = useDayRollover(date, archived);
   const [order, setOrder] = useState<string[]>([]);
 
   useEffect(() => {
@@ -53,6 +55,7 @@ export default function InflationLadder() {
 
   const p = puzzleFor(date, THEN_NOW_ITEMS);
   const over = isOver(state, p.answer);
+  busy.current = state.tries.length > 0 && !over;
   const solved = state.tries.some((t) => isSolved(t, p.answer));
   const byId = new Map(p.rungs.map((r) => [r.item.id, r]));
   const lastMarks = state.tries.length ? markOrder(state.tries.at(-1)!, p.answer) : null;

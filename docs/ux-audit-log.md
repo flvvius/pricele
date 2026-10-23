@@ -194,3 +194,31 @@ Found and fixed:
 
 Left: links inside running prose keep their line height, as they should;
 the masthead wordmark is 24px tall but has plenty of empty space around it.
+
+## Round 9: sharing, and a tab left open overnight
+
+Checked: the share buttons with a working clipboard and with both clipboard
+routes blocked (as some in-app browsers do); a tab open across local
+midnight, with a fake clock, idle and mid-round; /today after coming back to
+it.
+
+Found and fixed:
+
+- When neither clipboard route worked, Share result did nothing at all: no
+  "Copied", no error. The games' share button now shows the result in a
+  selectable box with a one-line explanation.
+- The legacy copy path (used where the async clipboard is blocked) appended
+  a textarea at the browser default size, which on iOS zooms the page on
+  focus, and relied on `select()`, which selects nothing on iOS. It is 16px,
+  read-only, and sets the selection range explicitly.
+- Every game read the date once on mount, so a tab left open overnight showed
+  yesterday's finished board the next morning, with "a new one at your local
+  midnight" under it, and a fresh round started there was saved against
+  yesterday. A small hook (`components/useDayRollover.ts`) reloads when the
+  local date has changed, checked when the tab comes back into view and once a
+  minute. It never interrupts an archive replay or a half-played round; those
+  roll over once finished. Verified with a fake clock on Price Atlas and the
+  main game (No. 115 to No. 116 at midnight, mid-round board left alone).
+- /today re-reads the set whenever it comes back into view, so returning to it
+  with the back button (which can restore the page without re-running any
+  code) no longer shows a just-finished game as "Not played".

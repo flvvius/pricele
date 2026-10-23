@@ -23,6 +23,7 @@ import { trackEvent } from "@/lib/analytics";
 import NextUp from "./NextUp";
 import ScoreRank from "./ScoreRank";
 import ShareButton from "./ShareButton";
+import { useDayRollover } from "./useDayRollover";
 
 const usd = (n: number) => (n >= 100 ? `$${Math.round(n)}` : `$${n.toFixed(2)}`);
 
@@ -43,6 +44,7 @@ export default function PriceChain() {
   const [date, setDate] = useState<string | null>(null);
   const [state, setState] = useState<ChainState | null>(null);
   const [archived, setArchived] = useState(false);
+  const busy = useDayRollover(date, archived);
 
   useEffect(() => {
     const past = archiveDate(window.location.search, EPOCH);
@@ -56,6 +58,7 @@ export default function PriceChain() {
 
   const p = puzzleFor(date);
   const over = isOver(state);
+  busy.current = state.calls.length > 0 && !over;
   const i = state.calls.length;
 
   function call(c: Call) {

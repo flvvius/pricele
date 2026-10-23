@@ -25,6 +25,7 @@ import { trackEvent } from "@/lib/analytics";
 import NextUp from "./NextUp";
 import ScoreRank from "./ScoreRank";
 import ShareButton from "./ShareButton";
+import { useDayRollover } from "./useDayRollover";
 
 const usd = (n: number) => `$${n.toLocaleString("en-US")}`;
 
@@ -41,6 +42,7 @@ export default function RentRatio() {
   const [date, setDate] = useState<string | null>(null);
   const [state, setState] = useState<RentState | null>(null);
   const [archived, setArchived] = useState(false);
+  const busy = useDayRollover(date, archived);
 
   useEffect(() => {
     const past = archiveDate(window.location.search, EPOCH);
@@ -54,6 +56,7 @@ export default function RentRatio() {
 
   const p = puzzleFor(date, RENT_AREAS);
   const over = isOver(state);
+  busy.current = state.picks.length > 0 && !over;
   const current = p.rounds[state.picks.length];
   const lastIndex = state.picks.length - 1;
   const last = lastIndex >= 0 ? p.rounds[lastIndex] : null;

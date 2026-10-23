@@ -27,6 +27,7 @@ import NextUp from "./NextUp";
 import ScoreRank from "./ScoreRank";
 import ShareButton from "./ShareButton";
 import { useKeepInView } from "./useKeepInView";
+import { useDayRollover } from "./useDayRollover";
 
 const usd = (n: number) => (n >= 100 ? `$${Math.round(n)}` : `$${n.toFixed(2)}`);
 const km = (n: number) => `${n.toLocaleString("en-US")} km`;
@@ -42,6 +43,7 @@ export default function PriceAtlas() {
   const [date, setDate] = useState<string | null>(null);
   const [state, setState] = useState<AtlasState | null>(null);
   const [archived, setArchived] = useState(false);
+  const busy = useDayRollover(date, archived);
   const [query, setQuery] = useState("");
   const formRef = useRef<HTMLFormElement>(null);
   const resultRef = useRef<HTMLDivElement>(null);
@@ -59,6 +61,7 @@ export default function PriceAtlas() {
 
   const p = puzzleFor(date);
   const over = isOver(p, state);
+  busy.current = state.guesses.length > 0 && !over;
   const won = isWon(p, state);
   const misses = state.guesses.filter((g) => g !== p.answer.code).length;
   const clues = over ? p.clues : visibleClues(p, misses);

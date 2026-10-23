@@ -31,6 +31,7 @@ import { trackEvent } from "@/lib/analytics";
 import NextUp from "./NextUp";
 import ScoreRank from "./ScoreRank";
 import ShareButton from "./ShareButton";
+import { useDayRollover } from "./useDayRollover";
 
 const STEPS = 400;
 const WEIGHT_LABEL: Record<number, string> = { 2: " · counts double", 3: " · counts triple" };
@@ -43,6 +44,7 @@ export default function Pricele1000() {
   const [date, setDate] = useState<string | null>(null);
   const [state, setState] = useState<ScoredState | null>(null);
   const [archived, setArchived] = useState(false);
+  const busy = useDayRollover(date, archived);
   const [step, setStep] = useState<number | null>(null);
   const [reviewing, setReviewing] = useState(false);
   const acted = useRef(false);
@@ -66,6 +68,7 @@ export default function Pricele1000() {
 
   const p = puzzleFor(date);
   const over = isOver(state);
+  busy.current = state.guesses.length > 0 && !over;
   const i = state.guesses.length;
   const showing = reviewing ? i - 1 : i;
   const round = p.rounds[Math.min(showing, ROUNDS - 1)];
