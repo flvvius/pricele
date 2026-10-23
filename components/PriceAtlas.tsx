@@ -183,6 +183,8 @@ export default function PriceAtlas() {
             <button
               type="submit"
               disabled={!matches[0]}
+              // Like the match buttons: keep the keyboard up between guesses.
+              onMouseDown={(e) => e.preventDefault()}
               className="bg-ink px-5 font-mono text-[12px] uppercase tracking-[0.18em] text-paper-raised disabled:opacity-40"
             >
               Guess

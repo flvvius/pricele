@@ -127,13 +127,24 @@ export default function ThenAndNow() {
         <form onSubmit={submit} className="flex gap-2">
           <input
             inputMode="decimal"
+            autoComplete="off"
+            enterKeyHint="go"
             aria-label={`Price in ${p.year}, in US dollars`}
             placeholder="$0.00"
             value={input}
             onChange={(e) => setInput(sanitizePrice(e.target.value))}
             className="min-w-0 flex-1 border border-rule bg-paper-raised px-3 py-2.5 font-mono text-ink"
           />
-          <button type="submit" className="bg-ink px-5 font-mono text-[12px] uppercase tracking-[0.18em] text-paper-raised">
+          <button
+            type="submit"
+            // Disabled until there is a price to send: an empty or "0" guess
+            // used to be swallowed without a word. And it never takes focus
+            // from the field, so the keyboard stays up between guesses rather
+            // than closing after every tap of Guess.
+            disabled={!(parsePrice(input) > 0)}
+            onMouseDown={(e) => e.preventDefault()}
+            className="bg-ink px-5 font-mono text-[12px] uppercase tracking-[0.18em] text-paper-raised disabled:opacity-40"
+          >
             Guess
           </button>
         </form>

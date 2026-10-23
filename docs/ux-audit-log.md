@@ -78,3 +78,22 @@ Found and fixed:
 
 Left: the "1,6 reads as $1.60" echo was already in place from the earlier
 fix and checked out.
+
+## Round 4: Then & Now (/games/then-and-now)
+
+Checked: a full game at 320px dark and 390px light, comma and dot decimals,
+tapping Guess versus pressing return, an empty submit, the finish.
+
+Found and fixed:
+
+- Tapping Guess moved focus to the button, which closes the phone keyboard
+  after every guess; the next guess meant tapping the field again. The button
+  no longer takes focus (same fix for Price Atlas's Guess button).
+- An empty guess was silently ignored. Guess is now disabled until the field
+  holds a price above zero, like the other games' submit buttons.
+- The field had no `autocomplete="off"`, so browsers could offer autofill
+  suggestions over a price field; the return key now reads "go".
+
+Left: the main Pricele input (`components/GuessInput.tsx`) has the same
+blur-on-tap behaviour, but that file belongs to the parallel data/backlog
+work (its comma parser is on the backlog), so it is left alone.
