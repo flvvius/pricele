@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   COUNTRIES,
   ARROW_AFTER,
@@ -26,6 +26,7 @@ import { trackEvent } from "@/lib/analytics";
 import NextUp from "./NextUp";
 import ScoreRank from "./ScoreRank";
 import ShareButton from "./ShareButton";
+import { useKeepInView } from "./useKeepInView";
 
 const usd = (n: number) => (n >= 100 ? `$${Math.round(n)}` : `$${n.toFixed(2)}`);
 const km = (n: number) => `${n.toLocaleString("en-US")} km`;
@@ -42,6 +43,9 @@ export default function PriceAtlas() {
   const [state, setState] = useState<AtlasState | null>(null);
   const [archived, setArchived] = useState(false);
   const [query, setQuery] = useState("");
+  const formRef = useRef<HTMLFormElement>(null);
+  const resultRef = useRef<HTMLDivElement>(null);
+  useKeepInView(formRef, query);
 
   useEffect(() => {
     const past = archiveDate(window.location.search, EPOCH);
@@ -68,6 +72,17 @@ export default function PriceAtlas() {
     saveState(next, archived ? archiveKey(KEY) : KEY);
     setQuery("");
     if (isOver(p, next)) {
+      // The last guess opens the whole basket above the guesses, which pushed
+      // the result a dozen rows down and left the player looking at prices
+      // with no sign the round had ended. Bring the result up instead, about a
+      // third of the way down the screen so the last guesses stay in sight
+      // above it.
+      window.setTimeout(() => {
+        const top = resultRef.current?.getBoundingClientRect().top;
+        if (top !== undefined) {
+          window.scrollBy({ top: top - window.innerHeight * 0.35, behavior: "smooth" });
+        }
+      }, 50);
       trackEvent("atlas_complete", { won: isWon(p, next), guesses: next.guesses.length });
     }
   }
@@ -136,7 +151,7 @@ export default function PriceAtlas() {
       )}
 
       {over ? (
-        <div className="flex flex-col gap-3">
+        <div ref={resultRef} className="flex flex-col gap-3">
           <p className="text-[16px] text-ink-body">
             {won ? `Found it in ${result(p, state).split("/")[0]}. ` : ""}
             The basket was from <strong>{p.answer.name}</strong> {p.answer.flag}.
@@ -152,12 +167,15 @@ export default function PriceAtlas() {
           <NextUp current="price-atlas" />
         </div>
       ) : (
-        <form onSubmit={submit} className="relative flex flex-col gap-2">
+        <form ref={formRef} onSubmit={submit} className="relative flex flex-col gap-2">
           <div className="flex gap-2">
             <input
               aria-label="Guess a country"
               placeholder="Type a country"
               autoComplete="off"
+              autoCorrect="off"
+              spellCheck={false}
+              enterKeyHint="go"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               className="min-w-0 flex-1 border border-rule bg-paper-raised px-3 py-2.5 text-ink"
@@ -176,6 +194,10 @@ export default function PriceAtlas() {
                 <li key={c.code}>
                   <button
                     type="button"
+                    // Keeps focus, and so the keyboard, on the field: a tap
+                    // that blurred it closed the keyboard after every guess,
+                    // and the next country meant tapping the field again.
+                    onMouseDown={(e) => e.preventDefault()}
                     onClick={() => guess(c.code)}
                     className="border border-rule bg-paper-raised px-3 py-2 text-[14px] text-ink hover:bg-paper"
                   >

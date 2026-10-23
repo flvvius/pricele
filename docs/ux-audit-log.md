@@ -33,3 +33,29 @@ Found and fixed:
 Left: the share text still says "BEST 1%" for an exact bid; it is a compact
 summary line, not a contradiction on screen, and its format is pinned by the
 share tests.
+
+## Round 2: Price Atlas (/games/price-atlas)
+
+Checked: a full game at 390px light and 320px dark, typing countries,
+tapping the match buttons, Enter to guess, the finish, plus a simulated
+on-screen keyboard (viewport cut to 430px tall after focusing the field).
+
+Found and fixed:
+
+- The matches render under the field, and the field sits at the bottom of the
+  first screen, so with the keyboard up the Germany button for "ger" was
+  hidden behind the keyboard. A small hook (`components/useKeepInView.ts`)
+  now scrolls the form just far enough to clear the visual viewport's bottom
+  edge as matches appear, without ever pushing the field off the top.
+- Tapping a match blurred the field, so the keyboard closed after every guess
+  and the next country meant tapping the field again. The match buttons no
+  longer take focus.
+- "usa", "us", "uk", "england", "uae", "holland", "Türkiye" and so on matched
+  nothing, which left Guess disabled with no hint why. Common short names
+  and accents now match (tests in `lib/priceatlas.test.ts`).
+- iOS autocorrect could rewrite a half-typed country; it is off on the field,
+  and the return key reads "go".
+- Finishing opened the whole basket above the guesses, which pushed the result
+  a dozen rows down and left the player looking at prices with no sign the
+  round had ended. The result is now scrolled up to about a third of the
+  screen, with the last guesses still in view.
