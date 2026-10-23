@@ -21,6 +21,7 @@ import { archiveDate, archiveKey } from "@/lib/gamedate";
 import ArchiveNote from "./ArchiveNote";
 import { trackEvent } from "@/lib/analytics";
 import NextUp from "./NextUp";
+import ScoreRank from "./ScoreRank";
 import ShareButton from "./ShareButton";
 
 const usd = (n: number) => `$${n.toFixed(2)}`;
@@ -119,6 +120,7 @@ export default function ThenAndNow() {
             event="thenandnow_share"
           />
           <p className="text-[13px] text-ink-muted">A new item at your local midnight.</p>
+          <ScoreRank game="then-and-now" name="Then & Now" date={date} state={state} archived={archived} />
           <NextUp current="then-and-now" />
         </div>
       ) : (

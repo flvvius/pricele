@@ -31,6 +31,10 @@ export default function AnswersIndex() {
           <Link href="/games/archive" className={linkClass}>
             games archive
           </Link>
+          . For a week at a glance, read{" "}
+          <Link href="/games/recap" className={linkClass}>
+            the week in prices
+          </Link>
           .
         </p>
       }

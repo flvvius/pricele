@@ -29,6 +29,7 @@ import { archiveDate, archiveKey } from "@/lib/gamedate";
 import ArchiveNote from "./ArchiveNote";
 import { trackEvent } from "@/lib/analytics";
 import NextUp from "./NextUp";
+import ScoreRank from "./ScoreRank";
 import ShareButton from "./ShareButton";
 
 const STEPS = 400;
@@ -220,6 +221,7 @@ export default function Pricele1000() {
             event="p1000_share"
           />
           <p className="text-[13px] text-ink-muted">Five new rounds at your local midnight.</p>
+          <ScoreRank game="pricele-1000" name="Pricele 1000" date={date} state={state} archived={archived} />
           <NextUp current="pricele" />
         </div>
       )}

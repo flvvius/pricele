@@ -25,6 +25,7 @@ import { archiveDate, archiveKey } from "@/lib/gamedate";
 import ArchiveNote from "./ArchiveNote";
 import { trackEvent } from "@/lib/analytics";
 import NextUp from "./NextUp";
+import ScoreRank from "./ScoreRank";
 import ShareButton from "./ShareButton";
 
 const usd = (n: number) => `$${n.toFixed(2)}`;
@@ -245,6 +246,7 @@ export default function PriceYear() {
           <p className="text-[13px] text-ink-muted">
             Five new receipts at your local midnight. Tap a year to see everything it cost.
           </p>
+          <ScoreRank game="price-year" name="Price Year" date={date} state={state} archived={archived} />
           <NextUp current="price-year" />
         </div>
       )}

@@ -23,6 +23,7 @@ import { archiveDate, archiveKey } from "@/lib/gamedate";
 import ArchiveNote from "./ArchiveNote";
 import { trackEvent } from "@/lib/analytics";
 import NextUp from "./NextUp";
+import ScoreRank from "./ScoreRank";
 import ShareButton from "./ShareButton";
 
 const usd = (n: number) => `$${n.toLocaleString("en-US")}`;
@@ -126,6 +127,7 @@ export default function RentRatio() {
             event="rentratio_share"
           />
           <p className="text-[13px] text-ink-muted">New matchups at your local midnight.</p>
+          <ScoreRank game="rent-ratio" name="Rent Ratio" date={date} state={state} archived={archived} />
           <NextUp current="rent-ratio" />
         </div>
       )}

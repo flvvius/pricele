@@ -16,6 +16,8 @@
 //    that day's answers (one-line summaries, no editorial text) and every day
 //    has the same shape; the /games/answers index stays indexed and links them.
 //    /years/[year] and /history/[item] all clear 13+ sourced rows and stay in.
+//  - /games/recap/[monday]: indexed. The highlights compare prices across the
+//    whole week, which no single day's page says.
 //  - /d/[n] and /week are noindex already (redirect/share shells, see those files).
 //
 // Pages that fail the rule still render normally (content is never removed);

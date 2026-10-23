@@ -29,6 +29,7 @@ import { archiveDate, archiveKey } from "@/lib/gamedate";
 import ArchiveNote from "./ArchiveNote";
 import { trackEvent } from "@/lib/analytics";
 import NextUp from "./NextUp";
+import ScoreRank from "./ScoreRank";
 import ShareButton from "./ShareButton";
 
 function Verdict({ q, r }: { q: RangeQuestion; r: Range }) {
@@ -256,6 +257,7 @@ export default function OpenRange() {
             event="range_share"
           />
           <p className="text-[13px] text-ink-muted">Five new questions at your local midnight.</p>
+          <ScoreRank game="open-range" name="Open Range" date={date} state={state} archived={archived} />
           <NextUp current="open-range" />
         </div>
       )}

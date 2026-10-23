@@ -133,3 +133,25 @@ create index if not exists room_entry_board
 --
 --   delete from crowd_submission where play_date < current_date - 7;
 --   delete from room where created_at < now() - interval '30 days';
+
+-- ===========================================================================
+-- Hub game scores, for "you beat X% of today's players"
+-- ===========================================================================
+
+create table if not exists hub_score (
+  play_date date    not null,
+  game      text    not null,
+  score     integer not null,
+  n         integer not null default 0,
+
+  primary key (play_date, game, score)
+);
+
+create table if not exists hub_submission (
+  play_date  date not null,
+  game       text not null,
+  player_id  text not null,
+  created_at timestamptz not null default now(),
+
+  primary key (play_date, game, player_id)
+);

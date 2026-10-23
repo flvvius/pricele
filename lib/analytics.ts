@@ -30,7 +30,8 @@ export type EventName =
   | "p1000_share"
   | "years_pick"
   | "embed_copy"
-  | "today_share";
+  | "today_share"
+  | "reminder_add";
 
 type Props = Record<string, string | number | boolean>;
 

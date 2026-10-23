@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import ShareButton from "./ShareButton";
+import ReminderLink from "./ReminderLink";
 import Countdown from "./Countdown";
 import HubWeek from "./HubWeek";
 import { isoDate } from "@/lib/puzzle";
@@ -140,6 +141,8 @@ export default function TodayHub() {
         <Link href="/games/archive" className="underline underline-offset-2">
           games archive
         </Link>
+        . Easy to forget?{" "}
+        <ReminderLink />
         .
       </p>
     </div>

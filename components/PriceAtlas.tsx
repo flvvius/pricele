@@ -23,6 +23,7 @@ import { archiveDate, archiveKey } from "@/lib/gamedate";
 import ArchiveNote from "./ArchiveNote";
 import { trackEvent } from "@/lib/analytics";
 import NextUp from "./NextUp";
+import ScoreRank from "./ScoreRank";
 import ShareButton from "./ShareButton";
 
 const usd = (n: number) => (n >= 100 ? `$${Math.round(n)}` : `$${n.toFixed(2)}`);
@@ -147,6 +148,7 @@ export default function PriceAtlas() {
             event="atlas_share"
           />
           <p className="text-[13px] text-ink-muted">A new basket at your local midnight.</p>
+          <ScoreRank game="price-atlas" name="Price Atlas" date={date} state={state} archived={archived} />
           <NextUp current="price-atlas" />
         </div>
       ) : (

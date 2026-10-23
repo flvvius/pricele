@@ -21,6 +21,7 @@ import { archiveDate, archiveKey } from "@/lib/gamedate";
 import ArchiveNote from "./ArchiveNote";
 import { trackEvent } from "@/lib/analytics";
 import NextUp from "./NextUp";
+import ScoreRank from "./ScoreRank";
 import ShareButton from "./ShareButton";
 
 const usd = (n: number) => (n >= 100 ? `$${Math.round(n)}` : `$${n.toFixed(2)}`);
@@ -135,6 +136,7 @@ export default function PriceChain() {
             </a>
             .
           </p>
+          <ScoreRank game="higher-or-lower" name="Higher or Lower Daily" date={date} state={state} archived={archived} />
           <NextUp current="higher-or-lower" />
         </div>
       )}

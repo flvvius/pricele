@@ -6,6 +6,7 @@ import { PUBLISHED_ARTICLES } from "@/data/articles";
 import { COMPARISONS } from "@/data/comparisons";
 import { dateFromISO } from "@/lib/puzzle";
 import { YEARS } from "@/lib/yearprices";
+import { publishedRecapWeeks, weekEnd } from "@/lib/recap";
 import { HISTORY_ITEMS } from "@/data/price-history";
 import {
   indexableArchiveDates,
@@ -187,6 +188,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE_URL}/games/answers`, lastModified: now, changeFrequency: "daily", priority: 0.5 },
   ];
 
+  const recapPages: MetadataRoute.Sitemap = [
+    { url: `${SITE_URL}/games/recap`, lastModified: now, changeFrequency: "weekly", priority: 0.5 },
+    ...publishedRecapWeeks().map((m) => ({
+      url: `${SITE_URL}/games/recap/${m}`,
+      lastModified: dateFromISO(weekEnd(m)),
+      changeFrequency: "yearly" as const,
+      priority: 0.4,
+    })),
+  ];
+
   const articlePages: MetadataRoute.Sitemap = PUBLISHED_ARTICLES.map((a) => ({
     url: `${SITE_URL}/blog/${a.slug}`,
     lastModified: dateFromISO(a.date),
@@ -215,6 +226,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...yearPages,
     ...historyPages,
     ...answerPages,
+    ...recapPages,
     ...countryPages,
     ...articlePages,
     ...archivePages,

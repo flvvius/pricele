@@ -367,3 +367,48 @@ export async function writeRoomEntry(e: EntryInput): Promise<boolean> {
     return false;
   }
 }
+
+export interface HubSubmission {
+  date: string;
+  game: string;
+  playerId: string;
+  score: number;
+}
+
+export async function writeHubScore(s: HubSubmission): Promise<boolean> {
+  const sql = db();
+  if (!sql) return false;
+  try {
+    const claimed = (await sql`
+      insert into hub_submission (play_date, game, player_id)
+      values (${s.date}, ${s.game}, ${s.playerId})
+      on conflict do nothing
+      returning play_date
+    `) as unknown[];
+    if (claimed.length === 0) return false;
+    await sql`
+      insert into hub_score (play_date, game, score, n)
+      values (${s.date}, ${s.game}, ${s.score}, 1)
+      on conflict (play_date, game, score) do update set n = hub_score.n + 1
+    `;
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export async function readHubScores(
+  date: string,
+  game: string
+): Promise<{ score: number; n: number }[] | null> {
+  const sql = db();
+  if (!sql) return null;
+  try {
+    const rows = (await sql`
+      select score, n from hub_score where play_date = ${date} and game = ${game}
+    `) as { score: number; n: number }[];
+    return rows.map((r) => ({ score: Number(r.score), n: Number(r.n) }));
+  } catch {
+    return null;
+  }
+}
