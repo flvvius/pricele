@@ -155,7 +155,6 @@ export default function InflationLadder() {
             score={result(state, p.answer)}
             text={(url) => shareText(p, state, url)}
             path="/games/inflation-ladder"
-            campaign="game-inflation-ladder"
             event="ladder_share"
           />
           <p className="text-[13px] text-ink-muted">A new ladder at your local midnight.</p>

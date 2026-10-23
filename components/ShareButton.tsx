@@ -2,13 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { copyToClipboard, shouldUseNativeShare } from "@/lib/share";
-import { gameShareUrl, type ShareCampaign, type ShareChannel } from "@/lib/sharelink";
+import { gameShareUrl, type ShareChannel } from "@/lib/sharelink";
 import { trackEvent, type EventName } from "@/lib/analytics";
 
 export default function ShareButton({
   text,
   path,
-  campaign,
   event,
   label = "Share result",
   props,
@@ -16,7 +15,6 @@ export default function ShareButton({
 }: {
   text: (url: string) => string;
   path: string;
-  campaign: ShareCampaign;
   event: EventName;
   label?: string;
   props?: Record<string, string | number | boolean>;
@@ -28,7 +26,7 @@ export default function ShareButton({
   useEffect(() => setNative(shouldUseNativeShare()), []);
 
   async function share() {
-    const url = (channel: ShareChannel) => gameShareUrl(path, channel, campaign, score);
+    const url = (channel: ShareChannel) => gameShareUrl(path, channel, score);
     if (native) {
       try {
         const full = text(url("native"));

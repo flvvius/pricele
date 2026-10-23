@@ -126,7 +126,6 @@ export default function PriceChain() {
             score={result(p, state)}
             text={(url) => shareText(p, state, url)}
             path="/games/higher-or-lower"
-            campaign="game-higher-or-lower"
             event="chain_share"
           />
           <p className="text-[13px] text-ink-muted">

@@ -240,7 +240,6 @@ export default function PriceYear() {
             score={result(p, state)}
             text={(url) => shareText(p, state, url)}
             path="/games/price-year"
-            campaign="game-price-year"
             event="year_share"
           />
           <p className="text-[13px] text-ink-muted">

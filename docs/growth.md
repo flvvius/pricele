@@ -190,13 +190,21 @@ or a price).
 |---|---|---|
 | `puzzle_complete` | A Pricele round ends (`components/Game.tsx`) | `won`, `guesses`, `archive`, `challenge` (arrived with `?c=`) |
 | `share` | A share succeeds (`ShareCard`, `WeekCard`) | `channel` (`native`/`copy`), `campaign` (`daily`/`weekly`) |
-| `share_landing` | Arrival with `utm_source=share`, `utm_source=dickle` or `?c=` (`components/LandingTracker.tsx` in the root layout). Once per session per URL; `/d/[n]` is skipped because it forwards to `/` | `source` (`share`/`dickle`/`challenge`), `medium`, `campaign`, `challenge`, `path` |
+| `share_landing` | Arrival with `?s=` (our shares: `s=n` native, `s=c` copied; older links carry `utm_source=share`), `utm_source=dickle` or `?c=` (`components/LandingTracker.tsx` in the root layout). Once per session per URL; `/d/[n]` is skipped because it forwards to `/` | `source` (`share`/`dickle`/`challenge`), `medium`, `campaign` (from the path for `?s=` links: `daily`, `weekly`, `today`, `years`, `game-<slug>`), `challenge`, `path` |
 | `thenandnow_complete` | A Then & Now round ends | `won`, `guesses` |
 | `thenandnow_share` | Then & Now result copied | `channel` |
 | `rentratio_complete` | A Rent Ratio day ends | `score` |
 | `rentratio_share` | Rent Ratio result copied | `channel` |
 
-After `share_landing` fires, the `utm_*` tags are removed from the address bar
+Shared links carry one short tag, not the utm set:
+`/games/price-atlas?s=c&c=X/6` rather than
+`?utm_source=share&utm_medium=copy&utm_campaign=game-price-atlas&c=X%2F6`. A
+long query reads as tracking or phishing in a group chat and people skip it.
+The trade-off: Vercel's built-in UTM panel no longer sees our own shares, so
+read share traffic from the `share_landing` event (or pageviews filtered on
+`s=`). Embeds and the Dickle referral still use utm tags.
+
+After `share_landing` fires, the `s` and `utm_*` tags are removed from the address bar
 with `history.replaceState`. `?c=` stays so the challenge banner survives a
 reload. The pageview still records the tagged URL, because it is sent on load.
 
@@ -256,7 +264,7 @@ Rules for each post:
   card and its own challenge banner.
 - Post once per community, at least a week apart across communities, and read
   each one's self-promotion rules first.
-- Check `share_landing` by `utm_campaign` in Vercel Analytics after 48 hours.
+- Check `share_landing` by `campaign` in Vercel Analytics after 48 hours.
   The campaign is `game-<slug>`, so each game's spread is visible on its own.
 
 Newsletters are next. `hub-research.md` records GeoSports going from 575 to over

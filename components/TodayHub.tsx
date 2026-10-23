@@ -130,7 +130,6 @@ export default function TodayHub() {
       <ShareButton
         text={(url) => dailySetShare(st, streak, url)}
         path="/today"
-        campaign="today"
         event="today_share"
         label="Share today's set"
         props={{ done: doneCount, streak }}

@@ -18,7 +18,17 @@ describe("trackEvent", () => {
 });
 
 describe("detectLanding", () => {
-  it("spots our share tags", () => {
+  it("spots the short share tag and takes the campaign from the path", () => {
+    expect(detectLanding("?s=c&c=X/6", "/games/price-atlas")).toEqual({
+      source: "share",
+      medium: "copy",
+      campaign: "game-price-atlas",
+      challenge: true,
+    });
+    expect(detectLanding("?s=n")).toMatchObject({ medium: "native", campaign: "daily" });
+    expect(detectLanding("?s=zzz")).toBeNull();
+  });
+  it("still spots the utm tags on older links", () => {
     expect(detectLanding("?utm_source=share&utm_medium=native&utm_campaign=daily")).toEqual({
       source: "share",
       medium: "native",
@@ -37,7 +47,10 @@ describe("detectLanding", () => {
 });
 
 describe("stripLandingTags", () => {
-  it("drops utm tags but keeps the challenge and hash", () => {
+  it("drops share and utm tags but keeps the challenge and hash", () => {
+    expect(stripLandingTags("https://x.test/games/price-atlas?s=c&c=X/6")).toBe(
+      "/games/price-atlas?c=X/6"
+    );
     expect(
       stripLandingTags(
         "https://x.test/?utm_source=share&utm_medium=copy&utm_campaign=daily&c=214-3-870"

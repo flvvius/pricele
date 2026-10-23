@@ -253,7 +253,6 @@ export default function OpenRange() {
             score={result(p, state)}
             text={(url) => shareText(p, state, url)}
             path="/games/open-range"
-            campaign="game-open-range"
             event="range_share"
           />
           <p className="text-[13px] text-ink-muted">Five new questions at your local midnight.</p>

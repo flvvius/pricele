@@ -217,7 +217,6 @@ export default function Pricele1000() {
             score={result(p, state)}
             text={(url) => shareText(p, state, url)}
             path="/games/pricele-1000"
-            campaign="game-pricele-1000"
             event="p1000_share"
           />
           <p className="text-[13px] text-ink-muted">Five new rounds at your local midnight.</p>

@@ -116,7 +116,6 @@ export default function ThenAndNow() {
             score={`${won ? state.guesses.length : "X"}/${MAX_GUESSES}`}
             text={(url) => shareText(p, state.guesses, url)}
             path="/games/then-and-now"
-            campaign="game-then-and-now"
             event="thenandnow_share"
           />
           <p className="text-[13px] text-ink-muted">A new item at your local midnight.</p>

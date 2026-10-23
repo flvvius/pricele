@@ -144,7 +144,6 @@ export default function PriceAtlas() {
             score={result(p, state)}
             text={(url) => shareText(p, state, url)}
             path="/games/price-atlas"
-            campaign="game-price-atlas"
             event="atlas_share"
           />
           <p className="text-[13px] text-ink-muted">A new basket at your local midnight.</p>

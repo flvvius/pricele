@@ -7,7 +7,7 @@ import {
   encodeChallenge,
   weekShareUrl,
 } from "./sharelink";
-import { decodeGameScore, gameShareUrl } from "./sharelink";
+import { campaignForPath, decodeGameScore, gameShareUrl } from "./sharelink";
 import { buildShareTextWithUrl, shareLinkFor, type ShareInput } from "./share";
 import { pageMetadata, SITE_URL } from "./seo";
 import {
@@ -37,16 +37,14 @@ describe("shared links", () => {
   it("tag the day link by channel and carry the challenge", () => {
     const url = new URL(dayShareUrl(214, "native", { bids: 3, score: 870 }));
     expect(url.pathname).toBe("/d/214");
-    expect(url.searchParams.get("utm_source")).toBe("share");
-    expect(url.searchParams.get("utm_medium")).toBe("native");
-    expect(url.searchParams.get("utm_campaign")).toBe("daily");
+    expect(url.searchParams.get("s")).toBe("n");
     expect(url.searchParams.get("c")).toBe("214-3-870");
+    expect(url.search).not.toContain("utm_");
   });
 
   it("put the tagged link on the receipt, and never the price", () => {
     const text = buildShareTextWithUrl(input);
-    expect(text).toContain(`${SITE_URL}/d/214?utm_source=share&utm_medium=copy`);
-    expect(text).toContain("c=214-2-870");
+    expect(text).toContain(`${SITE_URL}/d/214?s=c&c=214-2-870`);
     expect(text).not.toMatch(/3\.1/);
     expect(shareLinkFor(input, "copy")).not.toMatch(/3\.1/);
   });
@@ -59,7 +57,7 @@ describe("shared links", () => {
   it("keep the week in the fragment, after the tags", () => {
     const url = new URL(weekShareUrl("abc"));
     expect(url.pathname).toBe("/week");
-    expect(url.searchParams.get("utm_campaign")).toBe("weekly");
+    expect(url.search).toBe("?s=c");
     expect(url.hash).toBe("#abc");
   });
 
@@ -125,12 +123,28 @@ describe("streakSafetyLine", () => {
 });
 
 describe("gameShareUrl", () => {
-  it("tags the game page with its own campaign", () => {
-    const url = new URL(gameShareUrl("/games/price-atlas", "native", "game-price-atlas"));
+  it("tags the game page with one short param", () => {
+    const url = new URL(gameShareUrl("/games/price-atlas", "native"));
     expect(url.pathname).toBe("/games/price-atlas");
-    expect(url.searchParams.get("utm_source")).toBe("share");
-    expect(url.searchParams.get("utm_medium")).toBe("native");
-    expect(url.searchParams.get("utm_campaign")).toBe("game-price-atlas");
+    expect(url.search).toBe("?s=n");
+  });
+
+  it("keeps the slash in a score readable", () => {
+    expect(gameShareUrl("/games/price-atlas", "copy", "X/6")).toBe(
+      `${SITE_URL}/games/price-atlas?s=c&c=X/6`
+    );
+  });
+});
+
+describe("campaignForPath", () => {
+  it("names the campaign from the landing path", () => {
+    expect(campaignForPath("/")).toBe("daily");
+    expect(campaignForPath("/d/214")).toBe("daily");
+    expect(campaignForPath("/week")).toBe("weekly");
+    expect(campaignForPath("/today")).toBe("today");
+    expect(campaignForPath("/years/1999")).toBe("years");
+    expect(campaignForPath("/games/price-atlas")).toBe("game-price-atlas");
+    expect(campaignForPath("/about")).toBe("");
   });
 });
 
@@ -146,9 +160,9 @@ describe("game challenge scores", () => {
   });
 
   it("puts a valid score on the link and drops a bad one", () => {
-    const good = new URL(gameShareUrl("/games/rent-ratio", "copy", "game-rent-ratio", "4/5"));
+    const good = new URL(gameShareUrl("/games/rent-ratio", "copy", "4/5"));
     expect(good.searchParams.get("c")).toBe("4/5");
-    const bad = new URL(gameShareUrl("/games/rent-ratio", "copy", "game-rent-ratio", "nope"));
+    const bad = new URL(gameShareUrl("/games/rent-ratio", "copy", "nope"));
     expect(bad.searchParams.has("c")).toBe(false);
   });
 });

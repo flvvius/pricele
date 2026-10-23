@@ -123,7 +123,6 @@ export default function RentRatio() {
             score={`${score(p, state.picks)}/${ROUNDS}`}
             text={(url) => shareText(p, state.picks, url)}
             path="/games/rent-ratio"
-            campaign="game-rent-ratio"
             event="rentratio_share"
           />
           <p className="text-[13px] text-ink-muted">New matchups at your local midnight.</p>

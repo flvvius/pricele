@@ -1,8 +1,11 @@
 // The links that leave the site inside a share, and the challenge they carry.
 //
 // Two jobs, both measured in group chats. First, a shared link has to say it
-// was shared: the utm set marks it so Vercel Analytics can tell share traffic
-// from everything else (docs/growth.md, week 1). Second, a link to a *day*
+// was shared: one short tag, `s=n` (native share sheet) or `s=c` (copied),
+// marks it so the landing can be counted (docs/growth.md, week 1). It used to
+// be the full utm set, which tripled the link's length; a long query reads as
+// a tracking or phishing link in a chat and people don't tap it. The campaign
+// never needed to ride along: it is a function of the path (campaignForPath). Second, a link to a *day*
 // rather than to the home page lets the unfurl show that day's item and
 // country (app/d/[n]/opengraph-image.tsx) and lets the landing page put the
 // sharer's result up as a score to beat.
@@ -10,6 +13,8 @@
 // WHAT A LINK MUST NEVER CARRY: a guess, or the price. Same rule as the
 // Receipt. The challenge is bids used and the round score, neither of which can
 // be worked back into a price.
+//
+// Old utm-tagged links still in chats keep working: lib/analytics.ts reads both.
 //
 // Canonical URLs are untouched by any of this. The tags ride only on links
 // handed to other people; every page still declares its own clean canonical,
@@ -20,16 +25,34 @@ import { SITE_URL } from "./seo";
 export type ShareChannel = "native" | "copy";
 export type ShareCampaign = "daily" | "weekly" | "today" | "years" | `game-${string}`;
 
-/** The utm set for a shared link, in a fixed order so links are stable. */
-export function utmParams(
-  channel: ShareChannel,
-  campaign: ShareCampaign = "daily"
-): URLSearchParams {
-  return new URLSearchParams({
-    utm_source: "share",
-    utm_medium: channel,
-    utm_campaign: campaign,
-  });
+/** The one query param that marks a shared link, and its channel codes. */
+export const SHARE_PARAM = "s";
+const CHANNEL_CODE: Record<ShareChannel, string> = { native: "n", copy: "c" };
+
+export function channelFromCode(code: string | null): ShareChannel | null {
+  if (code === "n") return "native";
+  if (code === "c") return "copy";
+  return null;
+}
+
+/**
+ * `s=c&c=X/6`. Built by hand rather than with URLSearchParams, which would
+ * write the slash in a game score as %2F. A slash is legal in a query and
+ * reads as a score; %2F reads as noise. Callers only pass validated tokens.
+ */
+function shareQuery(channel: ShareChannel, challenge?: string): string {
+  const q = `${SHARE_PARAM}=${CHANNEL_CODE[channel]}`;
+  return challenge ? `${q}&c=${encodeURIComponent(challenge).replace(/%2F/g, "/")}` : q;
+}
+
+/** The campaign a shared link counts toward, worked out from where it lands. */
+export function campaignForPath(pathname: string): ShareCampaign | "" {
+  if (pathname === "/" || pathname.startsWith("/d/")) return "daily";
+  if (pathname === "/week") return "weekly";
+  if (pathname === "/today") return "today";
+  if (pathname === "/years" || pathname.startsWith("/years/")) return "years";
+  const game = /^\/games\/([a-z0-9-]+)$/.exec(pathname);
+  return game ? `game-${game[1]}` : "";
 }
 
 /** What a challenge link remembers about the sharer's round. */
@@ -67,16 +90,13 @@ export function dayShareUrl(
   channel: ShareChannel,
   challenge?: Omit<Challenge, "puzzleNumber">
 ): string {
-  const params = utmParams(channel, "daily");
-  if (challenge) {
-    params.set("c", encodeChallenge({ puzzleNumber, ...challenge }));
-  }
-  return `${SITE_URL}/d/${puzzleNumber}?${params.toString()}`;
+  const c = challenge ? encodeChallenge({ puzzleNumber, ...challenge }) : undefined;
+  return `${SITE_URL}/d/${puzzleNumber}?${shareQuery(channel, c)}`;
 }
 
 /** The Weekly Wrapped link. The week itself stays in the fragment. */
 export function weekShareUrl(fragment: string, channel: ShareChannel = "copy"): string {
-  return `${SITE_URL}/week?${utmParams(channel, "weekly").toString()}#${fragment}`;
+  return `${SITE_URL}/week?${shareQuery(channel)}#${fragment}`;
 }
 
 /** The landing banner. Never names a price, only the sharer's numbers. */
@@ -97,15 +117,8 @@ export function challengeVerdict(
   return `Dead heat: ${you.score} each.`;
 }
 
-export function gameShareUrl(
-  path: string,
-  channel: ShareChannel,
-  campaign: ShareCampaign,
-  score?: string
-): string {
-  const params = utmParams(channel, campaign);
-  if (score && decodeGameScore(score)) params.set("c", score);
-  return `${SITE_URL}${path}?${params.toString()}`;
+export function gameShareUrl(path: string, channel: ShareChannel, score?: string): string {
+  return `${SITE_URL}${path}?${shareQuery(channel, decodeGameScore(score) ?? undefined)}`;
 }
 
 export function decodeGameScore(raw: string | null | undefined): string | null {

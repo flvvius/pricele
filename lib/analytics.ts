@@ -6,6 +6,7 @@
 // strings/numbers/booleans only, and never a guess or a price.
 
 import { track } from "@vercel/analytics";
+import { campaignForPath, channelFromCode, SHARE_PARAM } from "./sharelink";
 
 export type EventName =
   | "puzzle_complete"
@@ -46,6 +47,7 @@ export function trackEvent(name: EventName, props?: Props): void {
 
 /** Query params that mark an arrival from a share. Stripped after landing. */
 export const LANDING_TAGS = [
+  SHARE_PARAM,
   "utm_source",
   "utm_medium",
   "utm_campaign",
@@ -62,13 +64,19 @@ export interface Landing {
 
 /**
  * What a URL's query says about how the visitor arrived, or null when it is
- * not a share landing. Counts our own shares (utm_source=share), the sister
- * game (utm_source=dickle) and any challenge link (?c=).
+ * not a share landing. Counts our own shares (?s=, or utm_source=share on
+ * links shared before ?s= replaced it), the sister game (utm_source=dickle)
+ * and any challenge link (?c=). A ?s= link carries no campaign; it comes from
+ * the path, so the reports keep the same `game-<slug>` split as before.
  */
-export function detectLanding(search: string): Landing | null {
+export function detectLanding(search: string, pathname = "/"): Landing | null {
   const q = new URLSearchParams(search);
-  const source = q.get("utm_source") ?? "";
   const challenge = q.has("c");
+  const channel = channelFromCode(q.get(SHARE_PARAM));
+  if (channel) {
+    return { source: "share", medium: channel, campaign: campaignForPath(pathname), challenge };
+  }
+  const source = q.get("utm_source") ?? "";
   if (source !== "share" && source !== "dickle" && !challenge) return null;
   return {
     source: source || "challenge",
@@ -79,12 +87,13 @@ export function detectLanding(search: string): Landing | null {
 }
 
 /**
- * The address-bar URL with the utm tags removed. `c` stays: the challenge
+ * The address-bar URL with the share and utm tags removed. `c` stays: the challenge
  * banner reads it, and a reload should keep showing the score to beat.
  */
 export function stripLandingTags(href: string): string {
   const url = new URL(href);
   for (const k of LANDING_TAGS) url.searchParams.delete(k);
-  const qs = url.searchParams.toString();
+  // Same as the share link: a score's slash stays a slash, not %2F.
+  const qs = url.searchParams.toString().replace(/%2F/g, "/");
   return `${url.pathname}${qs ? `?${qs}` : ""}${url.hash}`;
 }
