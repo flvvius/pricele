@@ -70,9 +70,30 @@ export default function WorkTimePage() {
           caption={false}
         />
         <p className="text-[13px] text-ink-muted">
-          Minutes of work at the average hourly wage to buy one of each item below. Hover a point
-          for the year.
+          Minutes of work at the average hourly wage to buy one of each item below.
         </p>
+        {/* The chart's per-year figures live in SVG <title>s, which only a
+            mouse can hover: on a phone there was no way to read any year but
+            the last, and the caption said to hover. The chart's own aria-label
+            also promises a table of every year, which this page didn't have. */}
+        <details className="text-[14px] text-ink-body">
+          <summary className="cursor-pointer py-2 font-mono text-[12px] uppercase tracking-[0.14em] text-ink-muted">
+            Every year
+          </summary>
+          <ul className="grid grid-cols-2 gap-x-6 border-t border-rule sm:grid-cols-3">
+            {series
+              .filter((p) => !p.hidden)
+              .map((p) => (
+                <li
+                  key={p.year}
+                  className="flex justify-between border-b border-rule-soft py-1 font-mono text-[13px]"
+                >
+                  <span className="text-ink-muted">{p.year}</span>
+                  <span>{Math.round(p.price)} min</span>
+                </li>
+              ))}
+          </ul>
+        </details>
       </Section>
       <Section heading="Item by item">
         <ul className="flex flex-col border-t border-rule">

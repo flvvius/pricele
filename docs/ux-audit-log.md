@@ -147,3 +147,28 @@ Found and fixed:
 - /classroom: the room name, code and label inputs were 15px, which makes
   iOS Safari zoom the page on focus. They are 16px. The room code field also
   stops autocorrect and capitalises as you type.
+
+## Round 7: the side games and the work-time chart
+
+Checked: /higher-or-lower (unlimited), /where-in-the-world and /work-time at
+320px, light and dark.
+
+Found and fixed:
+
+- Higher or Lower: on a 568px-tall phone the two cards fill the bottom of the
+  first screen, so after a tap the verdict and the Next pair button rendered
+  below the fold; it looked as if the tap had only revealed two prices. They
+  are now scrolled into view ("nearest", so nothing moves where they fit).
+- Where in the World: each miss replaced the previous clue, so by the third
+  guess the wage and the item count the player had been reasoning from were
+  gone. All clues so far now stay, numbered.
+- Where in the World: new clues land above a wall of 50-odd country buttons
+  the player has scrolled into, so they appeared off the top of the screen.
+  The newest clue (and the verdict at the end) is scrolled into view.
+- Where in the World: the country buttons were about 30px tall, packed 6px
+  apart; a thumb hit the neighbour often enough. They are about 43px now.
+- /work-time: the caption said "Hover a point for the year", and the chart's
+  per-year values live in SVG titles that only a mouse can hover, so on a
+  phone no year but the last was readable (the chart's own aria-label also
+  promised a table that wasn't on the page). An "Every year" disclosure now
+  lists them.

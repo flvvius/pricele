@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import {
   applyRound,
@@ -45,7 +45,22 @@ export default function WhereInTheWorld({ rounds }: Props) {
   const solved = picked.includes(round.answer);
   const out = picked.length >= MAX_ATTEMPTS && !solved;
   const over = solved || out;
-  const clue = clueFor(round, solved ? 0 : picked.length);
+  // Every clue so far, not just the newest. Each miss used to replace the
+  // last clue with the next, so by the third guess the wage and the item count
+  // the player had been reasoning from were gone from the screen.
+  const misses = solved ? 0 : picked.length;
+  const clues = Array.from({ length: misses }, (_, k) => clueFor(round, k + 1)).filter(
+    (c, k, all): c is string => c !== null && all.indexOf(c) === k
+  );
+
+  // A new clue lands above the wall of countries, which on a phone the player
+  // has usually scrolled into, so it appeared off the top of the screen. Bring
+  // it (or the verdict, at the end) back into view; "nearest" does nothing
+  // when it is already showing.
+  const latestRef = useRef<HTMLElement | null>(null);
+  useEffect(() => {
+    if (picked.length > 0) latestRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }, [picked.length]);
 
   function pick(code: string) {
     if (over || picked.includes(code)) return;
@@ -90,15 +105,26 @@ export default function WhereInTheWorld({ rounds }: Props) {
         </p>
       </figure>
 
-      {clue && !over && (
-        <p className="border-l-2 border-accent bg-accent/[0.06] py-2 pl-3 pr-2 text-[14px] leading-relaxed text-ink-body">
-          <span className="label !text-accent">Clue</span>{" "}
-          <span className="ml-1">{clue}</span>
-        </p>
+      {clues.length > 0 && !over && (
+        <ul className="flex flex-col gap-1.5">
+          {clues.map((c, k) => (
+            <li
+              key={c}
+              ref={k === clues.length - 1 ? (el) => { latestRef.current = el; } : undefined}
+              className="scroll-mt-4 border-l-2 border-accent bg-accent/[0.06] py-2 pl-3 pr-2 text-[14px] leading-relaxed text-ink-body"
+            >
+              <span className="label !text-accent">Clue {k + 1}</span>{" "}
+              <span className="ml-1">{c}</span>
+            </li>
+          ))}
+        </ul>
       )}
 
       {over ? (
-        <div className="animate-set-in flex flex-col gap-4">
+        <div
+          ref={(el) => { latestRef.current = el; }}
+          className="animate-set-in flex scroll-mb-4 flex-col gap-4"
+        >
           <p
             className="flex items-center justify-center gap-2.5 font-mono text-[12px] uppercase tracking-[0.16em]"
             style={{
@@ -128,7 +154,9 @@ export default function WhereInTheWorld({ rounds }: Props) {
                 <button
                   onClick={() => pick(o.code)}
                   disabled={tried}
-                  className={`border px-2 py-1.5 text-[13px] transition-[border-color,background-color,opacity] duration-fast ease-out ${
+                  // About 40px tall: at the old 30px, in a wall this dense, a
+                  // thumb landed on the neighbouring country often enough.
+                  className={`border px-2.5 py-2.5 text-[14px] transition-[border-color,background-color,opacity] duration-fast ease-out ${
                     tried
                       ? "border-rule-soft text-ink-faint line-through opacity-50"
                       : "border-rule text-ink-body hover:border-ink hover:bg-paper-raised"

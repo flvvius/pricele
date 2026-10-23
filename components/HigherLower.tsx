@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import {
   applyAnswer,
@@ -89,6 +89,15 @@ export default function HigherLower({ deck, initialPair }: Props) {
 
   const cards = useMemo(() => deck, [deck]);
 
+  // On a phone the cards fill the bottom of the first screen, so the verdict
+  // and the Next pair button rendered below the fold: a tap revealed two
+  // prices and nothing else seemed to happen. Scroll just far enough to show
+  // them; "nearest" leaves the page alone where they already fit.
+  const verdictRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (phase !== "asking") verdictRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }, [phase]);
+
   function answer(side: "left" | "right") {
     if (phase !== "asking") return;
     const correct = isCorrect(pair, side);
@@ -140,7 +149,7 @@ export default function HigherLower({ deck, initialPair }: Props) {
       </div>
 
       {answered && (
-        <div className="animate-set-in flex flex-col gap-4">
+        <div ref={verdictRef} className="animate-set-in flex scroll-mb-4 flex-col gap-4">
           <p
             className="flex items-center justify-center gap-2.5 font-mono text-[12px] uppercase tracking-[0.16em]"
             style={{
