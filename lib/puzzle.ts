@@ -24,6 +24,13 @@ export interface PriceEntry {
   avgHourlyWageUSD: number;
   source: string;
   sourceDate: string;
+  /**
+   * The first game date ("YYYY-MM-DD") this row may be dealt on, for a row
+   * added to a country already in the rotation. A new row changes which item
+   * that country falls through to on a sparse day, so it only counts from a day
+   * nobody has played yet. Absent on every row that has always been there.
+   */
+  since?: string;
 }
 
 export const PRICES = pricesData as PriceEntry[];
@@ -33,11 +40,19 @@ const PRICE_INDEX = new Map(
   PRICES.map((p) => [`${p.itemId}:${p.countryCode}`, p])
 );
 
+/**
+ * The row for one (item, country) pair. With `onDate`, a row that only joined
+ * the games after that date is treated as absent, which is what keeps the daily
+ * schedule of a past day fixed when rows are added.
+ */
 export function findPrice(
   itemId: string,
-  countryCode: string
+  countryCode: string,
+  onDate?: string
 ): PriceEntry | undefined {
-  return PRICE_INDEX.get(`${itemId}:${countryCode}`);
+  const row = PRICE_INDEX.get(`${itemId}:${countryCode}`);
+  if (row?.since && onDate && onDate < row.since) return undefined;
+  return row;
 }
 
 const MS_PER_DAY = 24 * 60 * 60 * 1000;
@@ -165,8 +180,9 @@ export function getDailyPuzzle(today: Date = new Date()): DailyPuzzle | null {
   const countryCode = countryForDay(dayIndex);
   if (!countryCode) return null;
 
+  const iso = addDaysISO(ROTATION.startDate, dayIndex);
   for (const itemId of itemOrderForDay(dayIndex)) {
-    const price = findPrice(itemId, countryCode);
+    const price = findPrice(itemId, countryCode, iso);
     const item = getItem(itemId);
     if (price && item) {
       return { puzzleNumber: puzzleNumber(today), item, price };

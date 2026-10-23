@@ -30,3 +30,6 @@ yarn-error.log*
 
 # Font cache for scripts/generate-og.mjs
 .cache/
+
+# Agent worktrees
+.claude/worktrees/

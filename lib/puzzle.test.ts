@@ -166,8 +166,8 @@ describe("daily puzzle rotation", () => {
         // Only assert where the country actually stocks the scheduled item;
         // elsewhere the substitution rule picks, and it picks from this era's
         // list either way.
-        if (!findPrice(scheduled, country)) continue;
         const iso = addDaysISO(ROTATION.startDate, day);
+        if (!findPrice(scheduled, country, iso)) continue;
         expect(getPuzzleItemFor(iso), `day ${day} (${iso})`).toBe(scheduled);
       }
     }
@@ -208,7 +208,7 @@ describe("daily puzzle rotation", () => {
 
   it("only repeats an (item, country) pair after a full cycle", () => {
     const period = countryOrder.length * itemOrder.length;
-    expect(period).toBe(637); // 49 countries x 13 items
+    expect(period).toBe(793); // 61 countries x 13 items
 
     const seen = new Set<string>();
     for (let i = itemOrderFrom; i < itemOrderFrom + period; i++) {

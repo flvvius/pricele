@@ -112,6 +112,21 @@ export const COUNTRY_META: Record<string, CountryMeta> = {
   UY: { name: "Uruguay", flag: "🇺🇾", localCurrency: "UYU", avgHourlyWageUSD: 7.66, wageSource: "ILO 2024" },
   VN: { name: "Vietnam", flag: "🇻🇳", localCurrency: "VND", avgHourlyWageUSD: 2.8, wageSource: "estimate" },
   ZA: { name: "South Africa", flag: "🇿🇦", localCurrency: "ZAR", avgHourlyWageUSD: 4.5, wageSource: "estimate" },
+  // Added 2026-10-26, all with ILO hourly earnings from 2020 or later. Countries
+  // whose newest ILO figure was older (Bulgaria, Serbia and Ukraine among them)
+  // were left out rather than given a wage from before the 2022 price shock.
+  AT: { name: "Austria", flag: "🇦🇹", localCurrency: "EUR", avgHourlyWageUSD: 25.93, wageSource: "ILO 2021" },
+  BA: { name: "Bosnia & Herzegovina", flag: "🇧🇦", localCurrency: "BAM", avgHourlyWageUSD: 5.82, wageSource: "ILO 2025" },
+  DO: { name: "Dominican Republic", flag: "🇩🇴", localCurrency: "DOP", avgHourlyWageUSD: 2.91, wageSource: "ILO 2025" },
+  EC: { name: "Ecuador", flag: "🇪🇨", localCurrency: "USD", avgHourlyWageUSD: 3.4, wageSource: "ILO 2025" },
+  FI: { name: "Finland", flag: "🇫🇮", localCurrency: "EUR", avgHourlyWageUSD: 22.75, wageSource: "ILO 2022" },
+  GR: { name: "Greece", flag: "🇬🇷", localCurrency: "EUR", avgHourlyWageUSD: 6.82, wageSource: "ILO 2020" },
+  GT: { name: "Guatemala", flag: "🇬🇹", localCurrency: "GTQ", avgHourlyWageUSD: 3.07, wageSource: "ILO 2025" },
+  IS: { name: "Iceland", flag: "🇮🇸", localCurrency: "ISK", avgHourlyWageUSD: 31.27, wageSource: "ILO 2022" },
+  JO: { name: "Jordan", flag: "🇯🇴", localCurrency: "JOD", avgHourlyWageUSD: 2.59, wageSource: "ILO 2024" },
+  LK: { name: "Sri Lanka", flag: "🇱🇰", localCurrency: "LKR", avgHourlyWageUSD: 0.92, wageSource: "ILO 2024" },
+  MD: { name: "Moldova", flag: "🇲🇩", localCurrency: "MDL", avgHourlyWageUSD: 3, wageSource: "ILO 2025" },
+  SK: { name: "Slovakia", flag: "🇸🇰", localCurrency: "EUR", avgHourlyWageUSD: 9.62, wageSource: "ILO 2022" },
 };
 
 /**
@@ -125,7 +140,7 @@ export const COUNTRY_META: Record<string, CountryMeta> = {
  *
  * SOURCING RULE: standard rates come from PwC's Worldwide Tax Summaries VAT
  * quick chart, which is the single source used for every country so the figures
- * are consistent with one another rather than assembled from 49 different pages.
+ * are consistent with one another rather than assembled from 61 different pages.
  * Reduced and zero rates for European countries are cross-checked against the
  * Tax Foundation's annual VAT rates in Europe table. Where a country's food
  * treatment could not be confirmed from either, `food` is left undefined rather
@@ -188,6 +203,18 @@ export const COUNTRY_TAX: Record<string, CountryTax> = {
   UY: { standard: "22% IVA", food: "10% on food, milk exempt" },
   VN: { standard: "10% VAT", food: "5% on foodstuffs" },
   ZA: { standard: "15% VAT", food: "a defined basket of basic foods is zero-rated" },
+  AT: { standard: "20% USt", food: "10% on food" },
+  BA: { standard: "17% PDV, a single rate", food: "no reduced rate for food" },
+  DO: { standard: "18% ITBIS", food: "basic foods exempt" },
+  EC: { standard: "15% IVA", food: "0% on basic food" },
+  FI: { standard: "25.5% ALV", food: "13.5% on food" },
+  GR: { standard: "24% FPA", food: "13% on most food" },
+  GT: { standard: "12% IVA" },
+  IS: { standard: "24% VSK", food: "11% on food" },
+  JO: { standard: "16% general sales tax" },
+  LK: { standard: "18% VAT" },
+  MD: { standard: "20% TVA" },
+  SK: { standard: "23% DPH" },
 };
 
 export const COUNTRY_NOTES: Record<string, string> = {
@@ -288,4 +315,48 @@ US: "The United States is the reference point for the Big Mac Index, so its burg
 VN: "Vietnam is among the cheapest countries in the game across nearly every item. It is also the world's second-largest coffee producer, which shows up directly in café prices. Dairy is the usual exception for a country without a large domestic herd. VAT is 10% with foodstuffs at a reduced 5%, a modest wedge by regional standards. What makes Vietnam interesting in this table is that its cheapness is mostly genuine production advantage rather than a weak currency or a subsidy. The coffee is cheap because it is grown next door, which is the simplest explanation for a price anywhere on this site.",
 
 ZA: "South Africa has low prices in dollar terms but the widest gap in the game between price and affordability: measured in work time at the average wage, its groceries cost far more than the dollar figures suggest. Fuel is regulated and adjusted monthly by the government. VAT is 15% with a defined basket of basic foods zero-rated, a list that is explicitly a poverty measure and has been publicly debated and extended over the years. South Africa is the strongest argument in this dataset for not reading dollar prices as a cost of living: on the dollar column it looks affordable, and on the work-time column it is the hardest country in the table.",
+
+AT: "Austria sells the same branded groceries as Germany at noticeably higher prices, a gap Austrians call the Österreich-Aufschlag and the national competition authority has investigated more than once. Three supermarket groups hold most of the market, and suppliers have been accused of charging Austrian retailers more for identical goods. Tax does not explain it: VAT is 20% with food at 10%, close to the German treatment. Wages are among the highest in the euro area, which keeps the work-time column ordinary. The Big Mac row is the euro-area price, as it is for every eurozone country here, so it says nothing specifically Austrian.",
+
+BA: "Bosnia and Herzegovina runs a currency board: the convertible mark has been fixed to the euro since the board was set up, at the old Deutsche Mark rate, so its dollar prices move with the euro rather than with anything local. It also has one of the simplest consumption taxes in Europe, a single 17% VAT with no reduced band, so a loaf of bread is taxed exactly like a bottle of beer. Household electricity is cheap, generated by state-owned utilities from domestic coal and hydro and sold at regulated tariffs. Wages are among the lowest in Europe, which is what the work-time column is for.",
+
+DO: "The Dominican Republic is a tourism and remittance economy, and its prices split accordingly: local staples are cheap, while anything imported or sold into the resort trade is priced closer to US levels. ITBIS, the VAT, is 18% but exempts a list of basic foods. Fuel is priced weekly by the government, which has repeatedly held pump prices flat with subsidies when world oil prices rose. Electricity has the opposite problem: the distribution companies lose a large share of what they buy to theft and non-payment, and the state covers the difference, so household tariffs sit below what the power actually costs.",
+
+EC: "Ecuador has used the US dollar as its currency since 2000, so its prices involve no exchange rate at all: the local figure and the dollar figure are the same number. That makes it the cleanest comparison in the table with the United States and the hardest to explain away by currency. IVA went from 12% to 15% in 2024, with basic food at 0%. Fuel was subsidised for decades, and the removal of the diesel subsidy in 2025 raised pump prices sharply and led to protests. Electricity is mostly hydro, cheap in a wet year and the cause of rolling blackouts in the 2024 drought.",
+
+FI: "Finland has one of the highest standard VAT rates in the world, 25.5% since 2024, with food at 13.5%. Alcohol is the clearest Finnish price: drinks above 8% are sold only through Alko, the state retail monopoly, and excise duty is among the highest in the EU, so a bottle of beer is priced well above the European middle. Electricity has moved the other way. The Olkiluoto 3 reactor came online in 2023 and, with growing wind power, has given Finland some of the cheapest wholesale power in western Europe. The Big Mac row is the euro-area price, shared with every eurozone country here.",
+
+GR: "Greece has eurozone prices on a much lower wage: hourly earnings here are a fraction of those in Austria or Finland, a legacy of the debt crisis and the wage cuts that came with it, so the work-time column is where Greece looks expensive. VAT is 24%, one of the higher rates in the EU, with most food at 13% and some staples at 6%, and a 30% discount on all rates applies on some islands. Fuel excise puts Greek petrol and diesel among the dearer in Europe. The Big Mac row is the euro-area price, as for every eurozone country in the game.",
+
+GT: "Guatemala has one of the lowest consumption taxes in Latin America, a 12% IVA, and one of the lowest tax takes in the region overall, so the state's wedge in a price is thin. The quetzal has been unusually stable against the dollar for years, supported by large inflows of remittances from the United States, which makes the conversion here more trustworthy than in most of its neighbours. Fuel is imported and mostly passed through at world prices. The ILO wage covers employees, and a large share of Guatemalans work informally outside that count, so the work-time column flatters local purchasing power.",
+
+IS: "Iceland has the highest hourly earnings in the game and the price level to match, because almost everything on a shop shelf has to be shipped to a small island in the North Atlantic. There is no Big Mac row because there is no McDonald's: the chain closed its Icelandic restaurants in 2009, after the krona collapse made importing its ingredients uneconomic. VAT is 24% with food at 11%, and alcohol is sold only through Vínbúðin, the state monopoly, under heavy excise. Electricity is the exception: it comes almost entirely from hydro and geothermal, so household power costs less than in most of Europe despite the wages.",
+
+JO: "The Jordanian dinar has been pegged to the US dollar since 1995, so dollar prices here move with Jordanian costs rather than with an exchange rate. Jordan imports most of its food and nearly all of its energy, and fuel prices are reset monthly by a government committee to track world prices. The 16% general sales tax works like a VAT, with some goods taxed at reduced rates. Hourly earnings are modest against prices that are high for the region, so the work-time column is where Jordan stands out. It is also one of the most water-scarce countries in the world, which shapes what is grown locally and what is imported.",
+
+LK: "Sri Lanka defaulted on its foreign debt in 2022, and the rupee lost roughly half its value against the dollar within months, so its dollar prices look cheap while its work-time figures are among the most expensive in the table. The recovery has run through an IMF programme: fuel and electricity were moved to cost-reflective pricing, with fuel revised monthly by formula and power tariffs raised steeply in 2022 and 2023. VAT was raised from 15% to 18% in 2024 as part of the same repair. Hourly earnings are among the lowest in the game, which is why the gap between the two columns is so wide.",
+
+MD: "Moldova is one of the poorest countries in Europe by income, with hourly earnings closer to Latin America's than to its neighbour Romania's, and remittances from Moldovans working abroad are a large part of household income. It imports almost all of its energy and has spent the years since 2022 reducing its dependence on Russian gas, buying through Romania and the EU instead, a shift that raised household energy bills sharply. VAT is 20%, with some foods at a reduced rate. The leu floats, so dollar prices move with it, and the Big Mac row is one of the few in the index from this part of Europe.",
+
+SK: "Slovakia joined the euro in 2009 and is one of the poorer eurozone members, so it has euro-area prices for traded goods on wages about a third of Austria's, its neighbour across the Danube. It makes more cars per person than any country in the world, and the economy rises and falls with that industry. VAT went up from 20% to 23% in 2025, with reduced rates of 19% and 5%. Household energy prices are regulated and were capped by the government after 2022, which keeps the utility rows below the European middle. The Big Mac row is the euro-area price, shared with every eurozone country here.",
 };
+
+/**
+ * The day the twelve countries added in October 2026 join the games.
+ *
+ * The daily games deal from the whole price table with a per-day seed, so new
+ * rows reshuffle every deal, past days included. Holding the new countries out
+ * of any game dated before this keeps the archive and old share cards on the
+ * puzzles people actually played. Reference pages show them straight away.
+ */
+export const COUNTRIES_ADDED_ON: Record<string, string> = {
+  AT: "2026-10-26", BA: "2026-10-26", DO: "2026-10-26", EC: "2026-10-26",
+  FI: "2026-10-26", GR: "2026-10-26", GT: "2026-10-26", IS: "2026-10-26",
+  JO: "2026-10-26", LK: "2026-10-26", MD: "2026-10-26", SK: "2026-10-26",
+};
+
+/** Whether a game dated `date` ("YYYY-MM-DD") may deal this country. */
+export function countryInGames(code: string, date: string): boolean {
+  const added = COUNTRIES_ADDED_ON[code];
+  return !added || date >= added;
+}

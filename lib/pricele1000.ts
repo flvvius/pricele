@@ -1,4 +1,4 @@
-import { pricesForItem } from "./catalog";
+import { gameRows } from "./catalog";
 import {
   dayIndex,
   dealQuestions,
@@ -30,7 +30,9 @@ export function puzzleFor(date: string): ScoredPuzzle {
     openRangePuzzle(date).questions.map((q) => `${q.price.itemId}:${q.price.countryCode}`)
   );
   const rounds = dealQuestions(date, ROUNDS, 1000, openRange).map((q, i) => {
-    const all = pricesForItem(q.price.itemId).map((p) => p.priceUSD);
+    const all = gameRows(date)
+      .filter((p) => p.itemId === q.price.itemId)
+      .map((p) => p.priceUSD);
     return {
       ...q,
       weight: WEIGHTS[i],

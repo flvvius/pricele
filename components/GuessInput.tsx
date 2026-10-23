@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import { toUSD, type Currency } from "@/lib/currency";
+import { parsePrice, sanitizePrice } from "@/lib/priceinput";
 import CurrencyToggle from "./CurrencyToggle";
 
 interface Props {
@@ -11,15 +12,6 @@ interface Props {
   onCurrencyChange: (currency: Currency) => void;
   /** Receives the guess in USD, whatever currency it was typed in. */
   onGuess: (usd: number) => void;
-}
-
-// Keep only digits and a single decimal separator. Allowing both "." and ","
-// means the guess still parses on keyboards that only offer a comma.
-function sanitize(raw: string): string {
-  const cleaned = raw.replace(/[^0-9.,]/g, "");
-  const sep = cleaned.search(/[.,]/);
-  if (sep === -1) return cleaned;
-  return cleaned.slice(0, sep + 1) + cleaned.slice(sep + 1).replace(/[.,]/g, "");
 }
 
 export default function GuessInput({
@@ -34,7 +26,9 @@ export default function GuessInput({
 
   function submit(e: FormEvent) {
     e.preventDefault();
-    const n = Number(value.replace(",", "."));
+    // Shared with the other price games, so "1,6" and "1.234,56" read the
+    // same way everywhere on the site.
+    const n = parsePrice(value);
     if (!value.trim() || Number.isNaN(n) || n <= 0) {
       setError("Enter a price greater than 0.");
       return;
@@ -80,7 +74,7 @@ export default function GuessInput({
           disabled={disabled}
           value={value}
           onChange={(e) => {
-            setValue(sanitize(e.target.value));
+            setValue(sanitizePrice(e.target.value));
             if (error) setError(null);
           }}
           placeholder="0.00"

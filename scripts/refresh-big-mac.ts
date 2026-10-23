@@ -69,6 +69,8 @@ const ISO3: Record<string, string> = {
   PE: "PER", PH: "PHL", PK: "PAK", PL: "POL", PT: "EUZ", RO: "ROU",
   SA: "SAU", SE: "SWE", SG: "SGP", TH: "THA", TR: "TUR", US: "USA",
   UY: "URY", VN: "VNM", ZA: "ZAF",
+  AT: "EUZ", FI: "EUZ", GR: "EUZ", GT: "GTM", JO: "JOR", MD: "MDA",
+  SK: "EUZ",
 };
 
 interface Row {

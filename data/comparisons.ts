@@ -118,7 +118,7 @@ const OURS = {
     "Every past puzzle is replayable and cannot touch your streak",
   provenance:
     "Every price is a published figure with its source named on the page: the Economist's Big Mac Index, Numbeo, GlobalPetrolPrices.com, the WHO Global Health Observatory, Cable.co.uk, the World Bank and the FAO",
-  catalogue: "16 everyday items across 49 countries, 617 sourced rows",
+  catalogue: "16 everyday items across 61 countries, 714 sourced rows",
   offline:
     "Fully static. The puzzle data ships with the page, so it plays with a dropped connection",
 } as const;
@@ -225,7 +225,7 @@ export const COMPARISONS: Comparison[] = [
       {
         question: "Is Pricele the same as Costcodle?",
         answer:
-          "No. Costcodle gives you a Costco product and six guesses at its US shelf price. Pricele gives you an everyday item and a different country each day, and five guesses at what that item costs there. Both win at within 5%, but the questions are different: Costcodle is about one retailer, Pricele is about the spread between 49 countries.",
+          "No. Costcodle gives you a Costco product and six guesses at its US shelf price. Pricele gives you an everyday item and a different country each day, and five guesses at what that item costs there. Both win at within 5%, but the questions are different: Costcodle is about one retailer, Pricele is about the spread between 61 countries.",
       },
       {
         question: "Which is harder, Pricele or Costcodle?",
@@ -332,7 +332,7 @@ export const COMPARISONS: Comparison[] = [
       {
         question: "What is the difference between Pricele and Spendle?",
         answer:
-          "Both give you one product a day and win at within 5%. Spendle prices branded consumer goods in dollars with six guesses. Pricele prices everyday staples — a Big Mac, a litre of petrol, a month of mobile data — in a different one of 49 countries each day, with five guesses, and names the published source behind every figure.",
+          "Both give you one product a day and win at within 5%. Spendle prices branded consumer goods in dollars with six guesses. Pricele prices everyday staples — a Big Mac, a litre of petrol, a month of mobile data — in a different one of 61 countries each day, with five guesses, and names the published source behind every figure.",
       },
       {
         question: "Does Spendle have an archive like Pricele's?",
@@ -517,7 +517,7 @@ export const COMPARISONS: Comparison[] = [
       },
       {
         dimension: "Countries covered",
-        ours: "49, and the country is the puzzle",
+        ours: "61, and the country is the puzzle",
         theirs:
           "A currency selector converting the same dollar prices; no country dimension in the answers",
         edge: "ours",
@@ -567,7 +567,7 @@ export const COMPARISONS: Comparison[] = [
       {
         question: "What is the difference between Pricele and Price Games?",
         answer:
-          "Price Games is a large multi-mode platform: about a dozen game modes, live rooms for up to six players, a daily challenge and a monthly prize draw, all built on live Amazon listings. Pricele is a single daily puzzle — one everyday item, one of 49 countries, five guesses — built on published national statistics with named sources.",
+          "Price Games is a large multi-mode platform: about a dozen game modes, live rooms for up to six players, a daily challenge and a monthly prize draw, all built on live Amazon listings. Pricele is a single daily puzzle — one everyday item, one of 61 countries, five guesses — built on published national statistics with named sources.",
       },
       {
         question: "Can you play Pricele with friends?",
@@ -587,7 +587,7 @@ export const COMPARISONS: Comparison[] = [
     opponent: "Guess the Price",
     opponentUrl: "https://guesstheprice.net/",
     verdict:
-      "Guess the Price is a continuous run of fifteen items with no daily limit, built around extravagant products and community-submitted entries, and it shows you what everyone else guessed. Pricele is one puzzle a day, five guesses, on everyday things in 49 countries with a source for every figure. One is endless; the other is a habit.",
+      "Guess the Price is a continuous run of fifteen items with no daily limit, built around extravagant products and community-submitted entries, and it shows you what everyone else guessed. Pricele is one puzzle a day, five guesses, on everyday things in 61 countries with a source for every figure. One is endless; the other is a habit.",
     checked: "2026-08-20",
     sourceNote:
       "Played the live game and read its instructions page and shipped routes: fifteen items per run then play again with new items, feedback showing the real price plus the community average guess and the number of guesses recorded, and the submission and admin-review routes behind community entries.",

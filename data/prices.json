@@ -25,6 +25,18 @@
  },
  {
   "itemId": "big-mac",
+  "countryCode": "AT",
+  "countryName": "Austria",
+  "flag": "🇦🇹",
+  "priceUSD": 7.05,
+  "priceLocal": 6.08,
+  "localCurrency": "EUR",
+  "avgHourlyWageUSD": 25.93,
+  "source": "The Economist Big Mac Index (euro-area price), Jan 2026",
+  "sourceDate": "2026-01"
+ },
+ {
+  "itemId": "big-mac",
   "countryCode": "AU",
   "countryName": "Australia",
   "flag": "🇦🇺",
@@ -169,6 +181,18 @@
  },
  {
   "itemId": "big-mac",
+  "countryCode": "FI",
+  "countryName": "Finland",
+  "flag": "🇫🇮",
+  "priceUSD": 7.05,
+  "priceLocal": 6.08,
+  "localCurrency": "EUR",
+  "avgHourlyWageUSD": 22.75,
+  "source": "The Economist Big Mac Index (euro-area price), Jan 2026",
+  "sourceDate": "2026-01"
+ },
+ {
+  "itemId": "big-mac",
   "countryCode": "FR",
   "countryName": "France",
   "flag": "🇫🇷",
@@ -188,6 +212,30 @@
   "priceLocal": 5.29,
   "localCurrency": "GBP",
   "avgHourlyWageUSD": 18,
+  "source": "The Economist Big Mac Index, Jan 2026",
+  "sourceDate": "2026-01"
+ },
+ {
+  "itemId": "big-mac",
+  "countryCode": "GR",
+  "countryName": "Greece",
+  "flag": "🇬🇷",
+  "priceUSD": 7.05,
+  "priceLocal": 6.08,
+  "localCurrency": "EUR",
+  "avgHourlyWageUSD": 6.82,
+  "source": "The Economist Big Mac Index (euro-area price), Jan 2026",
+  "sourceDate": "2026-01"
+ },
+ {
+  "itemId": "big-mac",
+  "countryCode": "GT",
+  "countryName": "Guatemala",
+  "flag": "🇬🇹",
+  "priceUSD": 4.3,
+  "priceLocal": 33,
+  "localCurrency": "GTQ",
+  "avgHourlyWageUSD": 3.07,
   "source": "The Economist Big Mac Index, Jan 2026",
   "sourceDate": "2026-01"
  },
@@ -265,6 +313,18 @@
  },
  {
   "itemId": "big-mac",
+  "countryCode": "JO",
+  "countryName": "Jordan",
+  "flag": "🇯🇴",
+  "priceUSD": 3.53,
+  "priceLocal": 2.5,
+  "localCurrency": "JOD",
+  "avgHourlyWageUSD": 2.59,
+  "source": "The Economist Big Mac Index, Jan 2026",
+  "sourceDate": "2026-01"
+ },
+ {
+  "itemId": "big-mac",
   "countryCode": "JP",
   "countryName": "Japan",
   "flag": "🇯🇵",
@@ -296,6 +356,18 @@
   "priceLocal": 480000,
   "localCurrency": "LBP",
   "avgHourlyWageUSD": 3.2,
+  "source": "The Economist Big Mac Index, Jan 2026",
+  "sourceDate": "2026-01"
+ },
+ {
+  "itemId": "big-mac",
+  "countryCode": "MD",
+  "countryName": "Moldova",
+  "flag": "🇲🇩",
+  "priceUSD": 4.09,
+  "priceLocal": 70,
+  "localCurrency": "MDL",
+  "avgHourlyWageUSD": 3,
   "source": "The Economist Big Mac Index, Jan 2026",
   "sourceDate": "2026-01"
  },
@@ -465,6 +537,18 @@
   "localCurrency": "SGD",
   "avgHourlyWageUSD": 16,
   "source": "The Economist Big Mac Index, Jan 2026",
+  "sourceDate": "2026-01"
+ },
+ {
+  "itemId": "big-mac",
+  "countryCode": "SK",
+  "countryName": "Slovakia",
+  "flag": "🇸🇰",
+  "priceUSD": 7.05,
+  "priceLocal": 6.08,
+  "localCurrency": "EUR",
+  "avgHourlyWageUSD": 9.62,
+  "source": "The Economist Big Mac Index (euro-area price), Jan 2026",
   "sourceDate": "2026-01"
  },
  {
@@ -2856,6 +2940,383 @@
   "sourceDate": "2026-08"
  },
  {
+  "itemId": "gasoline-1l",
+  "countryCode": "AT",
+  "countryName": "Austria",
+  "flag": "🇦🇹",
+  "priceUSD": 2.04,
+  "priceLocal": 1.82,
+  "localCurrency": "EUR",
+  "avgHourlyWageUSD": 25.93,
+  "source": "GlobalPetrolPrices.com, 19-Oct-2026",
+  "sourceDate": "2026-10",
+  "since": "2026-10-26"
+ },
+ {
+  "itemId": "gasoline-1l",
+  "countryCode": "BA",
+  "countryName": "Bosnia & Herzegovina",
+  "flag": "🇧🇦",
+  "priceUSD": 1.96,
+  "priceLocal": 3.42,
+  "localCurrency": "BAM",
+  "avgHourlyWageUSD": 5.82,
+  "source": "GlobalPetrolPrices.com, 19-Oct-2026",
+  "sourceDate": "2026-10",
+  "since": "2026-10-26"
+ },
+ {
+  "itemId": "gasoline-1l",
+  "countryCode": "BD",
+  "countryName": "Bangladesh",
+  "flag": "🇧🇩",
+  "priceUSD": 1.34,
+  "priceLocal": 165,
+  "localCurrency": "BDT",
+  "avgHourlyWageUSD": 0.64,
+  "source": "GlobalPetrolPrices.com, 19-Oct-2026",
+  "sourceDate": "2026-10",
+  "since": "2026-10-26"
+ },
+ {
+  "itemId": "gasoline-1l",
+  "countryCode": "CL",
+  "countryName": "Chile",
+  "flag": "🇨🇱",
+  "priceUSD": 1.53,
+  "priceLocal": 1487.83,
+  "localCurrency": "CLP",
+  "avgHourlyWageUSD": 6.26,
+  "source": "GlobalPetrolPrices.com, 19-Oct-2026",
+  "sourceDate": "2026-10",
+  "since": "2026-10-26"
+ },
+ {
+  "itemId": "gasoline-1l",
+  "countryCode": "CO",
+  "countryName": "Colombia",
+  "flag": "🇨🇴",
+  "priceUSD": 1.33,
+  "priceLocal": 4196.64,
+  "localCurrency": "COP",
+  "avgHourlyWageUSD": 2.66,
+  "source": "GlobalPetrolPrices.com, 19-Oct-2026",
+  "sourceDate": "2026-10",
+  "since": "2026-10-26"
+ },
+ {
+  "itemId": "gasoline-1l",
+  "countryCode": "CR",
+  "countryName": "Costa Rica",
+  "flag": "🇨🇷",
+  "priceUSD": 1.68,
+  "priceLocal": 764,
+  "localCurrency": "CRC",
+  "avgHourlyWageUSD": 6.33,
+  "source": "GlobalPetrolPrices.com, 19-Oct-2026",
+  "sourceDate": "2026-10",
+  "since": "2026-10-26"
+ },
+ {
+  "itemId": "gasoline-1l",
+  "countryCode": "CZ",
+  "countryName": "Czechia",
+  "flag": "🇨🇿",
+  "priceUSD": 2.1,
+  "priceLocal": 45.35,
+  "localCurrency": "CZK",
+  "avgHourlyWageUSD": 10.8,
+  "source": "GlobalPetrolPrices.com, 19-Oct-2026",
+  "sourceDate": "2026-10",
+  "since": "2026-10-26"
+ },
+ {
+  "itemId": "gasoline-1l",
+  "countryCode": "DO",
+  "countryName": "Dominican Republic",
+  "flag": "🇩🇴",
+  "priceUSD": 1.54,
+  "priceLocal": 94.6,
+  "localCurrency": "DOP",
+  "avgHourlyWageUSD": 2.91,
+  "source": "GlobalPetrolPrices.com, 19-Oct-2026",
+  "sourceDate": "2026-10",
+  "since": "2026-10-26"
+ },
+ {
+  "itemId": "gasoline-1l",
+  "countryCode": "EC",
+  "countryName": "Ecuador",
+  "flag": "🇪🇨",
+  "priceUSD": 0.84,
+  "priceLocal": 0.84,
+  "localCurrency": "USD",
+  "avgHourlyWageUSD": 3.4,
+  "source": "GlobalPetrolPrices.com, 19-Oct-2026",
+  "sourceDate": "2026-10",
+  "since": "2026-10-26"
+ },
+ {
+  "itemId": "gasoline-1l",
+  "countryCode": "FI",
+  "countryName": "Finland",
+  "flag": "🇫🇮",
+  "priceUSD": 2.62,
+  "priceLocal": 2.33,
+  "localCurrency": "EUR",
+  "avgHourlyWageUSD": 22.75,
+  "source": "GlobalPetrolPrices.com, 19-Oct-2026",
+  "sourceDate": "2026-10",
+  "since": "2026-10-26"
+ },
+ {
+  "itemId": "gasoline-1l",
+  "countryCode": "GH",
+  "countryName": "Ghana",
+  "flag": "🇬🇭",
+  "priceUSD": 1.63,
+  "priceLocal": 18.98,
+  "localCurrency": "GHS",
+  "avgHourlyWageUSD": 1.22,
+  "source": "GlobalPetrolPrices.com, 19-Oct-2026",
+  "sourceDate": "2026-10",
+  "since": "2026-10-26"
+ },
+ {
+  "itemId": "gasoline-1l",
+  "countryCode": "GR",
+  "countryName": "Greece",
+  "flag": "🇬🇷",
+  "priceUSD": 2.46,
+  "priceLocal": 2.19,
+  "localCurrency": "EUR",
+  "avgHourlyWageUSD": 6.82,
+  "source": "GlobalPetrolPrices.com, 19-Oct-2026",
+  "sourceDate": "2026-10",
+  "since": "2026-10-26"
+ },
+ {
+  "itemId": "gasoline-1l",
+  "countryCode": "GT",
+  "countryName": "Guatemala",
+  "flag": "🇬🇹",
+  "priceUSD": 1.29,
+  "priceLocal": 9.8,
+  "localCurrency": "GTQ",
+  "avgHourlyWageUSD": 3.07,
+  "source": "GlobalPetrolPrices.com, 19-Oct-2026",
+  "sourceDate": "2026-10",
+  "since": "2026-10-26"
+ },
+ {
+  "itemId": "gasoline-1l",
+  "countryCode": "HU",
+  "countryName": "Hungary",
+  "flag": "🇭🇺",
+  "priceUSD": 1.98,
+  "priceLocal": 640,
+  "localCurrency": "HUF",
+  "avgHourlyWageUSD": 8.57,
+  "source": "GlobalPetrolPrices.com, 19-Oct-2026",
+  "sourceDate": "2026-10",
+  "since": "2026-10-26"
+ },
+ {
+  "itemId": "gasoline-1l",
+  "countryCode": "IL",
+  "countryName": "Israel",
+  "flag": "🇮🇱",
+  "priceUSD": 2.6,
+  "priceLocal": 8.03,
+  "localCurrency": "ILS",
+  "avgHourlyWageUSD": 20.43,
+  "source": "GlobalPetrolPrices.com, 19-Oct-2026",
+  "sourceDate": "2026-10",
+  "since": "2026-10-26"
+ },
+ {
+  "itemId": "gasoline-1l",
+  "countryCode": "IS",
+  "countryName": "Iceland",
+  "flag": "🇮🇸",
+  "priceUSD": 2.27,
+  "priceLocal": 275.53,
+  "localCurrency": "ISK",
+  "avgHourlyWageUSD": 31.27,
+  "source": "GlobalPetrolPrices.com, 19-Oct-2026",
+  "sourceDate": "2026-10",
+  "since": "2026-10-26"
+ },
+ {
+  "itemId": "gasoline-1l",
+  "countryCode": "JO",
+  "countryName": "Jordan",
+  "flag": "🇯🇴",
+  "priceUSD": 1.92,
+  "priceLocal": 1.36,
+  "localCurrency": "JOD",
+  "avgHourlyWageUSD": 2.59,
+  "source": "GlobalPetrolPrices.com, 19-Oct-2026",
+  "sourceDate": "2026-10",
+  "since": "2026-10-26"
+ },
+ {
+  "itemId": "gasoline-1l",
+  "countryCode": "LB",
+  "countryName": "Lebanon",
+  "flag": "🇱🇧",
+  "priceUSD": 1.39,
+  "priceLocal": 136950,
+  "localCurrency": "LBP",
+  "avgHourlyWageUSD": 3.2,
+  "source": "GlobalPetrolPrices.com, 19-Oct-2026",
+  "sourceDate": "2026-10",
+  "since": "2026-10-26"
+ },
+ {
+  "itemId": "gasoline-1l",
+  "countryCode": "LK",
+  "countryName": "Sri Lanka",
+  "flag": "🇱🇰",
+  "priceUSD": 1.43,
+  "priceLocal": 475,
+  "localCurrency": "LKR",
+  "avgHourlyWageUSD": 0.92,
+  "source": "GlobalPetrolPrices.com, 19-Oct-2026",
+  "sourceDate": "2026-10",
+  "since": "2026-10-26"
+ },
+ {
+  "itemId": "gasoline-1l",
+  "countryCode": "MD",
+  "countryName": "Moldova",
+  "flag": "🇲🇩",
+  "priceUSD": 1.86,
+  "priceLocal": 33.21,
+  "localCurrency": "MDL",
+  "avgHourlyWageUSD": 3,
+  "source": "GlobalPetrolPrices.com, 19-Oct-2026",
+  "sourceDate": "2026-10",
+  "since": "2026-10-26"
+ },
+ {
+  "itemId": "gasoline-1l",
+  "countryCode": "MY",
+  "countryName": "Malaysia",
+  "flag": "🇲🇾",
+  "priceUSD": 1.13,
+  "priceLocal": 4.62,
+  "localCurrency": "MYR",
+  "avgHourlyWageUSD": 3.81,
+  "source": "GlobalPetrolPrices.com, 19-Oct-2026",
+  "sourceDate": "2026-10",
+  "since": "2026-10-26"
+ },
+ {
+  "itemId": "gasoline-1l",
+  "countryCode": "NG",
+  "countryName": "Nigeria",
+  "flag": "🇳🇬",
+  "priceUSD": 1.01,
+  "priceLocal": 1348.5,
+  "localCurrency": "NGN",
+  "avgHourlyWageUSD": 0.37,
+  "source": "GlobalPetrolPrices.com, 19-Oct-2026",
+  "sourceDate": "2026-10",
+  "since": "2026-10-26"
+ },
+ {
+  "itemId": "gasoline-1l",
+  "countryCode": "PE",
+  "countryName": "Peru",
+  "flag": "🇵🇪",
+  "priceUSD": 1.69,
+  "priceLocal": 5.78,
+  "localCurrency": "PEN",
+  "avgHourlyWageUSD": 3.31,
+  "source": "GlobalPetrolPrices.com, 19-Oct-2026",
+  "sourceDate": "2026-10",
+  "since": "2026-10-26"
+ },
+ {
+  "itemId": "gasoline-1l",
+  "countryCode": "PH",
+  "countryName": "Philippines",
+  "flag": "🇵🇭",
+  "priceUSD": 1.41,
+  "priceLocal": 88.9,
+  "localCurrency": "PHP",
+  "avgHourlyWageUSD": 2.02,
+  "source": "GlobalPetrolPrices.com, 19-Oct-2026",
+  "sourceDate": "2026-10",
+  "since": "2026-10-26"
+ },
+ {
+  "itemId": "gasoline-1l",
+  "countryCode": "PK",
+  "countryName": "Pakistan",
+  "flag": "🇵🇰",
+  "priceUSD": 1.38,
+  "priceLocal": 381.14,
+  "localCurrency": "PKR",
+  "avgHourlyWageUSD": 0.5,
+  "source": "GlobalPetrolPrices.com, 19-Oct-2026",
+  "sourceDate": "2026-10",
+  "since": "2026-10-26"
+ },
+ {
+  "itemId": "gasoline-1l",
+  "countryCode": "RO",
+  "countryName": "Romania",
+  "flag": "🇷🇴",
+  "priceUSD": 2.13,
+  "priceLocal": 10.11,
+  "localCurrency": "RON",
+  "avgHourlyWageUSD": 7.86,
+  "source": "GlobalPetrolPrices.com, 19-Oct-2026",
+  "sourceDate": "2026-10",
+  "since": "2026-10-26"
+ },
+ {
+  "itemId": "gasoline-1l",
+  "countryCode": "SK",
+  "countryName": "Slovakia",
+  "flag": "🇸🇰",
+  "priceUSD": 2.07,
+  "priceLocal": 1.85,
+  "localCurrency": "EUR",
+  "avgHourlyWageUSD": 9.62,
+  "source": "GlobalPetrolPrices.com, 19-Oct-2026",
+  "sourceDate": "2026-10",
+  "since": "2026-10-26"
+ },
+ {
+  "itemId": "gasoline-1l",
+  "countryCode": "TZ",
+  "countryName": "Tanzania",
+  "flag": "🇹🇿",
+  "priceUSD": 1.53,
+  "priceLocal": 4057,
+  "localCurrency": "TZS",
+  "avgHourlyWageUSD": 1.08,
+  "source": "GlobalPetrolPrices.com, 19-Oct-2026",
+  "sourceDate": "2026-10",
+  "since": "2026-10-26"
+ },
+ {
+  "itemId": "gasoline-1l",
+  "countryCode": "UY",
+  "countryName": "Uruguay",
+  "flag": "🇺🇾",
+  "priceUSD": 2.25,
+  "priceLocal": 90.45,
+  "localCurrency": "UYU",
+  "avgHourlyWageUSD": 7.66,
+  "source": "GlobalPetrolPrices.com, 19-Oct-2026",
+  "sourceDate": "2026-10",
+  "since": "2026-10-26"
+ },
+ {
   "itemId": "diesel-1l",
   "countryCode": "AE",
   "countryName": "United Arab Emirates",
@@ -2881,6 +3342,18 @@
  },
  {
   "itemId": "diesel-1l",
+  "countryCode": "AT",
+  "countryName": "Austria",
+  "flag": "🇦🇹",
+  "priceUSD": 2.4,
+  "priceLocal": 2.13,
+  "localCurrency": "EUR",
+  "avgHourlyWageUSD": 25.93,
+  "source": "GlobalPetrolPrices.com, 19-Oct-2026",
+  "sourceDate": "2026-10"
+ },
+ {
+  "itemId": "diesel-1l",
   "countryCode": "AU",
   "countryName": "Australia",
   "flag": "🇦🇺",
@@ -2890,6 +3363,18 @@
   "avgHourlyWageUSD": 26,
   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
   "sourceDate": "2026-08"
+ },
+ {
+  "itemId": "diesel-1l",
+  "countryCode": "BA",
+  "countryName": "Bosnia & Herzegovina",
+  "flag": "🇧🇦",
+  "priceUSD": 2.15,
+  "priceLocal": 3.75,
+  "localCurrency": "BAM",
+  "avgHourlyWageUSD": 5.82,
+  "source": "GlobalPetrolPrices.com, 19-Oct-2026",
+  "sourceDate": "2026-10"
  },
  {
   "itemId": "diesel-1l",
@@ -3013,6 +3498,30 @@
  },
  {
   "itemId": "diesel-1l",
+  "countryCode": "DO",
+  "countryName": "Dominican Republic",
+  "flag": "🇩🇴",
+  "priceUSD": 1.16,
+  "priceLocal": 71.54,
+  "localCurrency": "DOP",
+  "avgHourlyWageUSD": 2.91,
+  "source": "GlobalPetrolPrices.com, 19-Oct-2026",
+  "sourceDate": "2026-10"
+ },
+ {
+  "itemId": "diesel-1l",
+  "countryCode": "EC",
+  "countryName": "Ecuador",
+  "flag": "🇪🇨",
+  "priceUSD": 0.82,
+  "priceLocal": 0.82,
+  "localCurrency": "USD",
+  "avgHourlyWageUSD": 3.4,
+  "source": "GlobalPetrolPrices.com, 19-Oct-2026",
+  "sourceDate": "2026-10"
+ },
+ {
+  "itemId": "diesel-1l",
   "countryCode": "EG",
   "countryName": "Egypt",
   "flag": "🇪🇬",
@@ -3034,6 +3543,18 @@
   "avgHourlyWageUSD": 12,
   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
   "sourceDate": "2026-08"
+ },
+ {
+  "itemId": "diesel-1l",
+  "countryCode": "FI",
+  "countryName": "Finland",
+  "flag": "🇫🇮",
+  "priceUSD": 2.85,
+  "priceLocal": 2.54,
+  "localCurrency": "EUR",
+  "avgHourlyWageUSD": 22.75,
+  "source": "GlobalPetrolPrices.com, 19-Oct-2026",
+  "sourceDate": "2026-10"
  },
  {
   "itemId": "diesel-1l",
@@ -3070,6 +3591,30 @@
   "avgHourlyWageUSD": 1.22,
   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
   "sourceDate": "2026-08"
+ },
+ {
+  "itemId": "diesel-1l",
+  "countryCode": "GR",
+  "countryName": "Greece",
+  "flag": "🇬🇷",
+  "priceUSD": 2.39,
+  "priceLocal": 2.13,
+  "localCurrency": "EUR",
+  "avgHourlyWageUSD": 6.82,
+  "source": "GlobalPetrolPrices.com, 19-Oct-2026",
+  "sourceDate": "2026-10"
+ },
+ {
+  "itemId": "diesel-1l",
+  "countryCode": "GT",
+  "countryName": "Guatemala",
+  "flag": "🇬🇹",
+  "priceUSD": 1.48,
+  "priceLocal": 11.26,
+  "localCurrency": "GTQ",
+  "avgHourlyWageUSD": 3.07,
+  "source": "GlobalPetrolPrices.com, 19-Oct-2026",
+  "sourceDate": "2026-10"
  },
  {
   "itemId": "diesel-1l",
@@ -3133,6 +3678,18 @@
  },
  {
   "itemId": "diesel-1l",
+  "countryCode": "IS",
+  "countryName": "Iceland",
+  "flag": "🇮🇸",
+  "priceUSD": 2.68,
+  "priceLocal": 324.77,
+  "localCurrency": "ISK",
+  "avgHourlyWageUSD": 31.27,
+  "source": "GlobalPetrolPrices.com, 19-Oct-2026",
+  "sourceDate": "2026-10"
+ },
+ {
+  "itemId": "diesel-1l",
   "countryCode": "IT",
   "countryName": "Italy",
   "flag": "🇮🇹",
@@ -3142,6 +3699,18 @@
   "avgHourlyWageUSD": 14,
   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
   "sourceDate": "2026-08"
+ },
+ {
+  "itemId": "diesel-1l",
+  "countryCode": "JO",
+  "countryName": "Jordan",
+  "flag": "🇯🇴",
+  "priceUSD": 1.27,
+  "priceLocal": 0.9,
+  "localCurrency": "JOD",
+  "avgHourlyWageUSD": 2.59,
+  "source": "GlobalPetrolPrices.com, 19-Oct-2026",
+  "sourceDate": "2026-10"
  },
  {
   "itemId": "diesel-1l",
@@ -3178,6 +3747,30 @@
   "avgHourlyWageUSD": 3.2,
   "source": "GlobalPetrolPrices.com, 17-Aug-2026",
   "sourceDate": "2026-08"
+ },
+ {
+  "itemId": "diesel-1l",
+  "countryCode": "LK",
+  "countryName": "Sri Lanka",
+  "flag": "🇱🇰",
+  "priceUSD": 1.59,
+  "priceLocal": 528,
+  "localCurrency": "LKR",
+  "avgHourlyWageUSD": 0.92,
+  "source": "GlobalPetrolPrices.com, 19-Oct-2026",
+  "sourceDate": "2026-10"
+ },
+ {
+  "itemId": "diesel-1l",
+  "countryCode": "MD",
+  "countryName": "Moldova",
+  "flag": "🇲🇩",
+  "priceUSD": 1.99,
+  "priceLocal": 35.56,
+  "localCurrency": "MDL",
+  "avgHourlyWageUSD": 3,
+  "source": "GlobalPetrolPrices.com, 19-Oct-2026",
+  "sourceDate": "2026-10"
  },
  {
   "itemId": "diesel-1l",
@@ -3361,6 +3954,18 @@
  },
  {
   "itemId": "diesel-1l",
+  "countryCode": "SK",
+  "countryName": "Slovakia",
+  "flag": "🇸🇰",
+  "priceUSD": 2.16,
+  "priceLocal": 1.92,
+  "localCurrency": "EUR",
+  "avgHourlyWageUSD": 9.62,
+  "source": "GlobalPetrolPrices.com, 19-Oct-2026",
+  "sourceDate": "2026-10"
+ },
+ {
+  "itemId": "diesel-1l",
   "countryCode": "TH",
   "countryName": "Thailand",
   "flag": "🇹🇭",
@@ -3469,6 +4074,18 @@
  },
  {
   "itemId": "electricity-100kwh",
+  "countryCode": "AT",
+  "countryName": "Austria",
+  "flag": "🇦🇹",
+  "priceUSD": 36.9,
+  "priceLocal": 32.8,
+  "localCurrency": "EUR",
+  "avgHourlyWageUSD": 25.93,
+  "source": "GlobalPetrolPrices.com, March 2026",
+  "sourceDate": "2026-03"
+ },
+ {
+  "itemId": "electricity-100kwh",
   "countryCode": "AU",
   "countryName": "Australia",
   "flag": "🇦🇺",
@@ -3478,6 +4095,18 @@
   "avgHourlyWageUSD": 26,
   "source": "GlobalPetrolPrices.com, December 2025",
   "sourceDate": "2025-12"
+ },
+ {
+  "itemId": "electricity-100kwh",
+  "countryCode": "BA",
+  "countryName": "Bosnia & Herzegovina",
+  "flag": "🇧🇦",
+  "priceUSD": 12.9,
+  "priceLocal": 22.5,
+  "localCurrency": "BAM",
+  "avgHourlyWageUSD": 5.82,
+  "source": "GlobalPetrolPrices.com, March 2026",
+  "sourceDate": "2026-03"
  },
  {
   "itemId": "electricity-100kwh",
@@ -3601,6 +4230,30 @@
  },
  {
   "itemId": "electricity-100kwh",
+  "countryCode": "DO",
+  "countryName": "Dominican Republic",
+  "flag": "🇩🇴",
+  "priceUSD": 11.1,
+  "priceLocal": 680.9,
+  "localCurrency": "DOP",
+  "avgHourlyWageUSD": 2.91,
+  "source": "GlobalPetrolPrices.com, March 2026",
+  "sourceDate": "2026-03"
+ },
+ {
+  "itemId": "electricity-100kwh",
+  "countryCode": "EC",
+  "countryName": "Ecuador",
+  "flag": "🇪🇨",
+  "priceUSD": 9.7,
+  "priceLocal": 9.7,
+  "localCurrency": "USD",
+  "avgHourlyWageUSD": 3.4,
+  "source": "GlobalPetrolPrices.com, March 2026",
+  "sourceDate": "2026-03"
+ },
+ {
+  "itemId": "electricity-100kwh",
   "countryCode": "EG",
   "countryName": "Egypt",
   "flag": "🇪🇬",
@@ -3622,6 +4275,18 @@
   "avgHourlyWageUSD": 12,
   "source": "GlobalPetrolPrices.com, December 2025",
   "sourceDate": "2025-12"
+ },
+ {
+  "itemId": "electricity-100kwh",
+  "countryCode": "FI",
+  "countryName": "Finland",
+  "flag": "🇫🇮",
+  "priceUSD": 16,
+  "priceLocal": 14.2,
+  "localCurrency": "EUR",
+  "avgHourlyWageUSD": 22.75,
+  "source": "GlobalPetrolPrices.com, March 2026",
+  "sourceDate": "2026-03"
  },
  {
   "itemId": "electricity-100kwh",
@@ -3658,6 +4323,30 @@
   "avgHourlyWageUSD": 1.22,
   "source": "GlobalPetrolPrices.com, December 2025",
   "sourceDate": "2025-12"
+ },
+ {
+  "itemId": "electricity-100kwh",
+  "countryCode": "GR",
+  "countryName": "Greece",
+  "flag": "🇬🇷",
+  "priceUSD": 26.2,
+  "priceLocal": 23.3,
+  "localCurrency": "EUR",
+  "avgHourlyWageUSD": 6.82,
+  "source": "GlobalPetrolPrices.com, March 2026",
+  "sourceDate": "2026-03"
+ },
+ {
+  "itemId": "electricity-100kwh",
+  "countryCode": "GT",
+  "countryName": "Guatemala",
+  "flag": "🇬🇹",
+  "priceUSD": 32.9,
+  "priceLocal": 250.8,
+  "localCurrency": "GTQ",
+  "avgHourlyWageUSD": 3.07,
+  "source": "GlobalPetrolPrices.com, March 2026",
+  "sourceDate": "2026-03"
  },
  {
   "itemId": "electricity-100kwh",
@@ -3721,6 +4410,18 @@
  },
  {
   "itemId": "electricity-100kwh",
+  "countryCode": "IS",
+  "countryName": "Iceland",
+  "flag": "🇮🇸",
+  "priceUSD": 20.8,
+  "priceLocal": 2522.3,
+  "localCurrency": "ISK",
+  "avgHourlyWageUSD": 31.27,
+  "source": "GlobalPetrolPrices.com, March 2026",
+  "sourceDate": "2026-03"
+ },
+ {
+  "itemId": "electricity-100kwh",
   "countryCode": "IT",
   "countryName": "Italy",
   "flag": "🇮🇹",
@@ -3730,6 +4431,18 @@
   "avgHourlyWageUSD": 14,
   "source": "GlobalPetrolPrices.com, December 2025",
   "sourceDate": "2025-12"
+ },
+ {
+  "itemId": "electricity-100kwh",
+  "countryCode": "JO",
+  "countryName": "Jordan",
+  "flag": "🇯🇴",
+  "priceUSD": 9,
+  "priceLocal": 6.4,
+  "localCurrency": "JOD",
+  "avgHourlyWageUSD": 2.59,
+  "source": "GlobalPetrolPrices.com, March 2026",
+  "sourceDate": "2026-03"
  },
  {
   "itemId": "electricity-100kwh",
@@ -3754,6 +4467,30 @@
   "avgHourlyWageUSD": 14,
   "source": "GlobalPetrolPrices.com, December 2025",
   "sourceDate": "2025-12"
+ },
+ {
+  "itemId": "electricity-100kwh",
+  "countryCode": "LK",
+  "countryName": "Sri Lanka",
+  "flag": "🇱🇰",
+  "priceUSD": 7.9,
+  "priceLocal": 2625.7,
+  "localCurrency": "LKR",
+  "avgHourlyWageUSD": 0.92,
+  "source": "GlobalPetrolPrices.com, March 2026",
+  "sourceDate": "2026-03"
+ },
+ {
+  "itemId": "electricity-100kwh",
+  "countryCode": "MD",
+  "countryName": "Moldova",
+  "flag": "🇲🇩",
+  "priceUSD": 20.1,
+  "priceLocal": 359,
+  "localCurrency": "MDL",
+  "avgHourlyWageUSD": 3,
+  "source": "GlobalPetrolPrices.com, March 2026",
+  "sourceDate": "2026-03"
  },
  {
   "itemId": "electricity-100kwh",
@@ -3937,6 +4674,18 @@
  },
  {
   "itemId": "electricity-100kwh",
+  "countryCode": "SK",
+  "countryName": "Slovakia",
+  "flag": "🇸🇰",
+  "priceUSD": 22.7,
+  "priceLocal": 20.2,
+  "localCurrency": "EUR",
+  "avgHourlyWageUSD": 9.62,
+  "source": "GlobalPetrolPrices.com, March 2026",
+  "sourceDate": "2026-03"
+ },
+ {
+  "itemId": "electricity-100kwh",
   "countryCode": "TH",
   "countryName": "Thailand",
   "flag": "🇹🇭",
@@ -4030,6 +4779,18 @@
   "avgHourlyWageUSD": 3.5,
   "source": "GlobalPetrolPrices.com, December 2025",
   "sourceDate": "2025-12"
+ },
+ {
+  "itemId": "natural-gas-100kwh",
+  "countryCode": "AT",
+  "countryName": "Austria",
+  "flag": "🇦🇹",
+  "priceUSD": 14.7,
+  "priceLocal": 13.1,
+  "localCurrency": "EUR",
+  "avgHourlyWageUSD": 25.93,
+  "source": "GlobalPetrolPrices.com, March 2026",
+  "sourceDate": "2026-03"
  },
  {
   "itemId": "natural-gas-100kwh",
@@ -4177,6 +4938,18 @@
  },
  {
   "itemId": "natural-gas-100kwh",
+  "countryCode": "FI",
+  "countryName": "Finland",
+  "flag": "🇫🇮",
+  "priceUSD": 14.2,
+  "priceLocal": 12.6,
+  "localCurrency": "EUR",
+  "avgHourlyWageUSD": 22.75,
+  "source": "GlobalPetrolPrices.com, March 2026",
+  "sourceDate": "2026-03"
+ },
+ {
+  "itemId": "natural-gas-100kwh",
   "countryCode": "FR",
   "countryName": "France",
   "flag": "🇫🇷",
@@ -4198,6 +4971,18 @@
   "avgHourlyWageUSD": 18,
   "source": "GlobalPetrolPrices.com, December 2025",
   "sourceDate": "2025-12"
+ },
+ {
+  "itemId": "natural-gas-100kwh",
+  "countryCode": "GR",
+  "countryName": "Greece",
+  "flag": "🇬🇷",
+  "priceUSD": 8.1,
+  "priceLocal": 7.2,
+  "localCurrency": "EUR",
+  "avgHourlyWageUSD": 6.82,
+  "source": "GlobalPetrolPrices.com, March 2026",
+  "sourceDate": "2026-03"
  },
  {
   "itemId": "natural-gas-100kwh",
@@ -4369,6 +5154,18 @@
  },
  {
   "itemId": "natural-gas-100kwh",
+  "countryCode": "SK",
+  "countryName": "Slovakia",
+  "flag": "🇸🇰",
+  "priceUSD": 6.5,
+  "priceLocal": 5.8,
+  "localCurrency": "EUR",
+  "avgHourlyWageUSD": 9.62,
+  "source": "GlobalPetrolPrices.com, March 2026",
+  "sourceDate": "2026-03"
+ },
+ {
+  "itemId": "natural-gas-100kwh",
   "countryCode": "TR",
   "countryName": "Turkey",
   "flag": "🇹🇷",
@@ -4417,6 +5214,18 @@
  },
  {
   "itemId": "cigarettes-20",
+  "countryCode": "AT",
+  "countryName": "Austria",
+  "flag": "🇦🇹",
+  "priceUSD": 7.04,
+  "priceLocal": 6.5,
+  "localCurrency": "EUR",
+  "avgHourlyWageUSD": 25.93,
+  "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
+  "sourceDate": "2024"
+ },
+ {
+  "itemId": "cigarettes-20",
   "countryCode": "AU",
   "countryName": "Australia",
   "flag": "🇦🇺",
@@ -4424,6 +5233,18 @@
   "priceLocal": 37.56,
   "localCurrency": "AUD",
   "avgHourlyWageUSD": 26,
+  "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
+  "sourceDate": "2024"
+ },
+ {
+  "itemId": "cigarettes-20",
+  "countryCode": "BA",
+  "countryName": "Bosnia & Herzegovina",
+  "flag": "🇧🇦",
+  "priceUSD": 3.6,
+  "priceLocal": 6.5,
+  "localCurrency": "BAM",
+  "avgHourlyWageUSD": 5.82,
   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
   "sourceDate": "2024"
  },
@@ -4549,6 +5370,30 @@
  },
  {
   "itemId": "cigarettes-20",
+  "countryCode": "DO",
+  "countryName": "Dominican Republic",
+  "flag": "🇩🇴",
+  "priceUSD": 5.87,
+  "priceLocal": 349,
+  "localCurrency": "DOP",
+  "avgHourlyWageUSD": 2.91,
+  "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
+  "sourceDate": "2024"
+ },
+ {
+  "itemId": "cigarettes-20",
+  "countryCode": "EC",
+  "countryName": "Ecuador",
+  "flag": "🇪🇨",
+  "priceUSD": 6.2,
+  "priceLocal": 6.2,
+  "localCurrency": "USD",
+  "avgHourlyWageUSD": 3.4,
+  "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
+  "sourceDate": "2024"
+ },
+ {
+  "itemId": "cigarettes-20",
   "countryCode": "EG",
   "countryName": "Egypt",
   "flag": "🇪🇬",
@@ -4568,6 +5413,18 @@
   "priceLocal": 5.6,
   "localCurrency": "EUR",
   "avgHourlyWageUSD": 12,
+  "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
+  "sourceDate": "2024"
+ },
+ {
+  "itemId": "cigarettes-20",
+  "countryCode": "FI",
+  "countryName": "Finland",
+  "flag": "🇫🇮",
+  "priceUSD": 10.94,
+  "priceLocal": 10.1,
+  "localCurrency": "EUR",
+  "avgHourlyWageUSD": 22.75,
   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
   "sourceDate": "2024"
  },
@@ -4604,6 +5461,30 @@
   "priceLocal": 26,
   "localCurrency": "GHS",
   "avgHourlyWageUSD": 1.22,
+  "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
+  "sourceDate": "2024"
+ },
+ {
+  "itemId": "cigarettes-20",
+  "countryCode": "GR",
+  "countryName": "Greece",
+  "flag": "🇬🇷",
+  "priceUSD": 4.98,
+  "priceLocal": 4.6,
+  "localCurrency": "EUR",
+  "avgHourlyWageUSD": 6.82,
+  "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
+  "sourceDate": "2024"
+ },
+ {
+  "itemId": "cigarettes-20",
+  "countryCode": "GT",
+  "countryName": "Guatemala",
+  "flag": "🇬🇹",
+  "priceUSD": 2.58,
+  "priceLocal": 20,
+  "localCurrency": "GTQ",
+  "avgHourlyWageUSD": 3.07,
   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
   "sourceDate": "2024"
  },
@@ -4669,6 +5550,18 @@
  },
  {
   "itemId": "cigarettes-20",
+  "countryCode": "IS",
+  "countryName": "Iceland",
+  "flag": "🇮🇸",
+  "priceUSD": 12.71,
+  "priceLocal": 1759,
+  "localCurrency": "ISK",
+  "avgHourlyWageUSD": 31.27,
+  "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
+  "sourceDate": "2024"
+ },
+ {
+  "itemId": "cigarettes-20",
   "countryCode": "IT",
   "countryName": "Italy",
   "flag": "🇮🇹",
@@ -4676,6 +5569,18 @@
   "priceLocal": 6.2,
   "localCurrency": "EUR",
   "avgHourlyWageUSD": 14,
+  "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
+  "sourceDate": "2024"
+ },
+ {
+  "itemId": "cigarettes-20",
+  "countryCode": "JO",
+  "countryName": "Jordan",
+  "flag": "🇯🇴",
+  "priceUSD": 3.38,
+  "priceLocal": 2.4,
+  "localCurrency": "JOD",
+  "avgHourlyWageUSD": 2.59,
   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
   "sourceDate": "2024"
  },
@@ -4712,6 +5617,30 @@
   "priceLocal": 68250,
   "localCurrency": "LBP",
   "avgHourlyWageUSD": 3.2,
+  "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
+  "sourceDate": "2024"
+ },
+ {
+  "itemId": "cigarettes-20",
+  "countryCode": "LK",
+  "countryName": "Sri Lanka",
+  "flag": "🇱🇰",
+  "priceUSD": 9.92,
+  "priceLocal": 3000,
+  "localCurrency": "LKR",
+  "avgHourlyWageUSD": 0.92,
+  "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
+  "sourceDate": "2024"
+ },
+ {
+  "itemId": "cigarettes-20",
+  "countryCode": "MD",
+  "countryName": "Moldova",
+  "flag": "🇲🇩",
+  "priceUSD": 2.82,
+  "priceLocal": 50,
+  "localCurrency": "MDL",
+  "avgHourlyWageUSD": 3,
   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
   "sourceDate": "2024"
  },
@@ -4897,6 +5826,18 @@
  },
  {
   "itemId": "cigarettes-20",
+  "countryCode": "SK",
+  "countryName": "Slovakia",
+  "flag": "🇸🇰",
+  "priceUSD": 5.74,
+  "priceLocal": 5.3,
+  "localCurrency": "EUR",
+  "avgHourlyWageUSD": 9.62,
+  "source": "WHO Global Health Observatory, tobacco tax survey 2024 (most sold brand)",
+  "sourceDate": "2024"
+ },
+ {
+  "itemId": "cigarettes-20",
   "countryCode": "TH",
   "countryName": "Thailand",
   "flag": "🇹🇭",
@@ -4988,6 +5929,18 @@
   "priceLocal": 1395.35,
   "localCurrency": "ARS",
   "avgHourlyWageUSD": 3.5,
+  "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+  "sourceDate": "2024"
+ },
+ {
+  "itemId": "beer-330ml",
+  "countryCode": "AT",
+  "countryName": "Austria",
+  "flag": "🇦🇹",
+  "priceUSD": 1.44,
+  "priceLocal": 1.33,
+  "localCurrency": "EUR",
+  "avgHourlyWageUSD": 25.93,
   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
   "sourceDate": "2024"
  },
@@ -5113,6 +6066,30 @@
  },
  {
   "itemId": "beer-330ml",
+  "countryCode": "DO",
+  "countryName": "Dominican Republic",
+  "flag": "🇩🇴",
+  "priceUSD": 1.28,
+  "priceLocal": 76.08,
+  "localCurrency": "DOP",
+  "avgHourlyWageUSD": 2.91,
+  "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+  "sourceDate": "2024"
+ },
+ {
+  "itemId": "beer-330ml",
+  "countryCode": "EC",
+  "countryName": "Ecuador",
+  "flag": "🇪🇨",
+  "priceUSD": 1.5,
+  "priceLocal": 1.5,
+  "localCurrency": "USD",
+  "avgHourlyWageUSD": 3.4,
+  "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+  "sourceDate": "2024"
+ },
+ {
+  "itemId": "beer-330ml",
   "countryCode": "EG",
   "countryName": "Egypt",
   "flag": "🇪🇬",
@@ -5132,6 +6109,18 @@
   "priceLocal": 0.58,
   "localCurrency": "EUR",
   "avgHourlyWageUSD": 12,
+  "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+  "sourceDate": "2024"
+ },
+ {
+  "itemId": "beer-330ml",
+  "countryCode": "FI",
+  "countryName": "Finland",
+  "flag": "🇫🇮",
+  "priceUSD": 1.49,
+  "priceLocal": 1.38,
+  "localCurrency": "EUR",
+  "avgHourlyWageUSD": 22.75,
   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
   "sourceDate": "2024"
  },
@@ -5168,6 +6157,30 @@
   "priceLocal": 10,
   "localCurrency": "GHS",
   "avgHourlyWageUSD": 1.22,
+  "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+  "sourceDate": "2024"
+ },
+ {
+  "itemId": "beer-330ml",
+  "countryCode": "GR",
+  "countryName": "Greece",
+  "flag": "🇬🇷",
+  "priceUSD": 1.14,
+  "priceLocal": 1.05,
+  "localCurrency": "EUR",
+  "avgHourlyWageUSD": 6.82,
+  "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+  "sourceDate": "2024"
+ },
+ {
+  "itemId": "beer-330ml",
+  "countryCode": "GT",
+  "countryName": "Guatemala",
+  "flag": "🇬🇹",
+  "priceUSD": 0.61,
+  "priceLocal": 4.71,
+  "localCurrency": "GTQ",
+  "avgHourlyWageUSD": 3.07,
   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
   "sourceDate": "2024"
  },
@@ -5221,6 +6234,18 @@
  },
  {
   "itemId": "beer-330ml",
+  "countryCode": "IS",
+  "countryName": "Iceland",
+  "flag": "🇮🇸",
+  "priceUSD": 2.52,
+  "priceLocal": 349,
+  "localCurrency": "ISK",
+  "avgHourlyWageUSD": 31.27,
+  "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+  "sourceDate": "2024"
+ },
+ {
+  "itemId": "beer-330ml",
   "countryCode": "IT",
   "countryName": "Italy",
   "flag": "🇮🇹",
@@ -5228,6 +6253,18 @@
   "priceLocal": 1.21,
   "localCurrency": "EUR",
   "avgHourlyWageUSD": 14,
+  "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+  "sourceDate": "2024"
+ },
+ {
+  "itemId": "beer-330ml",
+  "countryCode": "JO",
+  "countryName": "Jordan",
+  "flag": "🇯🇴",
+  "priceUSD": 3.24,
+  "priceLocal": 2.3,
+  "localCurrency": "JOD",
+  "avgHourlyWageUSD": 2.59,
   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
   "sourceDate": "2024"
  },
@@ -5264,6 +6301,18 @@
   "priceLocal": 98000,
   "localCurrency": "LBP",
   "avgHourlyWageUSD": 3.2,
+  "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+  "sourceDate": "2024"
+ },
+ {
+  "itemId": "beer-330ml",
+  "countryCode": "LK",
+  "countryName": "Sri Lanka",
+  "flag": "🇱🇰",
+  "priceUSD": 1.1,
+  "priceLocal": 333.01,
+  "localCurrency": "LKR",
+  "avgHourlyWageUSD": 0.92,
   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
   "sourceDate": "2024"
  },
@@ -5413,6 +6462,18 @@
  },
  {
   "itemId": "beer-330ml",
+  "countryCode": "SK",
+  "countryName": "Slovakia",
+  "flag": "🇸🇰",
+  "priceUSD": 0.92,
+  "priceLocal": 0.85,
+  "localCurrency": "EUR",
+  "avgHourlyWageUSD": 9.62,
+  "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+  "sourceDate": "2024"
+ },
+ {
+  "itemId": "beer-330ml",
   "countryCode": "TH",
   "countryName": "Thailand",
   "flag": "🇹🇭",
@@ -5492,6 +6553,18 @@
   "priceLocal": 16000,
   "localCurrency": "ARS",
   "avgHourlyWageUSD": 3.5,
+  "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+  "sourceDate": "2024"
+ },
+ {
+  "itemId": "spirits-750ml",
+  "countryCode": "AT",
+  "countryName": "Austria",
+  "flag": "🇦🇹",
+  "priceUSD": 16.23,
+  "priceLocal": 14.99,
+  "localCurrency": "EUR",
+  "avgHourlyWageUSD": 25.93,
   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
   "sourceDate": "2024"
  },
@@ -5617,6 +6690,30 @@
  },
  {
   "itemId": "spirits-750ml",
+  "countryCode": "DO",
+  "countryName": "Dominican Republic",
+  "flag": "🇩🇴",
+  "priceUSD": 12.61,
+  "priceLocal": 750,
+  "localCurrency": "DOP",
+  "avgHourlyWageUSD": 2.91,
+  "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+  "sourceDate": "2024"
+ },
+ {
+  "itemId": "spirits-750ml",
+  "countryCode": "EC",
+  "countryName": "Ecuador",
+  "flag": "🇪🇨",
+  "priceUSD": 16.5,
+  "priceLocal": 16.5,
+  "localCurrency": "USD",
+  "avgHourlyWageUSD": 3.4,
+  "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+  "sourceDate": "2024"
+ },
+ {
+  "itemId": "spirits-750ml",
   "countryCode": "EG",
   "countryName": "Egypt",
   "flag": "🇪🇬",
@@ -5636,6 +6733,18 @@
   "priceLocal": 8.89,
   "localCurrency": "EUR",
   "avgHourlyWageUSD": 12,
+  "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+  "sourceDate": "2024"
+ },
+ {
+  "itemId": "spirits-750ml",
+  "countryCode": "FI",
+  "countryName": "Finland",
+  "flag": "🇫🇮",
+  "priceUSD": 22.54,
+  "priceLocal": 20.82,
+  "localCurrency": "EUR",
+  "avgHourlyWageUSD": 22.75,
   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
   "sourceDate": "2024"
  },
@@ -5672,6 +6781,30 @@
   "priceLocal": 459.75,
   "localCurrency": "GHS",
   "avgHourlyWageUSD": 1.22,
+  "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+  "sourceDate": "2024"
+ },
+ {
+  "itemId": "spirits-750ml",
+  "countryCode": "GR",
+  "countryName": "Greece",
+  "flag": "🇬🇷",
+  "priceUSD": 23.03,
+  "priceLocal": 21.27,
+  "localCurrency": "EUR",
+  "avgHourlyWageUSD": 6.82,
+  "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+  "sourceDate": "2024"
+ },
+ {
+  "itemId": "spirits-750ml",
+  "countryCode": "GT",
+  "countryName": "Guatemala",
+  "flag": "🇬🇹",
+  "priceUSD": 6.46,
+  "priceLocal": 50,
+  "localCurrency": "GTQ",
+  "avgHourlyWageUSD": 3.07,
   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
   "sourceDate": "2024"
  },
@@ -5725,6 +6858,18 @@
  },
  {
   "itemId": "spirits-750ml",
+  "countryCode": "IS",
+  "countryName": "Iceland",
+  "flag": "🇮🇸",
+  "priceUSD": 53.01,
+  "priceLocal": 7339.29,
+  "localCurrency": "ISK",
+  "avgHourlyWageUSD": 31.27,
+  "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+  "sourceDate": "2024"
+ },
+ {
+  "itemId": "spirits-750ml",
   "countryCode": "IT",
   "countryName": "Italy",
   "flag": "🇮🇹",
@@ -5732,6 +6877,18 @@
   "priceLocal": 10.3,
   "localCurrency": "EUR",
   "avgHourlyWageUSD": 14,
+  "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+  "sourceDate": "2024"
+ },
+ {
+  "itemId": "spirits-750ml",
+  "countryCode": "JO",
+  "countryName": "Jordan",
+  "flag": "🇯🇴",
+  "priceUSD": 36.22,
+  "priceLocal": 25.71,
+  "localCurrency": "JOD",
+  "avgHourlyWageUSD": 2.59,
   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
   "sourceDate": "2024"
  },
@@ -5768,6 +6925,18 @@
   "priceLocal": 1513000,
   "localCurrency": "LBP",
   "avgHourlyWageUSD": 3.2,
+  "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+  "sourceDate": "2024"
+ },
+ {
+  "itemId": "spirits-750ml",
+  "countryCode": "LK",
+  "countryName": "Sri Lanka",
+  "flag": "🇱🇰",
+  "priceUSD": 11.84,
+  "priceLocal": 3580,
+  "localCurrency": "LKR",
+  "avgHourlyWageUSD": 0.92,
   "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
   "sourceDate": "2024"
  },
@@ -5917,6 +7086,18 @@
  },
  {
   "itemId": "spirits-750ml",
+  "countryCode": "SK",
+  "countryName": "Slovakia",
+  "flag": "🇸🇰",
+  "priceUSD": 10.43,
+  "priceLocal": 9.63,
+  "localCurrency": "EUR",
+  "avgHourlyWageUSD": 9.62,
+  "source": "WHO Global Health Observatory, alcohol tax survey 2024 (most sold brand)",
+  "sourceDate": "2024"
+ },
+ {
+  "itemId": "spirits-750ml",
   "countryCode": "TH",
   "countryName": "Thailand",
   "flag": "🇹🇭",
@@ -6001,6 +7182,18 @@
  },
  {
   "itemId": "eliquid-1ml",
+  "countryCode": "AT",
+  "countryName": "Austria",
+  "flag": "🇦🇹",
+  "priceUSD": 4.33,
+  "priceLocal": 4,
+  "localCurrency": "EUR",
+  "avgHourlyWageUSD": 25.93,
+  "source": "WHO Global Health Observatory, tobacco tax survey 2024 (cheapest disposable device)",
+  "sourceDate": "2024"
+ },
+ {
+  "itemId": "eliquid-1ml",
   "countryCode": "CH",
   "countryName": "Switzerland",
   "flag": "🇨🇭",
@@ -6061,6 +7254,18 @@
  },
  {
   "itemId": "eliquid-1ml",
+  "countryCode": "FI",
+  "countryName": "Finland",
+  "flag": "🇫🇮",
+  "priceUSD": 4.28,
+  "priceLocal": 3.95,
+  "localCurrency": "EUR",
+  "avgHourlyWageUSD": 22.75,
+  "source": "WHO Global Health Observatory, tobacco tax survey 2024 (cheapest disposable device)",
+  "sourceDate": "2024"
+ },
+ {
+  "itemId": "eliquid-1ml",
   "countryCode": "FR",
   "countryName": "France",
   "flag": "🇫🇷",
@@ -6073,6 +7278,18 @@
  },
  {
   "itemId": "eliquid-1ml",
+  "countryCode": "GR",
+  "countryName": "Greece",
+  "flag": "🇬🇷",
+  "priceUSD": 7.66,
+  "priceLocal": 7.08,
+  "localCurrency": "EUR",
+  "avgHourlyWageUSD": 6.82,
+  "source": "WHO Global Health Observatory, tobacco tax survey 2024 (cheapest disposable device)",
+  "sourceDate": "2024"
+ },
+ {
+  "itemId": "eliquid-1ml",
   "countryCode": "IE",
   "countryName": "Ireland",
   "flag": "🇮🇪",
@@ -6080,6 +7297,18 @@
   "priceLocal": 3.1,
   "localCurrency": "EUR",
   "avgHourlyWageUSD": 20,
+  "source": "WHO Global Health Observatory, tobacco tax survey 2024 (cheapest disposable device)",
+  "sourceDate": "2024"
+ },
+ {
+  "itemId": "eliquid-1ml",
+  "countryCode": "IS",
+  "countryName": "Iceland",
+  "flag": "🇮🇸",
+  "priceUSD": 2.85,
+  "priceLocal": 395,
+  "localCurrency": "ISK",
+  "avgHourlyWageUSD": 31.27,
   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (cheapest disposable device)",
   "sourceDate": "2024"
  },
@@ -6104,6 +7333,18 @@
   "priceLocal": 108280.8,
   "localCurrency": "LBP",
   "avgHourlyWageUSD": 3.2,
+  "source": "WHO Global Health Observatory, tobacco tax survey 2024 (cheapest disposable device)",
+  "sourceDate": "2024"
+ },
+ {
+  "itemId": "eliquid-1ml",
+  "countryCode": "MD",
+  "countryName": "Moldova",
+  "flag": "🇲🇩",
+  "priceUSD": 4.23,
+  "priceLocal": 75,
+  "localCurrency": "MDL",
+  "avgHourlyWageUSD": 3,
   "source": "WHO Global Health Observatory, tobacco tax survey 2024 (cheapest disposable device)",
   "sourceDate": "2024"
  },
@@ -6217,6 +7458,18 @@
  },
  {
   "itemId": "eliquid-1ml",
+  "countryCode": "SK",
+  "countryName": "Slovakia",
+  "flag": "🇸🇰",
+  "priceUSD": 3.22,
+  "priceLocal": 2.98,
+  "localCurrency": "EUR",
+  "avgHourlyWageUSD": 9.62,
+  "source": "WHO Global Health Observatory, tobacco tax survey 2024 (cheapest disposable device)",
+  "sourceDate": "2024"
+ },
+ {
+  "itemId": "eliquid-1ml",
   "countryCode": "ZA",
   "countryName": "South Africa",
   "flag": "🇿🇦",
@@ -6251,12 +7504,34 @@
  },
  {
   "itemId": "mobile-data-1gb",
+  "countryCode": "AT",
+  "countryName": "Austria",
+  "flag": "🇦🇹",
+  "priceUSD": 0.51,
+  "localCurrency": "EUR",
+  "avgHourlyWageUSD": 25.93,
+  "source": "Cable.co.uk worldwide mobile data pricing, 2023",
+  "sourceDate": "2023"
+ },
+ {
+  "itemId": "mobile-data-1gb",
   "countryCode": "AU",
   "countryName": "Australia",
   "flag": "🇦🇺",
   "priceUSD": 0.44,
   "localCurrency": "AUD",
   "avgHourlyWageUSD": 26,
+  "source": "Cable.co.uk worldwide mobile data pricing, 2023",
+  "sourceDate": "2023"
+ },
+ {
+  "itemId": "mobile-data-1gb",
+  "countryCode": "BA",
+  "countryName": "Bosnia & Herzegovina",
+  "flag": "🇧🇦",
+  "priceUSD": 1.03,
+  "localCurrency": "BAM",
+  "avgHourlyWageUSD": 5.82,
   "source": "Cable.co.uk worldwide mobile data pricing, 2023",
   "sourceDate": "2023"
  },
@@ -6372,6 +7647,28 @@
  },
  {
   "itemId": "mobile-data-1gb",
+  "countryCode": "DO",
+  "countryName": "Dominican Republic",
+  "flag": "🇩🇴",
+  "priceUSD": 0.79,
+  "localCurrency": "DOP",
+  "avgHourlyWageUSD": 2.91,
+  "source": "Cable.co.uk worldwide mobile data pricing, 2023",
+  "sourceDate": "2023"
+ },
+ {
+  "itemId": "mobile-data-1gb",
+  "countryCode": "EC",
+  "countryName": "Ecuador",
+  "flag": "🇪🇨",
+  "priceUSD": 1,
+  "localCurrency": "USD",
+  "avgHourlyWageUSD": 3.4,
+  "source": "Cable.co.uk worldwide mobile data pricing, 2023",
+  "sourceDate": "2023"
+ },
+ {
+  "itemId": "mobile-data-1gb",
   "countryCode": "EG",
   "countryName": "Egypt",
   "flag": "🇪🇬",
@@ -6389,6 +7686,17 @@
   "priceUSD": 0.48,
   "localCurrency": "EUR",
   "avgHourlyWageUSD": 12,
+  "source": "Cable.co.uk worldwide mobile data pricing, 2023",
+  "sourceDate": "2023"
+ },
+ {
+  "itemId": "mobile-data-1gb",
+  "countryCode": "FI",
+  "countryName": "Finland",
+  "flag": "🇫🇮",
+  "priceUSD": 0.52,
+  "localCurrency": "EUR",
+  "avgHourlyWageUSD": 22.75,
   "source": "Cable.co.uk worldwide mobile data pricing, 2023",
   "sourceDate": "2023"
  },
@@ -6422,6 +7730,28 @@
   "priceUSD": 0.4,
   "localCurrency": "GHS",
   "avgHourlyWageUSD": 1.22,
+  "source": "Cable.co.uk worldwide mobile data pricing, 2023",
+  "sourceDate": "2023"
+ },
+ {
+  "itemId": "mobile-data-1gb",
+  "countryCode": "GR",
+  "countryName": "Greece",
+  "flag": "🇬🇷",
+  "priceUSD": 2.79,
+  "localCurrency": "EUR",
+  "avgHourlyWageUSD": 6.82,
+  "source": "Cable.co.uk worldwide mobile data pricing, 2023",
+  "sourceDate": "2023"
+ },
+ {
+  "itemId": "mobile-data-1gb",
+  "countryCode": "GT",
+  "countryName": "Guatemala",
+  "flag": "🇬🇹",
+  "priceUSD": 1.17,
+  "localCurrency": "GTQ",
+  "avgHourlyWageUSD": 3.07,
   "source": "Cable.co.uk worldwide mobile data pricing, 2023",
   "sourceDate": "2023"
  },
@@ -6482,12 +7812,34 @@
  },
  {
   "itemId": "mobile-data-1gb",
+  "countryCode": "IS",
+  "countryName": "Iceland",
+  "flag": "🇮🇸",
+  "priceUSD": 1.08,
+  "localCurrency": "ISK",
+  "avgHourlyWageUSD": 31.27,
+  "source": "Cable.co.uk worldwide mobile data pricing, 2023",
+  "sourceDate": "2023"
+ },
+ {
+  "itemId": "mobile-data-1gb",
   "countryCode": "IT",
   "countryName": "Italy",
   "flag": "🇮🇹",
   "priceUSD": 0.09,
   "localCurrency": "EUR",
   "avgHourlyWageUSD": 14,
+  "source": "Cable.co.uk worldwide mobile data pricing, 2023",
+  "sourceDate": "2023"
+ },
+ {
+  "itemId": "mobile-data-1gb",
+  "countryCode": "JO",
+  "countryName": "Jordan",
+  "flag": "🇯🇴",
+  "priceUSD": 0.76,
+  "localCurrency": "JOD",
+  "avgHourlyWageUSD": 2.59,
   "source": "Cable.co.uk worldwide mobile data pricing, 2023",
   "sourceDate": "2023"
  },
@@ -6521,6 +7873,28 @@
   "priceUSD": 1.91,
   "localCurrency": "LBP",
   "avgHourlyWageUSD": 3.2,
+  "source": "Cable.co.uk worldwide mobile data pricing, 2023",
+  "sourceDate": "2023"
+ },
+ {
+  "itemId": "mobile-data-1gb",
+  "countryCode": "LK",
+  "countryName": "Sri Lanka",
+  "flag": "🇱🇰",
+  "priceUSD": 0.25,
+  "localCurrency": "LKR",
+  "avgHourlyWageUSD": 0.92,
+  "source": "Cable.co.uk worldwide mobile data pricing, 2023",
+  "sourceDate": "2023"
+ },
+ {
+  "itemId": "mobile-data-1gb",
+  "countryCode": "MD",
+  "countryName": "Moldova",
+  "flag": "🇲🇩",
+  "priceUSD": 0.28,
+  "localCurrency": "MDL",
+  "avgHourlyWageUSD": 3,
   "source": "Cable.co.uk worldwide mobile data pricing, 2023",
   "sourceDate": "2023"
  },
@@ -6691,6 +8065,17 @@
  },
  {
   "itemId": "mobile-data-1gb",
+  "countryCode": "SK",
+  "countryName": "Slovakia",
+  "flag": "🇸🇰",
+  "priceUSD": 2.68,
+  "localCurrency": "EUR",
+  "avgHourlyWageUSD": 9.62,
+  "source": "Cable.co.uk worldwide mobile data pricing, 2023",
+  "sourceDate": "2023"
+ },
+ {
+  "itemId": "mobile-data-1gb",
   "countryCode": "TH",
   "countryName": "Thailand",
   "flag": "🇹🇭",
@@ -6792,6 +8177,18 @@
  },
  {
   "itemId": "healthy-diet-day",
+  "countryCode": "AT",
+  "countryName": "Austria",
+  "flag": "🇦🇹",
+  "priceUSD": 2.69,
+  "priceLocal": 2.38,
+  "localCurrency": "EUR",
+  "avgHourlyWageUSD": 25.93,
+  "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
+  "sourceDate": "2025"
+ },
+ {
+  "itemId": "healthy-diet-day",
   "countryCode": "AU",
   "countryName": "Australia",
   "flag": "🇦🇺",
@@ -6799,6 +8196,18 @@
   "priceLocal": 4.76,
   "localCurrency": "AUD",
   "avgHourlyWageUSD": 26,
+  "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
+  "sourceDate": "2025"
+ },
+ {
+  "itemId": "healthy-diet-day",
+  "countryCode": "BA",
+  "countryName": "Bosnia & Herzegovina",
+  "flag": "🇧🇦",
+  "priceUSD": 2.96,
+  "priceLocal": 5.13,
+  "localCurrency": "BAM",
+  "avgHourlyWageUSD": 5.82,
   "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
   "sourceDate": "2025"
  },
@@ -6924,6 +8333,30 @@
  },
  {
   "itemId": "healthy-diet-day",
+  "countryCode": "DO",
+  "countryName": "Dominican Republic",
+  "flag": "🇩🇴",
+  "priceUSD": 2.15,
+  "priceLocal": 133.32,
+  "localCurrency": "DOP",
+  "avgHourlyWageUSD": 2.91,
+  "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
+  "sourceDate": "2025"
+ },
+ {
+  "itemId": "healthy-diet-day",
+  "countryCode": "EC",
+  "countryName": "Ecuador",
+  "flag": "🇪🇨",
+  "priceUSD": 1.62,
+  "priceLocal": 1.62,
+  "localCurrency": "USD",
+  "avgHourlyWageUSD": 3.4,
+  "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
+  "sourceDate": "2025"
+ },
+ {
+  "itemId": "healthy-diet-day",
   "countryCode": "EG",
   "countryName": "Egypt",
   "flag": "🇪🇬",
@@ -6943,6 +8376,18 @@
   "priceLocal": 2.55,
   "localCurrency": "EUR",
   "avgHourlyWageUSD": 12,
+  "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
+  "sourceDate": "2025"
+ },
+ {
+  "itemId": "healthy-diet-day",
+  "countryCode": "FI",
+  "countryName": "Finland",
+  "flag": "🇫🇮",
+  "priceUSD": 3.48,
+  "priceLocal": 3.08,
+  "localCurrency": "EUR",
+  "avgHourlyWageUSD": 22.75,
   "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
   "sourceDate": "2025"
  },
@@ -6979,6 +8424,30 @@
   "priceLocal": 24.81,
   "localCurrency": "GHS",
   "avgHourlyWageUSD": 1.22,
+  "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
+  "sourceDate": "2025"
+ },
+ {
+  "itemId": "healthy-diet-day",
+  "countryCode": "GR",
+  "countryName": "Greece",
+  "flag": "🇬🇷",
+  "priceUSD": 2.93,
+  "priceLocal": 2.59,
+  "localCurrency": "EUR",
+  "avgHourlyWageUSD": 6.82,
+  "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
+  "sourceDate": "2025"
+ },
+ {
+  "itemId": "healthy-diet-day",
+  "countryCode": "GT",
+  "countryName": "Guatemala",
+  "flag": "🇬🇹",
+  "priceUSD": 2.31,
+  "priceLocal": 17.76,
+  "localCurrency": "GTQ",
+  "avgHourlyWageUSD": 3.07,
   "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
   "sourceDate": "2025"
  },
@@ -7044,6 +8513,18 @@
  },
  {
   "itemId": "healthy-diet-day",
+  "countryCode": "IS",
+  "countryName": "Iceland",
+  "flag": "🇮🇸",
+  "priceUSD": 4.49,
+  "priceLocal": 576.42,
+  "localCurrency": "ISK",
+  "avgHourlyWageUSD": 31.27,
+  "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
+  "sourceDate": "2025"
+ },
+ {
+  "itemId": "healthy-diet-day",
   "countryCode": "IT",
   "countryName": "Italy",
   "flag": "🇮🇹",
@@ -7051,6 +8532,18 @@
   "priceLocal": 2.81,
   "localCurrency": "EUR",
   "avgHourlyWageUSD": 14,
+  "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
+  "sourceDate": "2025"
+ },
+ {
+  "itemId": "healthy-diet-day",
+  "countryCode": "JO",
+  "countryName": "Jordan",
+  "flag": "🇯🇴",
+  "priceUSD": 1.55,
+  "priceLocal": 1.1,
+  "localCurrency": "JOD",
+  "avgHourlyWageUSD": 2.59,
   "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
   "sourceDate": "2025"
  },
@@ -7087,6 +8580,30 @@
   "priceLocal": 407250.16,
   "localCurrency": "LBP",
   "avgHourlyWageUSD": 3.2,
+  "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
+  "sourceDate": "2025"
+ },
+ {
+  "itemId": "healthy-diet-day",
+  "countryCode": "LK",
+  "countryName": "Sri Lanka",
+  "flag": "🇱🇰",
+  "priceUSD": 1.41,
+  "priceLocal": 422.73,
+  "localCurrency": "LKR",
+  "avgHourlyWageUSD": 0.92,
+  "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
+  "sourceDate": "2025"
+ },
+ {
+  "itemId": "healthy-diet-day",
+  "countryCode": "MD",
+  "countryName": "Moldova",
+  "flag": "🇲🇩",
+  "priceUSD": 1.92,
+  "priceLocal": 33.43,
+  "localCurrency": "MDL",
+  "avgHourlyWageUSD": 3,
   "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
   "sourceDate": "2025"
  },
@@ -7267,6 +8784,18 @@
   "priceLocal": 3.7,
   "localCurrency": "SGD",
   "avgHourlyWageUSD": 16,
+  "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
+  "sourceDate": "2025"
+ },
+ {
+  "itemId": "healthy-diet-day",
+  "countryCode": "SK",
+  "countryName": "Slovakia",
+  "flag": "🇸🇰",
+  "priceUSD": 2.86,
+  "priceLocal": 2.53,
+  "localCurrency": "EUR",
+  "avgHourlyWageUSD": 9.62,
   "source": "World Bank Food Prices for Nutrition, 2025 (converted at the World Bank official exchange rate)",
   "sourceDate": "2025"
  },

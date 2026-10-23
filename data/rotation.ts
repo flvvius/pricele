@@ -4,10 +4,10 @@
 // where dayIndex = daysSince(startDate) and `from` is the day the list in force
 // took over (see the era chain below).
 //
-// The two lists advance independently. Their lengths (49 and 13) are coprime, so
-// a given pair only recurs after 49 x 13 = 637 days: a different country every
+// The two lists advance independently. Their lengths (61 and 13) are coprime, so
+// a given pair only recurs after 61 x 13 = 793 days: a different country every
 // day, a different item every day, and the same combination about once every
-// year and three quarters.
+// two years.
 //
 // STABILITY RULE. Read this before editing:
 //   Never move startDate, and never edit an era that is already in force. Each
@@ -30,8 +30,8 @@
 //
 //   One extra constraint on the item chain: keep the live list's length coprime
 //   with the country list's, or the pairing collapses onto a short cycle and
-//   most combinations never come up. With 49 countries, that rules out any item
-//   count divisible by 7.
+//   most combinations never come up. With 61 countries (a prime), any item
+//   count below 61 works; under the old 49 it ruled out multiples of 7.
 //
 //   Removing an item from the catalogue does not remove it from the eras it was
 //   scheduled in: an id stays behind as a tombstone so the list keeps its
@@ -129,16 +129,35 @@ const ITEMS_NO_LPG: string[] = [
 // Spirits, vape liquid and natural gas left the games (see RETIRED_FROM_GAMES in
 // data/items.ts): players found them unguessable, and the reference pages keep
 // them. Dropping three takes the list to 13. Dropping only the two players named
-// would have left 14, which shares a factor of 7 with the 49 countries and
+// would have left 14, which shares a factor of 7 with the 61 countries and
 // collapses the pairing onto a seventh of the combinations.
 //
-// The order was searched for the lowest rate of the same item showing two days
-// running against FULL_COUNTRIES, under 4% across a full cycle.
+// It takes over on the same day as the 61-country roster below, and the two
+// orders were searched together for the lowest rate of the same item showing
+// two days running: about 2.4% across a full 793-day cycle, counting the
+// petrol rows that join on the same day.
 const GAME_ITEMS: string[] = [
-  "electricity-100kwh", "cigarettes-20", "healthy-diet-day", "beer-330ml",
-  "apples-1kg", "eggs-12", "gasoline-1l", "cappuccino",
-  "milk-1l", "coke-330ml", "big-mac", "mobile-data-1gb",
+  "gasoline-1l", "cigarettes-20", "healthy-diet-day", "mobile-data-1gb",
+  "beer-330ml", "apples-1kg", "eggs-12", "milk-1l",
+  "cappuccino", "coke-330ml", "big-mac", "electricity-100kwh",
   "diesel-1l",
+];
+
+// The 61-country roster, in force from day 94 (2026-10-26): the 49 plus twelve
+// added in October 2026 (see COUNTRIES_ADDED_ON in data/countries.ts).
+//
+// 61 is prime, so it stays coprime with any item count short of 61. The order
+// was searched against GAME_ITEMS for the repeat rate above, and its first week
+// avoids the seven countries shown in the last week of FULL_COUNTRIES, so the
+// changeover never brings one back within a few days.
+const COUNTRIES_61: string[] = [
+  "PT", "EG", "FI", "NG", "NZ", "JO", "SA", "MD", "SG", "GT",
+  "SE", "ES", "CZ", "BA", "IT", "ID", "PE", "AR", "CO", "DO",
+  "FR", "IE", "ZA", "VN", "AT", "JP", "PL", "AU", "CL", "KR",
+  "TR", "CA", "SK", "IS", "TH", "GB", "NL", "DE", "AE", "RO",
+  "GH", "LB", "UY", "IN", "IL", "BR", "GR", "BD", "HU", "CH",
+  "MY", "US", "CR", "LK", "PH", "TZ", "PK", "EC", "NO", "CN",
+  "MX",
 ];
 
 export const ROTATION: Rotation = {
@@ -147,6 +166,8 @@ export const ROTATION: Rotation = {
   countryEras: [
     { from: 0, order: LAUNCH_COUNTRIES },
     { from: 30, order: FULL_COUNTRIES },
+    // 2026-10-26, alongside the 13-item era.
+    { from: 94, order: COUNTRIES_61 },
   ],
   itemEras: [
     { from: 0, order: LAUNCH_ITEMS },

@@ -13,5 +13,7 @@ export default defineConfig({
     // as .tsx was collected by nothing and reported as neither passing nor
     // failing — the worst of the three outcomes.
     include: ["**/*.test.{ts,tsx}"],
+    // Agent worktrees live under .claude/ and carry a full copy of the suite.
+    exclude: ["**/node_modules/**", ".claude/**"],
   },
 });

@@ -1,6 +1,7 @@
 import { CAPITALS } from "@/data/capitals";
-import { dealtInGames, getItem } from "@/data/items";
-import { pairForDate } from "./catalog";
+import { getItem } from "@/data/items";
+import { countryInGames } from "@/data/countries";
+import { gameRows, pairForDate } from "./catalog";
 import { PRICES, dateFromISO, type PriceEntry } from "./puzzle";
 
 export const MAX_GUESSES = 6;
@@ -70,10 +71,20 @@ function shuffled<T>(list: T[], rand: () => number): T[] {
   return out;
 }
 
-const CYCLE = shuffled(
-  COUNTRIES.map((c) => c.code),
-  rng(0x5eed)
-);
+// The answer cycle is a fixed shuffle of the countries in play that day. A
+// country joining changes the list and so the shuffle, but only from the day it
+// joins: the days before keep the cycle they were played on.
+const cycles = new Map<string, string[]>();
+function cycleFor(date: string): string[] {
+  const codes = COUNTRIES.filter((c) => countryInGames(c.code, date)).map((c) => c.code);
+  const key = codes.join();
+  let cycle = cycles.get(key);
+  if (!cycle) {
+    cycle = shuffled(codes, rng(0x5eed));
+    cycles.set(key, cycle);
+  }
+  return cycle;
+}
 
 function rowsFor(code: string): PriceEntry[] {
   return PRICES.filter((p) => p.countryCode === code && p.priceUSD > 0);
@@ -82,6 +93,7 @@ function rowsFor(code: string): PriceEntry[] {
 export function puzzleFor(date: string): AtlasPuzzle {
   const avoid = pairForDate(dateFromISO(date));
   const idx = dayIndex(date);
+  const CYCLE = cycleFor(date);
   const lap = Math.floor(idx / CYCLE.length);
   let pos = ((idx % CYCLE.length) + CYCLE.length) % CYCLE.length;
   if (CYCLE[pos] === avoid?.countryCode) pos = (pos + Math.floor(CYCLE.length / 2)) % CYCLE.length;
@@ -89,7 +101,8 @@ export function puzzleFor(date: string): AtlasPuzzle {
   const answer = COUNTRIES.find((c) => c.code === code)!;
 
   const rand = rng(idx * 2654435761 + lap);
-  const rows = rowsFor(code).filter((r) => dealtInGames(r.itemId, date));
+  const inPlay = new Set(gameRows(date).map((r) => `${r.itemId}:${r.countryCode}`));
+  const rows = rowsFor(code).filter((r) => inPlay.has(`${r.itemId}:${r.countryCode}`));
   const lead = shuffled(
     rows.filter((r) => FIRST_CLUES.includes(r.itemId)),
     rand

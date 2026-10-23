@@ -12,7 +12,8 @@ import {
   countryForDay,
   type PriceEntry,
 } from "@/lib/puzzle";
-import { ITEMS, getItem, type Item } from "@/data/items";
+import { ITEMS, dealtInGames, getItem, type Item } from "@/data/items";
+import { countryInGames } from "@/data/countries";
 import { ROTATION } from "@/data/rotation";
 
 export interface Country {
@@ -22,6 +23,20 @@ export interface Country {
   slug: string;
   localCurrency: string;
   avgHourlyWageUSD: number;
+}
+
+/**
+ * The rows a daily game dated `date` may deal: no retired items, and no country
+ * from before the day it joined. Every seeded game draws from this rather than
+ * from PRICES, so changes to the table never reshuffle a day already played.
+ */
+export function gameRows(date: string): PriceEntry[] {
+  return PRICES.filter(
+    (p) =>
+      dealtInGames(p.itemId, date) &&
+      countryInGames(p.countryCode, date) &&
+      !(p.since && date < p.since)
+  );
 }
 
 /** URL-safe slug for a country, e.g. "United States" -> "united-states". */
@@ -82,8 +97,16 @@ export function rankForItem(itemId: string, code: string): number | null {
 }
 
 /** Median USD price of an item across every country that has it. */
-export function medianPriceUSD(itemId: string): number {
-  const v = pricesForItem(itemId).map((p) => p.priceUSD);
+/**
+ * The median dollar price of an item. Pass the game's date when a seeded game
+ * shows it, so the figure is taken over the countries in play that day and a
+ * country joining later never rewrites the "typical" price of a day played.
+ */
+export function medianPriceUSD(itemId: string, date?: string): number {
+  const rows = date
+    ? gameRows(date).filter((p) => p.itemId === itemId).sort((a, b) => a.priceUSD - b.priceUSD)
+    : pricesForItem(itemId);
+  const v = rows.map((p) => p.priceUSD);
   if (v.length === 0) return 0;
   const mid = Math.floor(v.length / 2);
   return v.length % 2 === 0 ? (v[mid - 1] + v[mid]) / 2 : v[mid];
@@ -135,8 +158,9 @@ export function pairForDate(
   const dayIndex = daysSince(ROTATION.startDate, date);
   const countryCode = countryForDay(dayIndex);
   if (!countryCode) return null;
+  const iso = addDaysISO(ROTATION.startDate, dayIndex);
   for (const itemId of itemOrderForDay(dayIndex)) {
-    if (findPrice(itemId, countryCode) && getItem(itemId)) {
+    if (findPrice(itemId, countryCode, iso) && getItem(itemId)) {
       return { itemId, countryCode };
     }
   }
