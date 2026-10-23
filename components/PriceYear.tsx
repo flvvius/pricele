@@ -186,7 +186,9 @@ export default function PriceYear() {
                 value={year}
                 onChange={(e) => setYear(Number(e.target.value))}
                 aria-label="Year"
-                className="w-full accent-accent"
+                // 32px tall rather than the 16px default, so a thumb on a
+                // phone lands on the slider and not on the page behind it.
+                className="h-8 w-full accent-accent"
               />
               <div className="flex justify-between font-mono text-[12px] text-ink-muted">
                 <span>{p.firstYear}</span>
@@ -213,19 +215,22 @@ export default function PriceYear() {
           </p>
           <ol className="flex flex-col gap-1.5" aria-label="Your receipts">
             {p.receipts.map((r, i) => (
+              // Stacked, not side by side: with the years in a column of their
+              // own, three item names had about a third of a 320px screen and
+              // wrapped to five lines a receipt.
               <li
                 key={i}
-                className="flex justify-between border-b border-rule-soft py-1.5 text-[14px]"
+                className="flex flex-col gap-0.5 border-b border-rule-soft py-1.5 text-[14px]"
               >
                 <span>
                   {missEmoji(Math.abs(state.guesses[i] - r.year))}{" "}
                   {r.items.map((x) => lowerFirst(x.name.replace(/^An? /, ""))).join(", ")}
                 </span>
-                <span className="shrink-0 pl-3 font-mono text-ink-muted">
+                <span className="font-mono text-[13px] text-ink-muted">
                   You {state.guesses[i]} · Real{" "}
                   <Link
                     href={`/years/${r.year}`}
-                    className="underline underline-offset-2 hover:text-ink"
+                    className="-my-2 inline-block py-2 underline underline-offset-2 hover:text-ink"
                   >
                     {r.year}
                   </Link>

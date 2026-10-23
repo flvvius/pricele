@@ -12,8 +12,10 @@ import {
   MAX_NAME_LENGTH,
 } from "@/lib/room";
 
+// 16px, not 15: iOS Safari zooms the page into any field set smaller than
+// 16px when it takes focus, and leaves it zoomed after the keyboard goes.
 const FIELD =
-  "w-full border border-rule bg-paper-raised px-3 py-2.5 font-mono text-[15px] text-ink outline-none transition-[border-color] duration-fast ease-out focus:border-ink placeholder:text-ink-faint";
+  "w-full border border-rule bg-paper-raised px-3 py-2.5 font-mono text-[16px] text-ink outline-none transition-[border-color] duration-fast ease-out focus:border-ink placeholder:text-ink-faint";
 
 const BUTTON =
   "bg-ink px-5 py-3 font-mono text-[12px] uppercase tracking-[0.18em] text-paper-raised transition-transform duration-press ease-out active:scale-[0.98] disabled:opacity-40";
@@ -160,6 +162,10 @@ export default function ClassroomSetup() {
           value={code}
           onChange={(e) => setCode(e.target.value.toUpperCase())}
           maxLength={4}
+          autoCapitalize="characters"
+          autoCorrect="off"
+          autoComplete="off"
+          spellCheck={false}
           placeholder="ABCD"
           aria-label="Room code"
           className={`${FIELD} tracking-[0.35em]`}

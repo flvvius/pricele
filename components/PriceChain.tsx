@@ -70,8 +70,20 @@ export default function PriceChain() {
     <div className="flex max-w-xl flex-col gap-5">
       {archived && <ArchiveNote date={date} href="/games/higher-or-lower" />}
       <p className="label text-center">
-        Higher or Lower Daily #{p.number} · Call {Math.min(i + 1, CALLS)} of {CALLS}
+        Higher or Lower Daily #{p.number} · {over ? "Final score" : `Call ${i + 1} of ${CALLS}`}
       </p>
+
+      {/* The verdict on the call just made, above the cards where the eye
+          already is. The running list below grows downward, so the newest
+          result was always its last row, off the bottom of a phone screen. */}
+      {!over && i > 0 && (
+        <p className="border-l-2 border-rule py-1 pl-2.5 text-[14px] text-ink-body" aria-live="polite">
+          {state.calls[i - 1] === truth(p, i - 1) ? "🟩 Right." : "🟥 Wrong."} {p.cards[i].itemName} in{" "}
+          {p.cards[i].countryName} is {usd(p.cards[i].priceUSD)},{" "}
+          {p.cards[i].priceUSD > p.cards[i - 1].priceUSD ? "higher" : "lower"} than{" "}
+          {usd(p.cards[i - 1].priceUSD)}.
+        </p>
+      )}
 
       {!over && (
         <>
@@ -99,24 +111,7 @@ export default function PriceChain() {
         </>
       )}
 
-      {i > 0 && (
-        <ol className="flex flex-col gap-1.5" aria-label="Your calls" aria-live="polite">
-          {state.calls.map((c, k) => {
-            const ok = c === truth(p, k);
-            const a = p.cards[k];
-            const b = p.cards[k + 1];
-            return (
-              <li key={k} className="border-b border-rule-soft py-1.5 text-[13px]">
-                <span className="mr-1.5">{ok ? "🟩" : "🟥"}</span>
-                {a.itemName} {a.flag} <span className="font-mono">{usd(a.priceUSD)}</span> →{" "}
-                {b.itemName} {b.flag} <span className="font-mono">{usd(b.priceUSD)}</span>
-                <span className="text-ink-muted"> · you said {c}</span>
-              </li>
-            );
-          })}
-        </ol>
-      )}
-
+      {/* Score and share before the nine-row list, not after it. */}
       {over && (
         <div className="flex flex-col gap-3">
           <p className="text-[16px] text-ink-body">
@@ -139,6 +134,25 @@ export default function PriceChain() {
           <NextUp current="higher-or-lower" />
         </div>
       )}
+
+      {i > 0 && (
+        <ol className="flex flex-col gap-1.5" aria-label="Your calls" aria-live="polite">
+          {state.calls.map((c, k) => {
+            const ok = c === truth(p, k);
+            const a = p.cards[k];
+            const b = p.cards[k + 1];
+            return (
+              <li key={k} className="border-b border-rule-soft py-1.5 text-[13px]">
+                <span className="mr-1.5">{ok ? "🟩" : "🟥"}</span>
+                {a.itemName} {a.flag} <span className="font-mono">{usd(a.priceUSD)}</span> →{" "}
+                {b.itemName} {b.flag} <span className="font-mono">{usd(b.priceUSD)}</span>
+                <span className="text-ink-muted"> · you said {c}</span>
+              </li>
+            );
+          })}
+        </ol>
+      )}
+
 
       <p className="text-[13px] leading-relaxed text-ink-muted">
         Prices are the same sourced figures as the daily Pricele puzzle, in U.S. dollars. Each pair

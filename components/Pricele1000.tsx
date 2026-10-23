@@ -173,7 +173,9 @@ export default function Pricele1000() {
                 onChange={(e) => setStep(Number(e.target.value))}
                 aria-label="Your price"
                 aria-valuetext={formatUSD(guess)}
-                className="w-full accent-accent"
+                // Taller than the 16px default for a thumb to land on; see
+                // the same slider in PriceYear.
+                className="h-8 w-full accent-accent"
               />
               <div className="flex justify-between font-mono text-[12px] text-ink-muted">
                 <span>{formatUSD(roundPrice(round.min))}</span>
@@ -199,12 +201,14 @@ export default function Pricele1000() {
             {p.rounds.map((r, k) => (
               <li
                 key={k}
-                className="flex justify-between gap-3 border-b border-rule-soft py-1.5 text-[14px]"
+                // Stacked: side by side, the two prices took most of a 320px
+                // row and squeezed the item into a narrow wrapping column.
+                className="flex flex-col gap-0.5 border-b border-rule-soft py-1.5 text-[14px]"
               >
                 <span className="min-w-0">
                   {bandEmoji(state.guesses[k], r.price.priceUSD)} {r.label}, {r.price.countryName}
                 </span>
-                <span className="shrink-0 font-mono text-ink-muted">
+                <span className="font-mono text-[13px] text-ink-muted">
                   You {formatUSD(state.guesses[k])} · Real {formatUSD(r.price.priceUSD)}
                 </span>
               </li>

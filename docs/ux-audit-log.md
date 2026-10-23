@@ -122,3 +122,28 @@ Found and fixed (Rent Ratio):
   names broke mid-name against each other ("St. / Louis, MO" opposite
   "Riverside-San / Bernardino, CA"). One area per line now, with the one the
   player picked in bold.
+
+## Round 6: Price Year, Pricele 1000, Higher or Lower Daily, /classroom
+
+Checked: all three played to the end at 320px, light and dark; the sliders,
+the nudge buttons, the reviews between rounds, the final lists. Plus the
+/classroom inputs the baseline sweep flagged.
+
+Found and fixed:
+
+- The year and price sliders were 16px tall, the browser default, so a thumb
+  missing by a few pixels scrolled the page instead. They are 32px now (the
+  track looks the same; the hit area grows).
+- Price Year and Pricele 1000 set each final row as two columns, item names
+  beside "You 2004 · Real 2020"; at 320px the names got a third of the width
+  and wrapped to five lines a row. The rows stack now. The year links in
+  Price Year get a taller hit area.
+- Higher or Lower Daily: the result of each call was the last row of a list
+  that grows downward under the buttons, so it was never on screen. The
+  verdict on the call just made now sits above the cards ("Right. Coca-Cola
+  in Portugal is $1.21, lower than $1.83."). When finished, the header said
+  "Call 9 of 9" instead of a final score, and the score and share button came
+  after all nine rows; both fixed.
+- /classroom: the room name, code and label inputs were 15px, which makes
+  iOS Safari zoom the page on focus. They are 16px. The room code field also
+  stops autocorrect and capitalises as you type.
