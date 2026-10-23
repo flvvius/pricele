@@ -61,7 +61,7 @@ export type ArticleBlock =
   /** The paragraph without which the article has no point. */
   | { kind: "callout"; heading?: string; paragraphs: string[] }
   /** Closing call to action. Always links to the game. */
-  | { kind: "cta"; heading: string; paragraphs: string[]; buttonLabel: string };
+  | { kind: "cta"; heading: string; paragraphs: string[]; buttonLabel: string; href?: string };
 
 export interface Article {
   slug: string;
@@ -2720,6 +2720,361 @@ export const ARTICLES: Article[] = [
       {
         label: "Eurostat: Household consumption expenditure",
         url: "https://ec.europa.eu/eurostat/web/household-budget-surveys",
+      },
+    ],
+  },
+  // ---------------------------------------------------------------------------
+  {
+    slug: "grocery-prices-the-year-you-were-born",
+    title: "What groceries cost the year you were born, and what they cost in work",
+    description:
+      "Eggs, bread, gas and coffee in 1980, 1990, 2000 and 2010, from BLS average prices, and how many minutes of work each took then and now.",
+    date: "2026-10-23",
+    status: "published",
+    readingMinutes: 5,
+    body: [
+      {
+        kind: "prose",
+        paragraphs: [
+          "Every family has a price someone remembers. Gas under a dollar. Bread for fifty cents. The memory is usually right about the sticker and wrong about what it meant, because pay was lower too.",
+          "The Bureau of Labor Statistics has tracked the U.S. average price of everyday groceries every month since 1980, and the average hourly wage of production and nonsupervisory workers for just as long. Put the two side by side and you can answer the question properly. Here is what a basket cost the year you were born, in dollars and in minutes of work.",
+        ],
+      },
+      {
+        kind: "table",
+        heading: "The sticker prices",
+        intro: "Yearly averages of the monthly BLS figures, U.S. city average.",
+        caption: "Source: BLS Average Price Data and Current Employment Statistics.",
+        columns: ["Item", "1980", "1990", "2000", "2010", "2025"],
+        rows: [
+          ["Dozen large eggs", "$0.84", "$1.01", "$0.91", "$1.66", "$4.25"],
+          ["Pound of white bread", "$0.51", "$0.69", "$0.93", "$1.37", "$1.87"],
+          ["Gallon of regular gas", "$1.25", "$1.16", "$1.51", "$2.79", "$3.26"],
+          ["Pound of ground coffee", "$3.14", "$2.97", "$3.45", "$3.91", "$8.18"],
+          ["Pound of bananas", "$0.34", "$0.46", "$0.50", "$0.58", "$0.65"],
+          ["Pound of whole chicken", "$0.71", "$0.90", "$1.07", "$1.26", "$2.06"],
+          ["Average hourly wage", "$6.85", "$10.20", "$14.01", "$19.05", "$31.34"],
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "The wage row is the one that matters",
+        paragraphs: [
+          "Between 1980 and 2025 the average hourly wage went up **4.6 times**. Any grocery whose price rose by less than that got cheaper to buy in hours of work, whatever the sticker says.",
+          "Most did. A gallon of gas took about 11 minutes of work in 1980 and about 6 in 2025. A pound of coffee took 27 minutes in 1980 and 16 now. Bananas went from 3 minutes a pound to just over 1.",
+          "Eggs went the other way. In 2000 a dozen took under 4 minutes of work. In 2025, after two rounds of bird flu, it took about 8. If you were born around 2000, eggs really are twice as dear as when you were a baby, measured in the only unit that counts.",
+        ],
+      },
+      {
+        kind: "callout",
+        heading: "Born after 2000? Your basket hasn't moved much",
+        paragraphs: [
+          "For the 15 groceries we track, the basket took about 128 minutes of work at 2000 prices and about 124 at 2025 prices. For 2005 and 2010 the two numbers are within a couple of minutes. The big drop in the work cost of food happened between 1980 and 2000. Since then the gains on gas and coffee and the losses on eggs and beef have mostly cancelled out.",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "Why the memory still feels true",
+        paragraphs: [
+          "People remember prices from the time they started paying for things themselves, usually their late teens. A price list fixed at that age becomes the reference every later price gets compared with. We wrote about that in [your mental price list is broken](/blog/your-mental-price-list-is-broken).",
+          "The minutes-of-work number corrects for pay, but it is an average. It does not describe a household whose wages lagged the average, and it leaves out rent, health care and college, which rose far faster than groceries. Food got cheaper in work time. Plenty else did not.",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "Look up your own year",
+        paragraphs: [
+          "There is a page for [every year from 1980](/years) with the full list of items, each one's price then and now, and the minutes of work for both. The [price history](/history) pages chart each item year by year if you want to see where the spikes were.",
+        ],
+      },
+      {
+        kind: "cta",
+        heading: "Find your birth year",
+        paragraphs: [
+          "Pick a year and see what a dozen eggs, a gallon of gas and a pound of coffee cost, and how long it took to earn them.",
+        ],
+        buttonLabel: "Prices by year",
+        href: "/years",
+      },
+    ],
+    sources: [
+      {
+        label: "BLS: Average Price Data (CPI)",
+        url: "https://www.bls.gov/cpi/factsheets/average-prices.htm",
+      },
+      {
+        label: "BLS: Average hourly earnings of production and nonsupervisory employees (CES0500000008)",
+        url: "https://data.bls.gov/timeseries/CES0500000008",
+      },
+      {
+        label: "BLS: Eggs, grade A, large, per dozen (APU0000708111)",
+        url: "https://data.bls.gov/timeseries/APU0000708111",
+      },
+    ],
+  },
+
+  // ---------------------------------------------------------------------------
+  {
+    slug: "grocery-work-time-index-1980-2025",
+    title: "Groceries take 24% less work than in 1980, and 12% more than in 2020",
+    description:
+      "A fixed basket of 12 U.S. groceries and gas took 112 minutes of work in 1980, 76 in 2020 and 86 in 2025. Both halves of the grocery argument are right.",
+    date: "2026-10-23",
+    status: "published",
+    readingMinutes: 5,
+    body: [
+      {
+        kind: "prose",
+        paragraphs: [
+          "Two claims about groceries get thrown at each other all the time. One says food has never been cheaper. The other says nobody can afford to eat any more. Both cite real numbers, and the reason they never settle it is that they start counting from different years.",
+          "We built a small index to see both at once. Take 12 everyday items the Bureau of Labor Statistics has priced every year since 1980: eggs, white bread, a gallon of gas, bacon, bananas, ice cream, potato chips, whole chicken, chocolate chip cookies, tomatoes, sugar and frozen orange juice. Add up what one of each costs. Divide by the average hourly wage of production and nonsupervisory workers. The result is how many minutes of work the basket takes.",
+        ],
+      },
+      {
+        kind: "stats",
+        items: [
+          { value: "112 min", label: "the basket in 1980" },
+          { value: "76 min", label: "the low point, 2020" },
+          { value: "86 min", label: "the basket in 2025" },
+        ],
+      },
+      {
+        kind: "table",
+        heading: "Minutes of work for the basket",
+        caption: "Yearly averages of monthly BLS prices and wages.",
+        columns: ["Year", "Minutes"],
+        rows: [
+          ["1980", "112.4"],
+          ["1990", "106.9"],
+          ["2000", "89.9"],
+          ["2010", "91.1"],
+          ["2019", "78.5"],
+          ["2020", "76.1"],
+          ["2021", "78.7"],
+          ["2022", "86.4"],
+          ["2023", "85.5"],
+          ["2024", "85.4"],
+          ["2025", "85.6"],
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "The long view",
+        paragraphs: [
+          "Over 45 years the basket fell from 112 minutes to 86, a drop of about **24%**. Most of that came in the 1990s. The basket was still at 107 minutes in 1990 and was down to 90 by 2000. It then sat around 90 for 15 years before falling again in the late 2010s.",
+          "Wages did most of the work. They rose 4.6 times over the period while most of these prices rose between 2 and 4 times.",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "The short view",
+        paragraphs: [
+          "The low point was **2020**, at 76 minutes. In 2022 the basket jumped almost 10% in one year, to 86 minutes, the largest single-year rise in the series. It has stayed there since. Wages caught up with the new prices but did not bring the basket back down.",
+          "So anyone who started shopping for themselves in the late 2010s has watched the work cost of groceries go up by about **12%** and stay up. That is not a misreading of the receipts. It is a real change, and it is also small next to the fall since 1980. Both statements are true, and an argument that picks one of them is choosing a start year.",
+        ],
+      },
+      {
+        kind: "callout",
+        heading: "What the index leaves out",
+        paragraphs: [
+          "It is 12 items, not a diet. It uses a national average wage, so it says nothing about a household whose pay lagged it. It also ignores what people buy now that they did not in 1980, such as more prepared food and more meals out. Read it as a measure of what these 12 things cost in work, and nothing wider.",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "The full series",
+        paragraphs: [
+          "The [grocery work-time index](/work-time) page has every year from 1980, a chart, each item's own change, and an embed code if you want to put the chart on your own site. The figures come straight from BLS, which publishes them in the public domain.",
+        ],
+      },
+      {
+        kind: "cta",
+        heading: "See every year",
+        paragraphs: [
+          "The index page shows the whole series with a chart, and how each of the 12 items moved on its own.",
+        ],
+        buttonLabel: "Open the index",
+        href: "/work-time",
+      },
+    ],
+    sources: [
+      {
+        label: "BLS: Average Price Data (CPI)",
+        url: "https://www.bls.gov/cpi/factsheets/average-prices.htm",
+      },
+      {
+        label: "BLS: Average hourly earnings of production and nonsupervisory employees (CES0500000008)",
+        url: "https://data.bls.gov/timeseries/CES0500000008",
+      },
+      {
+        label: "BLS: Gasoline, unleaded regular, per gallon (APU000074714)",
+        url: "https://data.bls.gov/timeseries/APU000074714",
+      },
+    ],
+  },
+
+  // ---------------------------------------------------------------------------
+  {
+    slug: "groceries-that-got-harder-to-buy-since-1980",
+    title: "Only three groceries got harder to buy since 1980",
+    description:
+      "Of 15 U.S. groceries BLS has priced since the 1980s, only ground beef, eggs and bacon now take more minutes of work. Bananas take 58% less.",
+    date: "2026-10-23",
+    status: "published",
+    readingMinutes: 4,
+    body: [
+      {
+        kind: "prose",
+        paragraphs: [
+          "A price that went up five times sounds like a disaster. Whether it is depends on what happened to pay. The average U.S. hourly wage for production and nonsupervisory workers rose from $6.85 in 1980 to $31.34 in 2025, **4.6 times**. A grocery got harder to buy only if its price rose faster than that.",
+          "Of the 15 items we track from BLS average price data, three did.",
+        ],
+      },
+      {
+        kind: "table",
+        heading: "Minutes of work, first year vs 2025",
+        intro:
+          "Ground beef and cheddar start in 1984, the first full year BLS priced them. Everything else starts in 1980.",
+        caption: "Source: BLS Average Price Data and Current Employment Statistics.",
+        columns: ["Item", "Then", "2025", "Price rise", "Work change"],
+        rows: [
+          ["Pound of ground beef", "9.1 min", "11.7 min", "4.7x", "+28%"],
+          ["Dozen large eggs", "7.4 min", "8.1 min", "5.1x", "+11%"],
+          ["Pound of sliced bacon", "12.8 min", "13.4 min", "4.8x", "+5%"],
+          ["Frozen orange juice", "10.3 min", "8.8 min", "3.9x", "-15%"],
+          ["Pound of white bread", "4.5 min", "3.6 min", "3.7x", "-20%"],
+          ["Half gallon of ice cream", "15.9 min", "12.2 min", "3.5x", "-24%"],
+          ["Bag of potato chips", "17.9 min", "12.8 min", "3.3x", "-28%"],
+          ["Pound of choc. chip cookies", "13.8 min", "9.7 min", "3.2x", "-30%"],
+          ["Pound of whole chicken", "6.2 min", "3.9 min", "2.9x", "-37%"],
+          ["Pound of tomatoes", "5.9 min", "3.5 min", "2.8x", "-40%"],
+          ["Gallon of regular gas", "10.9 min", "6.2 min", "2.6x", "-43%"],
+          ["Pound of ground coffee", "27.5 min", "15.7 min", "2.6x", "-43%"],
+          ["Pound of white sugar", "3.8 min", "2.0 min", "2.4x", "-48%"],
+          ["Pound of cheddar", "21.7 min", "11.2 min", "1.9x", "-48%"],
+          ["Pound of bananas", "3.0 min", "1.2 min", "1.9x", "-58%"],
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "Beef, eggs and bacon",
+        paragraphs: [
+          "All three are animal products, and all three had a bad few years recently. U.S. cattle herds have been shrinking for years, which pushed ground beef past $6 a pound. Eggs went through two bird flu outbreaks, one in 2015 and a longer one from 2022, and averaged $4.25 a dozen in 2025. Bacon tracks pork prices, which climbed after 2020.",
+          "Even so, the margins are thin for two of them. Bacon takes 5% more work than in 1980. Eggs took less work than in 1980 in every year until 2025. In 2019 a dozen took about 3.6 minutes.",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "Everything else",
+        paragraphs: [
+          "Bananas are the clearest case. Their price less than doubled in 45 years while pay rose 4.6 times, so a pound now takes about a minute of work. Sugar, cheddar, coffee and gas all fell by more than 40% in work time.",
+          "Gas surprises people most, because the swings are so visible. In 2022 a gallon averaged $4.09. That took about 9 minutes of work, still less than the 11 minutes a $1.25 gallon took in 1980, because pay had risen faster than the price.",
+        ],
+      },
+      {
+        kind: "callout",
+        heading: "The catch",
+        paragraphs: [
+          "Minutes of work at the average wage is a fair yardstick for one item. It is a poor one for a life. Rent, health insurance and college rose much faster than wages over the same period, and an average wage hides everyone below it. Groceries got cheaper in work time. That is a fact about groceries.",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "Every item, every year",
+        paragraphs: [
+          "Each item has its own [price history](/history) page with the yearly price since 1980, the change from year to year and the minutes of work, plus a chart you can embed. The [eggs page](/history/eggs) shows both bird flu spikes clearly.",
+        ],
+      },
+      {
+        kind: "cta",
+        heading: "Pick an item",
+        paragraphs: [
+          "See any of the 15 groceries year by year, and where its price jumped.",
+        ],
+        buttonLabel: "Price history",
+        href: "/history",
+      },
+    ],
+    sources: [
+      {
+        label: "BLS: Average Price Data (CPI)",
+        url: "https://www.bls.gov/cpi/factsheets/average-prices.htm",
+      },
+      {
+        label: "BLS: Average hourly earnings of production and nonsupervisory employees (CES0500000008)",
+        url: "https://data.bls.gov/timeseries/CES0500000008",
+      },
+      {
+        label: "USDA ERS: Cattle and beef sector at a glance",
+        url: "https://www.ers.usda.gov/topics/animal-products/cattle-beef/sector-at-a-glance",
+      },
+      {
+        label: "USDA ERS: Poultry and eggs",
+        url: "https://www.ers.usda.gov/topics/animal-products/poultry-eggs",
+      },
+    ],
+  },
+
+  // ---------------------------------------------------------------------------
+  {
+    slug: "how-to-play-price-year-open-range-pricele-1000",
+    title: "How to play Price Year, Open Range and Pricele 1000",
+    description:
+      "Three new daily price games: date a grocery receipt, give a price range, or score out of 1,000. The rules, the scoring and how to get better at each.",
+    date: "2026-10-23",
+    status: "published",
+    readingMinutes: 5,
+    body: [
+      {
+        kind: "prose",
+        paragraphs: [
+          "Pricele now has three more daily games. Each one tests a different way of knowing prices. Price Year asks when, Open Range asks how sure you are, and Pricele 1000 asks how close you can get with a single guess. All three are free, reset at your local midnight and count towards the one streak on [Today](/today).",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "Price Year",
+        paragraphs: [
+          "You get five receipts. Each lists three U.S. grocery or gas prices from the same year, somewhere between 1980 and 2025. Guess the year. A correct year scores 200, one year off scores 175, and the score falls to nothing at eight years off. The best total is 1,000.",
+          "No one price gives the year away, so read the three together. Gas is the best anchor. It stayed under $1.40 a gallon through the 1980s and 1990s, averaged over $3 in 2008 and over $4 in 2022. Eggs are the best trap. They spiked in 2015, fell back, and spiked again from 2022. Coffee was cheaper in 1993 than in 1980, so a low coffee price does not mean an early year.",
+          "Every receipt is chosen so that no year four or more away has similar prices on all three lines. If a receipt looks ambiguous, the answer is in the line that does not fit.",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "Open Range",
+        paragraphs: [
+          "Five prices, each from a different country. Instead of one number you give a low and a high. If the real price lands inside, you score up to 100, more the narrower the range. A miss scores nothing, though the game tells you how close you were.",
+          "Width is the high divided by the low. A range of $2 to $4 is 2x wide and scores 67. A 1.25x range scores 89. Anything 8x wide or more scores the minimum of 10, and you cannot go wider than 12x.",
+          "The trick is to be honest with yourself. A range from the typical price divided by 1.5 to the typical price times 1.5 lands about three times in five. Tighten it when you know the country runs dear, like Switzerland or Norway, or cheap, like Egypt or India. Widen it when you do not.",
+        ],
+      },
+      {
+        kind: "prose",
+        heading: "Pricele 1000",
+        paragraphs: [
+          "This is the daily Pricele without hints. Five prices from five countries, one guess each on a slider, scored by how close you are. Each round scores up to 100. A guess 1.75 times too high or too low scores nothing. Round three counts double and rounds four and five count triple, so the total is out of 1,000 and the last two rounds decide most games.",
+          "The slider starts at the typical price across all countries, which is shown on the card. Start from there and move it by what you know about the country. A rich country with high wages pushes services like a haircut or a cappuccino up much more than it pushes a can of Coca-Cola. We explain why in [why poor countries are cheap](/blog/why-poor-countries-are-cheap).",
+        ],
+      },
+      {
+        kind: "list",
+        heading: "When you miss a day",
+        ordered: false,
+        items: [
+          "The [games archive](/games/archive) replays every past puzzle of every daily game. Archive plays are saved apart from today's and never touch your streak.",
+          "The [answers page](/games/answers) lists every game's answer for each day with the figures behind it, two days after the day ends so nothing that is still live gets spoiled.",
+          "[All games](/games) lists the full set, including Price Atlas, Higher or Lower Daily, Then & Now, Inflation Ladder and Rent Ratio.",
+        ],
+      },
+      {
+        kind: "cta",
+        heading: "Play today's set",
+        paragraphs: [
+          "Eight daily games, about 12 minutes for all of them, and one streak.",
+        ],
+        buttonLabel: "All games",
+        href: "/games",
       },
     ],
   },

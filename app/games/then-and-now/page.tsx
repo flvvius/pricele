@@ -3,6 +3,7 @@ import Link from "next/link";
 import ContentPage, { Section, Prose } from "@/components/ContentPage";
 import ThenAndNow from "@/components/ThenAndNow";
 import JsonLd from "@/components/JsonLd";
+import GameFaq from "@/components/GameFaq";
 import ChallengeBanner from "@/components/ChallengeBanner";
 import { breadcrumbJsonLd, dailyGameJsonLd, pageMetadata } from "@/lib/seo";
 
@@ -49,6 +50,11 @@ export default function ThenAndNowPage() {
             as about the general drift upward.
           </p>
         </div>
+        <GameFaq
+          name="Then & Now"
+          description={DESCRIPTION}
+          source="Prices are U.S. city averages from the Bureau of Labor Statistics average price series"
+        />
       </div>
       <Section heading="How to play">
         <Prose>

@@ -18,7 +18,7 @@ export default function GameArchive() {
 
   useEffect(() => setDates(pastDates(EPOCH)), []);
 
-  if (!dates) return <p className="text-ink-muted">Loading past days…</p>;
+  if (!dates) return <p className="min-h-[100svh] text-ink-muted">Loading past days…</p>;
   if (dates.length === 0) {
     return (
       <p className="text-ink-muted">

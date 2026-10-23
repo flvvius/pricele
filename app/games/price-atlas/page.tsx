@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import ContentPage from "@/components/ContentPage";
 import PriceAtlas from "@/components/PriceAtlas";
 import JsonLd from "@/components/JsonLd";
+import GameFaq from "@/components/GameFaq";
 import ChallengeBanner from "@/components/ChallengeBanner";
 import { breadcrumbJsonLd, dailyGameJsonLd, pageMetadata } from "@/lib/seo";
 
@@ -51,6 +52,11 @@ export default function PriceAtlasPage() {
             when the map arrow does not.
           </p>
         </div>
+        <GameFaq
+          name="Price Atlas"
+          description={DESCRIPTION}
+          source="Prices come from The Economist's Big Mac Index, Numbeo, GlobalPetrolPrices.com and other published surveys, across 49 countries"
+        />
       </div>
     </ContentPage>
   );

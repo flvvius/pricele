@@ -97,7 +97,7 @@ function Block({ block }: { block: ArticleBlock }) {
               >
                 <span
                   aria-hidden
-                  className="mt-1 w-5 shrink-0 text-right font-mono text-[12px] tabular-nums text-ink-faint"
+                  className="mt-1 w-5 shrink-0 text-right font-mono text-[12px] tabular-nums text-ink-meta"
                 >
                   {block.ordered === false ? "—" : `${i + 1}.`}
                 </span>
@@ -224,7 +224,7 @@ function ArticleCta({
         </p>
       ))}
       <Link
-        href="/"
+        href={block.href ?? "/"}
         className="inline-flex w-fit items-center gap-2.5 bg-paper px-5 py-3 font-mono text-[12px] uppercase tracking-[0.16em] text-ink transition-transform duration-press ease-out active:scale-[0.97]"
       >
         {block.buttonLabel}

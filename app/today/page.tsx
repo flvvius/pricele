@@ -2,7 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import ContentPage, { Section, Prose } from "@/components/ContentPage";
 import TodayHub from "@/components/TodayHub";
-import { pageMetadata } from "@/lib/seo";
+import Link from "next/link";
+import JsonLd from "@/components/JsonLd";
+import { GAMES } from "@/lib/games";
+import { absoluteUrl, breadcrumbJsonLd, gameListJsonLd, pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
   path: "/today",
@@ -18,8 +21,35 @@ export default function TodayPage() {
       title="Today"
       intro={<p>Today&apos;s daily set. Finish at least one game a day to keep your streak.</p>}
     >
+      <JsonLd
+        data={[
+          breadcrumbJsonLd([{ name: "Today" }]),
+          gameListJsonLd({
+            name: "Today's daily games",
+            description: "Every Pricele daily game, with one streak across all of them.",
+            path: "/today",
+            games: GAMES.map((g) => ({
+              name: g.name,
+              url: absoluteUrl(g.href),
+              description: g.blurb,
+            })),
+          }),
+        ]}
+      />
       <div className="lg:pl-64">
         <TodayHub />
+        <noscript>
+          <ul className="flex flex-col gap-2">
+            {GAMES.map((g) => (
+              <li key={g.slug}>
+                <Link href={g.href} className="underline underline-offset-2">
+                  {g.name}
+                </Link>
+                : {g.blurb}
+              </li>
+            ))}
+          </ul>
+        </noscript>
       </div>
       <Section heading="How to play">
         <Prose>

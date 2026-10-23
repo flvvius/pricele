@@ -167,7 +167,7 @@ export default function StatsPanel({
                   <span className="shrink-0 font-mono text-[12px] tabular-nums text-ink-muted">
                     {r.biasPct > 0 ? "+" : ""}
                     {r.biasPct}%{" "}
-                    <span className="text-ink-faint">
+                    <span className="text-ink-meta">
                       · {r.rounds} {r.rounds === 1 ? "round" : "rounds"}
                     </span>
                   </span>
@@ -239,13 +239,13 @@ export default function StatsPanel({
                   className="flex items-baseline justify-between gap-3 border-b border-rule-soft py-2 last:border-b-0"
                 >
                   <span
-                    className={`text-[14px] ${has ? "text-ink" : "text-ink-faint"}`}
+                    className={`text-[14px] ${has ? "text-ink" : "text-ink-meta"}`}
                   >
                     {m.name}
                   </span>
                   <span
                     className={`font-mono text-[11px] uppercase tracking-[0.14em] ${
-                      has ? "text-streak" : "text-ink-faint"
+                      has ? "text-streak" : "text-ink-meta"
                     }`}
                   >
                     {has ? "Held" : `${m.days} days`}

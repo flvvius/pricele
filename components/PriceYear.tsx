@@ -88,7 +88,7 @@ export default function PriceYear() {
     setState(loadState(d, past ? archiveKey(KEY) : KEY));
   }, []);
 
-  if (!date || !state) return <p className="text-ink-muted">Loading today&apos;s receipts…</p>;
+  if (!date || !state) return <p className="min-h-[100svh] text-ink-muted">Loading today&apos;s receipts…</p>;
 
   const p = puzzleFor(date, HISTORY_ITEMS);
   const over = isOver(state);

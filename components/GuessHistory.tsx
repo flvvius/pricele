@@ -54,7 +54,7 @@ function Row({
     >
       <span className="wash absolute inset-0" aria-hidden />
 
-      <span className="relative font-mono text-[11px] tabular-nums text-ink-faint">
+      <span className="relative font-mono text-[11px] tabular-nums text-ink-meta">
         {String(index + 1).padStart(2, "0")}
       </span>
 
@@ -158,9 +158,10 @@ export default function GuessHistory({
           aria-hidden
           className="board-slot flex min-h-[2.75rem] flex-1 items-center gap-3 overflow-hidden border-b border-rule-soft px-3 lg:min-h-[3.25rem]"
         >
-          <span className="font-mono text-[11px] tabular-nums text-ink-faint/60">
-            {String(guesses.length + i + 1).padStart(2, "0")}
-          </span>
+          <span
+            data-n={String(guesses.length + i + 1).padStart(2, "0")}
+            className="font-mono text-[11px] tabular-nums text-ink-faint/60 before:content-[attr(data-n)]"
+          />
         </li>
       ))}
     </ul>

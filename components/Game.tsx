@@ -273,7 +273,7 @@ export default function Game() {
     // comes off entirely once the round is finished.
     <div
       className={`flex flex-col gap-3 pt-3 pb-[max(0.5rem,env(safe-area-inset-bottom))] lg:gap-5 lg:pt-5 ${
-        state.done ? "" : "game-screen"
+        state.done ? "" : "game-screen lg:min-h-[505px]"
       }`}
     >
       <header className="screen-chrome shrink-0">
@@ -399,7 +399,7 @@ export default function Game() {
                   </span>
                 </>
               ) : (
-                <span className="text-ink-faint">Setting today&apos;s lot</span>
+                <span className="text-ink-meta">Setting today&apos;s lot</span>
               )}
             </h2>
           </div>
@@ -492,8 +492,12 @@ export default function Game() {
               </>
             )
           ) : (
-            <div className="flex min-h-0 flex-1 items-center justify-center py-10">
+            <div className="flex min-h-0 flex-1 flex-col items-center justify-center gap-3 py-10 text-center">
               <p className="label">Setting today&apos;s page</p>
+              <p className="max-w-xs text-[16px] leading-relaxed text-ink-body">
+                Guess what today&apos;s item costs in today&apos;s country. You get five tries, and
+                each miss tells you whether to go higher or lower.
+              </p>
             </div>
           )}
         </div>

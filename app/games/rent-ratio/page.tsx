@@ -3,6 +3,7 @@ import Link from "next/link";
 import ContentPage, { Section, Prose } from "@/components/ContentPage";
 import RentRatio from "@/components/RentRatio";
 import JsonLd from "@/components/JsonLd";
+import GameFaq from "@/components/GameFaq";
 import ChallengeBanner from "@/components/ChallengeBanner";
 import { breadcrumbJsonLd, dailyGameJsonLd, pageMetadata } from "@/lib/seo";
 
@@ -49,6 +50,11 @@ export default function RentRatioPage() {
             them as a consistent yardstick between places rather than what a listing will say.
           </p>
         </div>
+        <GameFaq
+          name="Rent Ratio"
+          description={DESCRIPTION}
+          source="Rents are HUD Fiscal Year 2026 Fair Market Rents for a two-bedroom home"
+        />
       </div>
       <Section heading="How to play">
         <Prose>

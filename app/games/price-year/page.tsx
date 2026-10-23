@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import ContentPage from "@/components/ContentPage";
 import PriceYear from "@/components/PriceYear";
 import JsonLd from "@/components/JsonLd";
+import GameFaq from "@/components/GameFaq";
 import ChallengeBanner from "@/components/ChallengeBanner";
 import { breadcrumbJsonLd, dailyGameJsonLd, pageMetadata } from "@/lib/seo";
 
@@ -61,6 +62,11 @@ export default function PriceYearPage() {
             and about 11 in 2020.
           </p>
         </div>
+        <GameFaq
+          name="Price Year"
+          description={DESCRIPTION}
+          source="Prices are U.S. city averages from the Bureau of Labor Statistics average price series, from 1980 on"
+        />
       </div>
     </ContentPage>
   );

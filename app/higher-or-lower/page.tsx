@@ -1,17 +1,20 @@
 import type { Metadata } from "next";
 import ContentPage from "@/components/ContentPage";
 import HigherLower from "@/components/HigherLower";
-import { pageMetadata } from "@/lib/seo";
+import JsonLd from "@/components/JsonLd";
+import { breadcrumbJsonLd, dailyGameJsonLd, pageMetadata } from "@/lib/seo";
 import { PRICES } from "@/lib/puzzle";
 import { suppressedPairs } from "@/lib/catalog";
 import { getItem, itemLabel } from "@/data/items";
 import { drawPair, toCard, MIN_RATIO, MAX_RATIO } from "@/lib/higherlower";
 
+const DESCRIPTION =
+  "Two prices, one question: which costs more? A Big Mac in Norway or a cappuccino in Japan? Chain a run for as long as you can, on the same sourced figures as the daily puzzle.";
+
 export const metadata: Metadata = pageMetadata({
   path: "/higher-or-lower",
   title: "Higher or Lower",
-  description:
-    "Two prices, one question: which costs more? A Big Mac in Norway or a cappuccino in Japan? Chain a run for as long as you can, on the same sourced figures as the daily puzzle.",
+  description: DESCRIPTION,
 });
 
 /**
@@ -32,9 +35,7 @@ export const revalidate = 3600;
 
 export default function HigherOrLowerPage() {
   const hidden = suppressedPairs();
-  const deck = PRICES.filter(
-    (p) => p.priceUSD > 0 && !hidden.has(`${p.itemId}:${p.countryCode}`)
-  )
+  const deck = PRICES.filter((p) => p.priceUSD > 0 && !hidden.has(`${p.itemId}:${p.countryCode}`))
     .map((p) => {
       const item = getItem(p.itemId);
       return item ? toCard(p, itemLabel(item)) : null;
@@ -48,39 +49,46 @@ export default function HigherOrLowerPage() {
       title="Higher or lower"
       intro={
         <p>
-          Two prices at a time, from anywhere in the table. Pick the dearer one
-          and keep going until you get one wrong. Unlimited, unlike the daily,
-          and it counts for nothing except a run you can beat.
+          Two prices at a time, from anywhere in the table. Pick the dearer one and keep going until
+          you get one wrong. Unlimited, unlike the daily, and it counts for nothing except a run you
+          can beat.
         </p>
       }
     >
+      <JsonLd
+        data={[
+          breadcrumbJsonLd([{ name: "Games", path: "/games" }, { name: "Higher or lower" }]),
+          dailyGameJsonLd({
+            name: "Higher or Lower",
+            path: "/higher-or-lower",
+            description: DESCRIPTION,
+          }),
+        ]}
+      />
       {initialPair ? (
         <HigherLower deck={deck} initialPair={initialPair} />
       ) : (
         <p className="text-[16px] leading-relaxed text-ink-body">
-          No pair is playable right now, which means the table has shrunk below
-          what this mode needs. That is a data problem rather than a temporary
-          one.
+          No pair is playable right now, which means the table has shrunk below what this mode
+          needs. That is a data problem rather than a temporary one.
         </p>
       )}
 
       <div className="flex max-w-prose flex-col gap-3.5 text-[16px] leading-[1.7] text-ink-body">
         <p>
-          Pairs cross items as well as countries, which is what makes them hard.
-          Knowing that Norway is expensive and Vietnam is cheap answers nothing
-          when the question is a Big Mac in one against a cappuccino in the
-          other: both halves move, and the item is usually the half that decides
-          it.
+          Pairs cross items as well as countries, which is what makes them hard. Knowing that Norway
+          is expensive and Vietnam is cheap answers nothing when the question is a Big Mac in one
+          against a cappuccino in the other: both halves move, and the item is usually the half that
+          decides it.
         </p>
         <p>
-          Two prices are only offered together when one is between {MIN_RATIO}{" "}
-          and {MAX_RATIO} times the other. Closer than that and nobody could
-          know. Further apart and the stereotype answers it for you, which is the
-          opposite of what this game is for.
+          Two prices are only offered together when one is between {MIN_RATIO} and {MAX_RATIO} times
+          the other. Closer than that and nobody could know. Further apart and the stereotype
+          answers it for you, which is the opposite of what this game is for.
         </p>
         <p>
-          Today&apos;s puzzle never appears here, and neither do the days either
-          side of it. Every figure on this page is one the{" "}
+          Today&apos;s puzzle never appears here, and neither do the days either side of it. Every
+          figure on this page is one the{" "}
           <a href="/prices" className="underline underline-offset-2 hover:text-ink">
             country pages
           </a>{" "}

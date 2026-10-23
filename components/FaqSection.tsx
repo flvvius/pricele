@@ -35,7 +35,7 @@ export default function FaqSection({
             <summary className="flex cursor-pointer list-none items-start gap-3 py-3.5 text-[16px] font-medium text-ink marker:content-none [&::-webkit-details-marker]:hidden">
               <span
                 aria-hidden
-                className="mt-[3px] shrink-0 font-mono text-[12px] text-ink-faint transition-transform duration-fast ease-out group-open:rotate-90"
+                className="mt-[3px] shrink-0 font-mono text-[12px] text-ink-meta transition-transform duration-fast ease-out group-open:rotate-90"
               >
                 &gt;
               </span>

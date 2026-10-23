@@ -51,6 +51,7 @@ export default function ItemsIndex() {
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={item.imageUrl}
+                    loading="lazy"
                     alt=""
                     width={40}
                     height={40}

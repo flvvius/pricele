@@ -49,7 +49,7 @@ export default function PriceAtlas() {
     setState(loadState(d, past ? archiveKey(KEY) : KEY));
   }, []);
 
-  if (!date || !state) return <p className="text-ink-muted">Loading today&apos;s puzzle…</p>;
+  if (!date || !state) return <p className="min-h-[100svh] text-ink-muted">Loading today&apos;s puzzle…</p>;
 
   const p = puzzleFor(date);
   const over = isOver(p, state);

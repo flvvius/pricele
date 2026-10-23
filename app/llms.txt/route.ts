@@ -72,6 +72,7 @@ ${gameLines}
 
 Scored mode: [Pricele 1000](${absoluteUrl("/games/pricele-1000")}), five prices with one guess each, scored out of 1,000.
 Past days: the [games archive](${absoluteUrl("/games/archive")}) replays any earlier puzzle of every daily game without touching streaks.
+Past answers: [answers by day](${absoluteUrl("/games/answers")}) lists every hub game's answer with the figures behind it, published two days after each day ends.
 
 Unlimited modes: [Higher or lower](${absoluteUrl("/higher-or-lower")}) and
 [Where in the world](${absoluteUrl("/where-in-the-world")}).

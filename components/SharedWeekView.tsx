@@ -62,7 +62,7 @@ export default function SharedWeekView() {
               key={`${day.i}-${day.c}-${i}`}
               className="flex items-center gap-3 border-b border-rule-soft py-3"
             >
-              <span className="font-mono text-[11px] tabular-nums text-ink-faint">
+              <span className="font-mono text-[11px] tabular-nums text-ink-meta">
                 {String(i + 1).padStart(2, "0")}
               </span>
               <span className="min-w-0 flex-1 truncate text-[15px] text-ink-body">

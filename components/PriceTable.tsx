@@ -85,7 +85,7 @@ export default function PriceTable({
               {r.hidden || !r.price ? (
                 <td
                   colSpan={showLocal ? 3 : 2}
-                  className="py-2.5 text-right font-mono text-[12px] text-ink-faint"
+                  className="py-2.5 text-right font-mono text-[12px] text-ink-meta"
                 >
                   {r.hidden ? "hidden, in play right now" : "no data"}
                 </td>

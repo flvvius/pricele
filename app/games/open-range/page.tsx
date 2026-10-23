@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import ContentPage from "@/components/ContentPage";
 import OpenRange from "@/components/OpenRange";
 import JsonLd from "@/components/JsonLd";
+import GameFaq from "@/components/GameFaq";
 import ChallengeBanner from "@/components/ChallengeBanner";
 import { breadcrumbJsonLd, dailyGameJsonLd, pageMetadata } from "@/lib/seo";
 
@@ -54,6 +55,11 @@ export default function OpenRangePage() {
             Switzerland runs dear and Egypt runs cheap is what lets you tighten the range.
           </p>
         </div>
+        <GameFaq
+          name="Open Range"
+          description={DESCRIPTION}
+          source="Prices come from The Economist's Big Mac Index, Numbeo, GlobalPetrolPrices.com and other published surveys, across 49 countries"
+        />
       </div>
     </ContentPage>
   );

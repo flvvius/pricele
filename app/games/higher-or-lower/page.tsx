@@ -3,6 +3,7 @@ import Link from "next/link";
 import ContentPage from "@/components/ContentPage";
 import PriceChain from "@/components/PriceChain";
 import JsonLd from "@/components/JsonLd";
+import GameFaq from "@/components/GameFaq";
 import ChallengeBanner from "@/components/ChallengeBanner";
 import { breadcrumbJsonLd, dailyGameJsonLd, pageMetadata } from "@/lib/seo";
 
@@ -53,6 +54,11 @@ export default function HigherOrLowerDailyPage() {
             runs until you miss.
           </p>
         </div>
+        <GameFaq
+          name="Higher or Lower Daily"
+          description={DESCRIPTION}
+          source="Prices come from The Economist's Big Mac Index, Numbeo, GlobalPetrolPrices.com and other published surveys, across 49 countries"
+        />
       </div>
     </ContentPage>
   );

@@ -37,7 +37,7 @@ export default function TodayHub() {
     setSt(readStatuses());
   }, []);
 
-  if (!st) return <p className="text-ink-muted">Loading today&apos;s set…</p>;
+  if (!st) return <p className="min-h-[100svh] text-ink-muted">Loading today&apos;s set…</p>;
 
   const doneCount = GAMES.filter((g) => st[g.slug]?.phase === "done").length;
   const next =

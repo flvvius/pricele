@@ -41,7 +41,7 @@ export default function CurrencyToggle({
             className={`min-h-[2.5rem] min-w-[2.25rem] px-2 py-2 font-mono text-[14px] leading-none transition-colors duration-fast ease-out disabled:opacity-40 ${
               active
                 ? "bg-ink text-paper-raised"
-                : "text-ink-faint hover:text-ink-body"
+                : "text-ink-meta hover:text-ink-body"
             }`}
           >
             {currencySymbol(c)}

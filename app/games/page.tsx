@@ -68,6 +68,11 @@ export default function GamesPage() {
               Pricele 1000
             </Link>{" "}
             is the daily Pricele without hints: five prices, one guess each, scored out of 1,000.
+            For tips on it, Price Year and Open Range, read{" "}
+            <Link href="/blog/how-to-play-price-year-open-range-pricele-1000" className={linkClass}>
+              how to play the new games
+            </Link>
+            .
           </p>
           <p>
             Missed a day? The{" "}

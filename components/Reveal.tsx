@@ -193,7 +193,7 @@ export default function Reveal({
           className="flex w-full items-center justify-center gap-2.5 border border-rule px-5 py-3.5 font-mono text-[12px] uppercase tracking-[0.18em] text-ink-body transition-[border-color,background-color,transform] duration-press ease-out hover:border-ink hover:bg-paper-raised active:scale-[0.98]"
         >
           Continue
-          <span className="text-ink-faint">
+          <span className="text-ink-meta">
             {stage}/{STAGES}
           </span>
         </button>

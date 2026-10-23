@@ -1,16 +1,19 @@
 import type { Metadata } from "next";
 import ContentPage from "@/components/ContentPage";
 import WhereInTheWorld from "@/components/WhereInTheWorld";
-import { pageMetadata } from "@/lib/seo";
+import JsonLd from "@/components/JsonLd";
+import { breadcrumbJsonLd, dailyGameJsonLd, pageMetadata } from "@/lib/seo";
 import { PRICES } from "@/lib/puzzle";
 import { suppressedPairs } from "@/lib/catalog";
 import { roundFor, MAX_ATTEMPTS, type Round } from "@/lib/whereintheworld";
 
+const DESCRIPTION =
+  "The daily puzzle backwards: here is the item and here is the price, name the country. Five guesses, a new clue after each miss, on the same sourced figures.";
+
 export const metadata: Metadata = pageMetadata({
   path: "/where-in-the-world",
   title: "Where in the World",
-  description:
-    "The daily puzzle backwards: here is the item and here is the price, name the country. Five guesses, a new clue after each miss, on the same sourced figures.",
+  description: DESCRIPTION,
 });
 
 /** Same hourly rebuild, and for the same reason as /higher-or-lower. */
@@ -64,6 +67,16 @@ export default function WhereInTheWorldPage() {
         </p>
       }
     >
+      <JsonLd
+        data={[
+          breadcrumbJsonLd([{ name: "Games", path: "/games" }, { name: "Where in the world" }]),
+          dailyGameJsonLd({
+            name: "Where in the World",
+            path: "/where-in-the-world",
+            description: DESCRIPTION,
+          }),
+        ]}
+      />
       {rounds.length > 0 ? (
         <WhereInTheWorld rounds={rounds} />
       ) : (

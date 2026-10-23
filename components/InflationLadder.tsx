@@ -48,7 +48,7 @@ export default function InflationLadder() {
     setOrder(s.tries.at(-1) ?? startingOrder(p.rungs.map((r) => r.item.id), p.answer));
   }, []);
 
-  if (!date || !state) return <p className="text-ink-muted">Loading today&apos;s puzzle…</p>;
+  if (!date || !state) return <p className="min-h-[100svh] text-ink-muted">Loading today&apos;s puzzle…</p>;
 
   const p = puzzleFor(date, THEN_NOW_ITEMS);
   const over = isOver(state, p.answer);

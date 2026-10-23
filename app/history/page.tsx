@@ -59,6 +59,13 @@ export default function HistoryIndex() {
             <Link href="/years" className="underline underline-offset-2">
               prices the year you were born
             </Link>
+            . Only three of these items take more work to buy than in the 1980s; we name them in{" "}
+            <Link
+              href="/blog/groceries-that-got-harder-to-buy-since-1980"
+              className="underline underline-offset-2"
+            >
+              this piece
+            </Link>
             .
           </p>
         </Prose>

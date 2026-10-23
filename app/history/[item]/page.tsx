@@ -174,7 +174,11 @@ export default function HistoryPage({ params }: { params: { item: string } }) {
             <Link href="/games/price-year" className={linkClass}>
               Price Year
             </Link>{" "}
-            shows a receipt and asks for the year. Other items:{" "}
+            shows a receipt and asks for the year. For how this item compares with the rest, read{" "}
+            <Link href="/blog/groceries-that-got-harder-to-buy-since-1980" className={linkClass}>
+              only three groceries got harder to buy since 1980
+            </Link>
+            . Other items:{" "}
             {HISTORY_ITEMS.filter((i) => i.id !== item.id).map((i, k, all) => (
               <span key={i.id}>
                 <Link href={`/history/${i.id}`} className={linkClass}>

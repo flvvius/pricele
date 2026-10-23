@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import ContentPage from "@/components/ContentPage";
 import Pricele1000 from "@/components/Pricele1000";
 import JsonLd from "@/components/JsonLd";
+import GameFaq from "@/components/GameFaq";
 import ChallengeBanner from "@/components/ChallengeBanner";
 import { breadcrumbJsonLd, dailyGameJsonLd, pageMetadata } from "@/lib/seo";
 
@@ -53,6 +54,11 @@ export default function Pricele1000Page() {
             job is to move it the right way and the right distance for the country in front of you.
           </p>
         </div>
+        <GameFaq
+          name="Pricele 1000"
+          description={DESCRIPTION}
+          source="Prices come from The Economist's Big Mac Index, Numbeo, GlobalPetrolPrices.com and other published surveys, across 49 countries"
+        />
       </div>
     </ContentPage>
   );

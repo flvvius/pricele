@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import ContentPage from "@/components/ContentPage";
 import InflationLadder from "@/components/InflationLadder";
 import JsonLd from "@/components/JsonLd";
+import GameFaq from "@/components/GameFaq";
 import ChallengeBanner from "@/components/ChallengeBanner";
 import { breadcrumbJsonLd, dailyGameJsonLd, pageMetadata } from "@/lib/seo";
 
@@ -48,6 +49,11 @@ export default function InflationLadderPage() {
             the survey that feeds the Consumer Price Index, so every percentage is a published number.
           </p>
         </div>
+        <GameFaq
+          name="Inflation Ladder"
+          description={DESCRIPTION}
+          source="Prices are U.S. city averages from the Bureau of Labor Statistics average price series"
+        />
       </div>
     </ContentPage>
   );

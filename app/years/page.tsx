@@ -70,6 +70,13 @@ export default function YearsPage() {
             <Link href="/games/price-year" className="underline underline-offset-2">
               Price Year
             </Link>
+            . The short version is in{" "}
+            <Link
+              href="/blog/grocery-prices-the-year-you-were-born"
+              className="underline underline-offset-2"
+            >
+              what groceries cost the year you were born
+            </Link>
             .
           </p>
         </Prose>

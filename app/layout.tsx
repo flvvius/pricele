@@ -6,7 +6,8 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import JsonLd from "@/components/JsonLd";
 import ThemeScript, { EDITION_THEME_COLOR } from "@/components/ThemeScript";
-import { ADSENSE_CLIENT, ADSENSE_LOADER_SRC, adsEnabled } from "@/lib/ads";
+import { ADSENSE_CLIENT, adsEnabled } from "@/lib/ads";
+import AdLoader from "@/components/AdLoader";
 import {
   SITE_URL,
   SITE_NAME,
@@ -44,6 +45,7 @@ const mono = IBM_Plex_Mono({
   weight: ["400", "500", "600"],
   variable: "--font-mono",
   display: "swap",
+  preload: false,
 });
 
 export const metadata: Metadata = {
@@ -178,14 +180,8 @@ export default function RootLayout({
     >
       <head>
         <ThemeScript />
-        {/* Google AdSense: verification meta + loader, on every page. Both are
-            gated on a well-formed publisher id (enabled by default). */}
-        {adsEnabled() && (
-          <>
-            <meta name="google-adsense-account" content={ADSENSE_CLIENT} />
-            <script async src={ADSENSE_LOADER_SRC} crossOrigin="anonymous" />
-          </>
-        )}
+        {/* The AdSense loader waits for the first interaction; ads only show after a finished game. */}
+        {adsEnabled() && <meta name="google-adsense-account" content={ADSENSE_CLIENT} />}
         <JsonLd
           data={[
             websiteJsonLd(),
@@ -200,6 +196,7 @@ export default function RootLayout({
         <Analytics />
         <LandingTracker />
         <SpeedInsights />
+        {adsEnabled() && <AdLoader />}
       </body>
     </html>
   );

@@ -47,7 +47,7 @@ export default function ArchiveModal({ open, onClose, today, onPlay }: Props) {
                   }}
                   className="flex w-full items-center gap-3 border-b border-rule-soft px-1 py-2.5 text-left transition-[background-color] duration-fast ease-out hover:bg-paper-sunk"
                 >
-                  <span className="font-mono text-[11px] tabular-nums text-ink-faint">
+                  <span className="font-mono text-[11px] tabular-nums text-ink-meta">
                     {String(puzzle.puzzleNumber).padStart(3, "0")}
                   </span>
                   {/* The item changes daily too, so the country alone no longer

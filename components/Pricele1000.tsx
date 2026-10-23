@@ -61,7 +61,7 @@ export default function Pricele1000() {
     setState(loadState(d, past ? archiveKey(KEY) : KEY));
   }, []);
 
-  if (!date || !state) return <p className="text-ink-muted">Loading today&apos;s rounds…</p>;
+  if (!date || !state) return <p className="min-h-[100svh] text-ink-muted">Loading today&apos;s rounds…</p>;
 
   const p = puzzleFor(date);
   const over = isOver(state);

@@ -85,12 +85,12 @@ export default function ComparisonTable({
                   </td>
                   <td className="py-3 pr-3 text-[14px] leading-relaxed text-ink-body">
                     {fact.theirs ?? (
-                      <span className="text-ink-faint">Not stated</span>
+                      <span className="text-ink-meta">Not stated</span>
                     )}
                   </td>
                   <td className="py-3 font-mono text-[11px] uppercase tracking-[0.14em]">
                     {fact.theirs === null ? (
-                      <span className="text-ink-faint">&mdash;</span>
+                      <span className="text-ink-meta">&mdash;</span>
                     ) : (
                       <span
                         className={

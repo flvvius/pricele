@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import ContentPage, { Section, Prose } from "@/components/ContentPage";
 import ClassroomSetup from "@/components/ClassroomSetup";
-import { pageMetadata } from "@/lib/seo";
+import JsonLd from "@/components/JsonLd";
+import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
   path: "/classroom",
@@ -30,6 +31,7 @@ export default function ClassroomPage() {
         </p>
       }
     >
+      <JsonLd data={breadcrumbJsonLd([{ name: "Classroom" }])} />
       <ClassroomSetup />
 
       <Section heading="How the board works">

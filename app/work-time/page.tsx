@@ -149,6 +149,10 @@ export default function WorkTimePage() {
             <Link href="/years" className={linkClass}>
               prices the year you were born
             </Link>
+            . We wrote up what the series shows in{" "}
+            <Link href="/blog/grocery-work-time-index-1980-2025" className={linkClass}>
+              groceries take 24% less work than in 1980
+            </Link>
             .
           </p>
         </Prose>

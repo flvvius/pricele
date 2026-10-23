@@ -111,6 +111,7 @@ export default function Home() {
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={item.imageUrl}
+                    loading="lazy"
                     alt=""
                     width={28}
                     height={28}
@@ -122,7 +123,7 @@ export default function Home() {
                 </span>
                 <span className="shrink-0 font-mono text-[12px] tabular-nums text-ink-meta">
                   median {formatUSD(medianPriceUSD(item.id))}
-                  <span className="ml-1.5 text-ink-faint">
+                  <span className="ml-1.5">
                     · {pricesForItem(item.id).length}
                   </span>
                 </span>
