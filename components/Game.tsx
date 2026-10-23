@@ -39,6 +39,8 @@ import {
 } from "@/lib/format";
 import { loadCurrency, saveCurrency, type Currency } from "@/lib/currency";
 import { initPwa } from "@/lib/pwa";
+import { archiveDate } from "@/lib/gamedate";
+import { ROTATION } from "@/data/rotation";
 import { useKeyboardViewport } from "./useKeyboardViewport";
 import GuessInput from "./GuessInput";
 import GuessHistory from "./GuessHistory";
@@ -108,9 +110,14 @@ export default function Game() {
 
   useEffect(() => {
     const day = isoDate(new Date());
+    // A back number lives in the address bar as ?d=, the same parameter the
+    // other games use, so a reload, or iOS discarding the tab while the player
+    // checks a price elsewhere, lands back on the edition they were playing
+    // rather than silently dropping them onto today's.
+    const past = archiveDate(window.location.search, ROTATION.startDate, day);
     setToday(day);
-    setActiveDate(day);
-    setState(loadDayState(day));
+    setActiveDate(past ?? day);
+    setState(loadDayState(past ?? day));
     setStats(loadStats());
     setCurrency(loadCurrency());
     setRoomCode(loadRoomCode());
@@ -169,6 +176,12 @@ export default function Game() {
   }, [mounted, isArchive, puzzle, state, activeDate, justFinished]);
 
   function selectDate(date: string) {
+    // replaceState, not pushState: the back button should still leave the
+    // page, not step back through every edition opened from the archive.
+    const url = new URL(window.location.href);
+    if (date === today) url.searchParams.delete("d");
+    else url.searchParams.set("d", date);
+    window.history.replaceState(window.history.state, "", url);
     setActiveDate(date);
     setState(loadDayState(date));
     setJustFinished(false);
