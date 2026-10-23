@@ -59,3 +59,22 @@ Found and fixed:
   a dozen rows down and left the player looking at prices with no sign the
   round had ended. The result is now scrolled up to about a third of the
   screen, with the last guesses still in view.
+
+## Round 3: Open Range (/games/open-range)
+
+Checked: all five questions at 320px and 390px, typing comma decimals,
+the keyboard's return key in each field, the verdict, the final score.
+
+Found and fixed:
+
+- Return on the low field submitted a half-filled form, which did nothing, so
+  the player had to reach up and tap the high field. It now moves to the high
+  field (and the key reads "next"; on the high field it reads "done").
+- After a keyboard submit the final total, which takes focus so a screen
+  reader announces it, was drawn with the red accent focus ring and read as an
+  error box. Focus targets with tabindex="-1" (Open Range, Price Year,
+  Pricele 1000 totals) no longer draw the ring: nothing there can be
+  activated.
+
+Left: the "1,6 reads as $1.60" echo was already in place from the earlier
+fix and checked out.
