@@ -266,3 +266,31 @@ Found and fixed:
 Checked and fine: the cramped mode drops the masthead and keeps both played
 rows, the input and the status line on a 330px-tall screen; landscape keeps
 the lock and the input on screen.
+
+## Round 12: the production build, console and archive links
+
+Checked: `next build`, then every route type from the sitemap against
+`next start` at 390px and 320px, collecting console errors, warnings, page
+errors and hydration warnings; archive links with good and bad `?d=` values
+on a daily game and on Pricele.
+
+Found: nothing new. The only console errors in production are 404s for
+`/_vercel/insights/script.js` and `/_vercel/speed-insights/script.js`, which
+exist only on Vercel's own hosting. No hydration warnings: every game reads
+storage after mount, so the server HTML and the first client render agree.
+A `?d=` in the future, before the game's first day, or not a date at all
+falls back to today's puzzle without the archive note, on every game
+including Pricele (first back number: No. 24, 2026-07-24).
+
+## Summary of what was deliberately left
+
+- `lib/share.ts` share text prints "BEST 1%" for an exact bid (pinned by
+  tests; the on-screen plate is fixed).
+- The /vs comparison table scrolls sideways on a phone (round 10).
+- "Next: <game>" after an archive replay links to today's edition of the next
+  game, not the same past day. Archive progress for most games lives in one
+  slot per game, so "the next unfinished game on that day" can't be read
+  reliably yet.
+- The home page's "What's in the game" list still includes the three items
+  retired from 2026-10-26; that list and the item rotation belong to the
+  parallel data work.
