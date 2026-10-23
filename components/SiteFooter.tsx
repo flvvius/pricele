@@ -62,12 +62,15 @@ export default function SiteFooter() {
         {GROUPS.map((g) => (
           <div key={g.title} className="flex flex-col gap-2.5">
             <h2 className="label">{g.title}</h2>
-            <ul className="flex flex-col gap-2">
+            {/* The spacing lives in each link's own padding rather than in
+                the list's gap, so the gap is tappable too: a stack of 21px
+                lines 8px apart was a column of near misses on a phone. */}
+            <ul className="-my-1.5 flex flex-col">
               {g.links.map((l) => (
                 <li key={l.href + l.label}>
                   <Link
                     href={l.href}
-                    className="text-ink-muted transition-colors duration-fast ease-out hover:text-ink"
+                    className="inline-block py-1.5 text-ink-muted transition-colors duration-fast ease-out hover:text-ink"
                   >
                     {l.label}
                   </Link>

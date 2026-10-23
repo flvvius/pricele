@@ -39,12 +39,12 @@ export default function GameArchive() {
       {dates.map((d) => (
         <li key={d} className="flex flex-col gap-1.5 border-b border-rule-soft px-1 py-3">
           <span className="text-base font-medium text-ink-strong">{formatArchiveDate(d)}</span>
-          <span className="flex flex-wrap gap-x-4 gap-y-1 text-[14px]">
+          <span className="-my-1.5 flex flex-wrap gap-x-4 text-[14px]">
             {ARCHIVED.map((g) => (
               <Link
                 key={g.href}
                 href={`${g.href}?d=${d}`}
-                className="underline decoration-rule underline-offset-2 hover:text-ink"
+                className="inline-block py-1.5 underline decoration-rule underline-offset-2 hover:text-ink"
               >
                 {g.name}
               </Link>
@@ -52,7 +52,7 @@ export default function GameArchive() {
             {isPublishedAnswerDate(d) && (
               <Link
                 href={`/games/answers/${d}`}
-                className="text-ink-muted underline decoration-rule underline-offset-2 hover:text-ink"
+                className="inline-block py-1.5 text-ink-muted underline decoration-rule underline-offset-2 hover:text-ink"
               >
                 Answers
               </Link>

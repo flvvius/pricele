@@ -172,3 +172,25 @@ Found and fixed:
   phone no year but the last was readable (the chart's own aria-label also
   promised a table that wasn't on the page). An "Every year" disclosure now
   lists them.
+
+## Round 8: tap targets on links
+
+Checked: every standalone link (not inside a sentence) on the game pages,
+/today, /games, /games/archive, /archive and /about at 320px, measuring each
+link's box.
+
+Found and fixed:
+
+- The section nav under the masthead: apart from the boxed Play and Today,
+  every link was 14px tall, in a row that also scrolls sideways. They now have
+  the same ~30px height as the boxed pair.
+- The footer columns were 21px lines 8px apart. The spacing is now each
+  link's own padding, so the whole column is tappable (~33px a link) at about
+  the same rhythm.
+- "Next: Price Year →" and "Today's set", the first thing a player taps after
+  finishing any game, were 18px targets. Now ~34px.
+- /games/archive: the per-day game links were 14px text with 4px between
+  rows. Now ~33px each.
+
+Left: links inside running prose keep their line height, as they should;
+the masthead wordmark is 24px tall but has plenty of empty space around it.

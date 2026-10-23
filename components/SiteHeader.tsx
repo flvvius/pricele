@@ -62,9 +62,12 @@ export default function SiteHeader() {
           </li>
           {LINKS.map((l) => (
             <li key={l.href}>
+              {/* py-2 gives the 11px words the same ~30px of height the two
+                  boxed links beside them have. As bare text they were 14px
+                  tall, a hard target in a row that also scrolls sideways. */}
               <Link
                 href={l.href}
-                className="font-mono text-[11px] uppercase tracking-[0.14em] text-ink-muted transition-colors duration-fast ease-out hover:text-ink"
+                className="inline-block py-2 font-mono text-[11px] uppercase tracking-[0.14em] text-ink-muted transition-colors duration-fast ease-out hover:text-ink"
               >
                 {l.label}
               </Link>

@@ -18,19 +18,21 @@ export default function NextUp({ current }: { current: string }) {
 
   if (next === undefined) return null;
   return (
-    <p className="flex flex-wrap gap-x-4 gap-y-1 font-mono text-[12px] uppercase tracking-[0.14em]">
+    // The links carry their own vertical padding: this is the first thing a
+    // player taps after finishing, and as bare 12px text it was an 18px target.
+    <p className="-my-2 flex flex-wrap gap-x-4 font-mono text-[12px] uppercase tracking-[0.14em]">
       {next && (
-        <Link href={next.href} className="text-accent underline-offset-4 hover:underline">
+        <Link href={next.href} className="inline-block py-2 text-accent underline-offset-4 hover:underline">
           Next: {next.name} →
         </Link>
       )}
-      <Link href="/today" className="text-ink-muted underline-offset-4 hover:text-ink hover:underline">
+      <Link href="/today" className="inline-block py-2 text-ink-muted underline-offset-4 hover:text-ink hover:underline">
         {next ? "Today's set" : "Set complete: today's set →"}
       </Link>
       {!next && (
         <Link
           href="/games/archive"
-          className="text-ink-muted underline-offset-4 hover:text-ink hover:underline"
+          className="inline-block py-2 text-ink-muted underline-offset-4 hover:text-ink hover:underline"
         >
           Past days →
         </Link>
