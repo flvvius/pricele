@@ -21,9 +21,6 @@ import { IconCheck, IconShare } from "./Icons";
  * player gets the action without the spoiler and the receipt itself appears once
  * there is nothing left to spoil.
  */
-const DICKLE_PROMO_URL =
-  "https://www.dickle.online/?utm_source=pricele&utm_medium=referral&utm_campaign=share_card";
-
 export default function ShareCard({
   compact = false,
   ...props
@@ -81,19 +78,6 @@ export default function ShareCard({
         {copied ? <IconCheck size={14} /> : <IconShare size={14} />}
         {copied ? "Copied" : nativeShare ? "Share result" : "Copy result"}
       </button>
-      {/* Cross-promo to the sister game, shown once the day is done: the
-          moment a player has nothing left to do here. UTM-tagged so Dickle's
-          analytics can tell how much of its traffic Pricele sends. */}
-      {!compact && (
-        <a
-          href={DICKLE_PROMO_URL}
-          target="_blank"
-          rel="noopener"
-          className="mt-3 text-center font-mono text-[11px] uppercase tracking-[0.14em] text-ink-body underline underline-offset-4"
-        >
-          Done for today? Try Dickle, our sister game
-        </a>
-      )}
     </div>
   );
 }

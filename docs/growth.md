@@ -63,8 +63,10 @@ Improvements, in priority order:
    Weekly Wrapped.
 4. **Group/classroom leaderboard sharing**: rooms already exist, and a
    "family/office room" variant is the same feature with a different label.
-5. **Cross-promo** (shipped, see below): after sharing, point players at Dickle.
-   Dickle should point back at Pricele.
+5. **Cross-promo, one way only**: Dickle may link to Pricele (arrivals are
+   tracked as `utm_source=dickle`), but Pricele does not promote Dickle
+   anywhere. The share-card link, FAQ answers, llms.txt section, similar-games
+   entry and structured-data relation were removed on 2026-10-24.
 
 ## 2. Content and social (TikTok / Shorts / Reels)
 
@@ -214,10 +216,8 @@ referrer breakdowns work on every plan.
 
 ## Shipped in repo with this doc
 
-- `components/ShareCard.tsx`: after the Receipt, a "Try Dickle, our sister
-  game" link tagged `utm_source=pricele&utm_medium=referral&utm_campaign=share_card`.
-  It appears only once the round is done, so it never pulls a player out
-  mid-game. Dickle should add the mirror link.
+- ~~`components/ShareCard.tsx`: a "Try Dickle" link after the Receipt.~~
+  Removed 2026-10-24: Pricele does not link out to Dickle.
 
 ## Sources
 

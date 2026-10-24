@@ -76,12 +76,7 @@ export const HOME_FAQ: FaqItem[] = [
   {
     question: "What should I play if I like Pricele?",
     answer:
-      "Dickle, which is the closest thing to it anywhere: it names a country and asks you for a published figure about it, in five tries, on the same hotter/colder scale. It is built by the same person as Pricele and to the same rule, so every figure prints the study it came from. Beyond that, Tradle is the best of the rest for the same instinct — a real dataset played as a daily puzzle. Costcodle if you want prices without the country dimension. All of them are free and take about two minutes.",
-  },
-  {
-    question: "Are Pricele and Dickle made by the same people?",
-    answer:
-      "Yes. Both are made by the same person and run on the same principle: the game names a country, asks you for a published figure, and then shows you exactly where the real figure came from. Pricele uses the price of everyday things from sources including The Economist's Big Mac Index, the World Bank and the WHO; Dickle uses average stretched penile length from peer-reviewed urology studies. Neither invents a number to fill a gap — a country or item with no published source is left out rather than estimated.",
+      "Tradle is the closest for the same instinct — a real dataset played as a daily puzzle, guessing a country from what it exports. Costcodle if you want prices without the country dimension. All of them are free and take about two minutes.",
   },
   {
     question: "Is Pricele reliable?",
